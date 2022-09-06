@@ -19,6 +19,11 @@ const routes = [
     auth: true,
   },
   {
+    name: "Library",
+    link: urls.pages.library,
+    auth: false,
+  },
+  {
     name: "Login",
     link: urls.pages.login,
     auth: false,
