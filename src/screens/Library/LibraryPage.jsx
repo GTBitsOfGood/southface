@@ -1,5 +1,6 @@
 import  { useEffect, useState } from "react";
 
+import StandardCard from "src/components/StandardCard";
 
 const LibraryPage = () => {
 
@@ -11,6 +12,7 @@ const LibraryPage = () => {
   return (
     <>
       <p>{example}</p>
+      <StandardCard />
     </>
   );
 };
