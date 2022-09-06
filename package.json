@@ -1,7 +1,7 @@
 {
   "name": "nextjs-starter",
   "version": "2.0.0",
-  "description": "A NextJS starter with API routes using MongoDB",
+  "description": "Southface's Standard Library",
   "author": "Bits of Good <hello@bitsofgood.org>",
   "license": "MIT",
   "repository": {
@@ -30,7 +30,7 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "eslint"
+      "eslint --fix"
     ],
     "*.{js,jsx,css}": [
       "prettier --write"
