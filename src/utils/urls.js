@@ -7,6 +7,7 @@ export default {
     app: {
       home: "/app",
     },
+    library: "/library",
   },
   api: {
     example: "/api/example",
