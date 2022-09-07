@@ -5,15 +5,18 @@
     "node": true
   },
   "parserOptions": {
-    "project": ["./tsconfig.json"]
+    "project": "./tsconfig.eslint.json",
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "requireConfigFile": false
   },
   "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:@next/next/recommended",
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended"
+    "next/core-web-vitals"
   ],
   "rules": {
     "no-underscore-dangle": "off",

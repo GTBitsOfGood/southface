@@ -260,3 +260,4 @@ $RECYCLE.BIN/
 
 .vercel
 package-lock.json
+next-env.d.ts

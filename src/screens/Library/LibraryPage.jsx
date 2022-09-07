@@ -1,15 +1,14 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import StandardCard from "src/components/StandardCard";
 
 const LibraryPage = () => {
-
   const [books, setBooks] = useState([]);
 
-    const [example, setExample] = useState("");
-    useEffect(() => {
-        setExample("Example here")
-    }, []);
+  const [example, setExample] = useState("");
+  useEffect(() => {
+    setExample("Example here");
+  }, []);
 
   return (
     <>
