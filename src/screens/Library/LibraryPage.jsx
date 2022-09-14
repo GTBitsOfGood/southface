@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import StandardCard from "src/components/StandardCard";
+import StandardCardTable from "src/components/StandardCardTable";
 
 const LibraryPage = () => {
   const [books, setBooks] = useState([]);
@@ -12,8 +12,7 @@ const LibraryPage = () => {
 
   return (
     <>
-      <p>{example}</p>
-      <StandardCard />
+      <StandardCardTable />
     </>
   );
 };
