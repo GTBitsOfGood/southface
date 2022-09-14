@@ -10,6 +10,8 @@ import "focus-visible/dist/focus-visible.min.js";
 import "normalize.css";
 import "public/static/styles/App.css";
 
+import { ChakraProvider } from "@chakra-ui/react";
+
 const MyApp = ({ Component, pageProps }) => (
   <SWRConfig
     value={{
@@ -23,7 +25,9 @@ const MyApp = ({ Component, pageProps }) => (
     <div className="App">
       <Header />
       <div className="Content">
-        <Component {...pageProps} />
+        <ChakraProvider>
+          <Component {...pageProps} />
+        </ChakraProvider>
       </div>
     </div>
   </SWRConfig>
