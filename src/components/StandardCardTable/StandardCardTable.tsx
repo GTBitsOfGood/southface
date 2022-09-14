@@ -46,8 +46,7 @@ const StandardCardTable = () => {
           md: "3%",
           lg: "5%",
         }}
-        mt="10%"
-        ml="5%"
+        m="10% 5% 15%"
         justifyContent="center"
       >
         {!loading &&
