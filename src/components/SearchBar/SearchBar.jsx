@@ -1,5 +1,17 @@
-const SearchBar = ({}) => {
-    return <input type="text" name="" id="" placeholder="Search cards here"/>
-}
+import { Input } from "@chakra-ui/react";
+import { useRef } from "react";
 
-export default SearchBar
+const SearchBar = ({ setSearchString }) => {
+  const self = useRef();
+
+  return (
+    <Input
+      ref={self}
+      size="lg"
+      placeholder="Search specs"
+      onInput={() => setSearchString(self.current.value)}
+    />
+  );
+};
+
+export default SearchBar;
