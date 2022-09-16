@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Box,
   Button,
   Image,
   Flex,
@@ -18,7 +17,13 @@ const StandardCard = () => {
 
   return (
     <Flex flexDirection="column" boxShadow="base" width="xs" height="lg">
-      <Image height="37%" width="full" fit="cover" src={samplePictureUrl} />
+      <Image
+        height="37%"
+        width="full"
+        fit="cover"
+        src={samplePictureUrl}
+        alt="construction image"
+      />
       <Flex p={3} flexDirection="column" flex={1}>
         <Heading size="md">Title</Heading>
         <Text fontSize="sm" lineHeight="shorter" py={2}>
@@ -26,7 +31,7 @@ const StandardCard = () => {
         </Text>
         <HStack>
           {new Array(3).fill("Tag").map((tag, index) => {
-            return <Tag>{tag}</Tag>;
+            return <Tag key={index}>{tag}</Tag>;
           })}
         </HStack>
         <Button size="lg" mt={7}>
