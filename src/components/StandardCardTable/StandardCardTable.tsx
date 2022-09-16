@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Box, Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
-import { resolve } from "styled-jsx/css";
 
 const StandardCardTable = () => {
   const [loading, setLoading] = React.useState(false);
