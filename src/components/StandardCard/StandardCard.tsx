@@ -1,11 +1,39 @@
 import React from "react";
+import {
+  Box,
+  Button,
+  Image,
+  Flex,
+  Heading,
+  Text,
+  HStack,
+  Tag,
+} from "@chakra-ui/react";
 
 const StandardCard = () => {
+  const samplePictureUrl = "https://picsum.photos/200";
+
+  const sampleText =
+    "The cardboard/foam covers over the registers are good, but a solid material would be beƩer. Siding or plywood scraps will hold up to people standing on them or placing objects on them. Also, not pictured, cover bath fans prior to the installation of drywall and painting to prevent drywall dust and paint from contaminating the fans.";
+
   return (
-    <div>
-      <p>test</p>
-      <p>card</p>
-    </div>
+    <Flex flexDirection="column" boxShadow="base" width="xs" height="lg">
+      <Image height="37%" width="full" fit="cover" src={samplePictureUrl} />
+      <Flex p={3} flexDirection="column" flex={1}>
+        <Heading size="md">Title</Heading>
+        <Text fontSize="sm" lineHeight="shorter" py={2}>
+          {sampleText}
+        </Text>
+        <HStack>
+          {new Array(3).fill("Tag").map((tag, index) => {
+            return <Tag>{tag}</Tag>;
+          })}
+        </HStack>
+        <Button size="lg" mt={7}>
+          View Full Standard
+        </Button>
+      </Flex>
+    </Flex>
   );
 };
 
