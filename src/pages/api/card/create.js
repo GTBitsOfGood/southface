@@ -1,7 +1,7 @@
 import { createCard } from "server/mongodb/actions/Card";
 import { withSessionRoute } from "src/utils/lib/session";
 
-// @route   POST api/card/create
+// @route   PUT api/card/create
 // @desc    Create Card Request
 // @access  Public
 const handler = async (req, res) => {
