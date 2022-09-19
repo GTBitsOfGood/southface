@@ -1,10 +1,11 @@
-import mongoDB from "../index.js";
+import mongoDB from "../index";
 import Card from "../models/Card";
 
-export async function createCard({ imageSrc, title, body, tags }) {
+export async function createCard({ userId, imageSrc, title, body, tags }) {
     await mongoDB();
 
     return Card.create({
+        userId,
         imageSrc,
         title,
         body,
@@ -19,10 +20,10 @@ export async function createCard({ imageSrc, title, body, tags }) {
     });
 }
 
-export async function updateCardByID({ id, imageSrc, title, body, tags }) {
+export async function updateCardById({ id, userId, imageSrc, title, body, tags }) {
     await mongoDB();
 
-    Card.findByIdAndUpdate(id, { 
+    Card.findOneAndUpdate({_id: id, userId: userId}, { 
         imageSrc: imageSrc, 
         title: title, 
         body: body, 
@@ -37,10 +38,10 @@ export async function updateCardByID({ id, imageSrc, title, body, tags }) {
     });
 }
 
-export async function deleteCardByID({ id }) {
+export async function deleteCardById({ id, userId }) {
     await mongoDB();
 
-    Card.findByIdAndRemove(id, function (err, docs) {
+    Card.findOneAndRemove({_id: id, userId: userId}, function (err, docs) {
         if (err){
             console.log(err)
         }
@@ -50,28 +51,15 @@ export async function deleteCardByID({ id }) {
     });
 }
 
-export async function getCards() {
+export async function getCards(userId) {
     await mongoDB();
 
-    Card.find({}, function (err, docs) {
+    return Card.find({userId: userId}, function (err, docs) {
         if (err){
             console.log(err)
         }
         else {
             console.log("Returned All Cards: ", docs);
         }
-    });
-}
-
-export async function getCardByID({ id }) {
-    await mongoDB();
-
-    Card.find({ _id: id }, function (err, docs) {
-        if (err){
-            console.log(err)
-        }
-        else {
-            console.log("Found Card: ", docs);
-        } 
     });
 }

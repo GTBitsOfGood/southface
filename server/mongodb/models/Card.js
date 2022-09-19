@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const CardSchema = new Schema({
+  userId: {
+    type: String,
+    required: true,
+    index: true,
+  },
   imageSrc: {
     type: String,
   },
@@ -17,4 +22,4 @@ const CardSchema = new Schema({
   }]
 });
 
-export default mongoose.models?.Card ?? mongoose.model("cards", CardSchema);
+export default mongoose.models?.Card ?? mongoose.model("Card", CardSchema);
