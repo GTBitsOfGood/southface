@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { Heading } from "@chakra-ui/react";
 
 import StandardCard from "src/components/StandardCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import StandardCardTable from "src/components/StandardCardTable";
 
 const LibraryPage = () => {
   const [books, setBooks] = useState([]);
@@ -15,13 +17,8 @@ const LibraryPage = () => {
   return (
     <>
       <SearchBar setSearchString={setSearchString} />
-      <p>{example}</p>
-      <p>
-        {searchString === ""
-          ? "No searchString"
-          : "The search string is: " + searchString}
-      </p>
-      <StandardCard />
+      <Heading>Library</Heading>
+      <StandardCardTable />
     </>
   );
 };
