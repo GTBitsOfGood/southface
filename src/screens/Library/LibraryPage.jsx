@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Heading } from "@chakra-ui/react";
 
-import StandardCard from "src/components/StandardCard";
+import StandardCardTable from "src/components/StandardCardTable";
 
 const LibraryPage = () => {
   const [books, setBooks] = useState([]);
@@ -13,9 +13,8 @@ const LibraryPage = () => {
 
   return (
     <>
-      <p>{example}</p>
-      <Heading py={3}>Card Component</Heading>
-      <StandardCard />
+      <Heading>Library</Heading>
+      <StandardCardTable />
     </>
   );
 };
