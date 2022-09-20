@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { Box, Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
 
+import StandardCard from "../StandardCard/StandardCard";
+
 const StandardCardTable = () => {
   const [loading, setLoading] = React.useState(false);
 
@@ -17,7 +19,7 @@ const StandardCardTable = () => {
 
   const delay = () => {
     return new Promise((res) => {
-      setTimeout(res, 2000);
+      setTimeout(res, 1000);
     });
   };
 
@@ -54,31 +56,33 @@ const StandardCardTable = () => {
               <Text fontSize="xl">{item}</Text>
               <Box display="flex">
                 <Box
-                  w="199px"
-                  h="306px"
+                  w="320px"
+                  h="510px"
                   bg="white"
-                  borderColor="#D9D9D9"
-                  borderWidth="2px"
                   zIndex={2}
-                ></Box>
+                >
+                  <StandardCard />
+                </Box>
                 <Box
-                  w="199px"
-                  h="306px"
+                  w="320px"
+                  h="510px"
                   bg="white"
                   borderColor="#D9D9D9"
                   borderWidth="2px"
-                  ml="-62%"
+                  ml="-100%"
+                  mr="-100%"
                   mt="4%"
                   zIndex={1}
                 ></Box>
 
                 <Box
-                  w="199px"
-                  h="306px"
+                  w="320px"
+                  h="510px"
                   bg="white"
                   borderColor="#D9D9D9"
                   borderWidth="2px"
-                  ml="-62%"
+                  ml="-0%"
+                  mr="-50%"
                   mt="8%"
                   zIndex={0}
                 ></Box>

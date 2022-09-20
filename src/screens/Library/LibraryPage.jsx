@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Heading } from "@chakra-ui/react";
 
 import StandardCardTable from "src/components/StandardCardTable";
 
@@ -12,6 +13,7 @@ const LibraryPage = () => {
 
   return (
     <>
+      <Heading>Library</Heading>
       <StandardCardTable />
     </>
   );
