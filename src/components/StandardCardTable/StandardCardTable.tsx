@@ -55,12 +55,7 @@ const StandardCardTable = () => {
             <GridItem w="100%" mb="15%" key={index}>
               <Text fontSize="xl">{item}</Text>
               <Box display="flex">
-                <Box
-                  w="320px"
-                  h="510px"
-                  bg="white"
-                  zIndex={2}
-                >
+                <Box w="320px" h="510px" bg="white" zIndex={2}>
                   <StandardCard />
                 </Box>
                 <Box
