@@ -17,5 +17,11 @@ export default {
       logout: "/api/user/logout",
       getCurrent: "/api/user",
     },
+    card: {
+      create: "/api/card/create",
+      get: "/api/card/get",
+      update: "/api/card/update",
+      delete: "/api/card/delete",
+    },
   },
 };
