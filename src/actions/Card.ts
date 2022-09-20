@@ -1,8 +1,10 @@
 import fetch from "isomorphic-unfetch";
 import urls from "src/utils/urls";
 
+import { Card as CardType } from "src/utils/types";
+
 export const getCards = async () => {
-  fetch(urls.baseUrl + urls.api.card.get, {
+  return fetch(urls.baseUrl + urls.api.card.get, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -19,20 +21,15 @@ export const getCards = async () => {
     });
 };
 
-export const createCard = ({ imageSrc, title, body, tags }) => {
-  fetch(urls.baseUrl + urls.api.card.create, {
+export const createCard = async (card: CardType) => {
+  return fetch(urls.baseUrl + urls.api.card.create, {
     method: "PUT",
     mode: "same-origin",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      imageSrc,
-      title,
-      body,
-      tags,
-    }),
+    body: JSON.stringify(card),
   })
     .then((response) => response.json())
     .then((json) => {
@@ -46,8 +43,8 @@ export const createCard = ({ imageSrc, title, body, tags }) => {
     });
 };
 
-export const updateCardById = ({ id, imageSrc, title, body, tags }) => {
-  fetch(urls.baseUrl + urls.api.card.update, {
+export const updateCardById = async (id: string, card: Partial<CardType>) => {
+  return fetch(urls.baseUrl + urls.api.card.update, {
     method: "POST",
     mode: "same-origin",
     credentials: "include",
@@ -56,10 +53,7 @@ export const updateCardById = ({ id, imageSrc, title, body, tags }) => {
     },
     body: JSON.stringify({
       id,
-      imageSrc,
-      title,
-      body,
-      tags,
+      ...card,
     }),
   })
     .then((response) => response.json())
@@ -74,15 +68,15 @@ export const updateCardById = ({ id, imageSrc, title, body, tags }) => {
     });
 };
 
-export const deleteCardById = ({ id }) => {
-  fetch(urls.baseUrl + urls.api.card.delete, {
+export const deleteCardById = async (id: string) => {
+  return fetch(urls.baseUrl + urls.api.card.delete, {
     method: "DELETE",
     mode: "same-origin",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id }),
+    body: JSON.stringify(id),
   })
     .then((response) => response.json())
     .then((json) => {

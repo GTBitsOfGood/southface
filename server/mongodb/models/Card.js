@@ -3,11 +3,6 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const CardSchema = new Schema({
-  userId: {
-    type: String,
-    required: true,
-    index: true,
-  },
   imageSrc: {
     type: String,
   },

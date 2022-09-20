@@ -6,8 +6,8 @@ import { withSessionRoute } from "src/utils/lib/session";
 // @access  Public
 const handler = async (req, res) => {
   try {
-    const userId = req.session.user.id;
-    await deleteCardById({ userId, ...req.body });
+    // const userId = req.session.user.id;
+    await deleteCardById(req.body);
 
     return res.status(200).json({
       success: true,
