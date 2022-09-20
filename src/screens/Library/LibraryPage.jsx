@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Heading } from "@chakra-ui/react";
 
 import StandardCard from "src/components/StandardCard";
 
@@ -13,6 +14,7 @@ const LibraryPage = () => {
   return (
     <>
       <p>{example}</p>
+      <Heading py={3}>Card Component</Heading>
       <StandardCard />
     </>
   );
