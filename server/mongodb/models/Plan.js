@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 
 const PlanSchema = new Schema({
   cards: {
-    type: String
+    type: String,
   }, 
   comments: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 export default mongoose.models?.Plan ?? mongoose.model("Plan", PlanSchema);
