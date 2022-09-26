@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
+import { CardSchema } from "./Card";
 
 const { Schema } = mongoose;
 
 const PlanSchema = new Schema({
   cards: {
-    type: String,
+    type: [CardSchema],
   }, 
   comments: {
     type: String,

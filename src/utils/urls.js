@@ -23,5 +23,11 @@ export default {
       update: "/api/card/update",
       delete: "/api/card/delete",
     },
+    plan: {
+      create: "/api/plan/create",
+      get: "/api/plan/[id]",
+      update: "/api/plan/update",
+      delete: "/api/plan/delete",
+    },
   },
 };
