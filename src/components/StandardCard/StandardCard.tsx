@@ -3,27 +3,48 @@ import {
   Button,
   Image,
   Flex,
+  Box,
   Heading,
   Text,
   HStack,
   Tag,
 } from "@chakra-ui/react";
 
-const StandardCard = () => {
+const StandardCard = ({ cardId, isLoggedIn, isAdmin }: StandardCardProps) => {
   const samplePictureUrl = "https://picsum.photos/200";
 
   const sampleText =
     "The cardboard/foam covers over the registers are good, but a solid material would be beƩer. Siding or plywood scraps will hold up to people standing on them or placing objects on them. Also, not pictured, cover bath fans prior to the installation of drywall and painting to prevent drywall dust and paint from contaminating the fans.";
 
+  const handleDelete = () => {
+    alert("Delete card");
+  };
+
   return (
     <Flex flexDirection="column" boxShadow="base" width="xs" height="lg">
-      <Image
-        height="37%"
-        width="full"
-        fit="cover"
-        src={samplePictureUrl}
-        alt="construction image"
-      />
+      <Box height="37%" width="full" position="relative">
+        <Image
+          width="full"
+          height="full"
+          fit="cover"
+          src={samplePictureUrl}
+          alt="construction image"
+        />
+        {isLoggedIn && isAdmin ? (
+          <Button
+            onClick={handleDelete}
+            bottom="70%"
+            left="70%"
+            position="absolute"
+            w="80px"
+            h="40px"
+          >
+            Delete
+          </Button>
+        ) : (
+          <></>
+        )}
+      </Box>
       <Flex p={3} flexDirection="column" flex={1}>
         <Heading size="md">Title</Heading>
         <Text fontSize="sm" lineHeight="shorter" py={2}>
@@ -41,5 +62,11 @@ const StandardCard = () => {
     </Flex>
   );
 };
+
+interface StandardCardProps {
+  cardId: number;
+  isLoggedIn: boolean;
+  isAdmin: boolean;
+}
 
 export default StandardCard;

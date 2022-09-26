@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import { Box, Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
-
+import { Box, Button, Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
 import StandardCard from "../StandardCard/StandardCard";
 
-const StandardCardTable = () => {
+const StandardCardTable = ({ isLoggedIn, isAdmin }: StandardCardTableProps) => {
   const [loading, setLoading] = React.useState(false);
 
   const cards = [
@@ -23,6 +22,10 @@ const StandardCardTable = () => {
     });
   };
 
+  const handleCreate = () => {
+    alert("Create new card");
+  };
+
   useEffect(() => {
     setLoading(true);
     delay().then(() => setLoading(false));
@@ -35,7 +38,15 @@ const StandardCardTable = () => {
           <Spinner size="xl" />{" "}
         </Box>
       )}
+      {!loading && isLoggedIn && isAdmin ? (
+        <Button onClick={handleCreate} left="85%">
+          Create New Card
+        </Button>
+      ) : (
+        <></>
+      )}
       <Grid
+        mt="5%"
         templateColumns={{
           base: "repeat(1, 300px)",
           md: "repeat(2, 300px)",
@@ -56,7 +67,11 @@ const StandardCardTable = () => {
               <Text fontSize="xl">{item}</Text>
               <Box display="flex">
                 <Box w="320px" h="510px" bg="white" zIndex={2}>
-                  <StandardCard />
+                  <StandardCard
+                    cardId={index}
+                    isLoggedIn={isLoggedIn}
+                    isAdmin={isAdmin}
+                  />
                 </Box>
                 <Box
                   w="320px"
@@ -69,7 +84,6 @@ const StandardCardTable = () => {
                   mt="4%"
                   zIndex={1}
                 ></Box>
-
                 <Box
                   w="320px"
                   h="510px"
@@ -88,5 +102,10 @@ const StandardCardTable = () => {
     </Box>
   );
 };
+
+interface StandardCardTableProps {
+  isLoggedIn: boolean;
+  isAdmin: boolean;
+}
 
 export default StandardCardTable;
