@@ -24,7 +24,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/StandardCard/StandardCard.jsx"  ],
   "exclude": [
     "node_modules"
   ]

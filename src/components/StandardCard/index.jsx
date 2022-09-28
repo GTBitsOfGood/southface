@@ -1,3 +1,3 @@
-import StandardCard from "./StandardCard";
+import StandardCard from "./StandardCard.jsx";
 
 export default StandardCard;

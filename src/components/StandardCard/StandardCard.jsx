@@ -7,9 +7,14 @@ import {
   Text,
   HStack,
   Tag,
+  useDisclosure,
 } from "@chakra-ui/react";
+import CardModal from "../CardModal";
 
-const StandardCard = () => {
+const StandardCard = ({title, image, bodyText}) => {
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const samplePictureUrl = "https://picsum.photos/200";
 
   const sampleText =
@@ -34,9 +39,10 @@ const StandardCard = () => {
             return <Tag key={index}>{tag}</Tag>;
           })}
         </HStack>
-        <Button size="lg" mt={7}>
+        <Button size="lg" mt={7} onClick={onOpen} >
           View Full Standard
         </Button>
+        <CardModal isOpen={isOpen} onClose={onClose} headerValue={title}/>
       </Flex>
     </Flex>
   );
