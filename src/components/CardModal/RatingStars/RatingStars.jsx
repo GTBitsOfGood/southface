@@ -8,8 +8,6 @@ import { MdOutlineStarRate } from "react-icons/md";
  * @param {boolean} edit => whether the stars are readonly or editable.
  */
 const RatingStars = ({ value, edit }) => {
-  const changeRating = (newRating) => {};
-
   return (
     <ReactStars
       count={5}

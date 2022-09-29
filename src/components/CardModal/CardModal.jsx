@@ -85,12 +85,7 @@ const CardModal = ({
             <Flex justifyContent="space-between" maxWidth="sm" my={3}>
               <Text fontSize="sm" fontWeight="bold">
                 Commented on{" "}
-                <Text
-                  as="span"
-        
-                  color="#FFD600"
-                  fontWeight="bold"
-                >
+                <Text as="span" color="#FFD600" fontWeight="bold">
                   Sept. 20. 2022
                 </Text>
               </Text>
