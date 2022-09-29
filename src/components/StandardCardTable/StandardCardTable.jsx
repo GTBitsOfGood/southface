@@ -56,7 +56,7 @@ const StandardCardTable = () => {
               <Text fontSize="xl">{item}</Text>
               <Box display="flex">
                 <Box w="320px" h="510px" bg="white" zIndex={2}>
-                  <StandardCard />
+                  <StandardCard title={"Title"}/>
                 </Box>
                 <Box
                   w="320px"

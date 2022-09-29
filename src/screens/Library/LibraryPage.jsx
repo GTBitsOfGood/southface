@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Heading } from "@chakra-ui/react";
 
-import StandardCard from "src/components/StandardCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 

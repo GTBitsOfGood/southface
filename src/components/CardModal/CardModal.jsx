@@ -6,6 +6,9 @@ import {
   ModalCloseButton,
   ModalBody,
   Button,
+  Image,
+  Text,
+  Flex,
   ModalFooter,
   useTheme,
 } from "@chakra-ui/react";
@@ -13,16 +16,24 @@ import {
 const CardModal = ({
   isOpen,
   onClose,
+  headerValue,
+  description,
+  image,
   ...rest
 }) => {
   const theme = useTheme();
   return (
-      <Modal {...rest} isOpen={isOpen} onClose={onClose}>
+    <Modal {...rest} isOpen={isOpen} onClose={onClose} size="4xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Sample Header</ModalHeader>
+        <ModalHeader>{headerValue}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>Body</ModalBody>
+        <ModalBody>
+          <Flex flexDirection="column">
+            <Image src={image} maxHeight="md"/>
+            <Text>{description}</Text>
+          </Flex>
+        </ModalBody>
 
         <ModalFooter>
           <Button
