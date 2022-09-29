@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Heading } from "@chakra-ui/react";
 
-import SearchBar from "../../components/SearchBar/SearchBar";
+import SearchBar from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 
 const LibraryPage = () => {

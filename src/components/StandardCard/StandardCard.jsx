@@ -11,14 +11,14 @@ import {
 } from "@chakra-ui/react";
 import CardModal from "../CardModal";
 
-export const StandardCard = (props) => {
+const StandardCard = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const samplePictureUrl = "https://picsum.photos/200";
-  console.log(props);
+  const sampleTitle = "Title";
   const sampleText =
     "The cardboard/foam covers over the registers are good, but a solid material would be beƩer. Siding or plywood scraps will hold up to people standing on them or placing objects on them. Also, not pictured, cover bath fans prior to the installation of drywall and painting to prevent drywall dust and paint from contaminating the fans.";
-
+  const sampleTags = new Array(3).fill("Tag");
   return (
     <Flex flexDirection="column" boxShadow="base" width="xs" height="lg">
       <Image
@@ -29,12 +29,12 @@ export const StandardCard = (props) => {
         alt="construction image"
       />
       <Flex p={3} flexDirection="column" flex={1}>
-        <Heading size="md">{props.title}</Heading>
+        <Heading size="md">{sampleTitle}</Heading>
         <Text fontSize="sm" lineHeight="shorter" py={2}>
           {sampleText}
         </Text>
         <HStack>
-          {new Array(3).fill("Tag").map((tag, index) => {
+          {sampleTags.map((tag, index) => {
             return <Tag key={index}>{tag}</Tag>;
           })}
         </HStack>
@@ -44,7 +44,8 @@ export const StandardCard = (props) => {
         <CardModal
           isOpen={isOpen}
           onClose={onClose}
-          headerValue={props.title}
+          tags={sampleTags}
+          headerValue={sampleTitle}
           description={sampleText}
           image={samplePictureUrl}
         />

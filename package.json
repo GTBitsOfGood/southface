@@ -54,6 +54,8 @@
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
+    "react-rating-stars-component": "^2.2.0",
     "swr": "^1.1.2"
   },
   "devDependencies": {
