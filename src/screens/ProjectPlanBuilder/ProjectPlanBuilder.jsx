@@ -1,12 +1,13 @@
 import SearchBar from "../../components/SearchBar";
-import StandardCard from "../../components/StandardCard";
-import { RandomCard, SelectableCard } from "../../components/StandardCard";
+import { SelectableCard } from "../../components/StandardCard";
 import { useTextFilter } from "../../components/SearchBar";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@chakra-ui/react";
+import { getCards, createCard } from "../../actions/Card";
+import { useEffect } from "react";
+import { Heading } from "@chakra-ui/react";
 
-export default function ProjectPlanBuilder() {
+export default function ProjectPlanBuilder({ ssrCards }) {
   const cards = [
     "Random",
     "Card",
@@ -38,19 +39,31 @@ export default function ProjectPlanBuilder() {
     console.log(exportedCards);
     alert("Exported data has been logged in console");
   };
+  const CardMapper = (card, index) => {
+    const cardProps = typeof card === "string" ? { title: card } : card;
+    return (
+      <SelectableCard
+        key={index}
+        setSelect={selectionSetter(index)}
+        cardProps={cardProps}
+        selected={selections[index]}
+      />
+    );
+  };
+  const [textFilter, setFilter] = useTextFilter();
 
   return (
     <>
       <SearchBar setSearchString={setFilter} />
-      <Button>Export</Button>
-      {cards.filter(textFilter).map((card, index) => (
-        <SelectableCard
-          key={index}
-          setSelect={selectionSetter(index)}
-          cardProps={{ title: card }}
-          selected={selections[index]}
-        />
-      ))}
+      <Heading>Selected Cards</Heading>
+      {cards.map(CardMapper).filter((_, index) => selections[index])}
+      <Button onClick={ExportHandler}>Export Selected</Button>
+      <Heading>All Cards</Heading>
+      {
+        cards.filter(textFilter).map(CardMapper)
+        /* .filter((_, index) => !selections[index]) */ // this line messes with searchability; requires restructuring selection logic :(
+      }
     </>
   );
 }
+
