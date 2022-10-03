@@ -25,6 +25,13 @@ export default function ProjectPlanBuilder({ ssrCards }) {
     "Dummy",
     "Data",
   ];
+  // const cards = ssrCards
+  useEffect(() => {
+    getCards().then((res) => {
+      console.log("Proof of successful api call: ");
+      console.log(res);
+    });
+  }, []);
   const [selections, setSelections] = useState(Array(cards.length).fill(false));
   const selectionSetter = (index) => {
     return (selection) => {
@@ -33,10 +40,13 @@ export default function ProjectPlanBuilder({ ssrCards }) {
       setSelections(newSelections);
     };
   };
-  const [textFilter, setFilter, searchString] = useTextFilter();
   const ExportHandler = () => {
     const exportedCards = cards.filter((_, index) => selections[index]);
     console.log(exportedCards);
+    exportedCards.forEach(async (card) => {
+      await createCard(card);
+      console.log("Created " + card);
+    });
     alert("Exported data has been logged in console");
   };
   const CardMapper = (card, index) => {
@@ -67,3 +77,9 @@ export default function ProjectPlanBuilder({ ssrCards }) {
   );
 }
 
+export async function getServerSideProps() {
+  const ssrCards = await getCards();
+  console.log("proof of successful SS API call:");
+  console.log(ssrCards);
+  return { props: { ssrCards } };
+}

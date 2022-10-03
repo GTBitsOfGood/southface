@@ -8,7 +8,8 @@ export default function useTextFilter() {
     (card) => {
       if (typeof card === "string" || card instanceof String) {
         return card.toLowerCase().includes(searchString.toLowerCase());
-      } else {
+      } /* else if (isCard(card))*/ else {
+        // leaving out strict typechecking for now
         return (
           card.title.toLowerCase().includes(searchString.toLowerCase()) ||
           card.body.toLowerCase().includes(searchString.toLowerCase()) ||

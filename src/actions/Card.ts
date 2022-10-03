@@ -16,7 +16,6 @@ export const getCards = async () => {
       } else if (!json.success) {
         throw new Error(json.message);
       }
-
       return json.payload;
     });
 };
