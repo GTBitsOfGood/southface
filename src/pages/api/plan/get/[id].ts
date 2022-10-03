@@ -8,8 +8,8 @@ import { withSessionRoute } from "src/utils/lib/session";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query;
-    
-    const useId = id ? id as string : req.body
+
+    const useId = id ? (id as string) : req.body;
 
     const plans = await getPlanById(useId);
 

@@ -4,7 +4,7 @@ import urls from "src/utils/urls";
 import { Plan as PlanType } from "src/utils/types";
 
 export const getPlanById = async (id: string) => {
-  return fetch(urls.baseUrl + urls.api.plan.get + '/' + id, {
+  return fetch(urls.baseUrl + urls.api.plan.get + "/" + id, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
