@@ -25,7 +25,7 @@ export default {
     },
     plan: {
       create: "/api/plan/create",
-      get: "/api/plan/[id]",
+      get: "/api/plan/get",
       update: "/api/plan/update",
       delete: "/api/plan/delete",
     },

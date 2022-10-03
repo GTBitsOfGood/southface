@@ -2,18 +2,20 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getPlanById } from "server/mongodb/actions/Plan";
 import { withSessionRoute } from "src/utils/lib/session";
 
-// NEED TO MAKE DYNAMIC SO USER CAN TYPE IN URL
-
-// @route   GET api/plan/[id]
+// @route   GET api/plan/get/[id]
 // @desc    Gets a Plan by its ID
 // @access  Public
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const cards = await getPlanById(req.body);
+    const { id } = req.query;
+    
+    const useId = id ? id as string : req.body
+
+    const plans = await getPlanById(useId);
 
     return res.status(200).json({
       success: true,
-      payload: cards,
+      payload: plans,
     });
   } catch (error: any) {
     res.status(400).json({
