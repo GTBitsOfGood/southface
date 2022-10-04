@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const CardSchema = new Schema({
+export const CardSchema = new Schema({
   imageSrc: {
     type: String,
   },
