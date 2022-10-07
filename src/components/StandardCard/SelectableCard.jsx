@@ -11,8 +11,9 @@ import {
 } from "@chakra-ui/react";
 
 const SelectableCard = ({ selected, setSelect, cardProps }) => {
-  const samplePictureUrl = "https://picsum.photos/200";
-  const { title, body, tags, imageSrc } = cardProps;
+  const samplePictureUrl =
+    "https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-1932.jpg?w=2000";
+  const { title, body, tags, images } = cardProps;
 
   const sampleText =
     "The cardboard/foam covers over the registers are good, but a solid material would be beƩer. Siding or plywood scraps will hold up to people standing on them or placing objects on them. Also, not pictured, cover bath fans prior to the installation of drywall and painting to prevent drywall dust and paint from contaminating the fans.";
@@ -22,11 +23,11 @@ const SelectableCard = ({ selected, setSelect, cardProps }) => {
         height="37%"
         width="full"
         fit="cover"
-        src={imageSrc ? imageSrc : samplePictureUrl}
+        src={images ? images[0] : samplePictureUrl}
         alt="construction image"
       />
       <Flex p={3} flexDirection="column" flex={1}>
-        <Heading size="md">{title}</Heading>
+        <Heading size="md">{title ? title : "(no title)"}</Heading>
         <Text fontSize="sm" lineHeight="shorter" py={2}>
           {body ? body : sampleText}
         </Text>

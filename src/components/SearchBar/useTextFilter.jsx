@@ -6,16 +6,11 @@ export default function useTextFilter() {
   const [searchString, setSearchString] = useState("");
   return [
     (card) => {
-      if (typeof card === "string" || card instanceof String) {
-        return card.toLowerCase().includes(searchString.toLowerCase());
-      } /* else if (isCard(card))*/ else {
-        // leaving out strict typechecking for now
-        return (
-          card.title.toLowerCase().includes(searchString.toLowerCase()) ||
-          card.body.toLowerCase().includes(searchString.toLowerCase()) ||
-          card.tags.toLowerCase().join(" ").includes(searchString.toLowerCase())
-        );
-      }
+      return (
+        card.title?.toLowerCase().includes(searchString.toLowerCase()) ||
+        card.body?.toLowerCase().includes(searchString.toLowerCase()) ||
+        card.tags?.join(" ").toLowerCase().includes(searchString.toLowerCase())
+      );
     },
     setSearchString,
     searchString,
