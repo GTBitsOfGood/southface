@@ -37,7 +37,7 @@ export const getCardById = async (id: string) => {
 
       return json.payload;
     });
-}
+};
 
 export const createCard = async (card: CardType) => {
   return fetch(urls.baseUrl + urls.api.card.create, {
@@ -81,7 +81,6 @@ export const updateCardById = async (id: string, card: Partial<CardType>) => {
       } else if (!json.success) {
         throw new Error(json.message);
       }
-
 
       return json.payload;
     });

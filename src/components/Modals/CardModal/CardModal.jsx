@@ -28,13 +28,11 @@ import ModalImage from "../ModalImage";
 const CardModal = ({
   isOpen,
   onClose,
-  isEditingFirst,
   cardTitle,
   cardBody,
   cardId,
   cardImages,
   cardTags,
-  setCards,
   ...rest
 }) => {
   const {
@@ -236,12 +234,7 @@ const CardModal = ({
                 placeholder="Add Card Body"
               />
 
-              <Button
-                bgColor="#D9D9D9"
-                alignSelf="end"
-                size="lg"
-                rounded={16}
-              >
+              <Button bgColor="#D9D9D9" alignSelf="end" size="lg" rounded={16}>
                 Add to Plan
               </Button>
             </Flex>

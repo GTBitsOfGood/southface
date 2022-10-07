@@ -29,6 +29,7 @@ const ModalImage = ({
         objectFit="cover"
         boxSize={isEditing ? "3xs" : "2xs"}
         boxShadow="dark-lg"
+        alt={"card image"}
       />
       {isEditing && (
         <Flex justifyContent="center" gap={2} m={2}>

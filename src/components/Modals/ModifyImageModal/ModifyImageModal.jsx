@@ -5,17 +5,10 @@ import {
   Modal,
   ModalCloseButton,
   ModalBody,
-  Button,
   ModalFooter,
-  Image,
-  Text,
-  Flex,
-  Tag,
   Input,
   FormLabel,
-  HStack,
   IconButton,
-  Heading,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 

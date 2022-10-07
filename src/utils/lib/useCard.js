@@ -1,3 +1,3 @@
 /**
- * Custom hook that holds all state information about cards 
+ * Custom hook that holds all state information about cards
  */

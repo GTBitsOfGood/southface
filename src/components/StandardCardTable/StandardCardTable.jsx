@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Box,
   Grid,
   GridItem,
-  Spinner,
-  Text,
   IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
