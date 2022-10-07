@@ -15,8 +15,6 @@ const StandardCardTable = ({ cards }) => {
   const [cardComponents, setCardComponents] = React.useState(cards);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log(cardComponents);
-
   return (
     <Box>
       <Grid

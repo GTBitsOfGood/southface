@@ -60,7 +60,6 @@ const useEditCardModal = (
     };
 
     updateCardById(cardId, updatedCardInput).then((updatedCard) => {
-      console.log(updatedCard);
       setIsEditing(!isEditing);
       setBody(updatedCard.body);
       setTitle(updatedCard.title);
@@ -73,7 +72,6 @@ const useEditCardModal = (
 
   const cancelEdit = async () => {
     const card = await getCardById(cardId);
-    console.log(card);
     setIsEditing(!isEditing);
     setAddingTag(false);
     setBody(card.body);
@@ -88,7 +86,6 @@ const useEditCardModal = (
    * This method re-fetches the cards inside getServerSideProps.
    */
   const refreshData = () => {
-    console.log("is this working");
     // router.replace(router.asPath); This is not working (best option since page does not refresh)
     router.reload();
   };
