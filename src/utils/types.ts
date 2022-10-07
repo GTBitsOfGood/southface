@@ -1,7 +1,7 @@
 export interface Card {
   imageSrc: string;
   title: string;
-  body: string;
+  comments: string[];
   tags: string[];
 }
 

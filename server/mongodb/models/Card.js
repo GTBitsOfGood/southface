@@ -9,12 +9,12 @@ export const CardSchema = new Schema({
   title: {
     type: String,
   },
-  body: {
-    type: String,
+  comments: {
+    type: [String],
   },
-  tags: [{
-    type: String,
-  }]
+  tags: {
+    type: [String],
+  }
 });
 
 export default mongoose.models?.Card ?? mongoose.model("Card", CardSchema);
