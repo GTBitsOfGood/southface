@@ -3,11 +3,11 @@ import { Heading } from "@chakra-ui/react";
 
 import SearchBar from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
+import { getCards } from "../../actions/Card";
 
-const LibraryPage = () => {
+const LibraryPage = ({cards}) => {
   const [books, setBooks] = useState([]);
   const [searchString, setSearchString] = useState("");
-
   const [example, setExample] = useState("");
   useEffect(() => {
     setExample("Example here");
@@ -17,9 +17,11 @@ const LibraryPage = () => {
     <>
       <SearchBar setSearchString={setSearchString} />
       <Heading>Library</Heading>
-      <StandardCardTable />
+      <StandardCardTable cards={cards}/>
     </>
   );
 };
+
+
 
 export default LibraryPage;

@@ -24,7 +24,7 @@ const IndexPage = () => {
       </h3>
       <h4>{payload}</h4>
       <p>You can tell because the text above flashes on page refresh</p>
-      <StandardCard />
+      {/* <StandardCard /> */}
       <SearchBar />
       {/* SearchBar only for testing purposes */}
     </>

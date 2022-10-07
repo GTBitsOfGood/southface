@@ -18,10 +18,10 @@ export default {
       getCurrent: "/api/user",
     },
     card: {
-      create: "/api/card/create",
-      get: "/api/card/get",
-      update: "/api/card/update",
-      delete: "/api/card/delete",
+      create: "/api/card/create/",
+      get: "/api/card/get/",
+      update: "/api/card/update/",
+      delete: "/api/card/delete/",
     },
   },
 };

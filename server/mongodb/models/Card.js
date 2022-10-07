@@ -3,9 +3,10 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const CardSchema = new Schema({
-  imageSrc: {
+  images: [{
     type: String,
-  },
+    default: [],
+  }],
   title: {
     type: String,
   },
@@ -14,6 +15,7 @@ const CardSchema = new Schema({
   },
   tags: [{
     type: String,
+    default: [],
   }]
 });
 
