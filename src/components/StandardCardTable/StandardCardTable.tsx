@@ -1,9 +1,20 @@
 import React, { useEffect } from "react";
-import { Box, Button, Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import {
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  HStack,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import StandardCard from "../StandardCard/StandardCard";
+import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
 
 const StandardCardTable = ({ isLoggedIn, isAdmin }: StandardCardTableProps) => {
   const [loading, setLoading] = React.useState(false);
+  const [isClientSide, setClientSide] = React.useState(false);
 
   const cards = [
     "Category 1",
@@ -16,6 +27,11 @@ const StandardCardTable = ({ isLoggedIn, isAdmin }: StandardCardTableProps) => {
     "Category 8",
   ];
 
+  const sampleText =
+    "The cardboard/foam covers over the registers are good, but a solid material would be better. Siding or plywood scraps will hold up to people standing on them or placing objects on them. Also, not pictured, cover bath fans prior to the installation of drywall and painting to prevent drywall dust and paint from contaminating the fans.";
+
+  const sampleSelectedPlanCards = [sampleText, sampleText, sampleText];
+
   const delay = () => {
     return new Promise((res) => {
       setTimeout(res, 1000);
@@ -27,6 +43,7 @@ const StandardCardTable = ({ isLoggedIn, isAdmin }: StandardCardTableProps) => {
   };
 
   useEffect(() => {
+    setClientSide(true);
     setLoading(true);
     delay().then(() => setLoading(false));
   }, []);
@@ -64,7 +81,29 @@ const StandardCardTable = ({ isLoggedIn, isAdmin }: StandardCardTableProps) => {
         {!loading &&
           cards.map((item, index) => (
             <GridItem w="100%" mb="15%" key={index}>
-              <Text fontSize="xl">{item}</Text>
+              <HStack>
+                <Text fontSize="xl">{item}</Text>
+                {isClientSide && (
+                  <PDFDownloadLink
+                    document={
+                      <PlanDocumentPDF
+                        selectedPlanCards={sampleSelectedPlanCards}
+                      />
+                    }
+                    fileName="plan.pdf"
+                    style={{
+                      padding: "10px",
+                      backgroundColor: "#f2f2f2",
+                      borderRadius: "5px",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? "Loading document..." : "Download PDF"
+                    }
+                  </PDFDownloadLink>
+                )}
+              </HStack>
               <Box display="flex">
                 <Box w="320px" h="510px" bg="white" zIndex={2}>
                   <StandardCard
