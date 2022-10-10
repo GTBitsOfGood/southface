@@ -36,7 +36,7 @@ export async function getCards() {
   await mongoDB();
 
   const cards = await Card.find({});
-  console.log(cards);
+  // console.log(cards);
 
   return cards;
 }

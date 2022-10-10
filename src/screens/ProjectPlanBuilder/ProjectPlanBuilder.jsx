@@ -1,32 +1,13 @@
 import SearchBar from "../../components/SearchBar";
 import { SelectableCard } from "../../components/StandardCard";
 import { useTextFilter } from "../../components/SearchBar";
-import { useRef, useState } from "react";
-import { Button } from "@chakra-ui/react";
-import { getCards, createCard } from "../../actions/Card";
+import { useState } from "react";
+import { Button, HStack } from "@chakra-ui/react";
+import { getCards } from "../../actions/Card";
 import { useEffect } from "react";
-import { Heading } from "@chakra-ui/react";
+import { Heading, Flex, Box } from "@chakra-ui/react";
 
-export default function ProjectPlanBuilder({ ssrCards }) {
-  // const cards = [
-  //   "Random",
-  //   "Card",
-  //   "Generator",
-  //   "Would",
-  //   "Be",
-  //   "Pretty",
-  //   "Nice",
-  //   "Hell",
-  //   "I'd",
-  //   "Settle",
-  //   "For",
-  //   "Some",
-  //   "Nice",
-  //   "Dummy",
-  //   "Data",
-  // ];
-  // const cards = ssrCards;
-
+export default function ProjectPlanBuilder() {
   // Wraps card object with additional properties for setting selection
   // and vice-versa
   const WrapToSelection = (card, index) => {
@@ -43,9 +24,8 @@ export default function ProjectPlanBuilder({ ssrCards }) {
   useEffect(() => {
     getCards().then((res) => {
       setSelections(res.map(WrapToSelection));
-    }, []);
-    // setSelections(ssrCards.map(WrapToSelection));
-  });
+    }); // for the love of God don't put dependency array here
+  }, []);
 
   // Every wrapped card object has an index which can be used to easily change
   // state in this component from a <SelectableCard /> child component
@@ -83,21 +63,38 @@ export default function ProjectPlanBuilder({ ssrCards }) {
 
   return (
     <>
+      <Heading textAlign="center">Project Plan Builder</Heading>
       <SearchBar setSearchString={setFilter} />
-      <Heading>Selected Cards</Heading>
-      <Button onClick={ExportHandler}>Export Selected</Button>
+      <Flex
+        p={5}
+        borderRadius={15}
+        flexDirection="column"
+        flexWrap="none"
+        bgColor="lightgray"
+        alignItems="flex-start"
+        minH="lg"
+      >
+        <HStack>
+          <Heading size="lg">Current Project Plan</Heading>
+          <Button onClick={ExportHandler}>Export Selected</Button>
+        </HStack>
+        {selections.length == 0 ? (
+          <Flex flexDirection="row">
+            {selections.filter((card) => card.selection).map(SelectionMapper)}
+          </Flex>
+        ) : (
+          <Box alignSelf="center" width="50%" fontSize="3xl">
+            You haven’t started building a project plan yet. Browse the card
+            library to begin adding to your project plan.
+          </Box>
+        )}
+      </Flex>
       <Heading>All Cards</Heading>
-      {selections
-        .map(UnwrapToCard)
-        .filter(textFilter)
-        .map(WrapToSelection)
-        .map(SelectionMapper)}
+      <Flex flexDirection="row">
+        {selections
+          .filter((card) => textFilter(card.cardProps))
+          .map(SelectionMapper)}
+      </Flex>
     </>
   );
-}
-export async function getServerSideProps() {
-  const ssrCards = await getCards();
-  console.log("proof of successful SS API call:");
-  console.log(ssrCards);
-  return { props: { ssrCards } };
 }
