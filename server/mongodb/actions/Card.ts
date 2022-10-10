@@ -5,6 +5,7 @@ import { Card as CardType } from "src/utils/types";
 
 export async function createCard(card: CardType) {
   await mongoDB();
+  
   return Card.create(card);
 }
 
@@ -13,6 +14,7 @@ export async function updateCardById(
   updatedCard: Partial<CardType>
 ) {
   await mongoDB();
+  
   return Card.findOneAndUpdate({ _id: id }, updatedCard, {
     returnDocument: "after",
   });
@@ -20,11 +22,13 @@ export async function updateCardById(
 
 export async function deleteCardById(id: string) {
   await mongoDB();
+  
   return Card.findOneAndRemove({ _id: id });
 }
 
 export async function getCards() {
   await mongoDB();
+  
   return Card.find({});
 }
 

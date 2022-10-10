@@ -1,22 +1,26 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Heading } from "@chakra-ui/react";
-
 import SearchBar from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
+import useUser from "src/utils/lib/useUser";
 
 const LibraryPage = ({ cards }) => {
-  const [books, setBooks] = useState([]);
+  const { user: currentUser } = useUser({
+    redirectIfFound: false,
+    redirectTo: "",
+  });
+
   const [searchString, setSearchString] = useState("");
-  const [example, setExample] = useState("");
-  useEffect(() => {
-    setExample("Example here");
-  }, []);
 
   return (
     <>
       <SearchBar setSearchString={setSearchString} />
       <Heading>Library</Heading>
-      <StandardCardTable cards={cards} />
+      <StandardCardTable
+        cards={cards}
+        isLoggedIn={currentUser?.isLoggedIn}
+        isAdmin={currentUser?.isAdmin}
+      />
     </>
   );
 };
