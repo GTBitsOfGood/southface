@@ -78,7 +78,7 @@ export default function ProjectPlanBuilder() {
           <Heading size="lg">Current Project Plan</Heading>
           <Button onClick={ExportHandler}>Export Selected</Button>
         </HStack>
-        {selections.length == 0 ? (
+        {selections.filter((card) => card.selection).length > 0 ? (
           <Flex flexDirection="row">
             {selections.filter((card) => card.selection).map(SelectionMapper)}
           </Flex>
