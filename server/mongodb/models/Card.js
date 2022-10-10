@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-export const CardSchema = new Schema({
-  imageSrc: {
+const CardSchema = new Schema({
+  images: [{
     type: String,
-  },
+    default: [],
+  }],
   title: {
     type: String,
   },
@@ -14,6 +15,7 @@ export const CardSchema = new Schema({
   },
   tags: [{
     type: String,
+    default: [],
   }]
 });
 
