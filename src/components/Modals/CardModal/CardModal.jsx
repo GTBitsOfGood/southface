@@ -109,7 +109,13 @@ const CardModal = ({
   };
 
   return (
-    <Modal {...rest} isOpen={isOpen} onClose={onClose} isCentered size="4xl">
+    <Modal
+      {...rest}
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      size={{ base: "sm", md: "2xl", lg: "4xl" }}
+    >
       <ModalOverlay />
       <ModalContent rounded={14}>
         <ModalCloseButton
@@ -136,9 +142,11 @@ const CardModal = ({
             ) : (
               <Heading mb={2}>{title}</Heading>
             )}
-            <RatingStars edit={false} value={4} />
+            <Box display={{ base: isEditing ? "none" : "block", md: "block" }}>
+              <RatingStars edit={false} value={4} />
+            </Box>
           </Flex>
-          <HStack>
+          <HStack flexWrap="wrap" gap={2}>
             {tags.map((tag, index) => {
               return (
                 <Tag key={index} bgColor="#D9D9D9">
@@ -222,9 +230,13 @@ const CardModal = ({
                 </>
               )}
             </Flex>
-            <Flex mt={6} justifyContent="space-between">
+            <Flex
+              mt={6}
+              flexDir={{ base: "column", md: "row" }}
+              justifyContent="space-between"
+            >
               <Input
-                flexBasis="sm"
+                flexBasis={{ md: "sm" }}
                 fontSize="sm"
                 variant={isEditing ? "outline" : "unstyled"}
                 isReadOnly={!isEditing}
@@ -234,7 +246,13 @@ const CardModal = ({
                 placeholder="Add Card Body"
               />
 
-              <Button bgColor="#D9D9D9" alignSelf="end" size="lg" rounded={16}>
+              <Button
+                bgColor="#D9D9D9"
+                alignSelf={{ md: "end" }}
+                size={{ base: "md", md: "lg" }}
+                my={{ base: 2, md: 0 }}
+                rounded={16}
+              >
                 Add to Plan
               </Button>
             </Flex>

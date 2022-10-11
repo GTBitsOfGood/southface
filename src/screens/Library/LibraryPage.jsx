@@ -15,7 +15,7 @@ const LibraryPage = ({ cards }) => {
   return (
     <>
       <SearchBar setSearchString={setSearchString} />
-      <Heading>Library</Heading>
+      <Heading fontSize={{base:"4xl", lg: "5xl"}}>Library</Heading>
       <StandardCardTable
         cards={cards}
         isLoggedIn={currentUser?.isLoggedIn}

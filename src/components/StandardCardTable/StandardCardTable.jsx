@@ -20,7 +20,7 @@ const StandardCardTable = ({ cards }) => {
       <Grid
         templateColumns={{
           base: "repeat(1, 300px)",
-          md: "repeat(2, 300px)",
+          sm: "repeat(1, 300px)",
           lg: "repeat(3, 300px)",
           xl: "repeat(4, 300px)",
         }}
@@ -31,10 +31,11 @@ const StandardCardTable = ({ cards }) => {
         }}
         m="10% 5% 15%"
         justifyContent="center"
+        py={{ base: "" }}
       >
         {cardComponents.map((card, index) => (
           <GridItem w="100%" mb="15%" key={index}>
-            <Box display="flex">
+            <Box display="flex" >
               <Box w="320px" h="510px" bg="white" zIndex={2}>
                 <StandardCard card={card} />
               </Box>
