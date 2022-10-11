@@ -28,7 +28,11 @@ const SearchBar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   return (
     <>
-      <ChooseTemplateModal isOpen={isOpen} onClose={onClose} />
+      <ChooseTemplateModal
+        isOpen={isOpen}
+        onClose={onClose}
+        setFilterTags={setFilterTags}
+      />
       <Flex flexDirection="row">
         <Box flex="1">
           <Input
