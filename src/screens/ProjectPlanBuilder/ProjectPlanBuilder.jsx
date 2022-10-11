@@ -1,11 +1,11 @@
-import SearchBar, { useTagsFilter } from "../../components/SearchBar";
+import SearchBar, {
+  useTagsFilter,
+  useTextFilter,
+} from "../../components/SearchBar";
 import { SelectableCard } from "../../components/StandardCard";
-import { useTextFilter, useTagFilter } from "../../components/SearchBar";
-import { useState } from "react";
-import { Button, HStack } from "@chakra-ui/react";
 import { getCards } from "../../actions/Card";
-import { useEffect } from "react";
-import { Heading, Flex, Box } from "@chakra-ui/react";
+import { Button, HStack, Heading, Flex, Box } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
 export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
