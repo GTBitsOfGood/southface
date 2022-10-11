@@ -1,6 +1,6 @@
-import SearchBar from "../../components/SearchBar";
+import SearchBar, { useTagsFilter } from "../../components/SearchBar";
 import { SelectableCard } from "../../components/StandardCard";
-import { useTextFilter } from "../../components/SearchBar";
+import { useTextFilter, useTagFilter } from "../../components/SearchBar";
 import { useState } from "react";
 import { Button, HStack } from "@chakra-ui/react";
 import { getCards } from "../../actions/Card";
@@ -59,12 +59,18 @@ export default function ProjectPlanBuilder() {
       />
     );
   };
+
   const [textFilter, setFilter] = useTextFilter();
+  const [tagsFilter, setTags, filterTags] = useTagsFilter();
 
   return (
     <>
       <Heading textAlign="center">Project Plan Builder</Heading>
-      <SearchBar setSearchString={setFilter} />
+      <SearchBar
+        setSearchString={setFilter}
+        setFilterTags={setTags}
+        filterTags={filterTags}
+      />
       <Flex
         p={5}
         borderRadius={15}
@@ -93,6 +99,7 @@ export default function ProjectPlanBuilder() {
       <Flex flexDirection="row">
         {selections
           .filter((card) => textFilter(card.cardProps))
+          .filter((card) => tagsFilter(card.cardProps))
           .map(SelectionMapper)}
       </Flex>
     </>
