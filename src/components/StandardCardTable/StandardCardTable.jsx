@@ -35,7 +35,7 @@ const StandardCardTable = ({ cards }) => {
       >
         {cardComponents.map((card, index) => (
           <GridItem w="100%" mb="15%" key={index}>
-            <Box display="flex" >
+            <Box display="flex">
               <Box w="320px" h="510px" bg="white" zIndex={2}>
                 <StandardCard card={card} />
               </Box>
