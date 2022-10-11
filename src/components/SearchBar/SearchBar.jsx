@@ -28,11 +28,13 @@ const SearchBar = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   return (
     <>
-      <ChooseTemplateModal
-        isOpen={isOpen}
-        onClose={onClose}
-        setFilterTags={setFilterTags}
-      />
+      {allowTemplates && (
+        <ChooseTemplateModal
+          isOpen={isOpen}
+          onClose={onClose}
+          setFilterTags={setFilterTags}
+        />
+      )}
       <Flex flexDirection="row">
         <Box flex="1">
           <Input
@@ -53,7 +55,7 @@ const SearchBar = (props) => {
           <Input ref={tagInput} placeholder="Add Tag Filter" />
           <Button onClick={AddFilterTag}>Add filter</Button>
           <Button onClick={ClearFilterTags}>Clear filters</Button>
-          <Button onClick={onOpen}>View Categories</Button>
+          {allowTemplates && <Button onClick={onOpen}>View Categories</Button>}
         </Box>
       </Flex>
     </>
