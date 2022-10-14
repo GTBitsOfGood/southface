@@ -1,13 +1,21 @@
-import SearchBar from "../../components/SearchBar";
+import SearchBar, {
+  useTagsFilter,
+  useTextFilter,
+} from "../../components/SearchBar";
 import { SelectableCard } from "../../components/StandardCard";
-import { useTextFilter } from "../../components/SearchBar";
-import { useState } from "react";
-import { Button, HStack } from "@chakra-ui/react";
 import { getCards } from "../../actions/Card";
-import { useEffect } from "react";
-import { Heading, Flex, Box } from "@chakra-ui/react";
+import { Button, HStack, Heading, Flex, Box } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
 export default function ProjectPlanBuilder() {
+  // Primary state in this page is the selections array
+  const [selections, setSelections] = useState([]);
+  useEffect(() => {
+    getCards().then((res) => {
+      setSelections(res.map(WrapToSelection));
+    }); // for the love of God don't put dependency array here
+  }, []);
+
   // Wraps card object with additional properties for setting selection
   // and vice-versa
   const WrapToSelection = (card, index) => {
@@ -19,15 +27,7 @@ export default function ProjectPlanBuilder() {
   };
   const UnwrapToCard = (card) => card.cardProps;
 
-  // Primary state in this page is the selections array
-  const [selections, setSelections] = useState([]);
-  useEffect(() => {
-    getCards().then((res) => {
-      setSelections(res.map(WrapToSelection));
-    }); // for the love of God don't put dependency array here
-  }, []);
-
-  // Every wrapped card object has an index which can be used to easily change
+  // Every wrapped card object has an index which can be used to "easily" change
   // state in this component from a <SelectableCard /> child component
   const SelectionSetter = (index) => {
     return (selection) => {
@@ -49,6 +49,8 @@ export default function ProjectPlanBuilder() {
     // });
     alert("Exported data has been logged in console");
   };
+
+  // Maps selection objects into renderable cards
   const SelectionMapper = (card) => {
     return (
       <SelectableCard
@@ -59,12 +61,19 @@ export default function ProjectPlanBuilder() {
       />
     );
   };
+
+  // Filtering logic
   const [textFilter, setFilter] = useTextFilter();
+  const [tagsFilter, setTags, filterTags] = useTagsFilter();
 
   return (
     <>
       <Heading textAlign="center">Project Plan Builder</Heading>
-      <SearchBar setSearchString={setFilter} />
+      <SearchBar
+        setSearchString={setFilter}
+        setFilterTags={setTags}
+        filterTags={filterTags}
+      />
       <Flex
         p={5}
         borderRadius={15}
@@ -93,6 +102,7 @@ export default function ProjectPlanBuilder() {
       <Flex flexDirection="row">
         {selections
           .filter((card) => textFilter(card.cardProps))
+          .filter((card) => tagsFilter(card.cardProps))
           .map(SelectionMapper)}
       </Flex>
     </>
