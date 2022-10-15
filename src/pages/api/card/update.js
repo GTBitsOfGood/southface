@@ -2,7 +2,7 @@ import { updateCardById } from "server/mongodb/actions/Card";
 import { withSessionRoute } from "src/utils/lib/session";
 import { getUserFromId } from "server/mongodb/actions/User";
 
-// @route   POST api/card/update
+// @route   PUT api/card/update
 // @desc    Update Card Request
 // @access  Public
 const handler = async (req, res) => {
@@ -10,10 +10,11 @@ const handler = async (req, res) => {
     const userId = req.session.user.id;
     const user = await getUserFromId(userId);
     if (user.isAdmin) {
-      await updateCardById(req.body);
+      const updatedCard = await updateCardById(req.body.id, req.body.card);
 
       return res.status(200).json({
         success: true,
+        payload: updatedCard,
       });
     } else {
       throw new Error("You do not have permission to do this action!");

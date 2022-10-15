@@ -3,7 +3,6 @@ import { useRef } from "react";
 
 const SearchBar = ({ setSearchString }) => {
   const self = useRef();
-
   return (
     <Input
       ref={self}
