@@ -4,7 +4,12 @@ export const createTemplateCard = (): CardType => {
   const card: CardType = {
     imageSrc: "www.defaulturl.com",
     title: "Default Title",
-    comments: ["Lorem ipsum dolor"],
+    comments: [
+      {
+        body: "Lorem ipsum dolor",
+        date: new Date(),
+      },
+    ],
     tags: ["tag1", "tag2", "tag3"],
   };
   return card;

@@ -23,6 +23,11 @@ export default {
       update: "/api/card/update",
       delete: "/api/card/delete",
     },
+    comment: {
+      create: "/api/comment/create",
+      update: "/api/comment/update",
+      delete: "/api/comment/delete",
+    },
     plan: {
       create: "/api/plan/create",
       get: "/api/plan/get",

@@ -37,3 +37,11 @@ export async function getCards() {
 
     return cards;
 }
+
+export async function getCardById(id: string) {
+    await mongoDB();
+
+    const card = await Card.findById(id);
+
+    return card;
+}
