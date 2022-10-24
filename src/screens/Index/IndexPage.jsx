@@ -1,8 +1,6 @@
 import React from "react";
 import { helloWorld } from "../../actions/General";
 import classes from "./IndexPage.module.css";
-
-import StandardCard from "src/components/StandardCard";
 import SearchBar from "src/components/SearchBar";
 
 const IndexPage = () => {
@@ -24,7 +22,6 @@ const IndexPage = () => {
       </h3>
       <h4>{payload}</h4>
       <p>You can tell because the text above flashes on page refresh</p>
-      <StandardCard />
       <SearchBar />
       {/* SearchBar only for testing purposes */}
     </>
