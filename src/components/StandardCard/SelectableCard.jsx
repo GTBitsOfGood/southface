@@ -18,7 +18,7 @@ const SelectableCard = ({ selected, setSelect, cardProps }) => {
   const sampleText =
     "The cardboard/foam covers over the registers are good, but a solid material would be beƩer. Siding or plywood scraps will hold up to people standing on them or placing objects on them. Also, not pictured, cover bath fans prior to the installation of drywall and painting to prevent drywall dust and paint from contaminating the fans.";
   return (
-    <Flex flexDirection="column" boxShadow="base" width="xs" height="lg">
+    <Flex flexDirection="column" boxShadow="base" width="xs" height="xl">
       <Image
         height="37%"
         width="full"
@@ -26,7 +26,7 @@ const SelectableCard = ({ selected, setSelect, cardProps }) => {
         src={images ? images[0] : samplePictureUrl}
         alt="construction image"
       />
-      <Flex p={3} flexDirection="column" flex={1}>
+      <Flex p={3} bg="white" flexDirection="column" flex={1}>
         <Heading size="md">{title ? title : "(no title)"}</Heading>
         <Text fontSize="sm" lineHeight="shorter" py={2}>
           {body ? body : sampleText}

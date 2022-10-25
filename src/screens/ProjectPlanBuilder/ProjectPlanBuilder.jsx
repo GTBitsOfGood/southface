@@ -4,7 +4,15 @@ import SearchBar, {
 } from "../../components/SearchBar";
 import { SelectableCard } from "../../components/StandardCard";
 import { getCards } from "../../actions/Card";
-import { Button, HStack, Heading, Flex, Box } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Heading,
+  Flex,
+  Box,
+  Grid,
+  Spacer,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
 export default function ProjectPlanBuilder() {
@@ -68,12 +76,15 @@ export default function ProjectPlanBuilder() {
 
   return (
     <>
-      <Heading textAlign="center">Project Plan Builder</Heading>
-      <SearchBar
-        setSearchString={setFilter}
-        setFilterTags={setTags}
-        filterTags={filterTags}
-      />
+      <Flex flexFlow="row nowrap" mb="10">
+        <Button opacity="0" cursor="default">
+          Bruh
+        </Button>
+        <Heading flex="1" gridArea="stack" textAlign="center">
+          Project Plan Builder
+        </Heading>
+        <Button>Bruh</Button>
+      </Flex>
       <Flex
         p={5}
         borderRadius={15}
@@ -82,29 +93,53 @@ export default function ProjectPlanBuilder() {
         bgColor="lightgray"
         alignItems="flex-start"
         minH="lg"
+        overflowX="scroll"
+        mb="10"
       >
-        <HStack>
+        <Flex
+          flex="1"
+          flexFlow="row nowrap"
+          justifyContent="space-between"
+          width="100%"
+          alignItems="flex-start"
+        >
           <Heading size="lg">Current Project Plan</Heading>
+          <HStack>
+            <Button>Download</Button>
+            <Button>Print to PDF</Button>
+            <Button bg="gold" color="white">
+              End Project Plan
+            </Button>
+          </HStack>
           <Button onClick={ExportHandler}>Export Selected</Button>
-        </HStack>
+        </Flex>
         {selections.filter((card) => card.selection).length > 0 ? (
-          <Flex flexDirection="row">
+          <HStack mt="10" gap="41" flexDirection="row">
             {selections.filter((card) => card.selection).map(SelectionMapper)}
-          </Flex>
+          </HStack>
         ) : (
-          <Box alignSelf="center" width="50%" fontSize="3xl">
+          <Box alignSelf="center" flex="1" width="50%" fontSize="3xl">
             You haven’t started building a project plan yet. Browse the card
             library to begin adding to your project plan.
           </Box>
         )}
       </Flex>
       <Heading>All Cards</Heading>
-      <Flex flexDirection="row">
+      <SearchBar
+        setSearchString={setFilter}
+        setFilterTags={setTags}
+        filterTags={filterTags}
+      />
+      <Grid
+        templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
+        gap="41"
+        m="10"
+      >
         {selections
           .filter((card) => textFilter(card.cardProps))
           .filter((card) => tagsFilter(card.cardProps))
           .map(SelectionMapper)}
-      </Flex>
+      </Grid>
     </>
   );
 }
