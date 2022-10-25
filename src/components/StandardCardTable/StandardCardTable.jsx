@@ -7,16 +7,39 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 import AddCardModal from "../Modals/AddCardModal";
 import StandardCard from "../StandardCard/StandardCard";
+import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
 
 const StandardCardTable = ({ cards }) => {
   const [cardComponents, setCardComponents] = React.useState(cards);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isClientSide, setClientSide] = React.useState(false);
+
+  React.useEffect(() => {
+    setClientSide(true);
+  }, []);
 
   return (
     <Box>
+      {isClientSide && (
+        <PDFDownloadLink
+          document={<PlanDocumentPDF selectedPlanCards={cards} />}
+          fileName="plan.pdf"
+          style={{
+            padding: "10px",
+            backgroundColor: "#f2f2f2",
+            borderRadius: "5px",
+            marginLeft: "85%",
+          }}
+        >
+          {({ blob, url, loading, error }) =>
+            loading ? "Loading document..." : "Download PDF"
+          }
+        </PDFDownloadLink>
+      )}
       <Grid
         templateColumns={{
           base: "repeat(1, 300px)",
