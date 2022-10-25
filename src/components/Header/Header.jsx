@@ -1,10 +1,7 @@
 import React from "react";
-import { useRouter } from "next/router";
 import {
   Flex,
   Text,
-  Stack,
-  Box,
   Popover,
   PopoverContent,
   PopoverTrigger,

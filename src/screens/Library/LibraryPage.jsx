@@ -11,7 +11,6 @@ const LibraryPage = ({ cards }) => {
   });
 
   const [searchString, setSearchString] = useState("");
-  
 
   return (
     <>

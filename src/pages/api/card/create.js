@@ -7,7 +7,6 @@ import { getUserFromId } from "server/mongodb/actions/User";
 // @access  Public
 const handler = async (req, res) => {
   try {
-
     const userId = req.session.user.id;
     const user = await getUserFromId(userId);
     if (user.isAdmin) {
