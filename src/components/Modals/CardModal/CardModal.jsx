@@ -113,7 +113,6 @@ const CardModal = ({
       {...rest}
       isOpen={isOpen}
       onClose={onClose}
-      isCentered
       size={{ base: "sm", md: "2xl", lg: "4xl" }}
     >
       <ModalOverlay />

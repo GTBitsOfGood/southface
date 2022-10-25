@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Box,
   Grid,
@@ -6,80 +6,49 @@ import {
   IconButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
-
-import AddCardModal from "../Modals/AddCardModal";
 import StandardCard from "../StandardCard/StandardCard";
+import { AddIcon } from "@chakra-ui/icons";
+import AddCardModal from "../Modals/AddCardModal";
 
 const StandardCardTable = ({ cards }) => {
-  const [cardComponents, setCardComponents] = React.useState(cards);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [cardComponents, setCardComponents] = useState(cards);
   return (
-    <Box>
-      <Grid
-        templateColumns={{
-          base: "repeat(1, 300px)",
-          sm: "repeat(1, 300px)",
-          lg: "repeat(3, 300px)",
-          xl: "repeat(4, 300px)",
-        }}
-        gap={{
-          base: "2%",
-          md: "3%",
-          lg: "5%",
-        }}
-        m="10% 5% 15%"
-        justifyContent="center"
-        py={{ base: "" }}
-      >
-        {cardComponents.map((card, index) => (
-          <GridItem w="100%" mb="15%" key={index}>
-            <Box display="flex">
-              <Box w="320px" h="510px" bg="white" zIndex={2}>
-                <StandardCard card={card} />
-              </Box>
-              <Box
-                w="320px"
-                h="510px"
-                bg="white"
-                borderColor="#D9D9D9"
-                borderWidth="2px"
-                ml="-100%"
-                mr="-100%"
-                mt="4%"
-                zIndex={1}
-              ></Box>
+    <Grid
+      templateColumns={{
+        base: "repeat(1, 1fr)",
+        sm: "repeat(2, 1fr)",
+        md: "repeat(3, 1fr)",
+        lg: "repeat(4, 1fr)",
+      }}
+      gap={4}
+      py={{ base: "" }}
+      justifyContent="center"
+      width="90%"
+      m="3% auto"
+    >
+      {cardComponents.map((card, index) => (
+        <GridItem w="100%" key={index}>
+          <StandardCard card={card} />
+        </GridItem>
+      ))}
 
-              <Box
-                w="320px"
-                h="510px"
-                bg="white"
-                borderColor="#D9D9D9"
-                borderWidth="2px"
-                ml="-0%"
-                mr="-50%"
-                mt="8%"
-                zIndex={0}
-              ></Box>
-            </Box>
-          </GridItem>
-        ))}
-        <IconButton
-          icon={<AddIcon />}
-          justifySelf="center"
-          alignSelf="center"
-          size="lg"
-          onClick={onOpen}
-        />
-
-        <AddCardModal
-          isOpen={isOpen}
-          onClose={onClose}
-          setCards={setCardComponents}
-        />
-      </Grid>
-    </Box>
+      <IconButton
+        icon={<AddIcon />}
+        size="lg"
+        onClick={onOpen}
+        alignSelf="center"
+        justifySelf="center"
+        rounded={4}
+        boxShadow="base"
+        mt={2}
+      />
+      <AddCardModal
+        isOpen={isOpen}
+        onClose={onClose}
+        setCards={setCardComponents}
+      />
+    </Grid>
   );
 };
 
