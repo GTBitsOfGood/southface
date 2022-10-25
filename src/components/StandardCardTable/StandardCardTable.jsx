@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  Grid,
-  GridItem,
-  IconButton,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Grid, GridItem, IconButton, useDisclosure } from "@chakra-ui/react";
 import StandardCard from "../StandardCard/StandardCard";
 import { AddIcon } from "@chakra-ui/icons";
 import AddCardModal from "../Modals/AddCardModal";
