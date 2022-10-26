@@ -61,7 +61,11 @@ export const createCard = async (card: CardType) => {
     });
 };
 
-export const updateCardById = async (id: string, card: Partial<CardType>) => {
+export const updateCardById = async (
+  id: string,
+  card: Partial<CardType>,
+  isOnlyComments?: boolean
+) => {
   return fetch(urls.api.card.update, {
     method: "PUT",
     mode: "same-origin",
@@ -72,6 +76,7 @@ export const updateCardById = async (id: string, card: Partial<CardType>) => {
     body: JSON.stringify({
       id,
       card,
+      isOnlyComments,
     }),
   })
     .then((response) => response.json())

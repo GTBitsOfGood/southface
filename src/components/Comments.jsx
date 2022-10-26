@@ -2,26 +2,33 @@ import {
   AddIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
+  CheckIcon,
+  CloseIcon,
   DeleteIcon,
+  EditIcon,
 } from "@chakra-ui/icons";
 import {
   Box,
   HStack,
   IconButton,
   Input,
+  InputGroup,
+  InputRightElement,
   SimpleGrid,
   Spacer,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { updateCardById } from "../actions/Card";
 import AddCommentModal from "./Modals/EditCommentModals/AddCommentModal";
 import DeleteCommentModal from "./Modals/EditCommentModals/DeleteCommentModal";
 
 const Comments = React.forwardRef(
-  ({ isEditing, cardId, comments, handleCommentsUpdate, mt, mb }, ref) => {
+  ({ canEdit, cardId, comments, handleCommentsUpdate, mt, mb }, ref) => {
     // comments are shown in reverse order of creation date
     const [currCommentIdx, setCurrCommentIdx] = useState(comments.length - 1);
+    const [isEditing, setIsEditing] = useState(false);
 
     const {
       isOpen: isAddOpen,
@@ -42,8 +49,25 @@ const Comments = React.forwardRef(
       setCurrCommentIdx(currCommentIdx + 1);
     };
 
+    const handleEditing = () => {
+      setIsEditing(true);
+      ref.current.focus();
+    };
+
+    const handleSaveEdit = async () => {
+      await updateCardById(cardId, { comments: comments }, true);
+      setIsEditing(false);
+    };
+
+    const handleClose = () => {
+      setIsEditing(false);
+    };
+
     const getValue = () => {
       if (isEditing) {
+        if (comments.length == 0) {
+          return "";
+        }
         return comments[currCommentIdx].body;
       } else {
         if (comments.length == 0) {
@@ -56,26 +80,55 @@ const Comments = React.forwardRef(
     return (
       <SimpleGrid columns={1} mt={mt || 2} mb={mb || 2} spacing={2}>
         <Box>
-          <Input
-            flexBasis="sm"
-            fontSize="sm"
-            variant={isEditing ? "outline" : "unstyled"}
-            isReadOnly={!isEditing}
-            onChange={(e) =>
-              handleCommentsUpdate(e, comments[currCommentIdx]._id)
-            }
-            value={getValue()}
-            ref={ref}
-            placeholder="Add Card Comments"
-          />
-          <Text fontSize="sm">
-            {comments.length > 0 ? `-- Commented on ${" "}` : ""}
-            <Text as="span" color="#FFD600" fontWeight="bold">
-              {comments.length > 0
-                ? new Date(comments[currCommentIdx].date).toDateString()
-                : ""}
+          <InputGroup>
+            <Input
+              flexBasis="sm"
+              fontSize="sm"
+              pr="60px"
+              variant={isEditing ? "outline" : "unstyled"}
+              isReadOnly={!isEditing}
+              onChange={(e) =>
+                handleCommentsUpdate(e, comments[currCommentIdx]._id)
+              }
+              value={getValue()}
+              ref={ref}
+              placeholder="Add Card Comments"
+            />
+            {isEditing && (
+              <InputRightElement width="60px">
+                <>
+                  <IconButton
+                    icon={<CheckIcon />}
+                    marginRight="1"
+                    size="xs"
+                    rounded="full"
+                    bgColor="green"
+                    color="black"
+                    onClick={handleSaveEdit}
+                  />
+                  <IconButton
+                    icon={<CloseIcon />}
+                    size="xs"
+                    rounded="full"
+                    bgColor="red"
+                    color="black"
+                    onClick={handleClose}
+                  />
+                </>
+              </InputRightElement>
+            )}
+          </InputGroup>
+
+          {!isEditing && (
+            <Text fontSize="sm">
+              {comments.length > 0 ? `-- Commented on ${" "}` : ""}
+              <Text as="span" color="#FFD600" fontWeight="bold">
+                {comments.length > 0
+                  ? new Date(comments[currCommentIdx].date).toDateString()
+                  : ""}
+              </Text>
             </Text>
-          </Text>
+          )}
         </Box>
         <Box>
           <HStack>
@@ -83,7 +136,7 @@ const Comments = React.forwardRef(
               <>
                 <IconButton
                   icon={<ArrowLeftIcon />}
-                  size="xs"
+                  size="sm"
                   _hover={{
                     bg: currCommentIdx == comments.length - 1 ? "#D9D9D9" : "",
                   }}
@@ -93,7 +146,7 @@ const Comments = React.forwardRef(
                 />
                 <IconButton
                   icon={<ArrowRightIcon />}
-                  size="xs"
+                  size="sm"
                   _hover={{
                     bg: currCommentIdx == comments.length - 1 ? "#D9D9D9" : "",
                   }}
@@ -105,10 +158,8 @@ const Comments = React.forwardRef(
             )}
             <IconButton
               icon={<AddIcon />}
-              size="xs"
-              minWidth="0"
+              size="sm"
               rounded="full"
-              variant="link"
               onClick={onAddOpen}
             />
             <AddCommentModal
@@ -117,13 +168,20 @@ const Comments = React.forwardRef(
               comments={comments}
               cardId={cardId}
             />
+            {comments.length > 0 && canEdit != false && (
+              <IconButton
+                icon={<EditIcon />}
+                size="sm"
+                rounded="full"
+                onClick={handleEditing}
+              />
+            )}
             {comments.length > 0 && (
               <>
                 <IconButton
                   icon={<DeleteIcon />}
-                  size="xs"
+                  size="sm"
                   rounded="full"
-                  variant="link"
                   onClick={onDeleteOpen}
                 />
                 <DeleteCommentModal

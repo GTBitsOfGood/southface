@@ -28,7 +28,13 @@ const StandardCard = ({ card }) => {
 
       <Flex p={3} flexDirection="column" flex={1}>
         <Heading size="md">{card.title}</Heading>
-        <Comments mt="2" mb="5" comments={card.comments} cardId={card._id} />
+        <Comments
+          mt="2"
+          mb="5"
+          comments={card.comments}
+          cardId={card._id}
+          canEdit={false}
+        />
         <HStack>
           {card.tags.map((tag, index) => {
             return (

@@ -16,6 +16,17 @@ const handler = async (req, res) => {
         success: true,
         payload: updatedCard,
       });
+    }
+
+    if (req.body.isOnlyComments == true) {
+      const updatedCard = await updateCardById(req.body.id, {
+        comments: req.body.card.comments,
+      });
+
+      return res.status(200).json({
+        success: true,
+        payload: updatedCard,
+      });
     } else {
       throw new Error("You do not have permission to do this action!");
     }
