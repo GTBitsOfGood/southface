@@ -1,16 +1,16 @@
 import { useDisclosure } from "@chakra-ui/hooks";
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { updateCardById, getCardById } from "../actions/Card";
 
 const useEditCardModal = (
   cardTitle,
-  cardBody,
+  cardComments,
   cardImages,
   cardTags,
   cardId
 ) => {
-  const inputRef = useRef();
+  const inputRef = React.createRef();
   const tagInputRef = useRef();
   const router = useRouter();
 
@@ -20,7 +20,8 @@ const useEditCardModal = (
     onClose: imageOnClose,
   } = useDisclosure();
 
-  const [body, setBody] = useState(cardBody);
+  const [comments, setComments] = useState(cardComments);
+  const [newComment, setNewComment] = useState({ body: "", date: "" });
   const [title, setTitle] = useState(cardTitle);
   const [images, setImages] = useState(cardImages);
   const [tags, setTags] = useState(cardTags);
@@ -34,8 +35,19 @@ const useEditCardModal = (
     setTitle(e.target.value);
   };
 
-  const handleBodyChange = (e) => {
-    setBody(e.target.value);
+  const handleCommentsUpdate = (e, id) => {
+    const newComments = comments.map((c) => {
+      if (c._id === id) {
+        c.body = e.target.value;
+        c.date = new Date();
+      }
+      return c;
+    });
+    setComments(newComments);
+  };
+
+  const createNewComment = (e) => {
+    setNewComment([{ body: e.target.value, date: new Date() }]);
   };
 
   const onDeleteTag = (currentTagIndex) => {
@@ -55,13 +67,13 @@ const useEditCardModal = (
     const updatedCardInput = {
       images,
       title,
-      body,
+      comments,
       tags,
     };
 
     updateCardById(cardId, updatedCardInput).then((updatedCard) => {
       setIsEditing(!isEditing);
-      setBody(updatedCard.body);
+      setComments(updatedCard.comments);
       setTitle(updatedCard.title);
       setImages(updatedCard.images);
       setTags(updatedCard.tags);
@@ -74,7 +86,7 @@ const useEditCardModal = (
     const card = await getCardById(cardId);
     setIsEditing(!isEditing);
     setAddingTag(false);
-    setBody(card.body);
+    setComments(card.comments);
     setTitle(card.title);
     setImages(card.images);
     setTags(card.tags);
@@ -92,7 +104,8 @@ const useEditCardModal = (
 
   return {
     handleTitleChange,
-    handleBodyChange,
+    handleCommentsUpdate,
+    createNewComment,
     applyEdit,
     cancelEdit,
     onEditCard,
@@ -104,13 +117,15 @@ const useEditCardModal = (
     setTitle,
     setImages,
     setTags,
-    setBody,
+    setNewComment,
+    setComments,
     setAddingTag,
     setIsEditing,
     title,
     images,
     tags,
-    body,
+    comments,
+    newComment,
     addingTag,
     isEditing,
     inputRef,
