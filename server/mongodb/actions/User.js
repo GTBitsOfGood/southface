@@ -38,6 +38,7 @@ export async function signUp({ username, password }) {
       User.create({
         username,
         password: hashedPassword,
+        isAdmin: false,
       })
     )
     .then((user) => {
@@ -59,7 +60,18 @@ export const getUserFromId = async (id) => {
     return {
       id,
       username: user.username,
+      isAdmin: user.isAdmin,
     };
+  } catch (e) {
+    throw new Error("Invalid token!");
+  }
+};
+
+export const getUsers = async () => {
+  await mongoDB();
+
+  try {
+    return User.find({});
   } catch (e) {
     throw new Error("Invalid token!");
   }

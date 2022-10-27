@@ -1,5 +1,5 @@
 export interface Card {
-  imageSrc: string;
+  images: [string];
   title: string;
   body: string;
   tags: string[];
@@ -11,5 +11,5 @@ export interface Plan {
 }
 
 export function isCard(card: Card): card is Card {
-  return card.imageSrc !== undefined && card.title !== undefined;
+  return card.images !== undefined && card.title !== undefined;
 }

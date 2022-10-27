@@ -1,20 +1,19 @@
-import { createCard } from "server/mongodb/actions/Card";
+import { deleteCardById } from "server/mongodb/actions/Card";
 import { withSessionRoute } from "src/utils/lib/session";
 import { getUserFromId } from "server/mongodb/actions/User";
 
-// @route   POST api/card/create
-// @desc    Create Card Request
+// @route   DELETE api/card/delete
+// @desc    Delete Card Request
 // @access  Public
 const handler = async (req, res) => {
   try {
     const userId = req.session.user.id;
     const user = await getUserFromId(userId);
     if (user.isAdmin) {
-      const createdCard = await createCard(req.body);
+      await deleteCardById(req.body);
 
       return res.status(200).json({
         success: true,
-        payload: createdCard,
       });
     } else {
       throw new Error("You do not have permission to do this action!");

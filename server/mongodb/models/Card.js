@@ -2,21 +2,23 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-export const CardSchema = new Schema({
-  imageSrc: {
+const CardSchema = new Schema({
+  images: [{
     type: String,
-  },
+    default: [],
+  }],
   title: {
     type: String,
   },
   body: {
     type: String,
   },
-  tags: [
-    {
-      type: String,
-    },
-  ],
+  tags: [{
+    type: String,
+    default: [],
+  }]
 });
+
+export { CardSchema };
 
 export default mongoose.models?.Card ?? mongoose.model("Card", CardSchema);

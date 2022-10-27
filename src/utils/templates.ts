@@ -2,7 +2,7 @@ import { Card as CardType, Plan as PlanType } from "./types";
 
 export const createTemplateCard = (): CardType => {
   const card: CardType = {
-    imageSrc: "www.defaulturl.com",
+    images: ["www.defaulturl.com"],
     title: "Default Title",
     body: "Lorem ipsum dolor",
     tags: ["tag1", "tag2", "tag3"],

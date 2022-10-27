@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const PlanSchema = new Schema({
   cards: {
     type: [CardSchema],
-  }, 
+  },
   comments: {
     type: String,
   },

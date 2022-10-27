@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-
+import { Flex } from "@chakra-ui/react";
 /**
  * Component for routing to different pages
  * @param props
@@ -25,19 +25,20 @@ const NavLink = ({ href, hrefParts, children, className, ...rest }) => {
   }
 
   return (
-    <Link
-      href={href}
-      passHref={children != null && !(typeof children === "string")}
-      className={className}
-      {...optionalProps}
-      {...rest}
-    >
-      {typeof children === "string" ? (
-        <a className={className}>{children}</a>
-      ) : (
-        children
-      )}
-    </Link>
+    <Flex {...rest}>
+      <Link
+        href={href}
+        passHref={children != null && !(typeof children === "string")}
+        className={className}
+        {...optionalProps}
+      >
+        {typeof children === "string" ? (
+          <a className={className}>{children}</a>
+        ) : (
+          children
+        )}
+      </Link>
+    </Flex>
   );
 };
 
