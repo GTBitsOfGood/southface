@@ -8,12 +8,15 @@ import {
   HStack,
   Tag,
   Stack,
+  useDisclosure,
 } from "@chakra-ui/react";
+import CardModal from "../Modals/CardModal";
 
 const SelectableCard = ({ selected, setSelect, cardProps }) => {
   const samplePictureUrl =
     "https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-1932.jpg?w=2000";
   const { title, body, tags, images } = cardProps;
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const sampleText =
     "The cardboard/foam covers over the registers are good, but a solid material would be beƩer. Siding or plywood scraps will hold up to people standing on them or placing objects on them. Also, not pictured, cover bath fans prior to the installation of drywall and painting to prevent drywall dust and paint from contaminating the fans.";
@@ -38,7 +41,7 @@ const SelectableCard = ({ selected, setSelect, cardProps }) => {
             })}
         </HStack>
         <Stack>
-          <Button size="lg" mt={7}>
+          <Button size="lg" mt={7} onClick={onOpen}>
             View Full Standard
           </Button>
           <Button
@@ -49,6 +52,16 @@ const SelectableCard = ({ selected, setSelect, cardProps }) => {
           </Button>
         </Stack>
       </Flex>
+      <CardModal
+        isOpen={isOpen}
+        onClose={onClose}
+        isEditingFirst={false}
+        cardId={cardProps._id}
+        cardTags={tags}
+        cardTitle={title}
+        cardBody={body}
+        cardImages={images}
+      />
     </Flex>
   );
 };
