@@ -4,16 +4,10 @@ import SearchBar, {
 } from "../../components/SearchBar";
 import { SelectableCard } from "../../components/StandardCard";
 import { getCards } from "../../actions/Card";
-import {
-  Button,
-  HStack,
-  Heading,
-  Flex,
-  Box,
-  Grid,
-  Spacer,
-} from "@chakra-ui/react";
+import { Button, HStack, Heading, Flex, Box, Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
 
 export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
@@ -74,6 +68,9 @@ export default function ProjectPlanBuilder() {
   const [textFilter, setFilter] = useTextFilter();
   const [tagsFilter, setTags, filterTags] = useTagsFilter();
 
+  // For PDF exporting
+  const [hasLoaded, setHasLoaded] = useState(false);
+  useEffect(() => setHasLoaded(true), []);
   return (
     <>
       <Flex flexFlow="row nowrap" mb="10">
@@ -106,7 +103,22 @@ export default function ProjectPlanBuilder() {
           <Heading size="lg">Current Project Plan</Heading>
           <HStack>
             <Button>Download</Button>
-            <Button>Print to PDF</Button>
+            {hasLoaded && (
+              <PDFDownloadLink
+                document={
+                  <PlanDocumentPDF
+                    selectedPlanCards={selections
+                      .filter((card) => card.selection)
+                      .map(UnwrapToCard)}
+                  />
+                }
+                fileName="plan.pdf"
+              >
+                {({ blob, url, loading, error }) => (
+                  <Button>{loading ? "Loading document..." : "PDF"}</Button>
+                )}
+              </PDFDownloadLink>
+            )}
             <Button bg="gold" color="white">
               End Project Plan
             </Button>
@@ -129,6 +141,7 @@ export default function ProjectPlanBuilder() {
         setSearchString={setFilter}
         setFilterTags={setTags}
         filterTags={filterTags}
+        popUpOnLoad={true}
       />
       <Grid
         templateColumns="repeat(auto-fill, minmax(250px, 1fr))"

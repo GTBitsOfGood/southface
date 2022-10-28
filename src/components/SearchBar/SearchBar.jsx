@@ -8,6 +8,7 @@ const SearchBar = (props) => {
     setFilterTags = () => undefined,
     filterTags = {},
     allowTemplates = true,
+    popUpOnLoad = false,
   } = props;
 
   const self = useRef();
@@ -25,7 +26,9 @@ const SearchBar = (props) => {
     delete newFilterTags[tag];
     setFilterTags(newFilterTags);
   };
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    defaultIsOpen: popUpOnLoad,
+  });
   return (
     <>
       {allowTemplates && (
