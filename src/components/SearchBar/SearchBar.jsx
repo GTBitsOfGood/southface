@@ -4,8 +4,8 @@ import { useRef } from "react";
 
 const SearchBar = (props) => {
   const {
-    setSearchString,
-    setFilterTags,
+    setSearchString = () => undefined,
+    setFilterTags = () => undefined,
     filterTags = {},
     allowTemplates = true,
   } = props;
