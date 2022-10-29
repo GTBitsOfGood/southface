@@ -66,3 +66,13 @@ export const getUserFromId = async (id) => {
     throw new Error("Invalid token!");
   }
 };
+
+export const getUsers = async () => {
+  await mongoDB();
+
+  try {
+    return User.find({});
+  } catch (e) {
+    throw new Error("Invalid token!");
+  }
+};

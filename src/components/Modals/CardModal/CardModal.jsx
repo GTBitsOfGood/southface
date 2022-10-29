@@ -110,7 +110,12 @@ const CardModal = ({
   };
 
   return (
-    <Modal {...rest} isOpen={isOpen} onClose={onClose} isCentered size="4xl">
+    <Modal
+      {...rest}
+      isOpen={isOpen}
+      onClose={onClose}
+      size={{ base: "sm", md: "2xl", lg: "4xl" }}
+    >
       <ModalOverlay />
       <ModalContent rounded={14}>
         <ModalCloseButton
@@ -137,9 +142,11 @@ const CardModal = ({
             ) : (
               <Heading mb={2}>{title}</Heading>
             )}
-            <RatingStars edit={false} value={4} />
+            <Box display={{ base: isEditing ? "none" : "block", md: "block" }}>
+              <RatingStars edit={false} value={4} />
+            </Box>
           </Flex>
-          <HStack>
+          <HStack flexWrap="wrap" gap={2}>
             {tags.map((tag, index) => {
               return (
                 <Tag key={index} bgColor="#D9D9D9">
