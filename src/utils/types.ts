@@ -15,3 +15,7 @@ export interface Plan {
   cards: Card[];
   name: string;
 }
+
+export function isCard(card: Card): card is Card {
+  return card.images !== undefined && card.title !== undefined;
+}
