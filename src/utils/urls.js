@@ -8,6 +8,7 @@ export default {
       home: "/app",
     },
     library: "/library",
+    planbuilder: "/plan-builder",
   },
   api: {
     example: "/api/example",

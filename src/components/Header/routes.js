@@ -24,6 +24,11 @@ const routes = [
     auth: false,
   },
   {
+    name: "Plan Builder",
+    link: urls.pages.planbuilder,
+    auth: false,
+  },
+  {
     name: "Login",
     link: urls.pages.login,
     auth: false,
