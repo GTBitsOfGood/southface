@@ -34,7 +34,6 @@ export const getCardById = async (id: string) => {
       } else if (!json.success) {
         throw new Error(json.message);
       }
-
       return json.payload;
     });
 };
