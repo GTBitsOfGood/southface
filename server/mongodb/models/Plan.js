@@ -4,6 +4,9 @@ import { CardSchema } from "./Card";
 const { Schema } = mongoose;
 
 const PlanSchema = new Schema({
+  userId: {
+    type: String,
+  },
   cards: {
     type: [CardSchema],
   }, 
