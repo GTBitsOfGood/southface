@@ -1,5 +1,5 @@
 export interface Card {
-  images: [string];
+  images: string[];
   title: string;
   comments: Comment[];
   tags: string[];
@@ -11,8 +11,9 @@ export interface Comment {
 }
 
 export interface Plan {
+  userId: string;
   cards: Card[];
-  comments: string;
+  name: string;
 }
 
 export function isCard(card: Card): card is Card {
