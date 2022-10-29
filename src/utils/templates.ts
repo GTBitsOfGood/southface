@@ -20,8 +20,9 @@ export const createTemplatePlan = (): PlanType => {
   const templateCard2 = createTemplateCard();
 
   const plan: PlanType = {
+    userId: "id",
     cards: [templateCard1, templateCard2],
-    comments: "default comments",
+    name: "default name",
   };
   return plan;
 };

@@ -10,7 +10,7 @@ const PlanSchema = new Schema({
   cards: {
     type: [Card],
   }, 
-  comments: {
+  name: {
     type: String,
   },
 });

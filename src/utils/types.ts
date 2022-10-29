@@ -11,6 +11,7 @@ export interface Comment {
 }
 
 export interface Plan {
+  userId: string;
   cards: Card[];
-  comments: string;
+  name: string;
 }
