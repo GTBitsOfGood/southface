@@ -5,15 +5,16 @@ import {
   IconButton,
   useDisclosure,
   Box,
+  Button,
+  Flex,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
 import AddCardModal from "../Modals/AddCardModal";
 import StandardCard from "../StandardCard/StandardCard";
 import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
 
-const StandardCardTable = ({ cards }) => {
+const StandardCardTable = ({ cards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClientSide, setClientSide] = useState(false);
   const [cardComponents, setCardComponents] = useState(cards);
@@ -23,22 +24,27 @@ const StandardCardTable = ({ cards }) => {
   }, []);
 
   return (
-    <Box>
+    <Box {...props}>
       {isClientSide && (
-        <PDFDownloadLink
-          document={<PlanDocumentPDF selectedPlanCards={cards} />}
-          fileName="plan.pdf"
-          style={{
-            padding: "10px",
-            backgroundColor: "#f2f2f2",
-            borderRadius: "5px",
-            marginLeft: "85%",
-          }}
-        >
-          {({ blob, url, loading, error }) =>
-            loading ? "Loading document..." : "Download PDF"
-          }
-        </PDFDownloadLink>
+        <Flex alignItems="center" justifyContent="end" gap={4} mr={6}>
+          <Button
+            as={PDFDownloadLink}
+            document={<PlanDocumentPDF selectedPlanCards={cards} />}
+            fileName="plan.pdf"
+            boxShadow="base"
+          >
+            Download PDF
+          </Button>
+
+          <Button onClick={onOpen} rounded={4} boxShadow="base">
+            Add Card
+          </Button>
+          <AddCardModal
+            isOpen={isOpen}
+            onClose={onClose}
+            setCards={setCardComponents}
+          />
+        </Flex>
       )}
       <Grid
         templateColumns={{
@@ -58,22 +64,6 @@ const StandardCardTable = ({ cards }) => {
             <StandardCard card={card} />
           </GridItem>
         ))}
-
-        <IconButton
-          icon={<AddIcon />}
-          size="lg"
-          onClick={onOpen}
-          alignSelf="center"
-          justifySelf="center"
-          rounded={4}
-          boxShadow="base"
-          mt={2}
-        />
-        <AddCardModal
-          isOpen={isOpen}
-          onClose={onClose}
-          setCards={setCardComponents}
-        />
       </Grid>
     </Box>
   );
