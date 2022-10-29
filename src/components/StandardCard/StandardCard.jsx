@@ -4,12 +4,12 @@ import {
   Image,
   Flex,
   Heading,
-  Text,
   HStack,
   Tag,
   useDisclosure,
 } from "@chakra-ui/react";
 import CardModal from "../Modals/CardModal";
+import Comments from "../Comments";
 
 const StandardCard = ({ card, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,15 +31,23 @@ const StandardCard = ({ card, ...props }) => {
 
       <Flex p={3} flexDirection="column" flex={1}>
         <Heading size="md">{card.title}</Heading>
-        <Text fontSize="sm" lineHeight="shorter" py={2}>
-          {card.body}
-        </Text>
+        <Comments
+          mt="2"
+          mb="5"
+          comments={card.comments}
+          cardId={card._id}
+          canEdit={false}
+        />
         <HStack>
           {card.tags.map((tag, index) => {
-            return <Tag key={index}>{tag}</Tag>;
+            return (
+              <Tag key={index} bgColor="#D9D9D9">
+                {tag}
+              </Tag>
+            );
           })}
         </HStack>
-        <Button size="lg" mt={7} onClick={onOpen}>
+        <Button size="lg" mt={7} onClick={onOpen} bgColor="#D9D9D9">
           View Full Standard
         </Button>
         <CardModal
@@ -49,7 +57,7 @@ const StandardCard = ({ card, ...props }) => {
           cardId={card._id}
           cardTags={card.tags}
           cardTitle={card.title}
-          cardBody={card.body}
+          cardComments={card.comments}
           cardImages={card.images}
         />
       </Flex>

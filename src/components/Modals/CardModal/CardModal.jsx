@@ -8,7 +8,6 @@ import {
   ModalCloseButton,
   ModalBody,
   Button,
-  Text,
   Flex,
   Tag,
   Input,
@@ -18,18 +17,21 @@ import {
   Box,
   TagLeftIcon,
   FormLabel,
+  SimpleGrid,
+  Center,
 } from "@chakra-ui/react";
 import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 import RatingStars from "./RatingStars";
 import ModifyImageModal from "../ModifyImageModal";
 import ModalImage from "../ModalImage";
+import Comments from "../../Comments";
 
 const CardModal = ({
   isOpen,
   onClose,
   cardTitle,
-  cardBody,
+  cardComments,
   cardId,
   cardImages,
   cardTags,
@@ -39,12 +41,12 @@ const CardModal = ({
     isEditing,
     title,
     onEditCard,
-    body,
+    comments,
     tags,
     images,
     setAddingTag,
     addingTag,
-    handleBodyChange,
+    handleCommentsUpdate,
     handleTitleChange,
     inputRef,
     tagInputRef,
@@ -56,8 +58,7 @@ const CardModal = ({
     imageOnClose,
     setImages,
     setTags,
-  } = useEditCardModal(cardTitle, cardBody, cardImages, cardTags, cardId);
-
+  } = useEditCardModal(cardTitle, cardComments, cardImages, cardTags, cardId);
   const TagInput = (props) => {
     const [width, setWidth] = useState(0.5);
     const [editTagValue, setEditTagValue] = useState("");
@@ -229,40 +230,19 @@ const CardModal = ({
                 </>
               )}
             </Flex>
-            <Flex
+            <SimpleGrid
               mt={6}
-              flexDir={{ base: "column", md: "row" }}
+              mb={15}
+              columns={3}
               justifyContent="space-between"
             >
-              <Input
-                flexBasis={{ md: "sm" }}
-                fontSize="sm"
-                variant={isEditing ? "outline" : "unstyled"}
-                isReadOnly={!isEditing}
-                onChange={handleBodyChange}
-                defaultValue={body}
+              <Comments
+                isEditing={isEditing}
+                comments={comments}
+                handleCommentsUpdate={handleCommentsUpdate}
+                cardId={cardId}
                 ref={inputRef}
-                placeholder="Add Card Body"
               />
-
-              <Button
-                bgColor="#D9D9D9"
-                alignSelf={{ md: "end" }}
-                size={{ base: "md", md: "lg" }}
-                my={{ base: 2, md: 0 }}
-                rounded={16}
-              >
-                Add to Plan
-              </Button>
-            </Flex>
-            <Flex justifyContent="space-between" maxWidth="sm" my={3}>
-              <Text fontSize="sm" fontWeight="bold">
-                Commented on{" "}
-                <Text as="span" color="#FFD600" fontWeight="bold">
-                  Sept. 20. 2022
-                </Text>
-              </Text>
-
               {!isEditing ? (
                 <Button
                   variant="link"
@@ -273,27 +253,32 @@ const CardModal = ({
                   Edit
                 </Button>
               ) : (
-                <Box>
-                  <HStack>
-                    <IconButton
-                      icon={<CheckIcon />}
-                      onClick={applyEdit}
-                      size="sm"
-                      rounded="full"
-                      bgColor="green"
-                    />
-                    <IconButton
-                      icon={<CloseIcon />}
-                      onClick={cancelEdit}
-                      size="sm"
-                      rounded="full"
-                      bgColor="red"
-                    />
-                  </HStack>
-                  <FormLabel fontWeight="bold">Apply/Cancel Edit</FormLabel>
-                </Box>
+                <Center>
+                  <Box>
+                    <HStack>
+                      <IconButton
+                        icon={<CheckIcon />}
+                        onClick={applyEdit}
+                        size="sm"
+                        rounded="full"
+                        bgColor="green"
+                      />
+                      <IconButton
+                        icon={<CloseIcon />}
+                        onClick={cancelEdit}
+                        size="sm"
+                        rounded="full"
+                        bgColor="red"
+                      />
+                    </HStack>
+                    <FormLabel fontWeight="bold">Apply/Cancel Edit</FormLabel>
+                  </Box>
+                </Center>
               )}
-            </Flex>
+              <Button bgColor="#D9D9D9" alignSelf="end" size="lg" rounded={16}>
+                Add to Plan
+              </Button>
+            </SimpleGrid>
           </Flex>
         </ModalBody>
       </ModalContent>

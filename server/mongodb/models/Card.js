@@ -10,9 +10,10 @@ const CardSchema = new Schema({
   title: {
     type: String,
   },
-  body: {
-    type: String,
-  },
+  comments: [{ 
+    body: String, 
+    date: Date
+  }],
   tags: [{
     type: String,
     default: [],

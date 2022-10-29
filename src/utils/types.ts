@@ -1,8 +1,13 @@
 export interface Card {
   images: [string];
   title: string;
-  body: string;
+  comments: Comment[];
   tags: string[];
+}
+
+export interface Comment {
+  body: string;
+  date: Date;
 }
 
 export interface Plan {

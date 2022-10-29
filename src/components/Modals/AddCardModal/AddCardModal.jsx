@@ -27,7 +27,7 @@ import ModalImage from "../ModalImage";
 const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
   const {
     handleTitleChange,
-    handleBodyChange,
+    createNewComment,
     onDeleteTag,
     imageIsOpen,
     imageOnOpen,
@@ -35,12 +35,12 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
     setTitle,
     setImages,
     setTags,
-    setBody,
+    setComments,
     setAddingTag,
     title,
     images,
     tags,
-    body,
+    newComment,
     addingTag,
     inputRef,
     tagInputRef,
@@ -50,12 +50,12 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
     const addCardInput = {
       images,
       title,
-      body,
+      comments: newComment,
       tags,
     };
     const createdCard = await createCard(addCardInput);
     setCards((cards) => [...cards, createdCard]);
-    setBody("");
+    setComments([]);
     setTitle("");
     setImages([]);
     setTags([]);
@@ -134,7 +134,7 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
               width="md"
               onChange={handleTitleChange}
               mb={2}
-              placeHolder="Add Title"
+              placeholder="Add Title"
             />
           </Flex>
           <HStack>
@@ -217,10 +217,9 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
               <Input
                 flexBasis="sm"
                 fontSize="sm"
-                onChange={handleBodyChange}
-                defaultValue={body}
+                onChange={createNewComment}
                 ref={inputRef}
-                placeHolder="Add Card Body"
+                placeholder="Add Card Comment"
               />
 
               <Button bgColor="#D9D9D9" alignSelf="end" size="lg" rounded={16}>
