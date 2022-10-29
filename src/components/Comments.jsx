@@ -76,7 +76,10 @@ const Comments = React.forwardRef(
         return `"${comments[currCommentIdx].body}"`;
       }
     };
-
+    // Prevent rendering nonexisting comments
+    if (comments[currCommentIdx] === undefined) {
+      return "bruh";
+    }
     return (
       <SimpleGrid columns={1} mt={mt || 2} mb={mb || 2} spacing={2}>
         <Box>
