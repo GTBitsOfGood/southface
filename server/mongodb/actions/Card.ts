@@ -32,6 +32,18 @@ export async function getCards() {
   return Card.find({}).sort({ _id: -1 });
 }
 
+export async function getCardsPagination(
+  pageNumber: number,
+  cardsPerPage: number = 4
+) {
+  await mongoDB();
+
+  return Card.find()
+    .sort({ _id: -1 })
+    .skip(pageNumber * cardsPerPage)
+    .limit(cardsPerPage);
+}
+
 export async function getCardsCount() {
   await mongoDB();
 

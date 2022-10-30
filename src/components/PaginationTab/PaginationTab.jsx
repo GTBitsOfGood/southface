@@ -1,19 +1,23 @@
-import { Flex, Button, Text } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
 import { useState } from "react";
-import Router from "next/router";
+import { getCardsPagination } from "../../actions/Card";
 
-const PaginationTab = ({ numPages, lastCardId, ...props }) => {
+const PaginationTab = ({
+  numPages,
+  currentPage,
+  setCurrentPage,
+  setCards,
+  setIsRefreshing,
+  ...props
+}) => {
   const numPagesArray = [...new Array(numPages).keys()].map(
     (element) => ++element
   );
-  const [currentPage, setCurrentPage] = useState(numPagesArray[0]);
-  const onPageChange = (pageNumber) => {
-    if (parseInt(pageNumber) === 1) {
-      window.location.href = "/library";
-    } else {
-      window.location.href = "/library?lastCardId=" + lastCardId;
-    }
 
+  const onPageChange = async (pageNumber) => {
+    const updatedCards = await getCardsPagination(pageNumber);
+    setCards(updatedCards);
+    setIsRefreshing(true);
     setCurrentPage(pageNumber);
   };
   return (

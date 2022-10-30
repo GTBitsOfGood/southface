@@ -60,7 +60,7 @@ const StandardCardTable = ({ cards, ...props }) => {
         m="3% auto"
       >
         {cardComponents.map((card, index) => (
-          <GridItem w="100%" key={index}>
+          <GridItem w="100%" key={index} rounded={12}>
             <StandardCard card={card} />
           </GridItem>
         ))}

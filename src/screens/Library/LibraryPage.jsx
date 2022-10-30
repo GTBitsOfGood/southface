@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Heading, Flex } from "@chakra-ui/react";
+import { Heading, Flex, Text } from "@chakra-ui/react";
 import SearchBar from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import useUser from "src/utils/lib/useUser";
@@ -12,16 +12,17 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
   });
 
   const [cards, setCards] = useState(cardsFromDatabase);
+  const [isRefresehing, setIsRefreshing] = useState(false);
+  const [searchString, setSearchString] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    setCards[cardsFromDatabase];
+    setIsRefreshing(false);
   }, [cards]);
 
-  const lastCardId = cards[cards.length - 1]._id;
-
-  const [searchString, setSearchString] = useState("");
-
-  return (
+  return isRefresehing ? (
+    <Text>Loading</Text>
+  ) : (
     <Flex alignItems="stretch" flexDirection="column">
       <SearchBar setSearchString={setSearchString} width="full" />
       <Heading fontSize={{ base: "4xl", lg: "5xl" }}> Library</Heading>
@@ -35,8 +36,11 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
       <PaginationTab
         numPages={numPages}
         alignSelf="center"
-        lastCardId={lastCardId}
         border="1px solid black"
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setCards={setCards}
+        setIsRefreshing={setIsRefreshing}
       />
     </Flex>
   );
