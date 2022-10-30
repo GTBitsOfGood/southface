@@ -10,7 +10,7 @@ const LibraryPageWrapper = (props) => <LibraryPage {...props} />;
  * Errors in getServerSideProps will display the page in 'pages/500.js' (https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props)
  */
 export async function getServerSideProps() {
-  const pageNumber = 0; 
+  const pageNumber = 0;
 
   const cards = await getCardsPagination(pageNumber);
   const cardsCount = await getCardsCount();

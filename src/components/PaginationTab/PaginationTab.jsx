@@ -1,5 +1,4 @@
 import { Flex, Button } from "@chakra-ui/react";
-import { useState } from "react";
 import { getCardsPagination } from "../../actions/Card";
 
 const PaginationTab = ({
