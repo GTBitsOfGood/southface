@@ -1,13 +1,16 @@
 import mongoose from "mongoose";
-import { CardSchema } from "./Card";
+import { Card } from "src/utils/types.ts";
 
 const { Schema } = mongoose;
 
 const PlanSchema = new Schema({
-  cards: {
-    type: [CardSchema],
+  userId: {
+    type: String,
   },
-  comments: {
+  cards: {
+    type: [Card],
+  }, 
+  name: {
     type: String,
   },
 });

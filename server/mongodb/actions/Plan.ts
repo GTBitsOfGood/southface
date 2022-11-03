@@ -37,3 +37,9 @@ export async function getPlanById(id: string) {
 
     return plan;
 }
+
+export async function getPlans(userId: string) {
+    await mongoDB();
+
+    return Plan.find({userId: userId});
+}

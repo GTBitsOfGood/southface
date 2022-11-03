@@ -15,7 +15,7 @@ import {
 export default function ChooseTemplateModal({
   isOpen,
   onClose,
-  setFilterTags,
+  setFilterTags: setTags,
 }) {
   const templateOptions = [
     { template: "house", tags: ["insulation", "hvac", "wiring"] },
@@ -26,7 +26,7 @@ export default function ChooseTemplateModal({
   const TagSetter = (tags) => () => {
     const tagSet = {};
     tags.forEach((tag) => (tagSet[tag] = true));
-    setFilterTags(tagSet);
+    setTags(tagSet);
     onClose();
   };
   return (
@@ -36,14 +36,6 @@ export default function ChooseTemplateModal({
         <ModalHeader>Choose a Template</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {/* {templateOptions.map((option, index) => (
-            <Box key={index}>
-              <Header>{option.template}</Header>
-              {option.tags.map((tag) => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
-            </Box>
-          ))} */}
           {templateOptions.map((option, index) => (
             <Box
               border="1px"
