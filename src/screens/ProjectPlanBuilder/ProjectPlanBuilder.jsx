@@ -1,6 +1,6 @@
 import SearchBar, { useSearch } from "../../components/SearchBar";
 import { SelectableCard } from "../../components/StandardCard";
-import { getCards } from "../../actions/Card";
+import { createCard, getCards } from "../../actions/Card";
 import { Button, HStack, Heading, Flex, Box, Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -47,6 +47,17 @@ export default function ProjectPlanBuilder() {
     //   console.log("Created " + card);
     // });
     alert("Exported data has been logged in console");
+  };
+
+  const SavePlanHandler = async () => {
+    const selectedCards = selections
+      .filter((card) => card.selection)
+      .map(UnwrapToCard);
+    await createCard({
+      cards: selectedCards,
+      name: "Random Plan",
+      userId: "12345678910",
+    });
   };
 
   // Maps selection objects into renderable cards
@@ -100,7 +111,7 @@ export default function ProjectPlanBuilder() {
         >
           <Heading size="lg">Current Project Plan</Heading>
           <HStack>
-            <Button>Download</Button>
+            {/* <Button>Download</Button> */}
             {hasLoaded && (
               <PDFDownloadLink
                 document={
@@ -117,11 +128,11 @@ export default function ProjectPlanBuilder() {
                 )}
               </PDFDownloadLink>
             )}
-            <Button bg="gold" color="white">
-              End Project Plan
+            <Button onClick={SavePlanHandler} bg="gold" color="white">
+              Save Project Plan
             </Button>
           </HStack>
-          <Button onClick={ExportHandler}>Export Selected</Button>
+          {/* <Button onClick={ExportHandler}>Export Selected</Button> */}
         </Flex>
         {selections.filter((card) => card.selection).length > 0 ? (
           <HStack mt="10" gap="41" flexDirection="row">
