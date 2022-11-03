@@ -22,6 +22,10 @@ const StandardCardTable = ({ cards }) => {
     setClientSide(true);
   }, []);
 
+  // cards property may be stateful
+  useEffect(() => {
+    setCardComponents(cards);
+  }, [cards]);
   return (
     <Box>
       {isClientSide && (

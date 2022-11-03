@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Heading } from "@chakra-ui/react";
 import SearchBar from "../../components/SearchBar";
+import { useSearch } from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import useUser from "src/utils/lib/useUser";
 
@@ -10,15 +11,14 @@ const LibraryPage = ({ cards }) => {
     redirectTo: "",
   });
 
-  const [searchString, setSearchString] = useState("");
-
+  const { searchedCards, handleSearch } = useSearch(cards);
   return (
     <>
-      <SearchBar setSearchString={setSearchString} />
+      <SearchBar handleSearch={handleSearch} />
       <Heading fontSize={{ base: "4xl", lg: "5xl" }}> Library</Heading>
 
       <StandardCardTable
-        cards={cards}
+        cards={searchedCards}
         isLoggedIn={currentUser?.isLoggedIn}
         isAdmin={currentUser?.isAdmin}
       />

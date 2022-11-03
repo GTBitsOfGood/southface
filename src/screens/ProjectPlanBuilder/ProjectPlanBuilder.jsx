@@ -1,7 +1,4 @@
-import SearchBar, {
-  useTagsFilter,
-  useTextFilter,
-} from "../../components/SearchBar";
+import SearchBar, { useSearch } from "../../components/SearchBar";
 import { SelectableCard } from "../../components/StandardCard";
 import { getCards } from "../../actions/Card";
 import { Button, HStack, Heading, Flex, Box, Grid } from "@chakra-ui/react";
@@ -65,8 +62,9 @@ export default function ProjectPlanBuilder() {
   };
 
   // Filtering logic
-  const [textFilter, setFilter] = useTextFilter();
-  const [tagsFilter, setTags, filterTags] = useTagsFilter();
+  const { searchedCards, handleSearch } = useSearch(
+    selections.map(UnwrapToCard)
+  );
 
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -137,21 +135,13 @@ export default function ProjectPlanBuilder() {
         )}
       </Flex>
       <Heading>All Cards</Heading>
-      <SearchBar
-        setSearchString={setFilter}
-        setFilterTags={setTags}
-        filterTags={filterTags}
-        popUpOnLoad={true}
-      />
+      <SearchBar handleSearch={handleSearch} popUpOnLoad={true} />
       <Grid
         templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
         gap="41"
         m="10"
       >
-        {selections
-          .filter((card) => textFilter(card.cardProps))
-          .filter((card) => tagsFilter(card.cardProps))
-          .map(SelectionMapper)}
+        {searchedCards.map(WrapToSelection).map(SelectionMapper)}
       </Grid>
     </>
   );
