@@ -8,6 +8,7 @@ import { Button, HStack, Heading, Flex, Box, Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
+import Link from "next/link";
 
 export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
@@ -80,7 +81,9 @@ export default function ProjectPlanBuilder() {
         <Heading flex="1" gridArea="stack" textAlign="center">
           Project Plan Builder
         </Heading>
-        <Button>Bruh</Button>
+        <Link href="/savedProjectPlans">
+          <Button href="/">View Saved Project Plans</Button>
+        </Link>
       </Flex>
       <Flex
         p={5}

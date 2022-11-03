@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   },
   description: {
     marginLeft: "15%",
+    marginTop: "5%",
     width: "80%",
   },
   text: {
@@ -68,7 +69,17 @@ const PlanDocumentPDF = ({ selectedPlanCards }) => {
                   })}
                 </View>
                 <View style={styles.description}>
-                  <Text style={styles.text}>{card.body}</Text>
+                  {card.comments.map((comment, index) => {
+                    {
+                      return (
+                        comment.body && (
+                          <Text key={index} style={styles.text}>
+                            {comment.body}
+                          </Text>
+                        )
+                      );
+                    }
+                  })}
                 </View>
               </View>
             );
