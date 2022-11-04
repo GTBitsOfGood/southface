@@ -1,5 +1,5 @@
 import SearchBar, { useSearch } from "../../components/SearchBar";
-import { SelectableCard } from "../../components/StandardCard";
+import StandardCard, { SelectableCard } from "../../components/StandardCard";
 import { createCard, getCards } from "../../actions/Card";
 import { Button, HStack, Heading, Flex, Box, Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
@@ -24,7 +24,12 @@ export default function ProjectPlanBuilder() {
       selection: false,
     };
   };
-  const UnwrapToCard = (card) => card.cardProps;
+  const UnwrapToCard = (card) => {
+    const cardProps = { ...card.cardProps };
+    cardProps.selected = card.selection;
+    cardProps.setSelection = card.setSelection;
+    return cardProps;
+  };
 
   // Every wrapped card object has an index which can be used to "easily" change
   // state in this component from a <SelectableCard /> child component
@@ -61,15 +66,18 @@ export default function ProjectPlanBuilder() {
   };
 
   // Maps selection objects into renderable cards
-  const SelectionMapper = (card) => {
-    return (
-      <SelectableCard
-        key={card.index}
-        setSelect={SelectionSetter(card.index)}
-        cardProps={card.cardProps}
-        selected={card.selection}
-      />
-    );
+  const RenderSelections = (card) => {
+    const cardProps = { ...card.cardProps };
+    cardProps.selected = card.selection;
+    cardProps.setSelection = SelectionSetter(card.index);
+    return <StandardCard key={card.index} card={cardProps} />;
+  };
+
+  const RenderAsUnselected = (card) => {
+    const cardProps = { ...card.cardProps };
+    cardProps.selected = false;
+    cardProps.setSelection = SelectionSetter(card.index);
+    return <StandardCard key={card.index} card={cardProps} />;
   };
 
   // Filtering logic
@@ -80,8 +88,18 @@ export default function ProjectPlanBuilder() {
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => setHasLoaded(true), []);
+  const sampleCard = {
+    images: ["https://picsum.photos/200"],
+    title: "Test sample",
+    comments: [{ body: "bruh", date: new Date() }],
+    tags: ["Bruh"],
+    // selected: true,
+  };
   return (
     <>
+      <Box width="sm">
+        <StandardCard card={sampleCard} />
+      </Box>
       <Flex flexFlow="row nowrap" mb="10">
         <Button opacity="0" cursor="default">
           Bruh
@@ -136,7 +154,7 @@ export default function ProjectPlanBuilder() {
         </Flex>
         {selections.filter((card) => card.selection).length > 0 ? (
           <HStack mt="10" gap="41" flexDirection="row">
-            {selections.filter((card) => card.selection).map(SelectionMapper)}
+            {selections.filter((card) => card.selection).map(RenderSelections)}
           </HStack>
         ) : (
           <Box alignSelf="center" flex="1" width="50%" fontSize="3xl">
@@ -152,7 +170,7 @@ export default function ProjectPlanBuilder() {
         gap="41"
         m="10"
       >
-        {searchedCards.map(WrapToSelection).map(SelectionMapper)}
+        {searchedCards.map(WrapToSelection).map(RenderSelections)}
       </Grid>
     </>
   );
