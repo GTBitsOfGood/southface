@@ -12,11 +12,11 @@ import {
 } from "@chakra-ui/react";
 import CardModal from "../Modals/CardModal";
 import Comments from "../Comments";
-import { CheckIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 const StandardCard = ({ card, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setSelection = () => undefined } = { ...card };
+  const { setSelection = () => undefined, toDeselect = false } = { ...card };
   return (
     <Flex
       {...props}
@@ -25,23 +25,36 @@ const StandardCard = ({ card, ...props }) => {
       bgColor="white"
       height={{ base: "sm", md: "md" }}
       borderColor="green.500"
-      borderWidth={card.selected ? "5px" : "0"}
+      borderWidth={card.selected && !card.toDeselect ? "5px" : "0"}
       onClick={() => setSelection(!card.selected)}
     >
       <Box height="37%" position="relative">
-        {card.selected && (
-          <Icon
-            bgColor="green.500"
-            color="white"
-            borderRadius="100%"
-            p="1"
-            as={CheckIcon}
-            position="absolute"
-            fontSize="24"
-            left="5"
-            top="5"
-          />
-        )}
+        {card.selected &&
+          (toDeselect ? (
+            <Icon
+              bgColor="red.500"
+              color="white"
+              borderRadius="100%"
+              p="1"
+              as={CloseIcon}
+              position="absolute"
+              fontSize="24"
+              left="5"
+              top="5"
+            />
+          ) : (
+            <Icon
+              bgColor="green.500"
+              color="white"
+              borderRadius="100%"
+              p="1"
+              as={CheckIcon}
+              position="absolute"
+              fontSize="24"
+              left="5"
+              top="5"
+            />
+          ))}
         <Image
           height="100%"
           width="full"

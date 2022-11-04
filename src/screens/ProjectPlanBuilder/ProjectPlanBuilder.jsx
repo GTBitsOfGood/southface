@@ -1,10 +1,11 @@
 import SearchBar, { useSearch } from "../../components/SearchBar";
-import StandardCard, { SelectableCard } from "../../components/StandardCard";
-import { createCard, getCards } from "../../actions/Card";
+import StandardCard from "../../components/StandardCard";
+import { getCards } from "../../actions/Card";
 import { Button, HStack, Heading, Flex, Box, Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
+import { createPlan } from "../../actions/Plan";
 
 export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
@@ -20,14 +21,15 @@ export default function ProjectPlanBuilder() {
   const WrapToSelection = (card, index) => {
     return {
       cardProps: card,
-      index: index,
-      selection: false,
+      index: card.selectionIndex ? card.selectionIndex : index,
+      selection: card.selected,
     };
   };
   const UnwrapToCard = (card) => {
     const cardProps = { ...card.cardProps };
     cardProps.selected = card.selection;
     cardProps.setSelection = card.setSelection;
+    cardProps.selectionIndex = card.index;
     return cardProps;
   };
 
@@ -58,7 +60,7 @@ export default function ProjectPlanBuilder() {
     const selectedCards = selections
       .filter((card) => card.selection)
       .map(UnwrapToCard);
-    await createCard({
+    await createPlan({
       cards: selectedCards,
       name: "Random Plan",
       userId: "12345678910",
@@ -66,17 +68,18 @@ export default function ProjectPlanBuilder() {
   };
 
   // Maps selection objects into renderable cards
-  const RenderSelections = (card) => {
+  const RenderCards = (card) => {
     const cardProps = { ...card.cardProps };
     cardProps.selected = card.selection;
     cardProps.setSelection = SelectionSetter(card.index);
     return <StandardCard key={card.index} card={cardProps} />;
   };
 
-  const RenderAsUnselected = (card) => {
+  const RenderSelected = (card) => {
     const cardProps = { ...card.cardProps };
-    cardProps.selected = false;
+    cardProps.selected = card.selection;
     cardProps.setSelection = SelectionSetter(card.index);
+    cardProps.toDeselect = true;
     return <StandardCard key={card.index} card={cardProps} />;
   };
 
@@ -88,18 +91,8 @@ export default function ProjectPlanBuilder() {
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => setHasLoaded(true), []);
-  const sampleCard = {
-    images: ["https://picsum.photos/200"],
-    title: "Test sample",
-    comments: [{ body: "bruh", date: new Date() }],
-    tags: ["Bruh"],
-    // selected: true,
-  };
   return (
     <>
-      <Box width="sm">
-        <StandardCard card={sampleCard} />
-      </Box>
       <Flex flexFlow="row nowrap" mb="10">
         <Button opacity="0" cursor="default">
           Bruh
@@ -154,7 +147,7 @@ export default function ProjectPlanBuilder() {
         </Flex>
         {selections.filter((card) => card.selection).length > 0 ? (
           <HStack mt="10" gap="41" flexDirection="row">
-            {selections.filter((card) => card.selection).map(RenderSelections)}
+            {selections.filter((card) => card.selection).map(RenderSelected)}
           </HStack>
         ) : (
           <Box alignSelf="center" flex="1" width="50%" fontSize="3xl">
@@ -170,7 +163,7 @@ export default function ProjectPlanBuilder() {
         gap="41"
         m="10"
       >
-        {searchedCards.map(WrapToSelection).map(RenderSelections)}
+        {searchedCards.map(WrapToSelection).map(RenderCards)}
       </Grid>
     </>
   );
