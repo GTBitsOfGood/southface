@@ -1,33 +1,22 @@
-import { getCards } from "../../actions/Card";
+import { getPlans } from "../../actions/Plan";
 import Link from "next/link";
-import {
-  Button,
-  HStack,
-  Center,
-  Heading,
-  Flex,
-  Text,
-  Box,
-  Grid,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, Heading, Flex, Box, VStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
 import SavedProjectPlan from "../../components/SavedProjectPlan/SavedProjectPlan";
 
 const SavedProjectPlans = () => {
-  // Primary state in this page is the selections array
   const [plans, setPlans] = useState([]);
 
   useEffect(() => {
-    // GET PLANS HERE
+    getPlans().then((res) => {
+      setPlans(res);
+    });
   }, []);
 
   return (
     <Box>
       <Flex mb="10">
-        <Link href="/projectPlanBuilder">
+        <Link href="/plan-builder">
           <Button>Return to Project Plan Builder</Button>
         </Link>
         <Heading m="auto" ml="25%">
@@ -35,9 +24,9 @@ const SavedProjectPlans = () => {
         </Heading>
       </Flex>
       <VStack p="0% 2% 0% 2%">
-        {/* GET ALL PROJECT PLANS ASSOCIATED WITH USER AND LOOP THROUGH HERE */}
-        {/* <SavedProjectPlan plan={ plan }/> */}
-        <SavedProjectPlan />
+        {plans.map((plan, index) => {
+          return <SavedProjectPlan key={index} plan={plan} />;
+        })}
       </VStack>
     </Box>
   );

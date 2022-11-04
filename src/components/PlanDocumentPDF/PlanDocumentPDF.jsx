@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
 });
 
 const PlanDocumentPDF = ({ selectedPlanCards }) => {
-  // console.log(selectedPlanCards);
   return (
     <Document>
       <Page size="A4" style={styles.page}>

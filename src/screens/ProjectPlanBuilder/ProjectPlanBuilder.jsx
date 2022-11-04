@@ -74,12 +74,12 @@ export default function ProjectPlanBuilder() {
     <>
       <Flex flexFlow="row nowrap" mb="10">
         <Button opacity="0" cursor="default">
-          Bruh
+          View Saved Project Plans
         </Button>
         <Heading flex="1" gridArea="stack" textAlign="center">
           Project Plan Builder
         </Heading>
-        <Link href="/savedProjectPlans">
+        <Link href="/saved-project-plans">
           <Button href="/">View Saved Project Plans</Button>
         </Link>
       </Flex>
