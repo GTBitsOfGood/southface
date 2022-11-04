@@ -1,7 +1,15 @@
 import SearchBar, { useSearch } from "../../components/SearchBar";
 import StandardCard from "../../components/StandardCard";
 import { getCards } from "../../actions/Card";
-import { Button, HStack, Heading, Flex, Box, Grid } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Heading,
+  Flex,
+  Box,
+  Grid,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
@@ -16,8 +24,7 @@ export default function ProjectPlanBuilder() {
     }); // for the love of God don't put dependency array here
   }, []);
 
-  // Wraps card object with additional properties for setting selection
-  // and vice-versa
+  // Wraps cards with selection info
   const WrapToSelection = (card, index) => {
     return {
       cardProps: card,
@@ -43,38 +50,14 @@ export default function ProjectPlanBuilder() {
     };
   };
 
-  // Handles export logic
-  const ExportHandler = () => {
-    const exportedCards = selections
-      .filter((card) => card.selection)
-      .map(UnwrapToCard);
-    console.log(exportedCards);
-    // exportedCards.forEach(async (card) => {
-    //   await createCard(card);
-    //   console.log("Created " + card);
-    // });
-    alert("Exported data has been logged in console");
-  };
-
-  const SavePlanHandler = async () => {
-    const selectedCards = selections
-      .filter((card) => card.selection)
-      .map(UnwrapToCard);
-    await createPlan({
-      cards: selectedCards,
-      name: "Random Plan",
-      userId: "12345678910",
-    });
-  };
-
-  // Maps selection objects into renderable cards
+  // Array map methods for rendering
   const RenderCards = (card) => {
     const cardProps = { ...card.cardProps };
     cardProps.selected = card.selection;
     cardProps.setSelection = SelectionSetter(card.index);
     return <StandardCard key={card.index} card={cardProps} />;
   };
-
+  // Renders cards to appear de-selectable
   const RenderSelected = (card) => {
     const cardProps = { ...card.cardProps };
     cardProps.selected = card.selection;
@@ -83,7 +66,21 @@ export default function ProjectPlanBuilder() {
     return <StandardCard key={card.index} card={cardProps} />;
   };
 
-  // Filtering logic
+  // DB action handlers
+  const DeleteHandler = () => undefined;
+
+  const SavePlanHandler = async () => {
+    const selectedCards = selections
+      .filter((card) => card.selection)
+      .map(UnwrapToCard);
+    // await createPlan({
+    //   cards: selectedCards,
+    //   name: "Random Plan",
+    //   userId: "12345678910",
+    // });
+  };
+
+  // Search logic
   const { searchedCards, handleSearch } = useSearch(
     selections.map(UnwrapToCard)
   );
@@ -91,6 +88,9 @@ export default function ProjectPlanBuilder() {
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => setHasLoaded(true), []);
+
+  // Confimation modal
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <Flex flexFlow="row nowrap" mb="10">
@@ -139,11 +139,11 @@ export default function ProjectPlanBuilder() {
                 )}
               </PDFDownloadLink>
             )}
+            <Button onClick={DeleteHandler}>Delete</Button>
             <Button onClick={SavePlanHandler} bg="gold" color="white">
               Save Project Plan
             </Button>
           </HStack>
-          {/* <Button onClick={ExportHandler}>Export Selected</Button> */}
         </Flex>
         {selections.filter((card) => card.selection).length > 0 ? (
           <HStack mt="10" gap="41" flexDirection="row">
