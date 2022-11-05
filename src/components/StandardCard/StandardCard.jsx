@@ -12,11 +12,24 @@ import {
 } from "@chakra-ui/react";
 import CardModal from "../Modals/CardModal";
 import Comments from "../Comments";
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon, RepeatIcon } from "@chakra-ui/icons";
 
 const StandardCard = ({ card, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setSelection = () => undefined, toDeselect = false } = { ...card };
+  const { setSelection = () => undefined, mode = "green" } = { ...card };
+  const modeColors = {
+    green: "green.500",
+    red: "red.500",
+    switchGray: "gray.500",
+    switchYellow: "yellow.500",
+  };
+  const modeIcons = {
+    green: CheckIcon,
+    red: CloseIcon,
+    switchGray: RepeatIcon,
+    switchYellow: RepeatIcon,
+  };
+
   return (
     <Flex
       {...props}
@@ -24,37 +37,30 @@ const StandardCard = ({ card, ...props }) => {
       boxShadow="base"
       bgColor="white"
       height={{ base: "sm", md: "md" }}
-      borderColor="green.500"
-      borderWidth={card.selected && !card.toDeselect ? "5px" : "0"}
+      borderColor={
+        mode === "switchYellow" ? modeColors.switchYellow : "green.500"
+      }
+      borderWidth={
+        card.selected && (mode === "green" || mode === "switchYellow")
+          ? "5px"
+          : "0"
+      }
       onClick={() => setSelection(!card.selected)}
     >
       <Box height="37%" position="relative">
-        {card.selected &&
-          (toDeselect ? (
-            <Icon
-              bgColor="red.500"
-              color="white"
-              borderRadius="100%"
-              p="1"
-              as={CloseIcon}
-              position="absolute"
-              fontSize="24"
-              left="5"
-              top="5"
-            />
-          ) : (
-            <Icon
-              bgColor="green.500"
-              color="white"
-              borderRadius="100%"
-              p="1"
-              as={CheckIcon}
-              position="absolute"
-              fontSize="24"
-              left="5"
-              top="5"
-            />
-          ))}
+        {card.selected && (
+          <Icon
+            bgColor={modeColors[mode]}
+            color="white"
+            borderRadius="100%"
+            p="1"
+            as={modeIcons[mode]}
+            position="absolute"
+            fontSize="24"
+            left="5"
+            top="5"
+          />
+        )}
         <Image
           height="100%"
           width="full"

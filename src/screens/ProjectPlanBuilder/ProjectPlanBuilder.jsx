@@ -48,9 +48,20 @@ export default function ProjectPlanBuilder() {
   // state in this component from a <SelectableCard /> child component
   const SelectionSetter = (index) => {
     return (selection) => {
-      const newSelections = [...selections];
-      newSelections[index].selection = selection;
-      setSelections(newSelections);
+      if (isSwitching) {
+        if (switchWith.current === null) {
+          const newSelections = [...selections];
+          switchWith.current = index;
+          newSelections[index].mode = "switchYellow";
+          setSelections(newSelections);
+        } else {
+          Switcher(index);
+        }
+      } else {
+        const newSelections = [...selections];
+        newSelections[index].selection = selection;
+        setSelections(newSelections);
+      }
     };
   };
 
@@ -62,12 +73,46 @@ export default function ProjectPlanBuilder() {
     return <StandardCard key={card.index} card={cardProps} />;
   };
   // Renders cards to appear de-selectable
+  const Comparator = (a, b) => {
+    const aVal = a.order !== undefined ? a.order : a.index;
+    const bVal = b.order !== undefined ? b.order : b.index;
+    return aVal - bVal;
+  };
+
   const RenderSelected = (card) => {
     const cardProps = { ...card.cardProps };
     cardProps.selected = card.selection;
     cardProps.setSelection = SelectionSetter(card.index);
-    cardProps.toDeselect = true;
+    cardProps.mode = (function () {
+      if (isSwitching) {
+        return card.order === switchWith.current
+          ? "switchYellow"
+          : "switchGray";
+      } else {
+        return "red";
+      }
+    })();
     return <StandardCard key={card.index} card={cardProps} />;
+  };
+
+  // Order handlers
+
+  const [isSwitching, setSwitching] = useState(false);
+  const switchWith = useRef(null);
+  const Switcher = (b) => {
+    const a = switchWith.current;
+
+    const newSelections = [...selections];
+    newSelections[a].order = b;
+    newSelections[b].order = a;
+    const temp = { ...newSelections[a] };
+    temp.mode = "red";
+    newSelections[a] = newSelections[b];
+    newSelections[b] = temp;
+    setSelections(newSelections, () => {
+      switchWith.current = null;
+      setSwitching(false);
+    });
   };
 
   // DB action handlers
@@ -82,25 +127,10 @@ export default function ProjectPlanBuilder() {
     onClose();
   };
 
-  const removeExtraProps = (card) => {
-    const newCard = { ...card };
-    if (newCard.selected !== undefined) {
-      delete newCard.selected;
-    }
-    if (newCard.setSelection !== undefined) {
-      delete newCard.setSelection;
-    }
-    if (newCard.selectionIndex !== undefined) {
-      delete newCard.selectionIndex;
-    }
-    return newCard;
-  };
-
   const SavePlanHandler = async () => {
     const selectedCards = selections
       .filter((card) => card.selection)
-      .map(UnwrapToCard)
-      .map(removeExtraProps);
+      .map(UnwrapToCard);
     await createPlan({
       cards: selectedCards,
       name: nameRef.current.value,
@@ -132,7 +162,7 @@ export default function ProjectPlanBuilder() {
         <Heading flex="1" gridArea="stack" textAlign="center">
           Project Plan Builder
         </Heading>
-        <Button>Bruh</Button>
+        <Button>View Project Plans</Button>
       </Flex>
       <Flex
         p={5}
@@ -165,7 +195,13 @@ export default function ProjectPlanBuilder() {
             />
           </Box>
           <HStack>
-            {/* <Button>Download</Button> */}
+            <Button
+              bgColor={isSwitching ? "gold" : "default"}
+              color={isSwitching ? "white" : "default"}
+              onClick={() => setSwitching(!isSwitching)}
+            >
+              {isSwitching ? "Finish reordering" : "Reorder cards"}
+            </Button>
             {hasLoaded && (
               <PDFDownloadLink
                 document={
@@ -205,7 +241,7 @@ export default function ProjectPlanBuilder() {
         gap="41"
         m="10"
       >
-        {searchedCards.map(WrapToSelection).map(RenderCards)}
+        {searchedCards.map(WrapToSelection).sort(Comparator).map(RenderCards)}
       </Grid>
       <PlanConfirmationModal
         isOpen={isOpen}
