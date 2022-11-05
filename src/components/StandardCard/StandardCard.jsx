@@ -34,6 +34,15 @@ const StandardCard = ({ card, ...props }) => {
     switchGray: RepeatIcon,
     switchYellow: RepeatIcon,
   };
+  const SelectorButton = () => (
+    <Button
+      disabled={mode === "switchYellow" || mode === "switchGray"}
+      onClick={() => setSelection(!card.selected)}
+      flex="1"
+    >
+      {card.selected ? "Remove from plan" : "Add to Plan"}
+    </Button>
+  );
 
   return (
     <Flex
