@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Card } from "src/utils/types.ts";
+import { CardSchema as Card } from "./Card";
 
 const { Schema } = mongoose;
 
@@ -9,7 +9,7 @@ const PlanSchema = new Schema({
   },
   cards: {
     type: [Card],
-  }, 
+  },
   name: {
     type: String,
   },

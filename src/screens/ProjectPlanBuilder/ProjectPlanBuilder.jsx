@@ -17,6 +17,7 @@ import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
 import { createPlan } from "../../actions/Plan";
 import PlanConfirmationModal from "../../components/Modals/PlanConfirmationModal";
 import { EditIcon, Icon } from "@chakra-ui/icons";
+import useUser from "../../utils/lib/useUser";
 
 export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
@@ -81,15 +82,30 @@ export default function ProjectPlanBuilder() {
     onClose();
   };
 
+  const removeExtraProps = (card) => {
+    const newCard = { ...card };
+    if (newCard.selected !== undefined) {
+      delete newCard.selected;
+    }
+    if (newCard.setSelection !== undefined) {
+      delete newCard.setSelection;
+    }
+    if (newCard.selectionIndex !== undefined) {
+      delete newCard.selectionIndex;
+    }
+    return newCard;
+  };
+
   const SavePlanHandler = async () => {
     const selectedCards = selections
       .filter((card) => card.selection)
-      .map(UnwrapToCard);
-    // await createPlan({
-    //   cards: selectedCards,
-    //   name: "Random Plan",
-    //   userId: "12345678910",
-    // });
+      .map(UnwrapToCard)
+      .map(removeExtraProps);
+    await createPlan({
+      cards: selectedCards,
+      name: nameRef.current.value,
+      userId: user._id,
+    });
     onClose();
   };
 
@@ -105,6 +121,7 @@ export default function ProjectPlanBuilder() {
   // Confimation modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const nameRef = useRef();
+  const { user } = useUser();
 
   return (
     <>
