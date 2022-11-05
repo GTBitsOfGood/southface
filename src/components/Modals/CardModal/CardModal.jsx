@@ -108,7 +108,13 @@ const CardModal = ({
       </>
     );
   };
-
+  const {
+    AddToPlanButton = (
+      <Button bgColor="#D9D9D9" alignSelf="end" size="lg" rounded={16}>
+        Add to Plan
+      </Button>
+    ),
+  } = { ...rest };
   return (
     <Modal
       {...rest}
@@ -275,9 +281,7 @@ const CardModal = ({
                   </Box>
                 </Center>
               )}
-              <Button bgColor="#D9D9D9" alignSelf="end" size="lg" rounded={16}>
-                Add to Plan
-              </Button>
+              {AddToPlanButton}
             </SimpleGrid>
           </Flex>
         </ModalBody>

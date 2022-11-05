@@ -129,6 +129,7 @@ const StandardCard = ({ card, ...props }) => {
           cardTitle={card.title}
           cardComments={card.comments}
           cardImages={card.images}
+          AddToPlanButton={<SelectorButton />}
         />
       </Flex>
     </Flex>
