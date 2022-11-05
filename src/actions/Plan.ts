@@ -3,7 +3,7 @@ import urls from "src/utils/urls";
 
 import { Plan as PlanType } from "src/utils/types";
 
-export const getPlans = async (id: string) => {
+export const getPlans = async () => {
   return fetch(urls.baseUrl + urls.api.plan.get, {
     method: "GET",
     mode: "same-origin",

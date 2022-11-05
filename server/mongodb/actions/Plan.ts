@@ -5,15 +5,8 @@ import { Plan as PlanType } from "src/utils/types";
 
 export async function createPlan(plan: PlanType) {
     await mongoDB();
-    
-    const newPlan = await Plan.create(plan, function (err, docs) {
-        if (err){
-            console.log(err)
-        }
-        else {
-            console.log("Created Plan: ", docs);
-        }
-    });
+
+    const newPlan = await Plan.create(plan);
 
     return newPlan;
 }
