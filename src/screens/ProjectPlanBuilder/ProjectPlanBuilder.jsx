@@ -9,11 +9,14 @@ import {
   Box,
   Grid,
   useDisclosure,
+  Input,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
 import { createPlan } from "../../actions/Plan";
+import PlanConfirmationModal from "../../components/Modals/PlanConfirmationModal";
+import { EditIcon, Icon } from "@chakra-ui/icons";
 
 export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
@@ -67,7 +70,16 @@ export default function ProjectPlanBuilder() {
   };
 
   // DB action handlers
-  const DeleteHandler = () => undefined;
+  const DiscardPlanHandler = () => {
+    setSelections((prevSelections) => {
+      return prevSelections.map((selection) => {
+        const newSelection = { ...selection };
+        newSelection.selection = false;
+        return newSelection;
+      });
+    });
+    onClose();
+  };
 
   const SavePlanHandler = async () => {
     const selectedCards = selections
@@ -78,6 +90,7 @@ export default function ProjectPlanBuilder() {
     //   name: "Random Plan",
     //   userId: "12345678910",
     // });
+    onClose();
   };
 
   // Search logic
@@ -91,6 +104,8 @@ export default function ProjectPlanBuilder() {
 
   // Confimation modal
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const nameRef = useRef();
+
   return (
     <>
       <Flex flexFlow="row nowrap" mb="10">
@@ -107,7 +122,7 @@ export default function ProjectPlanBuilder() {
         borderRadius={15}
         flexDirection="column"
         flexWrap="none"
-        bgColor="lightgray"
+        bgColor="#DADADA"
         alignItems="flex-start"
         minH="lg"
         overflowX="scroll"
@@ -120,7 +135,18 @@ export default function ProjectPlanBuilder() {
           width="100%"
           alignItems="flex-start"
         >
-          <Heading size="lg">Current Project Plan</Heading>
+          <Box minWidth="40%" as="span">
+            <Input
+              type="text"
+              placeholder="Name your project plan"
+              fontSize="3xl"
+              variant="flushed"
+              pb="3"
+              borderBottomWidth="3px"
+              borderColor="darkgray"
+              ref={nameRef}
+            />
+          </Box>
           <HStack>
             {/* <Button>Download</Button> */}
             {hasLoaded && (
@@ -139,9 +165,8 @@ export default function ProjectPlanBuilder() {
                 )}
               </PDFDownloadLink>
             )}
-            <Button onClick={DeleteHandler}>Delete</Button>
-            <Button onClick={SavePlanHandler} bg="gold" color="white">
-              Save Project Plan
+            <Button onClick={onOpen} bg="gold" color="white">
+              End Project Plan
             </Button>
           </HStack>
         </Flex>
@@ -165,6 +190,12 @@ export default function ProjectPlanBuilder() {
       >
         {searchedCards.map(WrapToSelection).map(RenderCards)}
       </Grid>
+      <PlanConfirmationModal
+        isOpen={isOpen}
+        onClose={onClose}
+        handleSave={SavePlanHandler}
+        handleDiscard={DiscardPlanHandler}
+      />
     </>
   );
 }
