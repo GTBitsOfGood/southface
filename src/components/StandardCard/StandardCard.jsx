@@ -9,14 +9,19 @@ import {
   useDisclosure,
   Icon,
   Box,
+  IconButton,
 } from "@chakra-ui/react";
 import CardModal from "../Modals/CardModal";
 import Comments from "../Comments";
-import { CheckIcon, CloseIcon, RepeatIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon, InfoIcon, RepeatIcon } from "@chakra-ui/icons";
 
 const StandardCard = ({ card, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setSelection = () => undefined, mode = "green" } = { ...card };
+  const {
+    setSelection = () => undefined,
+    mode = "green",
+    selectable = false,
+  } = { ...card };
   const modeColors = {
     green: "green.500",
     red: "red.500",
@@ -45,10 +50,14 @@ const StandardCard = ({ card, ...props }) => {
           ? "5px"
           : "0"
       }
-      onClick={() => setSelection(!card.selected)}
+      onClick={
+        mode === "switchYellow" || mode === "switchGray"
+          ? () => setSelection(!card.selected)
+          : () => undefined
+      }
     >
       <Box height="37%" position="relative">
-        {card.selected && (
+        {card.selected && mode !== "red" && (
           <Icon
             bgColor={modeColors[mode]}
             color="white"
@@ -88,9 +97,20 @@ const StandardCard = ({ card, ...props }) => {
             );
           })}
         </HStack>
-        <Button size="lg" mt={7} onClick={onOpen} bgColor="#D9D9D9">
-          View Full Standard
-        </Button>
+        {selectable ? (
+          <HStack justify="space-evenly" pt="5">
+            <SelectorButton />
+            <IconButton
+              onClick={onOpen}
+              fontSize="lg"
+              icon={<Icon as={InfoIcon} />}
+            ></IconButton>
+          </HStack>
+        ) : (
+          <Button size="lg" mt={7} onClick={onOpen} bgColor="#D9D9D9">
+            View Full Standard
+          </Button>
+        )}
         <CardModal
           isOpen={isOpen}
           onClose={onClose}

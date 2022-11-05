@@ -33,6 +33,7 @@ export default function ProjectPlanBuilder() {
     return {
       cardProps: card,
       index: card.selectionIndex ? card.selectionIndex : index,
+      order: card.order ? card.order : index,
       selection: card.selected,
     };
   };
@@ -49,11 +50,8 @@ export default function ProjectPlanBuilder() {
   const SelectionSetter = (index) => {
     return (selection) => {
       if (isSwitching) {
-        if (switchWith.current === null) {
-          const newSelections = [...selections];
-          switchWith.current = index;
-          newSelections[index].mode = "switchYellow";
-          setSelections(newSelections);
+        if (switchWith === null) {
+          setSwitchWith(index);
         } else {
           Switcher(index);
         }
@@ -70,24 +68,20 @@ export default function ProjectPlanBuilder() {
     const cardProps = { ...card.cardProps };
     cardProps.selected = card.selection;
     cardProps.setSelection = SelectionSetter(card.index);
+    cardProps.selectable = true;
     return <StandardCard key={card.index} card={cardProps} />;
   };
-  // Renders cards to appear de-selectable
-  const Comparator = (a, b) => {
-    const aVal = a.order !== undefined ? a.order : a.index;
-    const bVal = b.order !== undefined ? b.order : b.index;
-    return aVal - bVal;
-  };
+
+  const Comparator = (a, b) => a.order - b.order;
 
   const RenderSelected = (card) => {
     const cardProps = { ...card.cardProps };
     cardProps.selected = card.selection;
     cardProps.setSelection = SelectionSetter(card.index);
+    cardProps.selectable = true;
     cardProps.mode = (function () {
       if (isSwitching) {
-        return card.order === switchWith.current
-          ? "switchYellow"
-          : "switchGray";
+        return card.index === switchWith ? "switchYellow" : "switchGray";
       } else {
         return "red";
       }
@@ -98,29 +92,40 @@ export default function ProjectPlanBuilder() {
   // Order handlers
 
   const [isSwitching, setSwitching] = useState(false);
-  const switchWith = useRef(null);
+  useEffect(() => {
+    if (!isSwitching) {
+      setSwitchWith(null);
+    }
+  }, [isSwitching]);
+  const [switchWith, setSwitchWith] = useState(null);
   const Switcher = (b) => {
-    const a = switchWith.current;
-
+    const a = switchWith;
+    console.log(
+      `Before: a is ${selections[a].order} and b is ${selections[b].order}`
+    );
     const newSelections = [...selections];
-    newSelections[a].order = b;
-    newSelections[b].order = a;
-    const temp = { ...newSelections[a] };
-    temp.mode = "red";
-    newSelections[a] = newSelections[b];
-    newSelections[b] = temp;
-    setSelections(newSelections, () => {
-      switchWith.current = null;
+    const temp = newSelections[a].order;
+    newSelections[a].order = newSelections[b].order;
+    newSelections[b].order = temp;
+    // for (let i = Math.max(a, b) + 1; i < l; i++) {
+    //   newSelections[i].order = newSelections[i].order + 1;
+    // }
+    setSelections(() => {
       setSwitching(false);
+      return newSelections;
     });
+    console.log(
+      `After: a is ${newSelections[a].order} and b is ${newSelections[b].order}`
+    );
   };
 
   // DB action handlers
   const DiscardPlanHandler = () => {
     setSelections((prevSelections) => {
-      return prevSelections.map((selection) => {
+      return prevSelections.map((selection, order) => {
         const newSelection = { ...selection };
         newSelection.selection = false;
+        newSelection.order = order;
         return newSelection;
       });
     });
@@ -128,8 +133,9 @@ export default function ProjectPlanBuilder() {
   };
 
   const SavePlanHandler = async () => {
-    const selectedCards = selections
+    const selectedCards = [...selections]
       .filter((card) => card.selection)
+      .sort(Comparator)
       .map(UnwrapToCard);
     await createPlan({
       cards: selectedCards,
@@ -188,6 +194,7 @@ export default function ProjectPlanBuilder() {
               placeholder="Name your project plan"
               fontSize="3xl"
               variant="flushed"
+              mt="3"
               pb="3"
               borderBottomWidth="3px"
               borderColor="darkgray"
@@ -225,7 +232,10 @@ export default function ProjectPlanBuilder() {
         </Flex>
         {selections.filter((card) => card.selection).length > 0 ? (
           <HStack mt="10" gap="41" flexDirection="row">
-            {selections.filter((card) => card.selection).map(RenderSelected)}
+            {[...selections]
+              .filter((card) => card.selection)
+              .sort(Comparator)
+              .map(RenderSelected)}
           </HStack>
         ) : (
           <Box alignSelf="center" flex="1" width="50%" fontSize="3xl">
@@ -241,7 +251,7 @@ export default function ProjectPlanBuilder() {
         gap="41"
         m="10"
       >
-        {searchedCards.map(WrapToSelection).sort(Comparator).map(RenderCards)}
+        {searchedCards.map(WrapToSelection).map(RenderCards)}
       </Grid>
       <PlanConfirmationModal
         isOpen={isOpen}
