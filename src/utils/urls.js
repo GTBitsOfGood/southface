@@ -2,12 +2,9 @@ export default {
   baseUrl: process.env.BASE_URL ?? "http://localhost:3000",
   pages: {
     index: "/",
-    ssr: "/ssr",
     login: "/login",
-    app: {
-      home: "/app",
-    },
     library: "/library",
+    planbuilder: "/plan-builder",
   },
   api: {
     example: "/api/example",

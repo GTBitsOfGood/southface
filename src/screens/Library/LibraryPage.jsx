@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Heading, Flex, Text } from "@chakra-ui/react";
 import SearchBar from "../../components/SearchBar";
+import { useSearch } from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import useUser from "src/utils/lib/useUser";
 import PaginationTab from "../../components/PaginationTab";
@@ -11,6 +12,7 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
     redirectTo: "",
   });
 
+  const { searchedCards, handleSearch } = useSearch(cardsFromDatabase);
   const [cards, setCards] = useState(cardsFromDatabase);
   const [isRefresehing, setIsRefreshing] = useState(false);
   const [searchString, setSearchString] = useState("");
@@ -24,7 +26,7 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
     <Text>Loading</Text>
   ) : (
     <Flex alignItems="stretch" flexDirection="column">
-      <SearchBar setSearchString={setSearchString} width="full" />
+      <SearchBar handleSearch={handleSearch} />
       <Heading fontSize={{ base: "4xl", lg: "5xl" }}> Library</Heading>
 
       <StandardCardTable
