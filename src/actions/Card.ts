@@ -21,6 +21,25 @@ export const getCards = async () => {
     });
 };
 
+export const getCardsPagination = async (pageNumber: number) => {
+  console.log(urls.api.card.getPagination + pageNumber);
+  return fetch(urls.api.card.getPagination + pageNumber, {
+    method: "GET",
+    mode: "same-origin",
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+
+      return json.payload;
+    });
+};
+
 export const getCardById = async (id: string) => {
   return fetch(urls.api.card.get + id, {
     method: "GET",

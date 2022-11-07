@@ -17,6 +17,7 @@ export default {
     card: {
       create: "/api/card/create/",
       get: "/api/card/get/",
+      getPagination: "/api/card/getPagination?page=",
       update: "/api/card/update/",
       delete: "/api/card/delete/",
     },

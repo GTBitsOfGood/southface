@@ -19,7 +19,8 @@ const StandardCard = ({ card, ...props }) => {
       {...props}
       flexDirection="column"
       boxShadow="base"
-      height={{ base: "sm", md: "md" }}
+      height="md"
+      rounded={24}
     >
       <Image
         height="37%"
@@ -27,6 +28,7 @@ const StandardCard = ({ card, ...props }) => {
         fit="cover"
         src={card.images[0]}
         alt="construction image"
+        borderTopRadius={24}
       />
 
       <Flex p={3} flexDirection="column" flex={1}>
