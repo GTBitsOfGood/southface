@@ -13,6 +13,7 @@ const SearchBar = (props) => {
     },
     allowTemplates = true,
     popUpOnLoad = false,
+    ...rest
   } = props;
   const { setSearch, criteria } = handleSearch;
 
@@ -66,7 +67,7 @@ const SearchBar = (props) => {
           setFilterTags={setTags}
         />
       )}
-      <Flex flexDirection="row">
+      <Flex {...rest} flexDirection="row">
         <Box flex="1">
           <Input
             ref={textInput}

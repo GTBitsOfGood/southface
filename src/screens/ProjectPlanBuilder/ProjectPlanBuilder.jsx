@@ -18,6 +18,7 @@ import { createPlan } from "../../actions/Plan";
 import PlanConfirmationModal from "../../components/Modals/PlanConfirmationModal";
 import { EditIcon, Icon } from "@chakra-ui/icons";
 import useUser from "../../utils/lib/useUser";
+import Link from "next/link";
 
 export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
@@ -163,12 +164,14 @@ export default function ProjectPlanBuilder() {
     <>
       <Flex flexFlow="row nowrap" mb="10">
         <Button opacity="0" cursor="default">
-          Bruh
+          View Saved Project Plans
         </Button>
         <Heading flex="1" gridArea="stack" textAlign="center">
           Project Plan Builder
         </Heading>
-        <Button>View Project Plans</Button>
+        <Link href="/saved-project-plans">
+          <Button href="/">View Saved Project Plans</Button>
+        </Link>
       </Flex>
       <Flex
         p={5}

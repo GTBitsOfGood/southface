@@ -98,7 +98,7 @@ const useEditCardModal = (
    * This method re-fetches the cards inside getServerSideProps.
    */
   const refreshData = () => {
-    // router.replace(router.asPath); This is not working (best option since page does not refresh)
+    // router.replace(router.asPath); // if this doesn't work (comment and use the commented code below)
     router.reload();
   };
 

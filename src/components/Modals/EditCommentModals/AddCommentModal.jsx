@@ -29,6 +29,7 @@ const AddCommentModal = ({ isOpen, onClose, cardId, comments }) => {
     const newComments = comments.concat(newComment);
     await updateCardById(cardId, { comments: newComments });
 
+    // router.replace(router.asPath); // if this doesn't work, then comment it out and use the code below
     router.reload();
 
     onClose();
