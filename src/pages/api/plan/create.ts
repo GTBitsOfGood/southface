@@ -7,10 +7,11 @@ import { withSessionRoute } from "src/utils/lib/session";
 // @access  Public
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    await createPlan(req.body);
+    const plan = await createPlan(req.body);
 
     return res.status(200).json({
       success: true,
+      payload: plan,
     });
   } catch (error: any) {
     res.status(400).json({
