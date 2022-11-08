@@ -11,28 +11,31 @@ export async function createPlan(plan: PlanType) {
     return newPlan;
 }
 
-export async function updatePlanById(id: string, updatedPlan: Partial<PlanType>) {
-    await mongoDB();
+export async function updatePlanById(
+  id: string,
+  updatedPlan: Partial<PlanType>
+) {
+  await mongoDB();
 
-    await Plan.findOneAndUpdate({_id: id}, updatedPlan);
+  await Plan.findOneAndUpdate({ _id: id }, updatedPlan);
 }
 
 export async function deletePlanById(id: string) {
-    await mongoDB();
+  await mongoDB();
 
-    await Plan.findOneAndRemove({_id: id });
+  await Plan.findOneAndRemove({ _id: id });
 }
 
 export async function getPlanById(id: string) {
-    await mongoDB();
+  await mongoDB();
 
-    const plan = await Plan.find({_id: id});
+  const plan = await Plan.find({ _id: id });
 
-    return plan;
+  return plan;
 }
 
 export async function getPlans(userId: string) {
-    await mongoDB();
+  await mongoDB();
 
-    return Plan.find({userId: userId});
+  return Plan.find({ userId: userId });
 }
