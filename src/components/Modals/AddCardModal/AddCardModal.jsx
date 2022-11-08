@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useEditCardModal from "../../../utils/useEditCard";
+
 import {
   ModalOverlay,
   ModalContent,
@@ -23,6 +24,7 @@ import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 import ModifyImageModal from "../ModifyImageModal";
 import ModalImage from "../ModalImage";
+import { useRouter } from "next/router";
 
 const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
   const {
@@ -46,6 +48,8 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
     tagInputRef,
   } = useEditCardModal();
 
+  const router = useRouter();
+
   const addCard = async () => {
     const addCardInput = {
       images,
@@ -53,14 +57,14 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
       comments: newComment,
       tags,
     };
-    const createdCard = await createCard(addCardInput);
-    setCards((cards) => [...cards, createdCard]);
+    await createCard(addCardInput);
     setComments([]);
     setTitle("");
     setImages([]);
     setTags([]);
 
     onClose();
+    router.reload();
   };
 
   const TagInput = (props) => {

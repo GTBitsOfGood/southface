@@ -4,28 +4,57 @@ import { useRef } from "react";
 
 const SearchBar = (props) => {
   const {
-    setSearchString = () => undefined,
-    setFilterTags = () => undefined,
-    filterTags = {},
+    handleSearch = {
+      setSearch: () => undefined,
+      criteria: {
+        searchString: "",
+        tags: {},
+      },
+    },
     allowTemplates = true,
     popUpOnLoad = false,
+    ...rest
   } = props;
+  const { setSearch, criteria } = handleSearch;
 
-  const self = useRef();
+  const textInput = useRef();
   const tagInput = useRef();
 
   const AddFilterTag = () => {
-    const newFilterTags = { ...filterTags };
-    newFilterTags[tagInput.current.value] = true;
-    setFilterTags(newFilterTags);
+    setSearch((search) => {
+      const prevSearch = { ...search };
+      prevSearch.tags[tagInput.current.value] = true;
+      return prevSearch;
+    });
     tagInput.current.value = "";
   };
-  const ClearFilterTags = () => setFilterTags({});
-  const TagDeleter = (tag) => () => {
-    const newFilterTags = { ...filterTags };
-    delete newFilterTags[tag];
-    setFilterTags(newFilterTags);
+  const ClearFilterTags = () =>
+    setSearch((search) => {
+      const prevSearch = { ...search };
+      prevSearch.tags = {};
+      return prevSearch;
+    });
+  const setTags = (tags) =>
+    setSearch((search) => {
+      const prevSearch = { ...search };
+      prevSearch.tags = tags;
+      return prevSearch;
+    });
+  const setSearchString = (string = textInput.current.value) => {
+    setSearch((search) => {
+      const prevSearch = { ...search };
+      prevSearch.searchString = string;
+      return prevSearch;
+    });
   };
+
+  const TagDeleter = (tag) => () =>
+    setSearch((search) => {
+      const prevSearch = { ...search };
+      delete prevSearch.tags[tag];
+      return prevSearch;
+    });
+
   const { isOpen, onOpen, onClose } = useDisclosure({
     defaultIsOpen: popUpOnLoad,
   });
@@ -35,19 +64,19 @@ const SearchBar = (props) => {
         <ChooseTemplateModal
           isOpen={isOpen}
           onClose={onClose}
-          setFilterTags={setFilterTags}
+          setFilterTags={setTags}
         />
       )}
-      <Flex flexDirection="row">
+      <Flex {...rest} flexDirection="row">
         <Box flex="1">
           <Input
-            ref={self}
+            ref={textInput}
             size="lg"
             placeholder="Search specs"
-            onInput={() => setSearchString(self.current.value)}
+            onInput={() => setSearchString(textInput.current.value)}
           />
           <Flex>
-            {Object.keys(filterTags).map((tag, index) => (
+            {Object.keys(criteria.tags).map((tag, index) => (
               <Tag cursor="pointer" onClick={TagDeleter(tag)} key={index}>
                 {tag}
               </Tag>

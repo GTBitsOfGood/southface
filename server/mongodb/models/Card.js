@@ -17,7 +17,15 @@ const CardSchema = new Schema({
   tags: [{
     type: String,
     default: [],
-  }]
+  }],
+  selected: {
+    type: Boolean,
+    default: false,
+  },
+  selectionIndex: {
+    type: Number,
+    default: 0,
+  }
 });
 
 export { CardSchema };

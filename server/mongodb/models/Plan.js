@@ -1,13 +1,16 @@
 import mongoose from "mongoose";
-import { CardSchema } from "./Card";
+import { CardSchema } from "server/mongodb/models/Card.js";
 
 const { Schema } = mongoose;
 
 const PlanSchema = new Schema({
+  userId: {
+    type: String,
+  },
   cards: {
     type: [CardSchema],
-  },
-  comments: {
+  }, 
+  name: {
     type: String,
   },
 });

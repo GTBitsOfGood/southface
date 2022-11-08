@@ -7,7 +7,7 @@ import { getUserFromId } from "server/mongodb/actions/User";
 // @access  Public
 const handler = async (req, res) => {
   try {
-    const userId = req.session.user.id;
+    const userId = req.session.user ? req.session.user.id : req.body.userId;
     const user = await getUserFromId(userId);
     if (user.isAdmin) {
       const createdCard = await createCard(req.body);

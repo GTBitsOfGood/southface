@@ -1,19 +1,23 @@
-import { useState, createRef } from "react";
-import { Heading, Box, Button } from "@chakra-ui/react";
+import { useState, useEffect, createRef } from "react";
+import { Heading, Box, Button, Flex, Text } from "@chakra-ui/react";
 import SearchBar from "../../components/SearchBar";
+import { useSearch } from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import useUser from "src/utils/lib/useUser";
+import PaginationTab from "../../components/PaginationTab";
 
-import { useEffect } from "react";
 import { uploadFile, listBlobs } from "../../utils/blobStorage";
 import FilePicker from "chakra-ui-file-picker";
 
-const LibraryPage = ({ cards }) => {
+const LibraryPage = ({ cardsFromDatabase, numPages }) => {
   const { user: currentUser } = useUser({
     redirectIfFound: false,
     redirectTo: "",
   });
 
+  const { searchedCards, handleSearch } = useSearch(cardsFromDatabase);
+  const [cards, setCards] = useState(cardsFromDatabase);
+  const [isRefresehing, setIsRefreshing] = useState(false);
   const [searchString, setSearchString] = useState("");
   const [fileList, setFileList] = useState([]);
 
@@ -21,12 +25,22 @@ const LibraryPage = ({ cards }) => {
 
   const upload = () => {
     const file = fileList[0];
-    uploadFile(file.name, file, { test_metadata: "test" });
+    uploadFile(file.name, file, { test_metadata: "test" })
+    .then((res) => {
+      console.log(res);
+    });
   };
+  const [currentPage, setCurrentPage] = useState(1);
 
-  return (
-    <>
-      <SearchBar setSearchString={setSearchString} />
+  useEffect(() => {
+    setIsRefreshing(false);
+  }, [cards]);
+
+  return isRefresehing ? (
+    <Text>Loading</Text>
+  ) : (
+    <Flex alignItems="stretch" flexDirection="column">
+      <SearchBar handleSearch={handleSearch} />
       <Heading fontSize={{ base: "4xl", lg: "5xl" }}> Library</Heading>
 
       <Box>
@@ -45,7 +59,17 @@ const LibraryPage = ({ cards }) => {
         isLoggedIn={currentUser?.isLoggedIn}
         isAdmin={currentUser?.isAdmin}
       />
-    </>
+
+      <PaginationTab
+        numPages={numPages}
+        alignSelf="center"
+        border="1px solid black"
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setCards={setCards}
+        setIsRefreshing={setIsRefreshing}
+      />
+    </Flex>
   );
 };
 
