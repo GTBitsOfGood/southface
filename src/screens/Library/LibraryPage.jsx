@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Heading, Flex, Text } from "@chakra-ui/react";
-import SearchBar from "../../components/SearchBar";
-import { useSearch } from "../../components/SearchBar";
+import SearchBar, { useSearch } from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import useUser from "src/utils/lib/useUser";
 import PaginationTab from "../../components/PaginationTab";
@@ -25,8 +24,11 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
     <Text>Loading</Text>
   ) : (
     <Flex alignItems="stretch" flexDirection="column">
+      <Heading fontSize={{ base: "4xl", lg: "5xl" }} pb="5">
+        Library
+      </Heading>
+
       <SearchBar handleSearch={handleSearch} />
-      <Heading fontSize={{ base: "4xl", lg: "5xl" }}> Library</Heading>
 
       <StandardCardTable
         cards={cards}
