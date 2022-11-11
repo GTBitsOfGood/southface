@@ -15,7 +15,6 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
   const { searchedCards, handleSearch } = useSearch(cardsFromDatabase);
   const [cards, setCards] = useState(cardsFromDatabase);
   const [isRefresehing, setIsRefreshing] = useState(false);
-  const [searchString, setSearchString] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -33,6 +32,7 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
         cards={cards}
         isLoggedIn={currentUser?.isLoggedIn}
         isAdmin={currentUser?.isAdmin}
+        enablePDFExport={false}
       />
 
       <PaginationTab

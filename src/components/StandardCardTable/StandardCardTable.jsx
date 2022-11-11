@@ -19,6 +19,8 @@ const StandardCardTable = ({ cards, ...props }) => {
   const [isClientSide, setClientSide] = useState(false);
   const [cardComponents, setCardComponents] = useState(cards);
 
+  const { enablePDFExport = true } = { ...props };
+
   useEffect(() => {
     setClientSide(true);
   }, []);
@@ -31,14 +33,16 @@ const StandardCardTable = ({ cards, ...props }) => {
     <Box {...props}>
       {isClientSide && (
         <Flex alignItems="center" justifyContent="end" gap={4} mr={6}>
-          <Button
-            as={PDFDownloadLink}
-            document={<PlanDocumentPDF selectedPlanCards={cards} />}
-            fileName="plan.pdf"
-            boxShadow="base"
-          >
-            Download PDF
-          </Button>
+          {enablePDFExport && (
+            <Button
+              as={PDFDownloadLink}
+              document={<PlanDocumentPDF selectedPlanCards={cards} />}
+              fileName="plan.pdf"
+              boxShadow="base"
+            >
+              Download PDF
+            </Button>
+          )}
 
           <Button onClick={onOpen} rounded={4} boxShadow="base">
             Add Card
