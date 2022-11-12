@@ -94,20 +94,34 @@ const ImagePreviewModal = ({ isOpen, onClose, cardImages, cardComments }) => {
                 w={6}
                 h={6}
               />
-              <VStack p="2% 5% 2% 2%" alignItems="flex-start" w="35%">
+              <VStack
+                maxH={{ base: "240px", md: "430px", lg: "575px" }}
+                overflow="scroll"
+                p="5% 5% 5% 2%"
+                alignItems="flex-start"
+                w="35%"
+              >
                 {cardComments.map((comment, index) => {
                   return (
-                    <Box key={index}>
-                      <Text>{comment.body}</Text>
+                    <>
+                      <Box w="full" key={index}>
+                        <Text key={index}>{comment.body}</Text>
 
-                      <Flex w="full" justifyContent="space-between">
-                        <Text color="#FFD600">
-                          {new Date(comment.date).toDateString()}
-                        </Text>
-                        <Text color="#0065C1"></Text>
-                      </Flex>
+                        <Flex
+                          key={index}
+                          w="full"
+                          justifyContent="space-between"
+                        >
+                          <Text key={index} color="#FFD600">
+                            {new Date(comment.date).toDateString()}
+                          </Text>
+                          <Text key={index} color="#0065C1">
+                            Edit
+                          </Text>
+                        </Flex>
+                      </Box>
                       <Spacer />
-                    </Box>
+                    </>
                   );
                 })}
               </VStack>
