@@ -23,7 +23,7 @@ export async function getServerSideProps() {
   return {
     props: {
       cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
-      numPages,
+      initNumPages: numPages,
       pageNumber: pageNumber + 1,
     },
   };
