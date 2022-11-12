@@ -7,6 +7,11 @@ import {
   Box,
   Button,
   Flex,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
@@ -19,7 +24,11 @@ const StandardCardTable = ({ cards, ...props }) => {
   const [isClientSide, setClientSide] = useState(false);
   const [cardComponents, setCardComponents] = useState(cards);
 
-  const { enablePDFExport = true } = { ...props };
+  const {
+    enablePDFExport = true,
+    numCardsHandler = () => undefined,
+    numCardsRef = undefined,
+  } = { ...props };
 
   useEffect(() => {
     setClientSide(true);
@@ -32,7 +41,7 @@ const StandardCardTable = ({ cards, ...props }) => {
   return (
     <Box {...props}>
       {isClientSide && (
-        <Flex alignItems="center" justifyContent="end" gap={4} mr={6}>
+        <Flex alignItems="center" justifyContent="end" gap={4} mt={5} mr={6}>
           {enablePDFExport && (
             <Button
               as={PDFDownloadLink}
@@ -43,6 +52,20 @@ const StandardCardTable = ({ cards, ...props }) => {
               Download PDF
             </Button>
           )}
+
+          <NumberInput
+            ref={numCardsRef}
+            onClick={numCardsHandler}
+            defaultValue={5}
+            min={1}
+            step={5}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
 
           <Button onClick={onOpen} rounded={4} boxShadow="base">
             Add Card

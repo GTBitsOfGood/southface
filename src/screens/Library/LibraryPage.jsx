@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Heading, Flex, Text } from "@chakra-ui/react";
 import SearchBar, { useSearch } from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import useUser from "src/utils/lib/useUser";
 import PaginationTab from "../../components/PaginationTab";
+import { getCardsCount } from "../../../server/mongodb/actions/Card";
 
-const LibraryPage = ({ cardsFromDatabase, numPages }) => {
+const LibraryPage = ({ cardsFromDatabase, numPages: initNumPages }) => {
   const { user: currentUser } = useUser({
     redirectIfFound: false,
     redirectTo: "",
@@ -15,6 +16,14 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
   const [cards, setCards] = useState(cardsFromDatabase);
   const [isRefresehing, setIsRefreshing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [numPages, setNumPages] = useState(initNumPages);
+
+  const cardCountInput = useRef();
+  const CardCountHandler = async () => {
+    const cardsCount = await getCardsCount();
+    const cardsPerPage = cardCountInput.current.value;
+    setNumPages(Math.ceil(cardsCount / cardsPerPage));
+  };
 
   useEffect(() => {
     setIsRefreshing(false);
@@ -31,6 +40,8 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
       <SearchBar handleSearch={handleSearch} />
 
       <StandardCardTable
+        numCardsRef={cardCountInput}
+        numCardsHandler={CardCountHandler}
         cards={cards}
         isLoggedIn={currentUser?.isLoggedIn}
         isAdmin={currentUser?.isAdmin}
