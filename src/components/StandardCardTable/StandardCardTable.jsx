@@ -14,19 +14,14 @@ import AddCardModal from "../Modals/AddCardModal";
 import StandardCard from "../StandardCard/StandardCard";
 import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
 
-const StandardCardTable = ({ cards, ...props }) => {
+const StandardCardTable = ({ cards, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClientSide, setClientSide] = useState(false);
-  const [cardComponents, setCardComponents] = useState(cards);
 
   useEffect(() => {
     setClientSide(true);
   }, []);
 
-  // cards property may be stateful
-  useEffect(() => {
-    setCardComponents(cards);
-  }, [cards]);
   return (
     <Box {...props}>
       {isClientSide && (
@@ -43,11 +38,7 @@ const StandardCardTable = ({ cards, ...props }) => {
           <Button onClick={onOpen} rounded={4} boxShadow="base">
             Add Card
           </Button>
-          <AddCardModal
-            isOpen={isOpen}
-            onClose={onClose}
-            setCards={setCardComponents}
-          />
+          <AddCardModal isOpen={isOpen} onClose={onClose} setCards={setCards} />
         </Flex>
       )}
       <Grid
@@ -63,7 +54,7 @@ const StandardCardTable = ({ cards, ...props }) => {
         width="90%"
         m="3% auto"
       >
-        {cardComponents.map((card, index) => (
+        {cards.map((card, index) => (
           <GridItem w="100%" key={index} rounded={12}>
             <StandardCard card={card} />
           </GridItem>
