@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Grid,
   GridItem,
-  IconButton,
   useDisclosure,
   Box,
   Button,
@@ -14,40 +13,35 @@ import AddCardModal from "../Modals/AddCardModal";
 import StandardCard from "../StandardCard/StandardCard";
 import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
 
-const StandardCardTable = ({ cards, ...props }) => {
+const StandardCardTable = ({ cards, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClientSide, setClientSide] = useState(false);
-  const [cardComponents, setCardComponents] = useState(cards);
+
+  const { enablePDFExport = true } = { ...props };
 
   useEffect(() => {
     setClientSide(true);
   }, []);
 
-  // cards property may be stateful
-  useEffect(() => {
-    setCardComponents(cards);
-  }, [cards]);
   return (
     <Box {...props}>
       {isClientSide && (
-        <Flex alignItems="center" justifyContent="end" gap={4} mr={6}>
-          <Button
-            as={PDFDownloadLink}
-            document={<PlanDocumentPDF selectedPlanCards={cards} />}
-            fileName="plan.pdf"
-            boxShadow="base"
-          >
-            Download PDF
-          </Button>
+        <Flex alignItems="center" justifyContent="end" gap={4} mt={5} mr={6}>
+          {enablePDFExport && (
+            <Button
+              as={PDFDownloadLink}
+              document={<PlanDocumentPDF selectedPlanCards={cards} />}
+              fileName="plan.pdf"
+              boxShadow="base"
+            >
+              Download PDF
+            </Button>
+          )}
 
           <Button onClick={onOpen} rounded={4} boxShadow="base">
             Add Card
           </Button>
-          <AddCardModal
-            isOpen={isOpen}
-            onClose={onClose}
-            setCards={setCardComponents}
-          />
+          <AddCardModal isOpen={isOpen} onClose={onClose} setCards={setCards} />
         </Flex>
       )}
       <Grid
@@ -63,7 +57,7 @@ const StandardCardTable = ({ cards, ...props }) => {
         width="90%"
         m="3% auto"
       >
-        {cardComponents.map((card, index) => (
+        {cards.map((card, index) => (
           <GridItem w="100%" key={index} rounded={12}>
             <StandardCard card={card} />
           </GridItem>

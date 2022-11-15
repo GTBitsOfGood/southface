@@ -12,11 +12,18 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import CardModal from "../Modals/CardModal";
+import ImagePreviewModal from "../Modals/ImagePreviewModal";
 import Comments from "../Comments";
 import { CheckIcon, CloseIcon, InfoIcon, RepeatIcon } from "@chakra-ui/icons";
 
 const StandardCard = ({ card, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenImagePreviewModal,
+    onOpen: onOpenImagePreviewModal,
+    onClose: onCloseImagePreviewModal,
+  } = useDisclosure();
+
   const {
     setSelection = () => undefined,
     mode = "green",
@@ -85,8 +92,16 @@ const StandardCard = ({ card, ...props }) => {
           fit="cover"
           src={card.images[0]}
           alt="construction image"
+          onClick={onOpenImagePreviewModal}
         />
       </Box>
+
+      <ImagePreviewModal
+        isOpen={isOpenImagePreviewModal}
+        onClose={onCloseImagePreviewModal}
+        cardImages={card.images}
+        cardComments={card.comments}
+      />
 
       <Flex p={3} flexDirection="column" flex={1}>
         <Heading size="md">{card.title}</Heading>

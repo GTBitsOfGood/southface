@@ -21,9 +21,25 @@ export const getCards = async () => {
     });
 };
 
-export const getCardsPagination = async (pageNumber: number) => {
-  console.log(urls.api.card.getPagination + pageNumber);
-  return fetch(urls.api.card.getPagination + pageNumber, {
+export const getCardsPagination = async (
+  pageNumber: number,
+  searchFilter: {
+    searchString: string;
+    tags: any;
+  } | null = null
+) => {
+  let url = urls.api.card.getPagination + pageNumber;
+
+  if (searchFilter) {
+    const tagsArray = Object.keys(searchFilter.tags);
+    url +=
+      "&searchFilterString=" +
+      searchFilter.searchString +
+      "&searchFilterTags=" +
+      tagsArray;
+  }
+
+  return fetch(url, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",

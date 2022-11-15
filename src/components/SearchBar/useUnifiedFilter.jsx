@@ -13,9 +13,6 @@ export default function useTextFilter() {
         card.title
           ?.toLowerCase()
           .includes(searchCriteria.searchString.toLowerCase()) ||
-        card.body
-          ?.toLowerCase()
-          .includes(searchCriteria.searchString.toLowerCase()) ||
         card.tags
           ?.join(" ")
           .toLowerCase()

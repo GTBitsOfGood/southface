@@ -1,7 +1,6 @@
 import { useState, useEffect, createRef } from "react";
 import { Heading, Box, Button, Flex, Text } from "@chakra-ui/react";
-import SearchBar from "../../components/SearchBar";
-import { useSearch } from "../../components/SearchBar";
+import SearchBar, { useSearch } from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import useUser from "src/utils/lib/useUser";
 import PaginationTab from "../../components/PaginationTab";
@@ -9,15 +8,14 @@ import PaginationTab from "../../components/PaginationTab";
 import { uploadFile, listBlobs } from "../../utils/blobStorage";
 import FilePicker from "chakra-ui-file-picker";
 
-const LibraryPage = ({ cardsFromDatabase, numPages }) => {
+const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
   const { user: currentUser } = useUser({
     redirectIfFound: false,
     redirectTo: "",
   });
 
-  const { searchedCards, handleSearch } = useSearch(cardsFromDatabase);
   const [cards, setCards] = useState(cardsFromDatabase);
-  const [isRefresehing, setIsRefreshing] = useState(false);
+
   const [searchString, setSearchString] = useState("");
   const [fileList, setFileList] = useState([]);
 
@@ -30,17 +28,26 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
     });
   };
   const [currentPage, setCurrentPage] = useState(1);
+  const [numPages, setNumPages] = useState(numPagesInitial);
+  const { searchedCards, handleSearch } = useSearch(
+    cardsFromDatabase,
+    setNumPages,
+    setCurrentPage,
+    setCards
+  );
 
-  useEffect(() => {
-    setIsRefreshing(false);
-  }, [cards]);
-
-  return isRefresehing ? (
-    <Text>Loading</Text>
-  ) : (
+  return (
     <Flex alignItems="stretch" flexDirection="column">
-      <SearchBar handleSearch={handleSearch} />
-      <Heading fontSize={{ base: "4xl", lg: "5xl" }}> Library</Heading>
+      <Heading fontSize={{ base: "4xl", lg: "5xl" }} pb="5">
+        {" "}
+        Library
+      </Heading>
+
+      <SearchBar
+        handleSearch={handleSearch}
+        setNumPages={setNumPages}
+        setCurrentPage={setCurrentPage}
+      />
 
       <Box>
         <FilePicker
@@ -55,8 +62,10 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
       </Box>
       <StandardCardTable
         cards={cards}
+        setCards={setCards}
         isLoggedIn={currentUser?.isLoggedIn}
         isAdmin={currentUser?.isAdmin}
+        enablePDFExport={false}
       />
 
       <PaginationTab
@@ -66,7 +75,6 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         setCards={setCards}
-        setIsRefreshing={setIsRefreshing}
       />
     </Flex>
   );
