@@ -34,20 +34,40 @@ export async function getCards() {
 
 export async function getCardsPagination(
   pageNumber: number,
+  searchFilter: string | null = null,
   cardsPerPage: number = 4
 ) {
   await mongoDB();
 
-  return Card.find()
-    .sort({ _id: -1 })
-    .skip(pageNumber * cardsPerPage)
-    .limit(cardsPerPage);
+  if (searchFilter) {
+    const regex = new RegExp(searchFilter, "g");
+
+    return Card.find({
+      $or: [{ title: { $regex: regex } }],
+    })
+      .sort({ _id: -1 })
+      .skip(pageNumber * cardsPerPage)
+      .limit(cardsPerPage);
+  } else {
+    return Card.find()
+      .sort({ _id: -1 })
+      .skip(pageNumber * cardsPerPage)
+      .limit(cardsPerPage);
+  }
 }
 
-export async function getCardsCount() {
+export async function getCardsCount(searchFilter: string | null = null) {
   await mongoDB();
+  if (searchFilter) {
+    const regex = new RegExp(searchFilter, "g");
+    return Card.find({
+      $or: [{ title: { $regex: regex } }],
+    }).count()
 
-  return Card.count();
+  } else {
+    return Card.count();
+  }
+  
 }
 
 export async function getNextDocs(

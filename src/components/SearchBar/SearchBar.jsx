@@ -13,10 +13,11 @@ const SearchBar = (props) => {
     },
     allowTemplates = true,
     popUpOnLoad = false,
+    setNumPages,
+    setCurrentPage,
     ...rest
   } = props;
   const { setSearch, criteria } = handleSearch;
-
   const textInput = useRef();
   const tagInput = useRef();
 

@@ -8,7 +8,6 @@ export default function useTextFilter() {
     (card) => {
       return (
         card.title?.toLowerCase().includes(searchString.toLowerCase()) ||
-        card.body?.toLowerCase().includes(searchString.toLowerCase()) ||
         card.tags?.join(" ").toLowerCase().includes(searchString.toLowerCase())
       );
     },

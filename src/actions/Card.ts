@@ -21,9 +21,14 @@ export const getCards = async () => {
     });
 };
 
-export const getCardsPagination = async (pageNumber: number) => {
-  console.log(urls.api.card.getPagination + pageNumber);
-  return fetch(urls.api.card.getPagination + pageNumber, {
+export const getCardsPagination = async (pageNumber: number, searchFilter: string | null = null) => {
+  let url = urls.api.card.getPagination + pageNumber
+  
+  if (searchFilter) {
+    url += "&searchFilter=" + searchFilter;
+  } 
+  
+  return fetch(url, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
