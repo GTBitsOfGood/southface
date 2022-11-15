@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Grid,
   GridItem,
-  IconButton,
   useDisclosure,
   Box,
   Button,
@@ -18,6 +17,8 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClientSide, setClientSide] = useState(false);
 
+  const { enablePDFExport = true } = { ...props };
+
   useEffect(() => {
     setClientSide(true);
   }, []);
@@ -25,15 +26,17 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
   return (
     <Box {...props}>
       {isClientSide && (
-        <Flex alignItems="center" justifyContent="end" gap={4} mr={6}>
-          <Button
-            as={PDFDownloadLink}
-            document={<PlanDocumentPDF selectedPlanCards={cards} />}
-            fileName="plan.pdf"
-            boxShadow="base"
-          >
-            Download PDF
-          </Button>
+        <Flex alignItems="center" justifyContent="end" gap={4} mt={5} mr={6}>
+          {enablePDFExport && (
+            <Button
+              as={PDFDownloadLink}
+              document={<PlanDocumentPDF selectedPlanCards={cards} />}
+              fileName="plan.pdf"
+              boxShadow="base"
+            >
+              Download PDF
+            </Button>
+          )}
 
           <Button onClick={onOpen} rounded={4} boxShadow="base">
             Add Card
