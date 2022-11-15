@@ -8,9 +8,17 @@ import { getCardsCount } from "../../../../server/mongodb/actions/Card";
 const handler = async (req, res) => {
   try {
     const pageNumber = req.query.page - 1;
-    const searchFilter = req.query.searchFilter ? req.query.searchFilter : null;
-    const cards = await getCardsPagination(pageNumber, searchFilter);
-    const cardsCount = await getCardsCount(searchFilter);
+    const searchFilterString = req.query.searchFilterString
+      ? req.query.searchFilterString
+      : null;
+    const searchFilterTags = req.query.searchFilterTags
+      ? req.query.searchFilterTags.split(",")
+      : null;
+
+    const cards = await getCardsPagination(pageNumber, searchFilterString, searchFilterTags);
+    const cardsCount = await getCardsCount(searchFilterString, searchFilterTags);
+
+  
     return res.status(200).json({
       success: true,
       payload: { cards, cardsCount },

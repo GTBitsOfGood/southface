@@ -18,18 +18,18 @@ export default function useSearch(
     tags: {},
   });
 
+
   useEffect(() => {
     const fetchCards = async () => {
       const { cards, cardsCount } = await getCardsPagination(
         1,
-        criteria.searchString
+        criteria
       );
 
       let numPages = Math.floor(cardsCount / 4);
       if (cardsCount % 4 > 0) {
         numPages += 1;
       }
-      console.log(numPages);
 
       setNumPages(numPages);
       setCurrentPage(1);
@@ -53,7 +53,7 @@ export default function useSearch(
     return matchesSearch && matchesTags;
   };
 
-  console.log(criteria);
+
   const searchedCards = cards.filter(filter);
   const nonSearchedCards = cards.filter((card) => !filter(card));
   const handleSearch = {

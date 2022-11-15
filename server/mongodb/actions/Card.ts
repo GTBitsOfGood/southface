@@ -34,42 +34,75 @@ export async function getCards() {
 
 export async function getCardsPagination(
   pageNumber: number,
-  searchFilter: string | null = null,
+  searchFilterString: string | null = null,
+  searchFilterTags: string[] | null = null,
   cardsPerPage: number = 4
 ) {
   await mongoDB();
 
-  if (searchFilter) {
-    const regex = new RegExp(searchFilter, "i");
+  let query = {};
+  if (searchFilterString && searchFilterTags) {
+    const regex = new RegExp(searchFilterString, "i");
 
-    return Card.find({
+    query = {
       $or: [
         { title: { $regex: regex } },
         { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
-        { tags: { $regex: regex } },
       ],
-    })
-      .sort({ _id: -1 })
-      .skip(pageNumber * cardsPerPage)
-      .limit(cardsPerPage);
-  } else {
-    return Card.find()
-      .sort({ _id: -1 })
-      .skip(pageNumber * cardsPerPage)
-      .limit(cardsPerPage);
+      tags: { $all: searchFilterTags },
+    };
+  } else if (searchFilterString) {
+    const regex = new RegExp(searchFilterString, "i");
+    query = {
+      $or: [
+        { title: { $regex: regex } },
+        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+      ],
+    };
+  } else if (searchFilterTags) {
+    query = {
+      tags: { $all: searchFilterTags },
+    };
   }
+
+  return Card.find(query)
+    .sort({ _id: -1 })
+    .skip(pageNumber * cardsPerPage)
+    .limit(cardsPerPage);
 }
 
-export async function getCardsCount(searchFilter: string | null = null) {
+export async function getCardsCount(
+  searchFilterString: string | null = null,
+  searchFilterTags: string[] | null = null
+) {
   await mongoDB();
-  if (searchFilter) {
-    const regex = new RegExp(searchFilter, "i");
-    return Card.find({
-      $or: [{ title: { $regex: regex } }],
-    }).count();
-  } else {
-    return Card.count();
+
+  let query = {}
+  if (searchFilterString && searchFilterTags) {
+    const regex = new RegExp(searchFilterString, "i");
+
+    query = {
+      $or: [
+        { title: { $regex: regex } },
+        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+      ],
+      tags: { $all: searchFilterTags },
+    };
+  } else if (searchFilterString) {
+    const regex = new RegExp(searchFilterString, "i");
+    query = {
+      $or: [
+        { title: { $regex: regex } },
+        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+      ],
+    };
+  } else if (searchFilterTags) {
+    query = {
+      tags: { $all: searchFilterTags },
+    };
   }
+
+  return Card.find(query).count()
 }
 
 export async function getNextDocs(

@@ -23,13 +23,22 @@ export const getCards = async () => {
 
 export const getCardsPagination = async (
   pageNumber: number,
-  searchFilter: string | null = null
+  searchFilter: {
+    searchString: string;
+    tags: any;
+  } | null = null
 ) => {
   let url = urls.api.card.getPagination + pageNumber;
 
   if (searchFilter) {
-    url += "&searchFilter=" + searchFilter;
+    const tagsArray = Object.keys(searchFilter.tags);
+    url +=
+      "&searchFilterString=" +
+      searchFilter.searchString +
+      "&searchFilterTags=" +
+      tagsArray;
   }
+
 
   return fetch(url, {
     method: "GET",
