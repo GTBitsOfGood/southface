@@ -232,6 +232,7 @@ const CardModal = ({
                     images={images}
                     setImages={setImages}
                     isAdd
+                    cardId={cardId}
                   />
                 </>
               )}

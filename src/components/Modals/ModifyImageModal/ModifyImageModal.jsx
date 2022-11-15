@@ -1,4 +1,6 @@
+import { useState, createRef } from "react";
 import {
+  Box,
   ModalOverlay,
   ModalContent,
   ModalHeader,
@@ -9,10 +11,12 @@ import {
   Input,
   FormLabel,
   IconButton,
+  Button,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
-import { useState } from "react";
+import { uploadFile, listBlobs } from "src/utils/blobStorage";
+import FilePicker from "chakra-ui-file-picker";
 
 const ModifyImageModal = ({
   isOpen,
@@ -21,11 +25,24 @@ const ModifyImageModal = ({
   isAdd,
   imageProp,
   currentImageIndex,
+  cardId,
 }) => {
   const [imageUrl, setImageUrl] = useState("https://picsum.photos/200");
+  const [fileList, setFileList] = useState([]);
 
-  const handleChange = (e) => {
-    setImageUrl(e.target.value);
+  const myRef = createRef();
+
+  const upload = () => {
+    const file = fileList[0];
+    const metadata = {};
+    const tags = {
+      'cardId' : cardId
+    };
+
+    uploadFile(file.name, file, metadata, tags).then((res) => {
+      console.log(res._response.request.url);
+      setImageUrl(res._response.request.url);
+    });
   };
 
   const handleAddSubmit = () => {
@@ -62,10 +79,17 @@ const ModifyImageModal = ({
         <ModalCloseButton />
         <ModalBody>
           <FormLabel>{isAdd ? "Enter Image Url" : "Edit Image Url"}</FormLabel>
-          <Input
-            onChange={handleChange}
-            defaultValue={isAdd ? "https://picsum.photos/200" : imageProp}
+          <Box>
+          <FilePicker
+            onFileChange={(fileList) => setFileList(fileList)}
+            placeholder="placeholder"
+            clearButtonLabel="Clear Selected Files"
+            multipleFiles={false}
+            hideClearButton={false}
+            ref={myRef}
           />
+          <Button onClick={upload}>Upload</Button>
+        </Box>
         </ModalBody>
 
         <ModalFooter>

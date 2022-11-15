@@ -9,7 +9,7 @@ const getBlobClient = () => {
   return containerClient;
 };
 
-const uploadFile = async (blobName, content, metadata) => {
+const uploadFile = async (blobName, content, metadata, tags) => {
   const containerClient = getBlobClient();
 
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
@@ -18,6 +18,7 @@ const uploadFile = async (blobName, content, metadata) => {
       blobContentType: content.type,
     },
     metadata: metadata,
+    tags : tags,
   };
 
   const uploadBlobResponse = await blockBlobClient.uploadBrowserData(
@@ -26,6 +27,7 @@ const uploadFile = async (blobName, content, metadata) => {
   );
   return uploadBlobResponse;
 };
+
 
 const listBlobs = async () => {
   const containerClient = getBlobClient();
