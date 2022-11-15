@@ -1,10 +1,4 @@
-// const { searchedCards, setSearch } = useSearch(cards);
-// return <SearchBar setSearch={setSearch} />
-// {
-// searchedCards.map()}
-
 import { useState, useEffect } from "react";
-import { getCardsCount } from "../../../server/mongodb/actions/Card";
 import { getCardsPagination } from "../../actions/Card";
 
 export default function useSearch(
@@ -18,13 +12,9 @@ export default function useSearch(
     tags: {},
   });
 
-
   useEffect(() => {
     const fetchCards = async () => {
-      const { cards, cardsCount } = await getCardsPagination(
-        1,
-        criteria
-      );
+      const { cards, cardsCount } = await getCardsPagination(1, criteria);
 
       let numPages = Math.floor(cardsCount / 4);
       if (cardsCount % 4 > 0) {
@@ -52,7 +42,6 @@ export default function useSearch(
         ) || Object.keys(criteria.tags).length === 0;
     return matchesSearch && matchesTags;
   };
-
 
   const searchedCards = cards.filter(filter);
   const nonSearchedCards = cards.filter((card) => !filter(card));

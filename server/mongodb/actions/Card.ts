@@ -77,7 +77,7 @@ export async function getCardsCount(
 ) {
   await mongoDB();
 
-  let query = {}
+  let query = {};
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
 
@@ -102,7 +102,7 @@ export async function getCardsCount(
     };
   }
 
-  return Card.find(query).count()
+  return Card.find(query).count();
 }
 
 export async function getNextDocs(

@@ -11,7 +11,6 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
     redirectIfFound: false,
     redirectTo: "",
   });
-  
 
   const [cards, setCards] = useState(cardsFromDatabase);
 

@@ -15,10 +15,16 @@ const handler = async (req, res) => {
       ? req.query.searchFilterTags.split(",")
       : null;
 
-    const cards = await getCardsPagination(pageNumber, searchFilterString, searchFilterTags);
-    const cardsCount = await getCardsCount(searchFilterString, searchFilterTags);
+    const cards = await getCardsPagination(
+      pageNumber,
+      searchFilterString,
+      searchFilterTags
+    );
+    const cardsCount = await getCardsCount(
+      searchFilterString,
+      searchFilterTags
+    );
 
-  
     return res.status(200).json({
       success: true,
       payload: { cards, cardsCount },

@@ -39,7 +39,6 @@ export const getCardsPagination = async (
       tagsArray;
   }
 
-
   return fetch(url, {
     method: "GET",
     mode: "same-origin",
