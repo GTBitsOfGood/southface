@@ -38,4 +38,9 @@ const listBlobs = async () => {
   return blobs;
 };
 
+const getUrlFromResponse = (res) => {
+  const url = res._response.request.url;
+  return url;
+};
+
 export { uploadFile, listBlobs };

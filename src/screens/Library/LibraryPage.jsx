@@ -25,9 +25,8 @@ const LibraryPage = ({ cardsFromDatabase, numPages }) => {
 
   const upload = () => {
     const file = fileList[0];
-    uploadFile(file.name, file, { test_metadata: "test" })
-    .then((res) => {
-      console.log(res);
+    uploadFile(file.name, file, { test_metadata: "test" }).then((res) => {
+      console.log(res._response.request.url);
     });
   };
   const [currentPage, setCurrentPage] = useState(1);
