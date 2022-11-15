@@ -1,48 +1,44 @@
-import { useState, useEffect, useRef } from "react";
-import { Heading, Flex, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import { Heading, Flex } from "@chakra-ui/react";
 import SearchBar, { useSearch } from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import useUser from "src/utils/lib/useUser";
 import PaginationTab from "../../components/PaginationTab";
-import { getCardsCount } from "../../../server/mongodb/actions/Card";
 
-const LibraryPage = ({ cardsFromDatabase, numPages: initNumPages }) => {
+const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
   const { user: currentUser } = useUser({
     redirectIfFound: false,
     redirectTo: "",
   });
 
-  const { searchedCards, handleSearch } = useSearch(cardsFromDatabase);
   const [cards, setCards] = useState(cardsFromDatabase);
-  const [isRefresehing, setIsRefreshing] = useState(false);
+
+  const [searchString, setSearchString] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [numPages, setNumPages] = useState(initNumPages);
+  const [numPages, setNumPages] = useState(numPagesInitial);
+  const { searchedCards, handleSearch } = useSearch(
+    cardsFromDatabase,
+    setNumPages,
+    setCurrentPage,
+    setCards
+  );
 
-  const cardCountInput = useRef();
-  const CardCountHandler = async () => {
-    const cardsCount = await getCardsCount();
-    const cardsPerPage = cardCountInput.current.value;
-    setNumPages(Math.ceil(cardsCount / cardsPerPage));
-  };
-
-  useEffect(() => {
-    setIsRefreshing(false);
-  }, [cards]);
-
-  return isRefresehing ? (
-    <Text>Loading</Text>
-  ) : (
+  return (
     <Flex alignItems="stretch" flexDirection="column">
       <Heading fontSize={{ base: "4xl", lg: "5xl" }} pb="5">
+        {" "}
         Library
       </Heading>
 
-      <SearchBar handleSearch={handleSearch} />
+      <SearchBar
+        handleSearch={handleSearch}
+        setNumPages={setNumPages}
+        setCurrentPage={setCurrentPage}
+      />
 
       <StandardCardTable
-        numCardsRef={cardCountInput}
-        numCardsHandler={CardCountHandler}
         cards={cards}
+        setCards={setCards}
         isLoggedIn={currentUser?.isLoggedIn}
         isAdmin={currentUser?.isAdmin}
         enablePDFExport={false}
@@ -55,7 +51,6 @@ const LibraryPage = ({ cardsFromDatabase, numPages: initNumPages }) => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         setCards={setCards}
-        setIsRefreshing={setIsRefreshing}
       />
     </Flex>
   );

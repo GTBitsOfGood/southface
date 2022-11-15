@@ -6,11 +6,6 @@ import {
   Box,
   Button,
   Flex,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
@@ -18,25 +13,16 @@ import AddCardModal from "../Modals/AddCardModal";
 import StandardCard from "../StandardCard/StandardCard";
 import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
 
-const StandardCardTable = ({ cards, ...props }) => {
+const StandardCardTable = ({ cards, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClientSide, setClientSide] = useState(false);
-  const [cardComponents, setCardComponents] = useState(cards);
 
-  const {
-    enablePDFExport = true,
-    numCardsHandler = () => undefined,
-    numCardsRef = undefined,
-  } = { ...props };
+  const { enablePDFExport = true } = { ...props };
 
   useEffect(() => {
     setClientSide(true);
   }, []);
 
-  // cards property may be stateful
-  useEffect(() => {
-    setCardComponents(cards);
-  }, [cards]);
   return (
     <Box {...props}>
       {isClientSide && (
@@ -52,28 +38,10 @@ const StandardCardTable = ({ cards, ...props }) => {
             </Button>
           )}
 
-          <NumberInput
-            ref={numCardsRef}
-            onClick={numCardsHandler}
-            defaultValue={5}
-            min={1}
-            step={5}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-
           <Button onClick={onOpen} rounded={4} boxShadow="base">
             Add Card
           </Button>
-          <AddCardModal
-            isOpen={isOpen}
-            onClose={onClose}
-            setCards={setCardComponents}
-          />
+          <AddCardModal isOpen={isOpen} onClose={onClose} setCards={setCards} />
         </Flex>
       )}
       <Grid
@@ -89,7 +57,7 @@ const StandardCardTable = ({ cards, ...props }) => {
         width="90%"
         m="3% auto"
       >
-        {cardComponents.map((card, index) => (
+        {cards.map((card, index) => (
           <GridItem w="100%" key={index} rounded={12}>
             <StandardCard card={card} />
           </GridItem>

@@ -27,10 +27,11 @@ const SearchBar = (props) => {
     },
     allowTemplates = true,
     popUpOnLoad = false,
+    setNumPages,
+    setCurrentPage,
     ...rest
   } = props;
   const { setSearch, criteria } = handleSearch;
-
   const textInput = useRef();
   const tagInput = useRef();
 
@@ -38,7 +39,6 @@ const SearchBar = (props) => {
     setSearch((search) => {
       const prevSearch = { ...search };
       prevSearch.tags[tagInput.current.value] = true;
-      console.log(tagInput.current.value);
       tagInput.current.value = "";
       return prevSearch;
     });

@@ -34,20 +34,75 @@ export async function getCards() {
 
 export async function getCardsPagination(
   pageNumber: number,
+  searchFilterString: string | null = null,
+  searchFilterTags: string[] | null = null,
   cardsPerPage: number = 4
 ) {
   await mongoDB();
 
-  return Card.find()
+  let query = {};
+  if (searchFilterString && searchFilterTags) {
+    const regex = new RegExp(searchFilterString, "i");
+
+    query = {
+      $or: [
+        { title: { $regex: regex } },
+        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+      ],
+      tags: { $all: searchFilterTags },
+    };
+  } else if (searchFilterString) {
+    const regex = new RegExp(searchFilterString, "i");
+    query = {
+      $or: [
+        { title: { $regex: regex } },
+        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+      ],
+    };
+  } else if (searchFilterTags) {
+    query = {
+      tags: { $all: searchFilterTags },
+    };
+  }
+
+  return Card.find(query)
     .sort({ _id: -1 })
     .skip(pageNumber * cardsPerPage)
     .limit(cardsPerPage);
 }
 
-export async function getCardsCount() {
+export async function getCardsCount(
+  searchFilterString: string | null = null,
+  searchFilterTags: string[] | null = null
+) {
   await mongoDB();
 
-  return Card.count();
+  let query = {};
+  if (searchFilterString && searchFilterTags) {
+    const regex = new RegExp(searchFilterString, "i");
+
+    query = {
+      $or: [
+        { title: { $regex: regex } },
+        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+      ],
+      tags: { $all: searchFilterTags },
+    };
+  } else if (searchFilterString) {
+    const regex = new RegExp(searchFilterString, "i");
+    query = {
+      $or: [
+        { title: { $regex: regex } },
+        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+      ],
+    };
+  } else if (searchFilterTags) {
+    query = {
+      tags: { $all: searchFilterTags },
+    };
+  }
+
+  return Card.find(query).count();
 }
 
 export async function getNextDocs(

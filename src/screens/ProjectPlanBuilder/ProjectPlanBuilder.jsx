@@ -141,7 +141,7 @@ export default function ProjectPlanBuilder() {
     await createPlan({
       cards: selectedCards,
       name: nameRef.current.value,
-      userId: user._id,
+      userId: user.id,
     });
     onClose();
   };
