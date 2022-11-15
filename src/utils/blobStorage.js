@@ -18,7 +18,7 @@ const uploadFile = async (blobName, content, metadata, tags) => {
       blobContentType: content.type,
     },
     metadata: metadata,
-    tags : tags,
+    tags: tags,
   };
 
   const uploadBlobResponse = await blockBlobClient.uploadBrowserData(
@@ -27,7 +27,6 @@ const uploadFile = async (blobName, content, metadata, tags) => {
   );
   return uploadBlobResponse;
 };
-
 
 const listBlobs = async () => {
   const containerClient = getBlobClient();

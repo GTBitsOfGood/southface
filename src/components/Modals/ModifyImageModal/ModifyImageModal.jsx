@@ -36,7 +36,7 @@ const ModifyImageModal = ({
     const file = fileList[0];
     const metadata = {};
     const tags = {
-      'cardId' : cardId
+      cardId: cardId,
     };
 
     uploadFile(file.name, file, metadata, tags).then((res) => {
@@ -80,16 +80,16 @@ const ModifyImageModal = ({
         <ModalBody>
           <FormLabel>{isAdd ? "Enter Image Url" : "Edit Image Url"}</FormLabel>
           <Box>
-          <FilePicker
-            onFileChange={(fileList) => setFileList(fileList)}
-            placeholder="placeholder"
-            clearButtonLabel="Clear Selected Files"
-            multipleFiles={false}
-            hideClearButton={false}
-            ref={myRef}
-          />
-          <Button onClick={upload}>Upload</Button>
-        </Box>
+            <FilePicker
+              onFileChange={(fileList) => setFileList(fileList)}
+              placeholder="placeholder"
+              clearButtonLabel="Clear Selected Files"
+              multipleFiles={false}
+              hideClearButton={false}
+              ref={myRef}
+            />
+            <Button onClick={upload}>Upload</Button>
+          </Box>
         </ModalBody>
 
         <ModalFooter>
