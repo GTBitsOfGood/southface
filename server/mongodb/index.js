@@ -4,7 +4,7 @@ export default async () => {
   if (mongoose.connections[0].readyState) return;
 
   await mongoose
-    .connect(process.env.MONGO_DB, {
+    .connect(process.env.DB_URL, {
       dbName: process.env.DB_NAME,
     })
     .catch((e) => {

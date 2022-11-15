@@ -1,7 +1,7 @@
 {
   "name": "nextjs-starter",
   "version": "2.0.0",
-  "description": "A NextJS starter with API routes using MongoDB",
+  "description": "Southface's Standard Library",
   "author": "Bits of Good <hello@bitsofgood.org>",
   "license": "MIT",
   "repository": {
@@ -16,12 +16,13 @@
     "dev": "next -p 3000",
     "build": "next build",
     "start": "next build && next start",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "lint": "next lint && tsc",
+    "lint:fix": "next lint --fix && tsc",
     "secrets:linux": "echo Enter Bitwarden Password: && read BW_PASSWORD && (bw logout || exit 0) && export BW_SESSION=`bw login product@bitsofgood.org $BW_PASSWORD --raw` && npm run secrets:get",
     "secrets:windows": "set /p BW_PASSWORD=Enter Bitwarden Password:&& (bw logout || VER>NUL) && npm run secrets:login",
     "secrets:login": "FOR /F %a IN ('bw login product@bitsofgood.org %BW_PASSWORD% --raw') DO SET BW_SESSION=%a && npm run secrets:get",
-    "secrets:get": "bw sync && bw get item [ID_OR_NAME_FROM_STEP_2] | fx .notes > \".env\""
+    "secrets:get": "bw sync && bw get item 8ccfc499-cfc2-4e66-9e82-af0801429e85 | fx .notes > \".env\"",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -29,26 +30,37 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint"
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix, npx tsc --noEmit"
     ],
-    "*.{js,jsx,css}": [
+    "*.{js,jsx,css,ts,tsx}": [
       "prettier --write"
     ]
   },
   "dependencies": {
+    "@azure/storage-blob": "^12.12.0",
+    "@chakra-ui/icons": "^2.0.11",
+    "@chakra-ui/react": "^2.3.1",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@react-pdf/renderer": "^3.0.0",
     "bcryptjs": "^2.4.3",
+    "chakra-ui-file-picker": "^0.3.0",
     "focus-visible": "^5.2.0",
+    "formik": "^2.2.9",
+    "framer-motion": "^6",
     "iron-session": "^6.0.5",
     "isomorphic-unfetch": "^3.1.0",
     "mongodb": "^4.0.0",
     "mongoose": "^6.1.6",
-    "next": "^12.1.0",
+    "next": "^12.2.5",
     "next-images": "^1.8.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
+    "react-rating-stars-component": "^2.2.0",
     "swr": "^1.1.2"
   },
   "devDependencies": {
@@ -56,6 +68,9 @@
     "@babel/eslint-parser": "^7.16.5",
     "@bitwarden/cli": "^1.17.1",
     "@next/eslint-plugin-next": "^12.0.8",
+    "@types/react": "^18.0.18",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-next": "^12.0.8",
@@ -65,10 +80,11 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "fx": "^20.0.2",
-    "husky": "^7.0.1",
+    "husky": "^8.0.0",
     "lint-staged": "^12.1.7",
     "prettier": "2.5.1",
     "prettier-eslint": "^13.0.0",
+    "typescript": "^4.8.2",
     "vercel": "^23.1.2"
   }
 }

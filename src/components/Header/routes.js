@@ -2,21 +2,14 @@ import urls from "src/utils/urls";
 
 const routes = [
   {
-    name: "Home",
-    link: urls.pages.index,
+    name: "Library",
+    link: urls.pages.library,
     auth: false,
-    atEnd: false,
   },
   {
-    name: "SSR",
-    link: urls.pages.ssr,
+    name: "Plan Builder",
+    link: urls.pages.planbuilder,
     auth: false,
-    atEnd: false,
-  },
-  {
-    name: "App Home",
-    link: urls.pages.app.home,
-    auth: true,
   },
   {
     name: "Login",

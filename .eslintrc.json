@@ -1,16 +1,19 @@
 {
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
   "env": {
     "es6": true,
     "node": true
   },
   "parserOptions": {
+    "project": "./tsconfig.eslint.json",
     "ecmaVersion": 2018,
     "sourceType": "module",
     "requireConfigFile": false
   },
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:@next/next/recommended",
     "next/core-web-vitals"
@@ -19,6 +22,7 @@
     "no-underscore-dangle": "off",
     "implicit-arrow-linebreak": "off",
     "no-console": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

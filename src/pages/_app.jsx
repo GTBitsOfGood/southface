@@ -10,6 +10,8 @@ import "focus-visible/dist/focus-visible.min.js";
 import "normalize.css";
 import "public/static/styles/App.css";
 
+import { ChakraProvider } from "@chakra-ui/react";
+
 const MyApp = ({ Component, pageProps }) => (
   <SWRConfig
     value={{
@@ -20,12 +22,14 @@ const MyApp = ({ Component, pageProps }) => (
     <Head>
       <title>Next.js-Starter</title>
     </Head>
-    <div className="App">
-      <Header />
-      <div className="Content">
-        <Component {...pageProps} />
+    <ChakraProvider>
+      <div className="App">
+        <Header />
+        <div className="Content">
+          <Component {...pageProps} />
+        </div>
       </div>
-    </div>
+    </ChakraProvider>
   </SWRConfig>
 );
 
