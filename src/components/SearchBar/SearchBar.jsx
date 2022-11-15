@@ -25,9 +25,9 @@ const SearchBar = (props) => {
     setSearch((search) => {
       const prevSearch = { ...search };
       prevSearch.tags[tagInput.current.value] = true;
+      tagInput.current.value = "";
       return prevSearch;
     });
-    tagInput.current.value = "";
   };
   const ClearFilterTags = () =>
     setSearch((search) => {

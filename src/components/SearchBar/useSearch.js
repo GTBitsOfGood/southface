@@ -20,17 +20,20 @@ export default function useSearch(
 
   useEffect(() => {
     const fetchCards = async () => {
-      const {cards, cardsCount} = await getCardsPagination(1, criteria.searchString);
+      const { cards, cardsCount } = await getCardsPagination(
+        1,
+        criteria.searchString
+      );
 
       let numPages = Math.floor(cardsCount / 4);
       if (cardsCount % 4 > 0) {
         numPages += 1;
       }
-      console.log(numPages)
+      console.log(numPages);
 
       setNumPages(numPages);
       setCurrentPage(1);
-      setCards(cards)
+      setCards(cards);
     };
     fetchCards();
   }, [criteria]);

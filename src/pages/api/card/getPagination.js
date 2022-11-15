@@ -10,10 +10,10 @@ const handler = async (req, res) => {
     const pageNumber = req.query.page - 1;
     const searchFilter = req.query.searchFilter ? req.query.searchFilter : null;
     const cards = await getCardsPagination(pageNumber, searchFilter);
-    const cardsCount = await getCardsCount(searchFilter)
+    const cardsCount = await getCardsCount(searchFilter);
     return res.status(200).json({
       success: true,
-      payload: {cards, cardsCount},
+      payload: { cards, cardsCount },
     });
   } catch (error) {
     res.status(400).json({

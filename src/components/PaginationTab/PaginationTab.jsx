@@ -14,7 +14,7 @@ const PaginationTab = ({
   );
 
   const onPageChange = async (pageNumber) => {
-    const {cards: updatedCards} = await getCardsPagination(pageNumber);
+    const { cards: updatedCards } = await getCardsPagination(pageNumber);
     setCards(updatedCards);
     setCurrentPage(pageNumber);
   };

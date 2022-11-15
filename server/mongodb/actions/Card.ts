@@ -40,10 +40,14 @@ export async function getCardsPagination(
   await mongoDB();
 
   if (searchFilter) {
-    const regex = new RegExp(searchFilter, "g");
+    const regex = new RegExp(searchFilter, "i");
 
     return Card.find({
-      $or: [{ title: { $regex: regex } }],
+      $or: [
+        { title: { $regex: regex } },
+        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+        { tags: { $regex: regex } },
+      ],
     })
       .sort({ _id: -1 })
       .skip(pageNumber * cardsPerPage)
@@ -59,15 +63,13 @@ export async function getCardsPagination(
 export async function getCardsCount(searchFilter: string | null = null) {
   await mongoDB();
   if (searchFilter) {
-    const regex = new RegExp(searchFilter, "g");
+    const regex = new RegExp(searchFilter, "i");
     return Card.find({
       $or: [{ title: { $regex: regex } }],
-    }).count()
-
+    }).count();
   } else {
     return Card.count();
   }
-  
 }
 
 export async function getNextDocs(

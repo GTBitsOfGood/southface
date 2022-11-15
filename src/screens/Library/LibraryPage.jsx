@@ -11,6 +11,7 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
     redirectIfFound: false,
     redirectTo: "",
   });
+  
 
   const [cards, setCards] = useState(cardsFromDatabase);
 
@@ -47,7 +48,6 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         setCards={setCards}
-
       />
     </Flex>
   );
