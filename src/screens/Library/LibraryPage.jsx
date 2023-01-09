@@ -42,7 +42,7 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
         setCards={setCards}
         isLoggedIn={currentUser?.isLoggedIn}
         isAdmin={currentUser?.isAdmin}
-        enablePDFExport={false}
+        enablepdfxport={false}
       />
 
       <PaginationTab

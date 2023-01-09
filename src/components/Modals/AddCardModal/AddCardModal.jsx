@@ -44,8 +44,6 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
     tags,
     newComment,
     addingTag,
-    inputRef,
-    tagInputRef,
   } = useEditCardModal();
 
   const router = useRouter();
@@ -91,7 +89,6 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
     return (
       <>
         <Input
-          ref={tagInputRef}
           {...props}
           width={width + "ch"}
           minWidth="0.5ch"
@@ -136,6 +133,7 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
               fontSize="lg"
               fontWeight="bold"
               width="md"
+              autoFocus
               onChange={handleTitleChange}
               mb={2}
               placeholder="Add Title"
@@ -175,10 +173,7 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
                 size="xs"
                 rounded="full"
                 variant="link"
-                onClick={() => {
-                  setAddingTag(!addingTag);
-                  tagInputRef.current.focus();
-                }}
+                onClick={() => setAddingTag(!addingTag)}
               />
             )}
           </HStack>
@@ -222,7 +217,6 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
                 flexBasis="sm"
                 fontSize="sm"
                 onChange={createNewComment}
-                ref={inputRef}
                 placeholder="Add Card Comment"
               />
 

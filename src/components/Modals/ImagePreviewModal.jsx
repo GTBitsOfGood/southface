@@ -105,17 +105,17 @@ const ImagePreviewModal = ({ isOpen, onClose, cardImages, cardComments }) => {
                   return (
                     <>
                       <Box w="full" key={index}>
-                        <Text key={index}>{comment.body}</Text>
+                        <Text>{comment.body}</Text>
 
                         <Flex
-                          key={index}
+                        
                           w="full"
                           justifyContent="space-between"
                         >
-                          <Text key={index} color="#FFD600">
+                          <Text color="#FFD600">
                             {new Date(comment.date).toDateString()}
                           </Text>
-                          <Text key={index} color="#0065C1">
+                          <Text color="#0065C1">
                             Edit
                           </Text>
                         </Flex>

@@ -16,7 +16,7 @@ import ImagePreviewModal from "../Modals/ImagePreviewModal";
 import Comments from "../Comments";
 import { CheckIcon, CloseIcon, InfoIcon, RepeatIcon } from "@chakra-ui/icons";
 
-const StandardCard = ({ card, ...props }) => {
+const StandardCard = ({ card, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isOpenImagePreviewModal,
@@ -145,6 +145,7 @@ const StandardCard = ({ card, ...props }) => {
           cardComments={card.comments}
           cardImages={card.images}
           AddToPlanButton={<SelectorButton />}
+          setCards={setCards}
         />
       </Flex>
     </Flex>

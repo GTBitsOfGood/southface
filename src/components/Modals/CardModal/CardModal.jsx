@@ -35,6 +35,7 @@ const CardModal = ({
   cardId,
   cardImages,
   cardTags,
+  setCards,
   ...rest
 }) => {
   const {
@@ -42,14 +43,13 @@ const CardModal = ({
     title,
     onEditCard,
     comments,
+    createNewComment,
     tags,
     images,
     setAddingTag,
     addingTag,
     handleCommentsUpdate,
     handleTitleChange,
-    inputRef,
-    tagInputRef,
     applyEdit,
     onDeleteTag,
     cancelEdit,
@@ -83,7 +83,6 @@ const CardModal = ({
     return (
       <>
         <Input
-          ref={tagInputRef}
           {...props}
           width={width + "ch"}
           minWidth="0.5ch"
@@ -140,6 +139,7 @@ const CardModal = ({
                 fontSize="lg"
                 fontWeight="bold"
                 width="md"
+                autoFocus
                 onChange={handleTitleChange}
                 mb={2}
                 defaultValue={title}
@@ -190,7 +190,6 @@ const CardModal = ({
                   variant="link"
                   onClick={() => {
                     setAddingTag(!addingTag);
-                    tagInputRef.current.focus();
                   }}
                 />
               </>
@@ -243,13 +242,22 @@ const CardModal = ({
               columns={3}
               justifyContent="space-between"
             >
-              <Comments
-                isEditing={isEditing}
-                comments={comments}
-                handleCommentsUpdate={handleCommentsUpdate}
-                cardId={cardId}
-                ref={inputRef}
-              />
+              {isEditing && comments.length === 0 ? (
+                <Input
+                  flexBasis="sm"
+                  fontSize="sm"
+                  onChange={createNewComment}
+                  placeholder="Add Card Comment"
+                />
+              ) : (
+                <Comments
+                  isEditing={isEditing}
+                  comments={comments}
+                  handleCommentsUpdate={handleCommentsUpdate}
+                  cardId={cardId}
+                />
+              )}
+
               {!isEditing ? (
                 <Button
                   variant="link"
@@ -265,7 +273,7 @@ const CardModal = ({
                     <HStack>
                       <IconButton
                         icon={<CheckIcon />}
-                        onClick={applyEdit}
+                        onClick={() => applyEdit(setCards)}
                         size="sm"
                         rounded="full"
                         bgColor="green"
