@@ -1,3 +1,4 @@
+import { computeSha256Hmac } from "@azure/core-util";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useState } from "react";
 import { updateCardById, getCardById } from "../actions/Card";
@@ -7,7 +8,8 @@ const useEditCardModal = (
   cardComments,
   cardImages,
   cardTags,
-  cardId
+  cardId,
+  unauthorizedToast
 ) => {
   const {
     isOpen: imageIsOpen,
@@ -58,14 +60,17 @@ const useEditCardModal = (
   /*------------- ALL SUBMIT BUTTON METHODS -------------*/
 
   const applyEdit = async (setCards) => {
-    const updatedCardInput = {
-      images,
-      title,
-      comments,
-      tags,
-    };
+    try {
+      const updatedCardInput = {
+        images,
+        title,
+        comments: comments.length === 0 ? newComment : comments,
+        tags,
+      };
 
-    updateCardById(cardId, updatedCardInput).then((updatedCard) => {
+      const updatedCard = await updateCardById(cardId, updatedCardInput);
+
+      
       setIsEditing(!isEditing);
       setComments(updatedCard.comments);
       setTitle(updatedCard.title);
@@ -81,7 +86,19 @@ const useEditCardModal = (
           }
         });
       });
-    });
+    } catch (error) {
+      if (error.message === "Not Logged In" || error.message === "Unauthorized") {
+        unauthorizedToast({
+          title: "Unauthorized!",
+          description: "You must log in as an admin.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        throw error;
+      }
+    }
   };
 
   const cancelEdit = async () => {

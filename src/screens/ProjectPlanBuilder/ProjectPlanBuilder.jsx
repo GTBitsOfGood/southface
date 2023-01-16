@@ -16,7 +16,6 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
 import { createPlan } from "../../actions/Plan";
 import PlanConfirmationModal from "../../components/Modals/PlanConfirmationModal";
-import { EditIcon, Icon } from "@chakra-ui/icons";
 import useUser from "../../utils/lib/useUser";
 import Link from "next/link";
 
@@ -24,9 +23,11 @@ export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
   const [selections, setSelections] = useState([]);
   useEffect(() => {
-    getCards().then((res) => {
-      setSelections(res.map(WrapToSelection));
-    }); // for the love of God don't put dependency array here
+    getCards()
+      .then((res) => {
+        setSelections(res.map(WrapToSelection));
+      })
+    // for the love of God don't put dependency array here
   }, []);
 
   // Wraps cards with selection info
@@ -91,7 +92,6 @@ export default function ProjectPlanBuilder() {
   };
 
   // Order handlers
-
   const [isSwitching, setSwitching] = useState(false);
   useEffect(() => {
     if (!isSwitching) {
@@ -108,9 +108,7 @@ export default function ProjectPlanBuilder() {
     const temp = newSelections[a].order;
     newSelections[a].order = newSelections[b].order;
     newSelections[b].order = temp;
-    // for (let i = Math.max(a, b) + 1; i < l; i++) {
-    //   newSelections[i].order = newSelections[i].order + 1;
-    // }
+
     setSelections(() => {
       setSwitching(false);
       return newSelections;

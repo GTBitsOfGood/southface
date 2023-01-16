@@ -17,7 +17,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClientSide, setClientSide] = useState(false);
 
-  const { enablepdfexport = true } = { ...props };
+  const { enablepdfexport = false } = { ...props };
 
   useEffect(() => {
     setClientSide(true);

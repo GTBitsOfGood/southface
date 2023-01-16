@@ -19,6 +19,7 @@ import {
   FormLabel,
   SimpleGrid,
   Center,
+  useToast,
 } from "@chakra-ui/react";
 import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
@@ -38,11 +39,13 @@ const CardModal = ({
   setCards,
   ...rest
 }) => {
+  const unauthorizedToast = useToast();
   const {
     isEditing,
     title,
     onEditCard,
     comments,
+    setComments,
     createNewComment,
     tags,
     images,
@@ -58,7 +61,15 @@ const CardModal = ({
     imageOnClose,
     setImages,
     setTags,
-  } = useEditCardModal(cardTitle, cardComments, cardImages, cardTags, cardId);
+  } = useEditCardModal(
+    cardTitle,
+    cardComments,
+    cardImages,
+    cardTags,
+    cardId,
+    unauthorizedToast
+  );
+
   const TagInput = (props) => {
     const [width, setWidth] = useState(0.5);
     const [editTagValue, setEditTagValue] = useState("");
@@ -255,6 +266,8 @@ const CardModal = ({
                   comments={comments}
                   handleCommentsUpdate={handleCommentsUpdate}
                   cardId={cardId}
+                  setComments={setComments}
+                  setCards={setCards}
                 />
               )}
 

@@ -7,33 +7,24 @@ export default function useSearch(
   setCurrentPage,
   setCards
 ) {
-
   const [criteria, setSearch] = useState({
     searchString: "",
     tags: {},
   });
 
   useEffect(() => {
-    const fetchCards = async () => {
-
-      try {
-        const { cards, cardsCount } = await getCardsPagination(1, criteria);
-
+    getCardsPagination(1, criteria).then(({cards, cardsCount}) => {
       let numPages = Math.floor(cardsCount / 4);
       if (cardsCount % 4 > 0) {
         numPages += 1;
       }
-      console.log(setNumPages)
-      setNumPages(numPages);
-      setCurrentPage(1);
-      setCards(cards);
-      } catch(err) {
-        throw new Error(err)
-      }
-      
-    };
 
-    fetchCards();
+      if (setNumPages) {
+        setNumPages(numPages);
+        setCurrentPage(1);
+        setCards(cards);
+      }
+    })
   }, [criteria]);
 
   const filter = (card) => {

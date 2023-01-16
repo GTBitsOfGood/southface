@@ -1,30 +1,29 @@
 import { useState, useEffect, createRef } from "react";
-import { Heading, Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Heading, Flex, Text } from "@chakra-ui/react";
 import SearchBar, { useSearch } from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
-import useUser from "src/utils/lib/useUser";
 import PaginationTab from "../../components/PaginationTab";
 
 const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
-  const { user: currentUser } = useUser({
-    redirectIfFound: false,
-    redirectTo: "",
-  });
-
   const [cards, setCards] = useState(cardsFromDatabase);
-
-  const [searchString, setSearchString] = useState("");
-
+  const [isRefresehing, setIsRefreshing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(numPagesInitial);
-  const { searchedCards, handleSearch } = useSearch(
+  const { handleSearch } = useSearch(
     cardsFromDatabase,
     setNumPages,
     setCurrentPage,
-    setCards
+    setCards,
   );
 
-  return (
+  // Without this useEffect, it opens modals for inconsistent cards with regards to pagination.
+  useEffect(() => {
+    setIsRefreshing(false);
+  }, [cards]);
+
+  return isRefresehing ? (
+    ""
+  ) : (
     <Flex alignItems="stretch" flexDirection="column">
       <Heading fontSize={{ base: "4xl", lg: "5xl" }} pb="5">
         {" "}
@@ -37,13 +36,7 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
         setCurrentPage={setCurrentPage}
       />
 
-      <StandardCardTable
-        cards={cards}
-        setCards={setCards}
-        isLoggedIn={currentUser?.isLoggedIn}
-        isAdmin={currentUser?.isAdmin}
-        enablepdfxport={false}
-      />
+      <StandardCardTable cards={cards} setCards={setCards} />
 
       <PaginationTab
         numPages={numPages}
@@ -52,6 +45,7 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         setCards={setCards}
+        setIsRefreshing={setIsRefreshing}
       />
     </Flex>
   );

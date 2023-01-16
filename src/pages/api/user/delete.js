@@ -1,21 +1,24 @@
+import { deleteUserById } from "server/mongodb/actions/User";
 import { withSessionRoute } from "src/utils/lib/session";
-import { getCardById } from "server/mongodb/actions/Card";
 
-// @route   GET api/card/get/[id]
-// @desc    Gets cards for a user
+// @route   DELETE api/user/getAll
+// @desc    Delete user by id
 // @access  Public
 const handler = async (req, res) => {
   try {
-    // const userId = req.session.user.id;
-    const { id } = req.query;
-  
-    const card = await getCardById(id);
+    const id = req.query.id;
+
+    const response = await deleteUserById(id);
+
+    if (response === null) {
+      throw new Error("User not found.");
+    }
+
     return res.status(200).json({
       success: true,
-      payload: card,
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       message: error.message,
     });

@@ -7,6 +7,10 @@ import { getUserFromId } from "server/mongodb/actions/User";
 // @access  Public
 const handler = async (req, res) => {
   try {
+    if (!req.session.user) {
+      throw new Error("Not Logged In");
+    }
+
     const userId = req.session.user ? req.session.user.id : req.body.userId;
     const user = await getUserFromId(userId);
     if (user.isAdmin) {
@@ -17,7 +21,7 @@ const handler = async (req, res) => {
         payload: createdCard,
       });
     } else {
-      throw new Error("You do not have permission to do this action!");
+      throw new Error("Unauthorized");
     }
   } catch (error) {
     res.status(400).json({

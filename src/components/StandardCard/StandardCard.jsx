@@ -121,12 +121,14 @@ const StandardCard = ({ card, setCards, ...props }) => {
             );
           })}
         </HStack>
+        {/* For now the selectable button is disabled due to bugs */}
         {selectable ? (
           <HStack justify="space-evenly" pt="5">
             <SelectorButton />
             <IconButton
               onClick={onOpen}
               fontSize="lg"
+              disabled
               icon={<Icon as={InfoIcon} />}
             ></IconButton>
           </HStack>

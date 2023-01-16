@@ -40,7 +40,6 @@ const ModifyImageModal = ({
     };
 
     uploadFile(file.name, file, metadata, tags).then((res) => {
-      console.log(res._response.request.url);
       setImageUrl(res._response.request.url);
     });
   };
