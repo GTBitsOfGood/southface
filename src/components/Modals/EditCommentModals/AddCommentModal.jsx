@@ -28,7 +28,7 @@ const AddCommentModal = ({
   const [newComment, setNewComment] = useState({ body: "", date: "" });
 
   const unauthorizedToast = useToast();
-  
+
   const handleChange = (e) => {
     setNewComment({ body: e.target.value, date: new Date() });
   };

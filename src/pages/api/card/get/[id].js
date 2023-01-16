@@ -8,7 +8,7 @@ const handler = async (req, res) => {
   try {
     // const userId = req.session.user.id;
     const { id } = req.query;
-  
+
     const card = await getCardById(id);
     return res.status(200).json({
       success: true,

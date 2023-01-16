@@ -70,7 +70,6 @@ const useEditCardModal = (
 
       const updatedCard = await updateCardById(cardId, updatedCardInput);
 
-      
       setIsEditing(!isEditing);
       setComments(updatedCard.comments);
       setTitle(updatedCard.title);
@@ -87,7 +86,10 @@ const useEditCardModal = (
         });
       });
     } catch (error) {
-      if (error.message === "Not Logged In" || error.message === "Unauthorized") {
+      if (
+        error.message === "Not Logged In" ||
+        error.message === "Unauthorized"
+      ) {
         unauthorizedToast({
           title: "Unauthorized!",
           description: "You must log in as an admin.",

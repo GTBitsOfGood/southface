@@ -23,10 +23,9 @@ export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
   const [selections, setSelections] = useState([]);
   useEffect(() => {
-    getCards()
-      .then((res) => {
-        setSelections(res.map(WrapToSelection));
-      })
+    getCards().then((res) => {
+      setSelections(res.map(WrapToSelection));
+    });
     // for the love of God don't put dependency array here
   }, []);
 

@@ -13,7 +13,7 @@ export default function useSearch(
   });
 
   useEffect(() => {
-    getCardsPagination(1, criteria).then(({cards, cardsCount}) => {
+    getCardsPagination(1, criteria).then(({ cards, cardsCount }) => {
       let numPages = Math.floor(cardsCount / 4);
       if (cardsCount % 4 > 0) {
         numPages += 1;
@@ -24,7 +24,7 @@ export default function useSearch(
         setCurrentPage(1);
         setCards(cards);
       }
-    })
+    });
   }, [criteria]);
 
   const filter = (card) => {

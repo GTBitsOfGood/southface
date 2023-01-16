@@ -12,7 +12,7 @@ const handler = async (req, res) => {
     }
 
     const userId = req.session.user.id;
-    
+
     const user = await getUserFromId(userId);
     if (user.isAdmin) {
       const updatedCard = await updateCardById(req.body.id, req.body.card);

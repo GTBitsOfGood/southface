@@ -13,7 +13,7 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
     cardsFromDatabase,
     setNumPages,
     setCurrentPage,
-    setCards,
+    setCards
   );
 
   // Without this useEffect, it opens modals for inconsistent cards with regards to pagination.

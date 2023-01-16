@@ -66,7 +66,10 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
 
       onClose();
     } catch (error) {
-      if (error.message === "Not Logged In" || error.message === "Unauthorized") {
+      if (
+        error.message === "Not Logged In" ||
+        error.message === "Unauthorized"
+      ) {
         unauthorizedToast({
           title: "Unauthorized!",
           description: "You must log in as an admin.",
