@@ -53,7 +53,7 @@ const AddCommentModal = ({
         });
       });
     } catch (error) {
-      if (error.message === "Unauthorized") {
+      if (error.message === "Unauthorized" || error.message === "Not Logged In") {
         unauthorizedToast({
           title: "Unauthorized!",
           description: "You must log in as an admin.",
