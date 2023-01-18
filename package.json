@@ -9,9 +9,9 @@
     "url": "git+https://github.com/GTBitsOfGood/nextjs-starter.git"
   },
   "engines": {
-    "node": "=14.17.0",
-    "yarn": "please-use-npm",
-    "npm": ">=6.14.13"
+    "node": "=16.17.0",
+    "yarn": ">=1.22.17",
+    "npm": "please-use-yarn"
   },
   "bugs": {
     "url": "https://github.com/GTBitsOfGood/nextjs-starter/issues"
