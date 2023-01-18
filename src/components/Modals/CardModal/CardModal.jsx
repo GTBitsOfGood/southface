@@ -19,6 +19,7 @@ import {
   FormLabel,
   SimpleGrid,
   Center,
+  useToast,
 } from "@chakra-ui/react";
 import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
@@ -35,21 +36,23 @@ const CardModal = ({
   cardId,
   cardImages,
   cardTags,
+  setCards,
   ...rest
 }) => {
+  const unauthorizedToast = useToast();
   const {
     isEditing,
     title,
     onEditCard,
     comments,
+    setComments,
+    createNewComment,
     tags,
     images,
     setAddingTag,
     addingTag,
     handleCommentsUpdate,
     handleTitleChange,
-    inputRef,
-    tagInputRef,
     applyEdit,
     onDeleteTag,
     cancelEdit,
@@ -58,7 +61,15 @@ const CardModal = ({
     imageOnClose,
     setImages,
     setTags,
-  } = useEditCardModal(cardTitle, cardComments, cardImages, cardTags, cardId);
+  } = useEditCardModal(
+    cardTitle,
+    cardComments,
+    cardImages,
+    cardTags,
+    cardId,
+    unauthorizedToast
+  );
+
   const TagInput = (props) => {
     const [width, setWidth] = useState(0.5);
     const [editTagValue, setEditTagValue] = useState("");
@@ -83,7 +94,6 @@ const CardModal = ({
     return (
       <>
         <Input
-          ref={tagInputRef}
           {...props}
           width={width + "ch"}
           minWidth="0.5ch"
@@ -140,6 +150,7 @@ const CardModal = ({
                 fontSize="lg"
                 fontWeight="bold"
                 width="md"
+                autoFocus
                 onChange={handleTitleChange}
                 mb={2}
                 defaultValue={title}
@@ -190,7 +201,6 @@ const CardModal = ({
                   variant="link"
                   onClick={() => {
                     setAddingTag(!addingTag);
-                    tagInputRef.current.focus();
                   }}
                 />
               </>
@@ -243,13 +253,24 @@ const CardModal = ({
               columns={3}
               justifyContent="space-between"
             >
-              <Comments
-                isEditing={isEditing}
-                comments={comments}
-                handleCommentsUpdate={handleCommentsUpdate}
-                cardId={cardId}
-                ref={inputRef}
-              />
+              {isEditing && comments.length === 0 ? (
+                <Input
+                  flexBasis="sm"
+                  fontSize="sm"
+                  onChange={createNewComment}
+                  placeholder="Add Card Comment"
+                />
+              ) : (
+                <Comments
+                  isEditing={isEditing}
+                  comments={comments}
+                  handleCommentsUpdate={handleCommentsUpdate}
+                  cardId={cardId}
+                  setComments={setComments}
+                  setCards={setCards}
+                />
+              )}
+
               {!isEditing ? (
                 <Button
                   variant="link"
@@ -265,7 +286,7 @@ const CardModal = ({
                     <HStack>
                       <IconButton
                         icon={<CheckIcon />}
-                        onClick={applyEdit}
+                        onClick={() => applyEdit(setCards)}
                         size="sm"
                         rounded="full"
                         bgColor="green"

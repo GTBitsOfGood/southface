@@ -7,7 +7,7 @@ import useUser from "src/utils/lib/useUser";
 const LoginPage = () => {
   const { mutateUser } = useUser({
     redirectIfFound: true,
-    redirectTo: urls.pages.index,
+    redirectTo: urls.pages.library,
   });
 
   const [username, setUsername] = React.useState("");

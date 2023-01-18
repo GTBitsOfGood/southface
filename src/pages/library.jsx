@@ -11,7 +11,6 @@ const LibraryPageWrapper = (props) => <LibraryPage {...props} />;
  */
 export async function getServerSideProps() {
   const pageNumber = 0;
-
   const cards = await getCardsPagination(pageNumber);
   const cardsCount = await getCardsCount();
   let numPages = Math.floor(cardsCount / 4);

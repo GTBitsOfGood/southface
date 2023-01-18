@@ -8,11 +8,11 @@ import {
   ModalFooter,
   Text,
   IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 import { updateCardById } from "../../../actions/Card";
-import { useRouter } from "next/router";
 
 const DeleteCommentModal = ({
   isOpen,
@@ -20,15 +20,46 @@ const DeleteCommentModal = ({
   cardId,
   comments,
   currCommentIdx,
+  setComments,
+  setCurrCommentIdx,
+  setCards,
 }) => {
-  const router = useRouter();
-
+  const unauthorizedToast = useToast();
   const handleDeleteComment = async () => {
-    const newComments = comments.filter((_, idx) => idx !== currCommentIdx);
+    try {
+      const newComments = comments.filter((_, idx) => idx !== currCommentIdx);
 
-    await updateCardById(cardId, { comments: newComments });
+      const updatedCard = await updateCardById(cardId, {
+        comments: newComments,
+      });
 
-    router.reload();
+      setComments(newComments);
+      setCurrCommentIdx((currCommentIdx) => currCommentIdx - 1);
+      setCards((cards) => {
+        return cards.map((card) => {
+          if (cardId === card._id) {
+            return updatedCard;
+          } else {
+            return card;
+          }
+        });
+      });
+    } catch (error) {
+      if (
+        error.message === "Unauthorized" ||
+        error.message === "Not Logged In"
+      ) {
+        unauthorizedToast({
+          title: "Unauthorized!",
+          description: "You must log in as an admin.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        throw error;
+      }
+    }
 
     onClose();
   };

@@ -1,6 +1,6 @@
+import { computeSha256Hmac } from "@azure/core-util";
 import { useDisclosure } from "@chakra-ui/hooks";
-import React, { useState, useRef } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 import { updateCardById, getCardById } from "../actions/Card";
 
 const useEditCardModal = (
@@ -8,12 +8,9 @@ const useEditCardModal = (
   cardComments,
   cardImages,
   cardTags,
-  cardId
+  cardId,
+  unauthorizedToast
 ) => {
-  const inputRef = React.createRef();
-  const tagInputRef = useRef();
-  const router = useRouter();
-
   const {
     isOpen: imageIsOpen,
     onOpen: imageOnOpen,
@@ -58,28 +55,52 @@ const useEditCardModal = (
 
   const onEditCard = async () => {
     setIsEditing(!isEditing);
-    inputRef.current.focus();
   };
 
   /*------------- ALL SUBMIT BUTTON METHODS -------------*/
 
-  const applyEdit = async () => {
-    const updatedCardInput = {
-      images,
-      title,
-      comments,
-      tags,
-    };
+  const applyEdit = async (setCards) => {
+    try {
+      const updatedCardInput = {
+        images,
+        title,
+        comments: comments.length === 0 ? newComment : comments,
+        tags,
+      };
 
-    updateCardById(cardId, updatedCardInput).then((updatedCard) => {
+      const updatedCard = await updateCardById(cardId, updatedCardInput);
+
       setIsEditing(!isEditing);
       setComments(updatedCard.comments);
       setTitle(updatedCard.title);
       setImages(updatedCard.images);
       setTags(updatedCard.tags);
 
-      refreshData();
-    });
+      setCards((cards) => {
+        return cards.map((card) => {
+          if (cardId === card._id) {
+            return updatedCard;
+          } else {
+            return card;
+          }
+        });
+      });
+    } catch (error) {
+      if (
+        error.message === "Not Logged In" ||
+        error.message === "Unauthorized"
+      ) {
+        unauthorizedToast({
+          title: "Unauthorized!",
+          description: "You must log in as an admin.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        throw error;
+      }
+    }
   };
 
   const cancelEdit = async () => {
@@ -90,16 +111,6 @@ const useEditCardModal = (
     setTitle(card.title);
     setImages(card.images);
     setTags(card.tags);
-  };
-
-  /*------------- MISC METHODS -------------*/
-
-  /**
-   * This method re-fetches the cards inside getServerSideProps.
-   */
-  const refreshData = () => {
-    // router.replace(router.asPath); // if this doesn't work (comment and use the commented code below)
-    router.reload();
   };
 
   return {
@@ -113,7 +124,6 @@ const useEditCardModal = (
     imageIsOpen,
     imageOnClose,
     imageOnOpen,
-    refreshData,
     setTitle,
     setImages,
     setTags,
@@ -128,8 +138,6 @@ const useEditCardModal = (
     newComment,
     addingTag,
     isEditing,
-    inputRef,
-    tagInputRef,
   };
 };
 

@@ -70,9 +70,11 @@ export const getUserFromId = async (id) => {
 export const getUsers = async () => {
   await mongoDB();
 
-  try {
-    return User.find({});
-  } catch (e) {
-    throw new Error("Invalid token!");
-  }
+  return User.find({});
+};
+
+export const deleteUserById = async (id) => {
+  await mongoDB();
+
+  return User.findOneAndRemove({ _id: id });
 };

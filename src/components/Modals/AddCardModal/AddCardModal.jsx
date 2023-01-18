@@ -25,6 +25,7 @@ import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import ModifyImageModal from "../ModifyImageModal";
 import ModalImage from "../ModalImage";
 import { useRouter } from "next/router";
+import { useToast } from "@chakra-ui/react";
 
 const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
   const {
@@ -44,27 +45,42 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
     tags,
     newComment,
     addingTag,
-    inputRef,
-    tagInputRef,
   } = useEditCardModal();
 
-  const router = useRouter();
+  const unauthorizedToast = useToast();
 
   const addCard = async () => {
-    const addCardInput = {
-      images,
-      title,
-      comments: newComment,
-      tags,
-    };
-    await createCard(addCardInput);
-    setComments([]);
-    setTitle("");
-    setImages([]);
-    setTags([]);
+    try {
+      const addCardInput = {
+        images,
+        title,
+        comments: newComment,
+        tags,
+      };
+      const newCard = await createCard(addCardInput);
+      setComments([]);
+      setTitle("");
+      setImages([]);
+      setTags([]);
+      setCards((cards) => [newCard, ...cards]);
 
-    onClose();
-    router.reload();
+      onClose();
+    } catch (error) {
+      if (
+        error.message === "Not Logged In" ||
+        error.message === "Unauthorized"
+      ) {
+        unauthorizedToast({
+          title: "Unauthorized!",
+          description: "You must log in as an admin.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        throw error;
+      }
+    }
   };
 
   const TagInput = (props) => {
@@ -91,7 +107,6 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
     return (
       <>
         <Input
-          ref={tagInputRef}
           {...props}
           width={width + "ch"}
           minWidth="0.5ch"
@@ -136,6 +151,7 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
               fontSize="lg"
               fontWeight="bold"
               width="md"
+              autoFocus
               onChange={handleTitleChange}
               mb={2}
               placeholder="Add Title"
@@ -175,10 +191,7 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
                 size="xs"
                 rounded="full"
                 variant="link"
-                onClick={() => {
-                  setAddingTag(!addingTag);
-                  tagInputRef.current.focus();
-                }}
+                onClick={() => setAddingTag(!addingTag)}
               />
             )}
           </HStack>
@@ -222,7 +235,6 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
                 flexBasis="sm"
                 fontSize="sm"
                 onChange={createNewComment}
-                ref={inputRef}
                 placeholder="Add Card Comment"
               />
 

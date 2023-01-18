@@ -47,7 +47,7 @@ export async function getCardsPagination(
     query = {
       $or: [
         { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+        { "comments.body": { $regex: regex } },
       ],
       tags: { $all: searchFilterTags },
     };
@@ -56,7 +56,7 @@ export async function getCardsPagination(
     query = {
       $or: [
         { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+        { "comments.body": { $regex: regex } },
       ],
     };
   } else if (searchFilterTags) {
@@ -84,7 +84,7 @@ export async function getCardsCount(
     query = {
       $or: [
         { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+        { "comments.body": { $regex: regex } },
       ],
       tags: { $all: searchFilterTags },
     };
@@ -93,7 +93,7 @@ export async function getCardsCount(
     query = {
       $or: [
         { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } }, // checks in each element.body in comments array
+        { "comments.body": { $regex: regex } },
       ],
     };
   } else if (searchFilterTags) {
@@ -110,10 +110,10 @@ export async function getNextDocs(
   last_doc_id?: string
 ) {
   if (!last_doc_id) {
-    // get first 5 docs
+    // get first 4 docs
     return Card.find().sort({ _id: -1 }).limit(no_of_docs_required);
   } else {
-    // get next 5 docs according to that last document id
+    // get next 4 docs according to that last document id
     return Card.find({ _id: { $lt: last_doc_id } })
       .sort({ _id: -1 })
       .limit(no_of_docs_required);

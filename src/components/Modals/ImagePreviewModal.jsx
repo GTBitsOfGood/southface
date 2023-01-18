@@ -103,25 +103,16 @@ const ImagePreviewModal = ({ isOpen, onClose, cardImages, cardComments }) => {
               >
                 {cardComments.map((comment, index) => {
                   return (
-                    <>
-                      <Box w="full" key={index}>
-                        <Text key={index}>{comment.body}</Text>
+                    <Box w="full" key={index}>
+                      <Text>{comment.body}</Text>
 
-                        <Flex
-                          key={index}
-                          w="full"
-                          justifyContent="space-between"
-                        >
-                          <Text key={index} color="#FFD600">
-                            {new Date(comment.date).toDateString()}
-                          </Text>
-                          <Text key={index} color="#0065C1">
-                            Edit
-                          </Text>
-                        </Flex>
-                      </Box>
-                      <Spacer />
-                    </>
+                      <Flex w="full" justifyContent="space-between">
+                        <Text color="#FFD600">
+                          {new Date(comment.date).toDateString()}
+                        </Text>
+                        <Text color="#0065C1">Edit</Text>
+                      </Flex>
+                    </Box>
                   );
                 })}
               </VStack>

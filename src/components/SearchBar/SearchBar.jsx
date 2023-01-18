@@ -36,12 +36,16 @@ const SearchBar = (props) => {
   const tagInput = useRef();
 
   const AddFilterTag = () => {
-    setSearch((search) => {
-      const prevSearch = { ...search };
-      prevSearch.tags[tagInput.current.value] = true;
-      tagInput.current.value = "";
-      return prevSearch;
-    });
+    if (tagInput.current.value === "") {
+      tagInput.current.focus();
+    } else {
+      setSearch((search) => {
+        const prevSearch = { ...search };
+        prevSearch.tags[tagInput.current.value] = true;
+        tagInput.current.value = "";
+        return prevSearch;
+      });
+    }
   };
   const ClearFilterTags = () =>
     setSearch((search) => {
@@ -108,7 +112,7 @@ const SearchBar = (props) => {
               onClick={TagDeleter(tag)}
               key={index}
             >
-              &quot;{tag}&quot; <Icon as={CloseIcon} ml="3" />
+              &quot;{tag}&quot; <Icon key={index} as={CloseIcon} ml="3" />
             </Button>
           ))}
           <InputGroup flex="500px">
@@ -133,8 +137,6 @@ const SearchBar = (props) => {
               View Templates <Icon as={CategoryIcon} fontSize="xl" ml="1.5" />
             </Button>
           )}
-          {/* <Flex>
-          </Flex> */}
         </Flex>
       </Flex>
     </>

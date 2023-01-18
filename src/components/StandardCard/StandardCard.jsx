@@ -16,7 +16,7 @@ import ImagePreviewModal from "../Modals/ImagePreviewModal";
 import Comments from "../Comments";
 import { CheckIcon, CloseIcon, InfoIcon, RepeatIcon } from "@chakra-ui/icons";
 
-const StandardCard = ({ card, ...props }) => {
+const StandardCard = ({ card, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isOpenImagePreviewModal,
@@ -121,12 +121,14 @@ const StandardCard = ({ card, ...props }) => {
             );
           })}
         </HStack>
+        {/* For now the selectable button is disabled due to bugs */}
         {selectable ? (
           <HStack justify="space-evenly" pt="5">
             <SelectorButton />
             <IconButton
               onClick={onOpen}
               fontSize="lg"
+              disabled
               icon={<Icon as={InfoIcon} />}
             ></IconButton>
           </HStack>
@@ -145,6 +147,7 @@ const StandardCard = ({ card, ...props }) => {
           cardComments={card.comments}
           cardImages={card.images}
           AddToPlanButton={<SelectorButton />}
+          setCards={setCards}
         />
       </Flex>
     </Flex>

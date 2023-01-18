@@ -16,7 +16,7 @@ const handler = async (req, res) => {
         success: true,
       });
     } else {
-      throw new Error("You do not have permission to do this action!");
+      throw new Error("Unauthorized");
     }
   } catch (error) {
     res.status(400).json({

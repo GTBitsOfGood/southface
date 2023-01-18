@@ -17,7 +17,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClientSide, setClientSide] = useState(false);
 
-  const { enablePDFExport = true } = { ...props };
+  const { enablepdfexport = false } = { ...props };
 
   useEffect(() => {
     setClientSide(true);
@@ -27,7 +27,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
     <Box {...props}>
       {isClientSide && (
         <Flex alignItems="center" justifyContent="end" gap={4} mt={5} mr={6}>
-          {enablePDFExport && (
+          {enablepdfexport && (
             <Button
               as={PDFDownloadLink}
               document={<PlanDocumentPDF selectedPlanCards={cards} />}
@@ -59,7 +59,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
       >
         {cards.map((card, index) => (
           <GridItem w="100%" key={index} rounded={12}>
-            <StandardCard card={card} />
+            <StandardCard card={card} setCards={setCards} />
           </GridItem>
         ))}
       </Grid>
