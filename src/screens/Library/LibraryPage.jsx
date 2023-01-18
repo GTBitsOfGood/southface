@@ -1,5 +1,5 @@
 import { useState, useEffect, createRef } from "react";
-import { Heading, Flex, Text } from "@chakra-ui/react";
+import { Heading, Flex } from "@chakra-ui/react";
 import SearchBar, { useSearch } from "../../components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import PaginationTab from "../../components/PaginationTab";

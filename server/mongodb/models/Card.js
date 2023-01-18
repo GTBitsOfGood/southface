@@ -3,21 +3,27 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const CardSchema = new Schema({
-  images: [{
-    type: String,
-    default: [],
-  }],
+  images: [
+    {
+      type: String,
+      default: [],
+    },
+  ],
   title: {
     type: String,
   },
-  comments: [{ 
-    body: String, 
-    date: Date
-  }],
-  tags: [{
-    type: String,
-    default: [],
-  }],
+  comments: [
+    {
+      body: String,
+      date: Date,
+    },
+  ],
+  tags: [
+    {
+      type: String,
+      default: [],
+    },
+  ],
   selected: {
     type: Boolean,
     default: false,
@@ -25,7 +31,7 @@ const CardSchema = new Schema({
   selectionIndex: {
     type: Number,
     default: 0,
-  }
+  },
 });
 
 export { CardSchema };

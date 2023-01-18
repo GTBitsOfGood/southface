@@ -8,7 +8,7 @@ const PlanPDFViewer = dynamic(
   { ssr: false }
 );
 
-const PDFWrapper = (props: any) => {
+const PDFWrapper = (props) => {
   const { plan, error } = props;
 
   if (error) {
@@ -26,7 +26,7 @@ const PDFWrapper = (props: any) => {
 /**
  * Errors in getServerSideProps will display the page in 'pages/500.js' (https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props)
  */
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context) {
   const id = context.query.id;
   try {
     const plan = await getPlanById(id);

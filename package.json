@@ -8,6 +8,11 @@
     "type": "git",
     "url": "git+https://github.com/GTBitsOfGood/nextjs-starter.git"
   },
+  "engines": {
+    "node": "=14.17.0",
+    "yarn": "please-use-npm",
+    "npm": ">=6.14.13"
+  },
   "bugs": {
     "url": "https://github.com/GTBitsOfGood/nextjs-starter/issues"
   },
@@ -68,9 +73,7 @@
     "@babel/eslint-parser": "^7.16.5",
     "@bitwarden/cli": "^1.17.1",
     "@next/eslint-plugin-next": "^12.0.8",
-    "@types/react": "^18.0.18",
-    "@typescript-eslint/eslint-plugin": "^5.36.2",
-    "@typescript-eslint/parser": "^5.36.2",
+    "@types/react": "18.0.27",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-next": "^12.0.8",
@@ -84,7 +87,7 @@
     "lint-staged": "^12.1.7",
     "prettier": "2.5.1",
     "prettier-eslint": "^13.0.0",
-    "typescript": "^4.8.2",
+    "typescript": "4.9.4",
     "vercel": "^23.1.2"
   }
 }
