@@ -128,7 +128,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
             <IconButton
               onClick={onOpen}
               fontSize="lg"
-              disabled
+              isDisabled
               icon={<Icon as={InfoIcon} />}
             ></IconButton>
           </HStack>
