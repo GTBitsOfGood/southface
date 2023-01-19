@@ -34,7 +34,7 @@ const DeleteCommentModal = ({
       });
 
       setComments(newComments);
-      setCurrCommentIdx((currCommentIdx) => currCommentIdx - 1);
+      setCurrCommentIdx(0);
       setCards((cards) => {
         return cards.map((card) => {
           if (cardId === card._id) {

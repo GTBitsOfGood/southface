@@ -18,14 +18,14 @@ export default function useSearch(
       if (cardsCount % 4 > 0) {
         numPages += 1;
       }
-
+      console.log("here");
       if (setNumPages) {
         setNumPages(numPages);
         setCurrentPage(1);
         setCards(cards);
       }
     });
-  }, [criteria]);
+  }, [criteria, setNumPages, setCurrentPage, setCards]);
 
   const filter = (card) => {
     const matchesSearch = card.title

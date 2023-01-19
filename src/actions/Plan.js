@@ -1,10 +1,8 @@
 import fetch from "isomorphic-unfetch";
 import urls from "src/utils/urls";
 
-import { Card as CardType } from "src/utils/types";
-
-export const getCards = async () => {
-  return fetch(urls.baseUrl + urls.api.card.get, {
+export const getPlans = async () => {
+  return fetch(urls.baseUrl + urls.api.plan.get, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -21,25 +19,8 @@ export const getCards = async () => {
     });
 };
 
-export const getCardsPagination = async (
-  pageNumber: number,
-  searchFilter: {
-    searchString: string;
-    tags: any;
-  } | null = null
-) => {
-  let url = urls.api.card.getPagination + pageNumber;
-
-  if (searchFilter) {
-    const tagsArray = Object.keys(searchFilter.tags);
-    url +=
-      "&searchFilterString=" +
-      searchFilter.searchString +
-      "&searchFilterTags=" +
-      tagsArray;
-  }
-
-  return fetch(url, {
+export const getPlanById = async (id) => {
+  return fetch(urls.baseUrl + urls.api.plan.get + "/" + id, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -56,32 +37,15 @@ export const getCardsPagination = async (
     });
 };
 
-export const getCardById = async (id: string) => {
-  return fetch(urls.baseUrl + urls.api.card.get + id, {
-    method: "GET",
-    mode: "same-origin",
-    credentials: "include",
-  })
-    .then((response) => response.json())
-    .then((json) => {
-      if (json == null) {
-        throw new Error("Could not connect to API!");
-      } else if (!json.success) {
-        throw new Error(json.message);
-      }
-      return json.payload;
-    });
-};
-
-export const createCard = async (card: CardType) => {
-  return fetch(urls.baseUrl + urls.api.card.create, {
-    method: "POST",
+export const createPlan = async (plan) => {
+  return fetch(urls.baseUrl + urls.api.plan.create, {
+    method: "PUT",
     mode: "same-origin",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(card),
+    body: JSON.stringify(plan),
   })
     .then((response) => response.json())
     .then((json) => {
@@ -95,13 +59,9 @@ export const createCard = async (card: CardType) => {
     });
 };
 
-export const updateCardById = async (
-  id: string,
-  card: Partial<CardType>,
-  isOnlyComments?: boolean
-) => {
-  return fetch(urls.baseUrl + urls.api.card.update, {
-    method: "PUT",
+export const updatePlanById = async (id, plan) => {
+  return fetch(urls.baseUrl + urls.api.plan.update, {
+    method: "POST",
     mode: "same-origin",
     credentials: "include",
     headers: {
@@ -109,8 +69,7 @@ export const updateCardById = async (
     },
     body: JSON.stringify({
       id,
-      card,
-      isOnlyComments,
+      plan,
     }),
   })
     .then((response) => response.json())
@@ -125,8 +84,8 @@ export const updateCardById = async (
     });
 };
 
-export const deleteCardById = async (id: string) => {
-  return fetch(urls.baseUrl + urls.api.card.delete, {
+export const deletePlanById = async (id) => {
+  return fetch(urls.baseUrl + urls.api.plan.delete, {
     method: "DELETE",
     mode: "same-origin",
     credentials: "include",

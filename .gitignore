@@ -259,5 +259,4 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/node,react,macos,windows,webstorm,visualstudiocode
 
 .vercel
-package-lock.json
 next-env.d.ts

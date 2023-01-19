@@ -1,18 +1,13 @@
 import mongoDB from "../index";
 import Card from "../models/Card";
 
-import { Card as CardType } from "src/utils/types";
-
-export async function createCard(card: CardType) {
+export async function createCard(card) {
   await mongoDB();
 
   return Card.create(card);
 }
 
-export async function updateCardById(
-  id: string,
-  updatedCard: Partial<CardType>
-) {
+export async function updateCardById(id, updatedCard) {
   await mongoDB();
 
   return Card.findOneAndUpdate({ _id: id }, updatedCard, {
@@ -20,7 +15,7 @@ export async function updateCardById(
   });
 }
 
-export async function deleteCardById(id: string) {
+export async function deleteCardById(id) {
   await mongoDB();
 
   return Card.findOneAndRemove({ _id: id });
@@ -33,10 +28,10 @@ export async function getCards() {
 }
 
 export async function getCardsPagination(
-  pageNumber: number,
-  searchFilterString: string | null = null,
-  searchFilterTags: string[] | null = null,
-  cardsPerPage: number = 4
+  pageNumber,
+  searchFilterString,
+  searchFilterTags,
+  cardsPerPage = 4
 ) {
   await mongoDB();
 
@@ -71,10 +66,7 @@ export async function getCardsPagination(
     .limit(cardsPerPage);
 }
 
-export async function getCardsCount(
-  searchFilterString: string | null = null,
-  searchFilterTags: string[] | null = null
-) {
+export async function getCardsCount(searchFilterString, searchFilterTags) {
   await mongoDB();
 
   let query = {};
@@ -105,10 +97,7 @@ export async function getCardsCount(
   return Card.find(query).count();
 }
 
-export async function getNextDocs(
-  no_of_docs_required: number = 4,
-  last_doc_id?: string
-) {
+export async function getNextDocs(no_of_docs_required, last_doc_id) {
   if (!last_doc_id) {
     // get first 4 docs
     return Card.find().sort({ _id: -1 }).limit(no_of_docs_required);
@@ -120,7 +109,7 @@ export async function getNextDocs(
   }
 }
 
-export async function getCardById(id: string) {
+export async function getCardById(id) {
   await mongoDB();
 
   return Card.findById(id);
