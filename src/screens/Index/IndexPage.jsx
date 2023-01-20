@@ -1,6 +1,5 @@
 import React from "react";
 import classes from "./IndexPage.module.css";
-import SearchBar from "src/components/SearchBar";
 
 const IndexPage = () => {
   return (

@@ -1,4 +1,4 @@
-import { Flex, Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { getCardsPagination } from "../../actions/Card";
 
 const PaginationTab = ({
@@ -26,7 +26,7 @@ const PaginationTab = ({
           key={index}
           variant="link"
           color="white"
-          disabled={currentPage === pageNumber ? true : false}
+          isDisabled={currentPage === pageNumber ? true : false}
           onClick={() => onPageChange(pageNumber)}
         >
           {pageNumber}

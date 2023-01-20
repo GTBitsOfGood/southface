@@ -1,20 +1,20 @@
-import React from "react";
+import { CheckIcon, CloseIcon, InfoIcon, RepeatIcon } from "@chakra-ui/icons";
 import {
+  Box,
   Button,
-  Image,
   Flex,
   Heading,
   HStack,
+  Icon,
+  IconButton,
+  Image,
   Tag,
   useDisclosure,
-  Icon,
-  Box,
-  IconButton,
 } from "@chakra-ui/react";
+import React from "react";
+import Comments from "../Comments";
 import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
-import Comments from "../Comments";
-import { CheckIcon, CloseIcon, InfoIcon, RepeatIcon } from "@chakra-ui/icons";
 
 const StandardCard = ({ card, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -43,7 +43,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
   };
   const SelectorButton = () => (
     <Button
-      disabled={mode === "switchYellow" || mode === "switchGray"}
+      isDisabled={mode === "switchYellow" || mode === "switchGray"}
       onClick={() => setSelection(!card.selected)}
       flex="1"
     >

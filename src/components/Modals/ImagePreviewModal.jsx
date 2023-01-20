@@ -1,20 +1,19 @@
-import React from "react";
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalCloseButton,
-  ModalBody,
+  Box,
+  Flex,
   HStack,
   Image,
-  VStack,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
   Text,
-  Flex,
-  Spacer,
-  Box,
+  VStack,
 } from "@chakra-ui/react";
+import React from "react";
 
-import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 
 const ImagePreviewModal = ({ isOpen, onClose, cardImages, cardComments }) => {
@@ -28,7 +27,7 @@ const ImagePreviewModal = ({ isOpen, onClose, cardImages, cardComments }) => {
     } else {
       setShowNextArrow(true);
     }
-  }, []);
+  }, [cardImages.length]);
 
   function getNextImage() {
     const nextIndex = currentImageIndex + 1;

@@ -19,7 +19,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { updateCardById } from "../actions/Card";
 import AddCommentModal from "./Modals/EditCommentModals/AddCommentModal";
 import DeleteCommentModal from "./Modals/EditCommentModals/DeleteCommentModal";
@@ -39,6 +39,10 @@ const Comments = ({
   const [isEditing, setIsEditing] = useState(false);
 
   const commentRef = useRef();
+
+  useEffect(() => {
+    setCurrCommentIdx(comments.length - 1);
+  }, [comments]);
 
   const {
     isOpen: isAddOpen,
@@ -66,11 +70,7 @@ const Comments = ({
   };
 
   const handleSaveEdit = async () => {
-    const updatedCard = await updateCardById(
-      cardId,
-      { comments: comments },
-      true
-    );
+    const updatedCard = await updateCardById(cardId, { comments }, true);
 
     setCards((cards) => {
       return cards.map((card) => {
@@ -103,6 +103,8 @@ const Comments = ({
   };
   // Prevent rendering nonexisting comments
   if (comments[currCommentIdx] === undefined) {
+    console.log(currCommentIdx);
+    console.log(comments);
     return "No Comments Yet";
   }
   return (
@@ -168,7 +170,7 @@ const Comments = ({
                 _hover={{
                   bg: currCommentIdx == comments.length - 1 ? "#D9D9D9" : "",
                 }}
-                disabled={currCommentIdx == comments.length - 1}
+                isDisabled={currCommentIdx == comments.length - 1}
                 bgColor="#D9D9D9"
                 onClick={lastComment}
               />
@@ -178,7 +180,7 @@ const Comments = ({
                 _hover={{
                   bg: currCommentIdx == comments.length - 1 ? "#D9D9D9" : "",
                 }}
-                disabled={currCommentIdx == 0}
+                isDisabled={currCommentIdx == 0}
                 bgColor="#D9D9D9"
                 onClick={nextComment}
               />

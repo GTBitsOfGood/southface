@@ -1,12 +1,12 @@
-import React from "react";
 import {
-  Page,
-  Text,
-  Image,
-  View,
   Document,
+  Image,
+  Page,
   StyleSheet,
+  Text,
+  View,
 } from "@react-pdf/renderer";
+import React from "react";
 
 const styles = StyleSheet.create({
   page: {
@@ -61,7 +61,12 @@ const PlanDocumentPDF = ({ selectedPlanCards }) => {
                     {
                       return (
                         image && (
-                          <Image key={index} style={styles.image} src={image} />
+                          <Image
+                            key={index}
+                            style={styles.image}
+                            src={image}
+                            alt="construction-image"
+                          />
                         )
                       );
                     }

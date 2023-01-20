@@ -1,4 +1,4 @@
-import ChooseTemplateModal from "../../components/Modals/ChooseTemplateModal";
+import { CloseIcon, Icon, SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -6,15 +6,14 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
-  Tag,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { CloseIcon, Icon, SearchIcon } from "@chakra-ui/icons";
 import {
-  BiFilter as FilterIcon,
   BiCategory as CategoryIcon,
+  BiFilter as FilterIcon,
 } from "react-icons/bi";
+import ChooseTemplateModal from "../../components/Modals/ChooseTemplateModal";
 
 const SearchBar = (props) => {
   const {
@@ -27,8 +26,6 @@ const SearchBar = (props) => {
     },
     allowTemplates = true,
     popUpOnLoad = false,
-    setNumPages,
-    setCurrentPage,
     ...rest
   } = props;
   const { setSearch, criteria } = handleSearch;

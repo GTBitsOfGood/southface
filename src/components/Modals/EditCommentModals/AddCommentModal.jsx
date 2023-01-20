@@ -1,17 +1,17 @@
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  Modal,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Input,
   FormLabel,
   IconButton,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   useToast,
 } from "@chakra-ui/react";
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 import { useState } from "react";
 import { updateCardById } from "../../../actions/Card";

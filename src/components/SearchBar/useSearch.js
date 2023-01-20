@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCardsPagination } from "../../actions/Card";
 
 export default function useSearch(
@@ -18,7 +18,6 @@ export default function useSearch(
       if (cardsCount % 4 > 0) {
         numPages += 1;
       }
-      console.log("here");
       if (setNumPages) {
         setNumPages(numPages);
         setCurrentPage(1);
