@@ -103,7 +103,6 @@ const Comments = ({
   };
   // Prevent rendering nonexisting comments
   if (comments[currCommentIdx] === undefined) {
-
     return "No Comments Yet";
   }
   return (

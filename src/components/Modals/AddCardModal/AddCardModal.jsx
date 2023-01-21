@@ -1,6 +1,4 @@
-import { useState } from "react";
-import useEditCardModal from "../../../utils/useEditCard";
-
+import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -17,12 +15,11 @@ import {
   ModalOverlay,
   Tag,
   TagLeftIcon,
+  useToast,
 } from "@chakra-ui/react";
-
-import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 import { createCard } from "../../../actions/Card";
-
-import { useToast } from "@chakra-ui/react";
+import useEditCardModal from "../../../utils/useEditCard";
 import ModalImage from "../ModalImage";
 import ModifyImageModal from "../ModifyImageModal";
 
