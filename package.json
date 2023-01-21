@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/GTBitsOfGood/nextjs-starter#readme",
   "scripts": {
-    "dev": "next -p 3000",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next build && next start",
     "lint": "next lint && tsc",

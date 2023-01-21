@@ -30,11 +30,7 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
         Library
       </Heading>
 
-      <SearchBar
-        handleSearch={handleSearch}
-        setNumPages={setNumPages}
-        setCurrentPage={setCurrentPage}
-      />
+      <SearchBar handleSearch={handleSearch} />
 
       <StandardCardTable cards={cards} setCards={setCards} />
 
