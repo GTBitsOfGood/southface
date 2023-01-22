@@ -57,7 +57,7 @@ To keep things modular, the resources are divided into folders namely `/screens`
   - Each function should return a fetch request matching the template:
 
     ```
-    fetch(urls.baseUrl + urls.api.example, {
+    fetch(urls.api.example, {
       method: "get",
       mode: "same-origin",
       credentials: "include",
@@ -107,9 +107,9 @@ The server directory includes the backend actions used in API routes separated b
 
 The public directory hosts any included files on the website.
 
-- [`/public`](public): Files placed in this directory can be accessed at `baseUrl/file`.
+- [`/public`](public): Files placed in this directory can be accessed at `/file`.
   Be **VERY** careful to not include a file with the same name as a page!
-- [`/public/static`](public/static): Files placed in this directory can be accessed at `baseUrl/static/file`.
+- [`/public/static`](public/static): Files placed in this directory can be accessed at `static/file`.
 
 ## Project Management: [`.github/`](.github)
 

@@ -2,7 +2,7 @@ import fetch from "isomorphic-unfetch";
 import urls from "src/utils/urls";
 
 export const signUp = (username, password) =>
-  fetch(urls.baseUrl + urls.api.user.signUp, {
+  fetch(urls.api.user.signUp, {
     method: "POST",
     mode: "same-origin",
     credentials: "include",
@@ -26,7 +26,7 @@ export const signUp = (username, password) =>
     });
 
 export const login = (username, password) =>
-  fetch(urls.baseUrl + urls.api.user.login, {
+  fetch(urls.api.user.login, {
     method: "POST",
     mode: "same-origin",
     credentials: "include",
@@ -50,7 +50,7 @@ export const login = (username, password) =>
     });
 
 export const logout = () =>
-  fetch(urls.baseUrl + urls.api.user.logout, {
+  fetch(urls.api.user.logout, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -73,7 +73,7 @@ export const getCurrentUser = (cookies) => {
     };
   }
 
-  return fetch(urls.baseUrl + urls.api.user.getCurrent, {
+  return fetch(urls.api.user.getCurrent, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",

@@ -2,7 +2,7 @@ import fetch from "isomorphic-unfetch";
 import urls from "src/utils/urls";
 
 export const getPlans = async () => {
-  return fetch(urls.baseUrl + urls.api.plan.get, {
+  return fetch(urls.api.plan.get, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -20,7 +20,7 @@ export const getPlans = async () => {
 };
 
 export const getPlanById = async (id) => {
-  return fetch(urls.baseUrl + urls.api.plan.get + "/" + id, {
+  return fetch(urls.api.plan.get + "/" + id, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -38,7 +38,7 @@ export const getPlanById = async (id) => {
 };
 
 export const createPlan = async (plan) => {
-  return fetch(urls.baseUrl + urls.api.plan.create, {
+  return fetch(urls.api.plan.create, {
     method: "PUT",
     mode: "same-origin",
     credentials: "include",
@@ -60,7 +60,7 @@ export const createPlan = async (plan) => {
 };
 
 export const updatePlanById = async (id, plan) => {
-  return fetch(urls.baseUrl + urls.api.plan.update, {
+  return fetch(urls.api.plan.update, {
     method: "POST",
     mode: "same-origin",
     credentials: "include",
@@ -85,7 +85,7 @@ export const updatePlanById = async (id, plan) => {
 };
 
 export const deletePlanById = async (id) => {
-  return fetch(urls.baseUrl + urls.api.plan.delete, {
+  return fetch(urls.api.plan.delete, {
     method: "DELETE",
     mode: "same-origin",
     credentials: "include",

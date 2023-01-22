@@ -1,7 +1,7 @@
 import urls from "src/utils/urls";
 
 export const getCards = async () => {
-  return fetch(urls.baseUrl + urls.api.card.get, {
+  return fetch(urls.api.card.get, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -48,7 +48,7 @@ export const getCardsPagination = async (pageNumber, searchFilter) => {
 };
 
 export const getCardById = async (id) => {
-  return fetch(urls.baseUrl + urls.api.card.get + id, {
+  return fetch(urls.api.card.get + id, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -65,7 +65,7 @@ export const getCardById = async (id) => {
 };
 
 export const createCard = async (card) => {
-  return fetch(urls.baseUrl + urls.api.card.create, {
+  return fetch(urls.api.card.create, {
     method: "POST",
     mode: "same-origin",
     credentials: "include",
@@ -87,7 +87,7 @@ export const createCard = async (card) => {
 };
 
 export const updateCardById = async (id, card, isOnlyComments) => {
-  return fetch(urls.baseUrl + urls.api.card.update, {
+  return fetch(urls.api.card.update, {
     method: "PUT",
     mode: "same-origin",
     credentials: "include",
@@ -113,7 +113,7 @@ export const updateCardById = async (id, card, isOnlyComments) => {
 };
 
 export const deleteCardById = async (id) => {
-  return fetch(urls.baseUrl + urls.api.card.delete, {
+  return fetch(urls.api.card.delete, {
     method: "DELETE",
     mode: "same-origin",
     credentials: "include",
