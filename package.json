@@ -20,7 +20,7 @@
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' NODE_PATH=. next dev",
     "build": "NODE_PATH=. next build",
-    "start": "next build && next start",
+    "start": "NODE_PATH=. next build && next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "prettier": "prettier --write .",
