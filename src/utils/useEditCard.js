@@ -97,7 +97,7 @@ const useEditCardModal = (
           isClosable: true,
         });
       } else {
-        throw error;
+        throw error; // this part just shows the next.js error modal, but is bad for production
       }
     }
   };

@@ -1,23 +1,23 @@
-import SearchBar, { useSearch } from "../../components/SearchBar";
-import StandardCard from "../../components/StandardCard";
-import { getCards } from "../../actions/Card";
 import {
-  Button,
-  HStack,
-  Heading,
-  Flex,
   Box,
+  Button,
+  Flex,
   Grid,
-  useDisclosure,
+  Heading,
+  HStack,
   Input,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useState, useEffect, useRef } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { getCards } from "../../actions/Card";
 import { createPlan } from "../../actions/Plan";
 import PlanConfirmationModal from "../../components/Modals/PlanConfirmationModal";
+import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
+import SearchBar, { useSearch } from "../../components/SearchBar";
+import StandardCard from "../../components/StandardCard";
 import useUser from "../../utils/lib/useUser";
-import Link from "next/link";
 
 export default function ProjectPlanBuilder() {
   // Primary state in this page is the selections array
@@ -220,7 +220,7 @@ export default function ProjectPlanBuilder() {
                 }
                 fileName="plan.pdf"
               >
-                {({ blob, url, loading, error }) => (
+                {({ loading }) => (
                   <Button>{loading ? "Loading document..." : "PDF"}</Button>
                 )}
               </PDFDownloadLink>

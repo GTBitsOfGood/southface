@@ -1,7 +1,7 @@
-import { getPlans } from "../../actions/Plan";
+import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
 import Link from "next/link";
-import { Button, Heading, Flex, Box, VStack } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getPlans } from "../../actions/Plan";
 import SavedProjectPlan from "../../components/SavedProjectPlan/SavedProjectPlan";
 
 const SavedProjectPlans = () => {

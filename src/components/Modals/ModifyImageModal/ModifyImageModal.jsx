@@ -1,29 +1,27 @@
-import { useState, createRef } from "react";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Box,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  Modal,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Input,
+  Button,
   FormLabel,
   IconButton,
-  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { createRef, useState } from "react";
 
-import { uploadFile, listBlobs } from "src/utils/blobStorage";
 import FilePicker from "chakra-ui-file-picker";
+import { uploadFile } from "src/utils/blobStorage";
 
 const ModifyImageModal = ({
   isOpen,
   onClose,
   setImages,
   isAdd,
-  imageProp,
   currentImageIndex,
   cardId,
 }) => {

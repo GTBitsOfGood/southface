@@ -1,8 +1,8 @@
-import { useState, useEffect, createRef } from "react";
-import { Heading, Flex } from "@chakra-ui/react";
-import SearchBar, { useSearch } from "../../components/SearchBar";
+import { Flex, Heading } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import StandardCardTable from "src/components/StandardCardTable";
 import PaginationTab from "../../components/PaginationTab";
+import SearchBar, { useSearch } from "../../components/SearchBar";
 
 const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
   const [cards, setCards] = useState(cardsFromDatabase);
@@ -30,11 +30,7 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
         Library
       </Heading>
 
-      <SearchBar
-        handleSearch={handleSearch}
-        setNumPages={setNumPages}
-        setCurrentPage={setCurrentPage}
-      />
+      <SearchBar handleSearch={handleSearch} />
 
       <StandardCardTable cards={cards} setCards={setCards} />
 

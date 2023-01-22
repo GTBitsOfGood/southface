@@ -1,31 +1,27 @@
-import { useState } from "react";
-import useEditCardModal from "../../../utils/useEditCard";
-
+import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  Modal,
-  ModalCloseButton,
-  ModalBody,
+  Box,
   Button,
   Flex,
-  Tag,
-  Input,
+  FormLabel,
   HStack,
   IconButton,
-  Box,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Tag,
   TagLeftIcon,
-  FormLabel,
+  useToast,
 } from "@chakra-ui/react";
-
+import { useState } from "react";
 import { createCard } from "../../../actions/Card";
-import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-
-import ModifyImageModal from "../ModifyImageModal";
+import useEditCardModal from "../../../utils/useEditCard";
 import ModalImage from "../ModalImage";
-import { useRouter } from "next/router";
-import { useToast } from "@chakra-ui/react";
+import ModifyImageModal from "../ModifyImageModal";
 
 const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
   const {

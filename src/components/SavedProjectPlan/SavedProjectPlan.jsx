@@ -1,7 +1,7 @@
-import { Button, HStack, Heading, Flex, Box, VStack } from "@chakra-ui/react";
-import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
-import { useState, useEffect } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { Box, Button, Flex, Heading, HStack, VStack } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { useEffect, useState } from "react";
 import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
 import StandardCard from "../StandardCard";
 
@@ -21,7 +21,7 @@ const SavedProjectPlans = ({ plan }) => {
       setCurrentCardGroup(plan.cards.slice(0, 3));
       setShowNextArrow(true);
     }
-  }, []);
+  }, [plan.cards]);
 
   function getNextCardGroup() {
     const nextGroupIndex = currentGroupIndex + 3;
@@ -79,7 +79,7 @@ const SavedProjectPlans = ({ plan }) => {
                 document={<PlanDocumentPDF selectedPlanCards={plan.cards} />}
                 fileName="plan.pdf"
               >
-                {({ blob, url, loading, error }) => (
+                {({ loading }) => (
                   <Button
                     h="30px"
                     bgColor="#727474"
