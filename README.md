@@ -1,5 +1,3 @@
-# nextjs-starter
-
 ## Stack
 
 - React.js: Front-end
@@ -7,79 +5,75 @@
 - MongoDB: Permanently storing info
 - iron-session: Authentication session handling for SSR/SSG
 - eslint: Automatically identifying and fixing code errors
-- prettier: Setting a common code style and fixing any issues. If you would like to adjust any prettier settings like quote style or include semicolons, look in `.prettierrc`
+- prettier: Setting a common code style and fixing any issues.
 - yarn: Package management. If you do not have yarn, run `npm install -g yarn` to install yarn globally.
 
-## Setup
+## Development
 
-### Initializing Env Vars
+1. Clone this project to your computer (preferably use VS Code)
 
-- If you are an EM setting up a project for the first time, read [the Bitwarden guide here](https://gtbitsofgood.notion.site/Secrets-Passwords-Bitwarden-74c4806a1f29485b8fb85ea29f273ab9) before continuing forward.
-- Run `yarn secrets` to sync development secrets from Bitwarden and save them to a local `.env.local` file. Contact a leadership member for the Bitwarden password.
-  - **Note**: If you are using Windows, enter `yarn secrets:login` and then `yarn secrets:sync` instead of the above script.
+```
+git clone https://github.com/GTBitsOfGood/Healing4Heroes.git
+```
 
-### Updating Env Vars
+2. Navigate to this project in your terminal
 
-- For dev, update `.env.local` and `next.config.js`
-- For production, add the env vars to your host, **NEVER** commit `.env.local` to your version control system.
+```
+cd southface
+```
 
-### MongoDB
+3. Install Node Version Manager (NVM)
+- follow [this guide](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/) if you don't have NVM already to install it onto your machine.
+
+4. Switch to node version 16.X
+
+```
+nvm install 16 && nvm use 16
+```
+
+4. Install the dependencies (make sure to use yarn and not npm):
+
+```
+yarn
+```
+
+5. Obtain your secrets -- Linux or MacOS (Skip if Windows); you will need to obtain a password from your Engineering Manager:
+
+```
+yarn secrets:linux
+```
+
+5. Obtain your secrets -- Windows Machines (Skip if MacOS or Linux); you will need to obtain a password from your Engineering Manager:
+
+```
+yarn secrets:windows
+```
+
+If that does not work, try the following (windows):
+
+```
+yarn secrets:login && yarn secrets:sync
+```
+
+Contact your EM for the Bitwarden password. Also change ```.env``` to ```.env.local``` after secrets have been synced to your machine. **NEVER EVER** commit `.env.local` to your version control system.
+
+## MongoDB
 
 A running instance of MongoDB is required this project.
 
-- Decide if you want to run MongoDB locally or remotely
-- Locally (Docker (RECOMMENDED))
-  1. [Download Docker Desktop](https://www.docker.com/products/docker-desktop)
-  2. Run `docker run --name mongodb -d -p 27017:27017 mongo` in your terminal
-  3. Open Docker Desktop and confirm that your MongoDB image is running. It should exist on port 27017, and can be accessed.
-- Locally (Non-Docker)
-  1. [Download MongoDB Community Server](https://www.mongodb.com/download-center/community)
-  2. Go through the installation instructions.
-     - Leave the port at default 27017
-- Remotely
-  1. Create a MongoDB instance on MongoDB Atlas
-  2. In Security → Network Access: add the IP address `0.0.0.0/0` (all IPs)
-  3. In Security → Database Access: Add new database user
-  4. In Data Storage → Clusters: Find your cluster and click `Connect` → `Connect your application` and copy the connection string, set the username and password, and set this as `MONGO_DB` in `.env.local`
-- Create the `nextjs` database. (or choose another name, but make sure to change it in `.env.local`)
-- It's very helpful to install MongoDB Compass to see your database contents
+- Download [mongoDB compass](https://www.mongodb.com/try/download/compass)
+- Launch MongoDB Compass. When prompted for the connection URL, copy and paste ```DB_URL``` from your ```.env.local``` file.
 
-### Node
-
-1. Clone this project to your computer
-2. Navigate to this project in terminal and enter `yarn`
-3. Rename `example.env` to `.env.local` and fill it out with the dev config
+You should now have write access to the different collections available.
 
 ## Running
-
-### Development
-
 To understand this code better, read the [Code Tour](/CODETOUR.md).
 
-1. Run `yarn`
-2. Run `yarn dev`
+### Development
+- Run `yarn dev`
 
 ### Production
+- Run `yarn start`
 
-1. Setup your host/vm and the necessary env vars
-2. Run `yarn install`
-3. Run `yarn start`
 
-## Other Info
-
-### Styling
-
-- This is dated info. We are on Next 11 now.
-- By default, this repository uses Next `^9.2.0` for styles, which includes native support for global CSS and CSS modules
-- However, this version only allows global css to be in `pages/_app.js`, which can cause issues with external packages
-- If you face this error, the solution is installing [`@zeit/next-css` and adding it to `next.config.js`](https://github.com/zeit/next-plugins/tree/master/packages/next-css), however you cannot use css modules and global css together with this package (and it defaults to global).
-
-### Deployment
-
-This repository has a Vercel CD pipeline set up in the [main.yml](/.github/workflows/main.yml) workflow. For first time set up, run `npx vercel` after installing all packages. This will trigger the Vercel CLI and deploy the repository onto Vercel.
-
-Once the repository has been deployed for the first time, three secrets must be loaded into GitHub: `ORG_ID`, `PROJECT_ID`, and `VERCEL_TOKEN`. The first two can be found within the `project.json` file within the `.vercel` folder, generated by the Vercel CLI. The third `VERCEL_TOKEN` can be found under your Vercel account on the Vercel website.
-
-Having configured these values, this repository will generate a Vercel deployment for every PR/push into the `main` or `production` branches. Three GitHub deployment environments are used: Production (for pushes to `production`), Preview (for pushes to open PRs into `main` or `production`), and Development (for pushes to `main`).
-
-There exists a more detailed guide regarding deployment on the [Bits of Good Notion](https://www.notion.so/gtbitsofgood/General-Deployment-Pointers-Vercel-763e769ef0074ff8b12c85c3d4809ba9) (must be a member of BoG to access).
+Congrats! You should now be set-up to work on Southface!! If you have any issues, don't hesitate to contact your EM.
