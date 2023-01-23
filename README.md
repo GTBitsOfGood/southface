@@ -1,5 +1,3 @@
-# nextjs-starter
-
 ## Stack
 
 - React.js: Front-end
