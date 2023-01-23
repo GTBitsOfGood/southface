@@ -26,7 +26,7 @@ import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import RatingStars from "./RatingStars";
 import ModifyImageModal from "../ModifyImageModal";
 import ModalImage from "../ModalImage";
-import Comments from "../../Comments";
+import Comments from "../../Comments/Comments";
 
 const CardModal = ({
   isOpen,

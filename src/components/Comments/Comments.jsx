@@ -18,11 +18,12 @@ import {
   Spacer,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { updateCardById } from "../actions/Card";
-import AddCommentModal from "./Modals/EditCommentModals/AddCommentModal";
-import DeleteCommentModal from "./Modals/EditCommentModals/DeleteCommentModal";
+import { updateCardById } from "../../actions/Card";
+import AddCommentModal from "../Modals/EditCommentModals/AddCommentModal";
+import DeleteCommentModal from "../Modals/EditCommentModals/DeleteCommentModal";
 
 const Comments = ({
   canEdit,
@@ -39,6 +40,7 @@ const Comments = ({
   const [isEditing, setIsEditing] = useState(false);
 
   const commentRef = useRef();
+  const unauthorizedToast = useToast();
 
   useEffect(() => {
     setCurrCommentIdx(comments.length - 1);
@@ -70,17 +72,34 @@ const Comments = ({
   };
 
   const handleSaveEdit = async () => {
-    const updatedCard = await updateCardById(cardId, { comments }, true);
+    try {
+      const updatedCard = await updateCardById(cardId, { comments }, true);
 
-    setCards((cards) => {
-      return cards.map((card) => {
-        if (cardId === card._id) {
-          return updatedCard;
-        } else {
-          return card;
-        }
+      setCards((cards) => {
+        return cards.map((card) => {
+          if (cardId === card._id) {
+            return updatedCard;
+          } else {
+            return card;
+          }
+        });
       });
-    });
+    } catch (error) {
+      if (
+        error.message === "Not Logged In" ||
+        error.message === "Unauthorized"
+      ) {
+        unauthorizedToast({
+          title: "Unauthorized!",
+          description: "You must log in as an admin.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        throw error;
+      }
+    }
     setIsEditing(false);
   };
 
