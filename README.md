@@ -10,7 +10,7 @@
 
 ## Development
 
-1. Clone this project to your computer
+1. Clone this project to your computer (preferably use VS Code)
 
 ```
 git clone https://github.com/GTBitsOfGood/Healing4Heroes.git
