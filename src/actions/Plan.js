@@ -1,5 +1,5 @@
 import fetch from "isomorphic-unfetch";
-import urls from "src/utils/urls";
+import urls from "src/lib/utils/urls";
 
 export const getPlans = async () => {
   return fetch(urls.api.plan.get, {

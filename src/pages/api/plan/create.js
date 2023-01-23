@@ -1,5 +1,5 @@
 import { createPlan } from "server/mongodb/actions/Plan";
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 
 // @route   PUT api/plan/create
 // @desc    Create Plan Request

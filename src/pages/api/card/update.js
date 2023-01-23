@@ -1,5 +1,5 @@
 import { updateCardById } from "server/mongodb/actions/Card";
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 import { getUserFromId } from "server/mongodb/actions/User";
 
 // @route   PUT api/card/update

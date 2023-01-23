@@ -1,4 +1,4 @@
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 import { getCardById } from "server/mongodb/actions/Card";
 
 // @route   GET api/card/get/[id]

@@ -1,5 +1,5 @@
 import { getPlans } from "server/mongodb/actions/Plan";
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 
 // @route   GET api/plan/get
 // @desc    Gets plans for a user

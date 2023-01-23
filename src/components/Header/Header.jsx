@@ -13,7 +13,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
 import NavLink from "../NavLink";
 import routes from "./routes";
-import useUser from "src/utils/lib/useUser";
+import useUser from "src/lib/hooks/useUser";
 
 const Header = () => {
   const { user } = useUser();

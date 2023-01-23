@@ -1,5 +1,5 @@
 import { deleteAllCards } from "server/mongodb/actions/Card";
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 
 // @route   DELETE api/card/delete/all
 // @desc    Delete All Cards Request

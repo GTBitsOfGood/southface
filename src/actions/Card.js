@@ -1,4 +1,4 @@
-import urls from "src/utils/urls";
+import urls from "src/lib/utils/urls";
 
 export const getCards = async () => {
   return fetch(urls.api.card.get, {

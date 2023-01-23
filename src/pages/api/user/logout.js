@@ -1,4 +1,4 @@
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 
 // @route   GET api/user/logout
 // @desc    Logout current user

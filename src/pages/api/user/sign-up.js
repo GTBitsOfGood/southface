@@ -1,5 +1,5 @@
 import { signUp } from "server/mongodb/actions/User";
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 
 // @route   POST api/user/sign-up
 // @desc    SignUp Request

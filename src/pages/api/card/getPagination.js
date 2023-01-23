@@ -1,5 +1,5 @@
 import { getCardsPagination } from "server/mongodb/actions/Card";
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 import { getCardsCount } from "../../../../server/mongodb/actions/Card";
 
 // @route   GET api/card/get

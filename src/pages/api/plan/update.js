@@ -1,5 +1,5 @@
 import { updatePlanById } from "server/mongodb/actions/Plan";
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 
 // @route   POST api/plan/update
 // @desc    Update Plan Request

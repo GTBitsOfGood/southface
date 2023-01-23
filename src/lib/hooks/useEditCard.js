@@ -1,6 +1,6 @@
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useState } from "react";
-import { updateCardById, getCardById } from "../actions/Card";
+import { updateCardById, getCardById } from "../../actions/Card";
 
 const useEditCardModal = (
   cardTitle,

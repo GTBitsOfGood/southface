@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useEditCardModal from "../../../utils/useEditCard";
+import useEditCardModal from "../../../lib/hooks/useEditCard";
 import {
   ModalOverlay,
   ModalContent,

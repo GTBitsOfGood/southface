@@ -1,5 +1,5 @@
 import { getUsers } from "server/mongodb/actions/User";
-import { withSessionRoute } from "src/utils/lib/session";
+import { withSessionRoute } from "src/lib/utils/session";
 
 // @route   GET api/user/getAll
 // @desc    Get current user from cookie

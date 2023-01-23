@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { createCard } from "../../../actions/Card";
-import useEditCardModal from "../../../utils/useEditCard";
+import useEditCardModal from "../../../lib/hooks/useEditCard";
 import ModalImage from "../ModalImage";
 import ModifyImageModal from "../ModifyImageModal";
 

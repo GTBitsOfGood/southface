@@ -15,7 +15,7 @@ import {
 import { createRef, useState } from "react";
 
 import FilePicker from "chakra-ui-file-picker";
-import { uploadFile } from "src/utils/blobStorage";
+import { uploadFile } from "src/lib/utils/blobStorage";
 
 const ModifyImageModal = ({
   isOpen,

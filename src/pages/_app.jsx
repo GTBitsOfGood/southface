@@ -4,7 +4,7 @@ import Head from "next/head";
 import { SWRConfig } from "swr";
 
 import Header from "src/components/Header";
-import fetchJson from "src/utils/lib/fetchJson";
+import fetchJson from "src/lib/utils/fetchJson";
 
 import "focus-visible/dist/focus-visible.min.js";
 import "normalize.css";

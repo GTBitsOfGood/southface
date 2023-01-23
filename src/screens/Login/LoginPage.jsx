@@ -1,8 +1,9 @@
+// This whole page needs to be refractored to use chakraUI
 import React from "react";
 import { login, signUp } from "src/actions/User";
-import urls from "src/utils/urls";
+import useUser from "src/lib/hooks/useUser";
+import urls from "src/lib/utils/urls";
 import classes from "./LoginPage.module.css";
-import useUser from "src/utils/lib/useUser";
 
 const LoginPage = () => {
   const { mutateUser } = useUser({

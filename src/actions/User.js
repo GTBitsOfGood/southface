@@ -1,5 +1,5 @@
 import fetch from "isomorphic-unfetch";
-import urls from "src/utils/urls";
+import urls from "src/lib/utils/urls";
 
 export const signUp = (username, password) =>
   fetch(urls.api.user.signUp, {
