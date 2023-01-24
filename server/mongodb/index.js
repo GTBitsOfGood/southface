@@ -4,7 +4,9 @@ export default async () => {
   if (mongoose.connections[0].readyState) return;
 
   if (!process.env.DB_URL || !process.env.DB_NAME) {
-    throw new Error("DB environmental variables are not set! Make sure to run yarn secrets")
+    throw new Error(
+      "DB environmental variables are not set! Make sure to run yarn secrets"
+    );
   }
 
   await mongoose
