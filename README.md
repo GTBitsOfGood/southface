@@ -79,4 +79,12 @@ To understand this code better, read the [Code Tour](/CODETOUR.md).
 
 - Run `yarn start`
 
+## Additional Information
+
+- Use `[INITIALS]/[ISSUE_NUMBER]-[SHORT_DESCRIPTION]` when naming your feature branches
+- Use commit messages using the tags located in `commitlint.config.js`. You will most likely be using `feat`, `style`, `fix`, and `docs`. I.e `feat: [message]`
+- Please run `yarn lint` and `yarn prettier` before committing (make sure yarn and prettier extensions are enabled in VSCode)
+- It is highly recommended to use VSCode with ESLint and Prettier extensions
+  - To save even more time, set up "Format on Save"
+
 Congrats! You should now be set-up to work on Southface!! If you have any issues, don't hesitate to contact your EM.
