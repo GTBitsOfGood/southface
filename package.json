@@ -19,16 +19,16 @@
   "homepage": "https://github.com/GTBitsOfGood/nextjs-starter#readme",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' NODE_PATH=. next dev",
-    "build": "NODE_PATH=. next build",
-    "start": "NODE_PATH=. next build && next start",
+    "build": "cross-env NODE_PATH=. next build",
+    "start": "cross-env NODE_PATH=. next build && next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
-    "secrets:linux": "echo Enter Bitwarden Password: && read BW_PASSWORD && (bw logout || exit 0) && export BW_SESSION=`bw login product@bitsofgood.org $BW_PASSWORD --raw` && npm run secrets:get",
-    "secrets:windows": "set /p BW_PASSWORD=Enter Bitwarden Password:&& (bw logout || VER>NUL) && npm run secrets:login",
-    "secrets:login": "FOR /F %a IN ('bw login product@bitsofgood.org %BW_PASSWORD% --raw') DO SET BW_SESSION=%a && npm run secrets:get",
-    "secrets:get": "bw sync && bw get item 8ccfc499-cfc2-4e66-9e82-af0801429e85 | fx .notes > \".env\"",
+    "secrets:linux": "echo Enter Bitwarden Password: && read BW_PASSWORD && (bw logout || exit 0) && export BW_SESSION=`bw login product@bitsofgood.org $BW_PASSWORD --raw` && yarn secrets:get",
+    "secrets:windows": "set /p BW_PASSWORD=Enter Bitwarden Password:&& (bw logout || VER>NUL) && yarn secrets:login",
+    "secrets:login": "FOR /F %a IN ('bw login product@bitsofgood.org %BW_PASSWORD% --raw') DO SET BW_SESSION=%a && yarn secrets:get",
+    "secrets:get": "bw sync && bw get item 8ccfc499-cfc2-4e66-9e82-af0801429e85 | fx .notes > \".env.local\"",
     "prepare": "npx husky install"
   },
   "husky": {
