@@ -19,8 +19,8 @@
   "homepage": "https://github.com/GTBitsOfGood/nextjs-starter#readme",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' NODE_PATH=. next dev",
-    "build": "NODE_PATH=. next build",
-    "start": "NODE_PATH=. next build && next start",
+    "build": "cross-env NODE_PATH=. next build",
+    "start": "cross-env NODE_PATH=. next build && next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "prettier": "prettier --write .",
