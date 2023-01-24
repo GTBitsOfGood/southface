@@ -50,13 +50,9 @@ yarn secrets:linux
 yarn secrets:windows
 ```
 
-If that does not work, try the following (windows):
 
-```
-yarn secrets:login && yarn secrets:sync
-```
 
-Contact your EM for the Bitwarden password. Also change `.env` to `.env.local` after secrets have been synced to your machine. **NEVER EVER** commit `.env.local` to your version control system.
+Contact your EM for the Bitwarden password. **NEVER EVER** commit `.env.local` to your version control system.
 
 ## MongoDB
 
