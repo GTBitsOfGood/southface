@@ -16,6 +16,7 @@ const SavedProjectPlans = () => {
   return (
     <Box>
       <Flex mb="10">
+        {/* This needs to use the NavLink component */}
         <Link href="/plan-builder">
           <Button>Return to Project Plan Builder</Button>
         </Link>
