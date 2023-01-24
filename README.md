@@ -50,8 +50,6 @@ yarn secrets:linux
 yarn secrets:windows
 ```
 
-
-
 Contact your EM for the Bitwarden password. **NEVER EVER** commit `.env.local` to your version control system.
 
 ## MongoDB

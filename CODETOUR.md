@@ -4,7 +4,7 @@ A quick introduction to the folders and files in this repo. Keep in mind that in
 
 ## Source Organization: [`src/`](src)
 
-To keep things modular, the resources are divided into folders namely `/pages`, `/components`, `/actions`, and `/lib`  (ignore `/screens` folder as it will be refactored soon).
+To keep things modular, the resources are divided into folders namely `/pages`, `/components`, `/actions`, and `/lib` (ignore `/screens` folder as it will be refactored soon).
 
 - ### [`/pages`](src/pages): Used for creating file-system routing to screens and creating API routes.
 
