@@ -2,7 +2,7 @@ import {
   Box,
   Button,
   Flex,
-  Grid,
+  // Grid,
   Heading,
   HStack,
   Input,
@@ -15,7 +15,7 @@ import { getCards } from "src/actions/Card";
 import { createPlan } from "src/actions/Plan";
 import PlanConfirmationModal from "src/components/Modals/PlanConfirmationModal";
 import PlanDocumentPDF from "src/components/PlanDocumentPDF/PlanDocumentPDF";
-import SearchBar, { useSearch } from "src/components/SearchBar";
+// import SearchBar, { useSearch } from "src/components/SearchBar";
 import StandardCard from "src/components/StandardCard";
 import useUser from "src/lib/hooks/useUser";
 
@@ -65,13 +65,13 @@ const ProjectPlanBuilder = () => {
   };
 
   // Array map methods for rendering
-  const RenderCards = (card) => {
-    const cardProps = { ...card.cardProps };
-    cardProps.selected = card.selection;
-    cardProps.setSelection = SelectionSetter(card.index);
-    cardProps.selectable = true;
-    return <StandardCard key={card.index} card={cardProps} />;
-  };
+  // const RenderCards = (card) => {
+  //   const cardProps = { ...card.cardProps };
+  //   cardProps.selected = card.selection;
+  //   cardProps.setSelection = SelectionSetter(card.index);
+  //   cardProps.selectable = true;
+  //   return <StandardCard key={card.index} card={cardProps} />;
+  // };
 
   const Comparator = (a, b) => a.order - b.order;
 
@@ -144,9 +144,9 @@ const ProjectPlanBuilder = () => {
   };
 
   // Search logic
-  const { searchedCards, handleSearch } = useSearch(
-    selections.map(UnwrapToCard)
-  );
+  // const { searchedCards, handleSearch } = useSearch(
+  //   selections.map(UnwrapToCard)
+  // );
 
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -244,15 +244,6 @@ const ProjectPlanBuilder = () => {
           </Box>
         )}
       </Flex>
-      <Heading>All Cards</Heading>
-      <SearchBar handleSearch={handleSearch} popUpOnLoad={true} />
-      <Grid
-        templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
-        gap="41"
-        m="10"
-      >
-        {searchedCards.map(WrapToSelection).map(RenderCards)}
-      </Grid>
       <PlanConfirmationModal
         isOpen={isOpen}
         onClose={onClose}
