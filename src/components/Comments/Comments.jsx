@@ -21,6 +21,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
+import useUser from "src/lib/hooks/useUser";
 import { updateCardById } from "../../actions/Card";
 import AddCommentModal from "../Modals/EditCommentModals/AddCommentModal";
 import DeleteCommentModal from "../Modals/EditCommentModals/DeleteCommentModal";
@@ -66,10 +67,22 @@ const Comments = ({
   };
 
   const handleEditing = () => {
+    if (!user || !user.isAdmin) {
+      unauthorizedToast({
+        title: "Unauthorized!",
+        description: "You must log in as an admin.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
     setIsEditing(true);
 
     commentRef.current.focus();
   };
+
+  const { user } = useUser();
 
   const handleSaveEdit = async () => {
     try {
@@ -210,7 +223,19 @@ const Comments = ({
                 icon={<AddIcon />}
                 size="sm"
                 rounded="full"
-                onClick={onAddOpen}
+                onClick={() => {
+                  if (!user || !user.isAdmin) {
+                    unauthorizedToast({
+                      title: "Unauthorized!",
+                      description: "You must log in as an admin.",
+                      status: "error",
+                      duration: 3000,
+                      isClosable: true,
+                    });
+                    return;
+                  }
+                  onAddOpen();
+                }}
               />
               <AddCommentModal
                 isOpen={isAddOpen}
@@ -232,7 +257,19 @@ const Comments = ({
                 icon={<DeleteIcon />}
                 size="sm"
                 rounded="full"
-                onClick={onDeleteOpen}
+                onClick={() => {
+                  if (!user || !user.isAdmin) {
+                    unauthorizedToast({
+                      title: "Unauthorized!",
+                      description: "You must log in as an admin.",
+                      status: "error",
+                      duration: 3000,
+                      isClosable: true,
+                    });
+                    return;
+                  }
+                  onDeleteOpen();
+                }}
               />
               <DeleteCommentModal
                 isOpen={isDeleteOpen}

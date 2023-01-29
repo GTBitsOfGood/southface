@@ -1,19 +1,19 @@
-import React from "react";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
+  Collapse,
   Flex,
-  Text,
+  IconButton,
   Popover,
   PopoverContent,
   PopoverTrigger,
-  IconButton,
+  Text,
   useDisclosure,
-  Collapse,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-
+import React from "react";
+import { logout } from "src/actions/User";
+import useUser from "src/lib/hooks/useUser";
 import NavLink from "../NavLink";
 import routes from "./routes";
-import useUser from "src/lib/hooks/useUser";
 
 const Header = () => {
   const { user } = useUser();
@@ -34,28 +34,59 @@ const DesktopHeader = ({ user, ...props }) => (
     {routes
       // show the routes which don't require auth
       // and the ones that require auth and being logged in
-      .filter((route) => (user?.isLoggedIn && route.auth) || !route.auth)
-      .map(({ name, link }) => (
-        <NavLink
-          href={link}
-          key={name}
-          color="white"
-          cursor="pointer"
-          _hover={{ bgColor: "#002d2d" }}
-          px={4}
-          py={2}
-          rounded={20}
-          _last={{ ml: "auto" }}
-        >
-          <Text fontSize="lg">{name}</Text>
-        </NavLink>
-      ))}
+      //
+      // Edit: now it shows the routes which require user to not be
+      // logged in and not require auth or the routes that
+      // require user to be logged in
+      .filter(
+        (route) =>
+          (!user?.isLoggedIn && !route.auth) ||
+          (user?.isLoggedIn && route.login)
+      )
+      .map(({ name, link }) =>
+        name != "Logout" ? (
+          <NavLink
+            href={link}
+            key={name}
+            color="white"
+            cursor="pointer"
+            _hover={{ bgColor: "#002d2d" }}
+            px={4}
+            py={2}
+            rounded={20}
+            _last={{ ml: "auto" }}
+          >
+            <Text fontSize="lg">{name}</Text>
+          </NavLink>
+        ) : (
+          <NavLink
+            href={link}
+            key={name}
+            color="white"
+            cursor="pointer"
+            backgroundColor={"transparent"}
+            _hover={{ bgColor: "#002d2d" }}
+            px={4}
+            py={2}
+            rounded={20}
+            _last={{ ml: "auto" }}
+            onClick={() => {
+              logout().catch((error) => window.alert(error.message));
+              window.location.reload();
+            }}
+          >
+            <Text fontSize="lg">{name}</Text>
+          </NavLink>
+        )
+      )}
   </Flex>
 );
 
 const MobileHeader = ({ user, ...props }) => {
   const { isOpen, onToggle } = useDisclosure();
-  const loginNavButton = routes[routes.length - 1];
+  const toggleButton = user?.isLoggedIn
+    ? routes[routes.length - 1]
+    : routes[routes.length - 2];
   return (
     <Flex
       {...props}
@@ -63,11 +94,25 @@ const MobileHeader = ({ user, ...props }) => {
       flexDirection="row-reverse"
       alignItems="center"
     >
-      <NavLink href={loginNavButton.link}>
-        <Text fontSize="lg" color="whiteAlpha.900">
-          {loginNavButton.name}
-        </Text>
-      </NavLink>
+      {user?.isLoggedIn ? (
+        <NavLink
+          href={toggleButton.link}
+          onClick={() => {
+            logout().catch((error) => window.alert(error.message));
+            window.location.reload();
+          }}
+        >
+          <Text fontSize="lg" color="whiteAlpha.900">
+            {toggleButton.name}
+          </Text>
+        </NavLink>
+      ) : (
+        <NavLink href={toggleButton.link}>
+          <Text fontSize="lg" color="whiteAlpha.900">
+            {toggleButton.name}
+          </Text>
+        </NavLink>
+      )}
       <Popover trigger={"hover"}>
         <PopoverTrigger bgColor="transparent">
           <IconButton
@@ -91,8 +136,10 @@ const MobileHeader = ({ user, ...props }) => {
                 // and the ones that require auth and being logged in
                 .filter(
                   (route) =>
-                    ((user?.isLoggedIn && route.auth) || !route.auth) &&
-                    route.name !== "Login"
+                    ((!user?.isLoggedIn && !route.auth) ||
+                      (user?.isLoggedIn && route.login)) &&
+                    route.name !== "Login" &&
+                    route.name !== "Logout"
                 )
                 .map(({ name, link }) => (
                   <NavLink

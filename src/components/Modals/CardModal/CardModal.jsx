@@ -1,32 +1,33 @@
-import { useState } from "react";
-import useEditCardModal from "../../../lib/hooks/useEditCard";
+import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  Modal,
-  ModalCloseButton,
-  ModalBody,
+  Box,
   Button,
+  Center,
   Flex,
-  Tag,
-  Input,
+  FormLabel,
+  Heading,
   HStack,
   IconButton,
-  Heading,
-  Box,
-  TagLeftIcon,
-  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
-  Center,
+  Tag,
+  TagLeftIcon,
   useToast,
 } from "@chakra-ui/react";
-import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { useState } from "react";
+import useEditCardModal from "../../../lib/hooks/useEditCard";
 
-import RatingStars from "./RatingStars";
-import ModifyImageModal from "../ModifyImageModal";
-import ModalImage from "../ModalImage";
+import useUser from "src/lib/hooks/useUser";
 import Comments from "../../Comments/Comments";
+import ModalImage from "../ModalImage";
+import ModifyImageModal from "../ModifyImageModal";
+import RatingStars from "./RatingStars";
 
 const CardModal = ({
   isOpen,
@@ -69,6 +70,8 @@ const CardModal = ({
     cardId,
     unauthorizedToast
   );
+
+  const { user } = useUser();
 
   const TagInput = (props) => {
     const [width, setWidth] = useState(0.5);
@@ -276,7 +279,19 @@ const CardModal = ({
                   variant="link"
                   alignSelf="end"
                   color="#0065C1"
-                  onClick={onEditCard}
+                  onClick={() => {
+                    if (!user || !user.isAdmin) {
+                      unauthorizedToast({
+                        title: "Unauthorized!",
+                        description: "You must log in as an admin.",
+                        status: "error",
+                        duration: 3000,
+                        isClosable: true,
+                      });
+                      return;
+                    }
+                    onEditCard();
+                  }}
                 >
                   Edit
                 </Button>

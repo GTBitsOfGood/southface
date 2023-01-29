@@ -1,23 +1,29 @@
-import { useState, useEffect } from "react";
 import {
-  Grid,
-  GridItem,
-  useDisclosure,
   Box,
   Button,
   Flex,
+  Grid,
+  GridItem,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { useEffect, useState } from "react";
 
+import useUser from "src/lib/hooks/useUser";
 import AddCardModal from "../Modals/AddCardModal";
-import StandardCard from "../StandardCard/StandardCard";
 import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
+import StandardCard from "../StandardCard/StandardCard";
 
 const StandardCardTable = ({ cards, setCards, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClientSide, setClientSide] = useState(false);
 
   const { enablepdfexport = false } = { ...props };
+
+  const { user } = useUser();
+
+  const unauthorizedToast = useToast();
 
   useEffect(() => {
     setClientSide(true);
@@ -38,7 +44,23 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
             </Button>
           )}
 
-          <Button onClick={onOpen} rounded={4} boxShadow="base">
+          <Button
+            onClick={() => {
+              if (!user || !user.isAdmin) {
+                unauthorizedToast({
+                  title: "Unauthorized!",
+                  description: "You must log in as an admin.",
+                  status: "error",
+                  duration: 3000,
+                  isClosable: true,
+                });
+                return;
+              }
+              onOpen();
+            }}
+            rounded={4}
+            boxShadow="base"
+          >
             Add Card
           </Button>
           <AddCardModal isOpen={isOpen} onClose={onClose} setCards={setCards} />
