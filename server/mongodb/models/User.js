@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { PlanSchema } from "./Plan";
 
 const { Schema } = mongoose;
 
@@ -15,6 +16,10 @@ const UserSchema = new Schema({
   },
   isAdmin: {
     type: Boolean,
+    required: false,
+  },
+  activePlan: {
+    type: PlanSchema,
     required: false,
   },
 });

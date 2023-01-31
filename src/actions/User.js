@@ -90,3 +90,19 @@ export const getCurrentUser = (cookies) => {
       return json.payload;
     });
 };
+
+export const addToActivePlan = (card) => {
+  console.log(card);
+  return fetch();
+  // unfinished
+};
+export const removeFromActivePlan = (card) => {
+  console.log(card);
+  return fetch();
+  // unfinished
+};
+export const updateActivePlan = (plan) => {
+  console.log(plan);
+  return fetch();
+  // unfinished
+};

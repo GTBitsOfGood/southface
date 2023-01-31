@@ -3,7 +3,7 @@ import { CardSchema } from "server/mongodb/models/Card.js";
 
 const { Schema } = mongoose;
 
-const PlanSchema = new Schema({
+export const PlanSchema = new Schema({
   userId: {
     type: String,
   },

@@ -67,6 +67,39 @@ export const getUserFromId = async (id) => {
   }
 };
 
+export const addToActivePlan = async (userId, card) => {
+  await mongoDB();
+  try {
+    console.log(userId);
+    console.log(card);
+  } catch (e) {
+    throw new Error("Bruh");
+  }
+  // unfinished
+};
+
+export const removeFromActivePlan = async (userId, card) => {
+  await mongoDB();
+  try {
+    console.log(userId);
+    console.log(card);
+  } catch (e) {
+    throw new Error("Bruh");
+  }
+  // unfinished
+};
+
+export const updateActivePlan = async (userId, plan) => {
+  await mongoDB();
+  try {
+    console.log(userId);
+    console.log(plan);
+  } catch (e) {
+    throw new Error("Bruh");
+  }
+  // unfinished
+};
+
 export const getUsers = async () => {
   await mongoDB();
 

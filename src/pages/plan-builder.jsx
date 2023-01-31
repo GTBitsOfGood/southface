@@ -21,26 +21,29 @@ import PlanDocumentPDF from "src/components/PlanDocumentPDF/PlanDocumentPDF";
 // import SearchBar, { useSearch } from "src/components/SearchBar";
 // import StandardCard from "src/components/StandardCard";
 import useUser from "src/lib/hooks/useUser";
+// import StandardCard from "../components/StandardCard/StandardCard";
 
 const ProjectPlanBuilder = () => {
   // Primary state in this page is the selections array
   const [selections, setSelections] = useState([]);
+  const [cards, setCards] = useState([]);
   useEffect(() => {
     getCards().then((res) => {
-      setSelections(res.map(WrapToSelection));
+      console.log(cards);
+      setCards(res);
     });
     // for the love of God don't put dependency array here
   }, []);
 
   // Wraps cards with selection info
-  const WrapToSelection = (card, index) => {
-    return {
-      cardProps: card,
-      index: card.selectionIndex ? card.selectionIndex : index,
-      order: card.order ? card.order : index,
-      selection: card.selected,
-    };
-  };
+  // const WrapToSelection = (card, index) => {
+  //   return {
+  //     cardProps: card,
+  //     index: card.selectionIndex ? card.selectionIndex : index,
+  //     order: card.order ? card.order : index,
+  //     selection: card.selected,
+  //   };
+  // };
   const UnwrapToCard = (card) => {
     const cardProps = { ...card.cardProps };
     cardProps.selected = card.selection;
@@ -236,7 +239,6 @@ const ProjectPlanBuilder = () => {
               )}
             </HStack>
           </CardBody>
-          <CardBody>Bruhas;dlfkjasdfl;ksldlsldllslsldkdksldksld</CardBody>
         </VStack>
         <VStack flex={1}>
           <Card w="100%">
