@@ -24,6 +24,8 @@ const StandardCard = ({ card, setCards, ...props }) => {
     onClose: onCloseImagePreviewModal,
   } = useDisclosure();
 
+  const { renderType = "default" } = { ...props }; // sets what kind of standardCard to show
+
   const {
     setSelection = () => undefined,
     mode = "green",
@@ -72,6 +74,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           : () => undefined
       }
     >
+      {renderType}
       <Box height="37%" position="relative">
         {card.selected && mode !== "red" && (
           <Icon
