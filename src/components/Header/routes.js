@@ -2,6 +2,11 @@ import urls from "src/lib/utils/urls";
 
 const routes = [
   {
+    name: "Landing",
+    link: urls.pages.index,
+    auth: false,
+  },
+  {
     name: "Library",
     link: urls.pages.library,
     auth: false,
@@ -16,6 +21,11 @@ const routes = [
     link: urls.pages.login,
     auth: false,
     atEnd: true,
+  },
+  {
+    name: "Primary Categories",
+    link: urls.pages.categories,
+    auth: false,
   },
 ];
 
