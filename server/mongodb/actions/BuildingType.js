@@ -27,6 +27,34 @@ export async function createDefaultBuildingTypes() {
         "Education and Operations (EO)",
       ],
     },
+    {
+      name: "singleFamily",
+      primaryCategories: [
+        "Site Planning (SP)",
+        "Resource Efficiency (RE)",
+        "Durability and Moisture Management (DU)",
+        "High-Performance Building Envelope (BE)",
+        "Energy Efficient HVAC Systems (ES)",
+        "Indoor Air Quality (IAQ)",
+        "Plumbing and Irrigation (PI)",
+        "Efficient Lighting and Appliances (LA)",
+        "Education and Operations (EO)",
+      ],
+    },
+    {
+      name: "commercial",
+      primaryCategories: [
+        "Site Planning (SP)",
+        "Resource Efficiency (RE)",
+        "Durability and Moisture Management (DU)",
+        "High-Performance Building Envelope (BE)",
+        "Energy Efficient HVAC Systems (ES)",
+        "Indoor Air Quality (IAQ)",
+        "Plumbing and Irrigation (PI)",
+        "Efficient Lighting and Appliances (LA)",
+        "Education and Operations (EO)",
+      ],
+    },
   ];
 
   for (let type of defaultTypes) {
