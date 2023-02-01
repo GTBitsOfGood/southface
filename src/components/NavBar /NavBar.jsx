@@ -1,19 +1,31 @@
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
+  Box,
+  Button,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  IconButton,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import { BiBookBookmark as ShoppingCartIcon } from "react-icons/bi";
 import SectionSeperator from "./SectionSeperator";
 import ShoppingCartItem from "./ShoppingCartItem";
 
 const NavBar = () => {
-  const [sidebar, setSidebar] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [shoppingCartItems, setShoppingCartItems] = React.useState([
+    { planName: "Ladder T-walls", imageNum: 2, commentNum: 8 },
+    { planName: "Ladder T-walls", imageNum: 3, commentNum: 6 },
+    { planName: "Ladder T-walls", imageNum: 1, commentNum: 2 },
+    { planName: "Ladder T-walls", imageNum: 4, commentNum: 5 },
+    { planName: "Ladder T-walls", imageNum: 6, commentNum: 7 },
+  ]);
 
-  const toggleSidebar = () => {
-    setSidebar((prevState) => !prevState);
+  const handleClose = () => {
+    onClose();
+    setShoppingCartItems(shoppingCartItems.slice(1));
   };
 
   return (
@@ -23,56 +35,50 @@ const NavBar = () => {
           <div style={NavBarElement}>Digital Library</div>
           <div style={NavBarElement}>Project Plan Builder</div>
           <div style={NavBarElementCart}>
-            <button onClick={toggleSidebar}>
-              <ShoppingCartIcon></ShoppingCartIcon>
-            </button>
+            <IconButton onClick={onOpen} icon={<ShoppingCartIcon />} />
             <div style={NavBarElement}>Logout</div>
           </div>
         </div>
       </nav>
 
-      {sidebar && (
-        <Modal isOpen={sidebar} onClose={sidebar} isCentered size="4xl">
-          <ModalOverlay />
-          <ModalContent style={sidebarContainer}>
-            <div>
-              <ModalHeader>Atlanta Construction 47</ModalHeader>
-              <SectionSeperator />
-              <ui>
+      <Drawer isOpen={isOpen} onClose={handleClose}>
+        <DrawerOverlay />
+        <DrawerContent justifyContent="space-between">
+          <Box>
+            <DrawerHeader display="flex" justifyContent="center">
+              Atlanta Construction 47
+            </DrawerHeader>
+            <SectionSeperator />
+            <ui>
+              {shoppingCartItems.slice(0, 3).map((item, index) => (
                 <ShoppingCartItem
-                  planName={"Ladder T-walls"}
-                  num1={2}
-                  num2={8}
-                ></ShoppingCartItem>
-                <ShoppingCartItem
-                  planName={"Ladder T-walls"}
-                  num1={3}
-                  num2={6}
-                ></ShoppingCartItem>
-                <ShoppingCartItem
-                  planName={"Ladder T-walls"}
-                  num1={1}
-                  num2={2}
-                ></ShoppingCartItem>
-              </ui>
-            </div>
-
-            <div>
-              <button style={exitButton} onClick={toggleSidebar}>
-                View Full Plan
-              </button>
-            </div>
-          </ModalContent>
-        </Modal>
-      )}
+                  key={index}
+                  planName={item.planName}
+                  imageNum={item.imageNum}
+                  commentNum={item.commentNum}
+                />
+              ))}
+            </ui>
+          </Box>
+          <Box display="flex" justifyContent="center">
+            <Button
+              onClick={handleClose}
+              background="#6D6E70"
+              borderRadius="32px"
+              color="white"
+              marginBottom="20"
+            >
+              View Full Plan
+            </Button>
+          </Box>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };
 
-// styles
 const NavBarContainer = {
   marginTop: "20px",
-  margineLeft: " 0",
   paddingLeft: "50px",
   paddingRight: "50px",
   background: "#6D6E70",
@@ -90,25 +96,6 @@ const NavBarElement = {
 const NavBarElementCart = {
   display: "flex",
   alignItems: "center",
-};
-
-const sidebarContainer = {
-  width: "400px",
-  height: "100vh",
-  float: "right",
-  textAlign: "center",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-};
-
-const exitButton = {
-  background: "#6D6E70",
-  borderRadius: "32px",
-  padding: "15px",
-  fontWeight: "bold",
-  color: "white",
-  marginBottom: "20px",
 };
 
 export default NavBar;
