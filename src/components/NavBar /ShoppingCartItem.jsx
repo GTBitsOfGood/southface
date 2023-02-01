@@ -11,41 +11,6 @@ const ShoppingCartItem = ({ planName, num1, num2 }) => {
   const imageURL =
     "https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png";
 
-  const itemContainer = {
-    display: "flex",
-    flexDirection: "row",
-    margin: "20px",
-    flex: 1,
-  };
-
-  const imageContainer = {
-    flex: 1,
-  };
-
-  const contentContainer = {
-    flex: 1.8,
-    paddingLeft: "10px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-  };
-
-  const planHeader = {
-    fontSize: "24px",
-    fontWeight: "700",
-    fontStyle: "normal",
-  };
-
-  const removebtn = {
-    backgroundColor: "#B90000",
-    borderRadius: "20px",
-    padding: "8px",
-    color: "white",
-    fontSize: "10px",
-    fontWeight: "bold",
-  };
-
   return (
     hasCartItem && (
       <div>
@@ -69,4 +34,38 @@ const ShoppingCartItem = ({ planName, num1, num2 }) => {
   );
 };
 
+const itemContainer = {
+  display: "flex",
+  flexDirection: "row",
+  margin: "20px",
+  flex: 1,
+};
+
+const imageContainer = {
+  flex: 1,
+};
+
+const contentContainer = {
+  flex: 1.8,
+  paddingLeft: "10px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  justifyContent: "space-between",
+};
+
+const planHeader = {
+  fontSize: "24px",
+  fontWeight: "700",
+  fontStyle: "normal",
+};
+
+const removebtn = {
+  backgroundColor: "#B90000",
+  borderRadius: "20px",
+  padding: "8px",
+  color: "white",
+  fontSize: "10px",
+  fontWeight: "bold",
+};
 export default ShoppingCartItem;

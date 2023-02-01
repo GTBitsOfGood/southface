@@ -1,7 +1,12 @@
-import { Modal, ModalContent } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
+import { BiBookBookmark as ShoppingCartIcon } from "react-icons/bi";
 import SectionSeperator from "./SectionSeperator";
-import ShoppingCartIcon from "./ShoppingCartIcon";
 import ShoppingCartItem from "./ShoppingCartItem";
 
 const NavBar = () => {
@@ -9,53 +14,6 @@ const NavBar = () => {
 
   const toggleSidebar = () => {
     setSidebar((prevState) => !prevState);
-  };
-
-  const NavBarContainer = {
-    marginTop: "20px",
-    margineLeft: " 0",
-    paddingLeft: "50px",
-    paddingRight: "50px",
-    background: "#6D6E70",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    color: "white",
-    fontWeight: "bold",
-  };
-
-  const NavBarElement = {
-    padding: "10px",
-  };
-
-  const NavBarElementCart = {
-    display: "flex",
-    alignItems: "center",
-  };
-
-  const sidebarContainer = {
-    width: "400px",
-    height: "100vh",
-    float: "right",
-    textAlign: "center",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  };
-
-  const sidebarTitle = {
-    padding: "15px",
-    fontWeight: "bold",
-    fontSize: "3vh",
-  };
-
-  const exitButton = {
-    background: "#6D6E70",
-    borderRadius: "32px",
-    padding: "15px",
-    fontWeight: "bold",
-    color: "white",
-    marginBottom: "20px",
   };
 
   return (
@@ -75,9 +33,10 @@ const NavBar = () => {
 
       {sidebar && (
         <Modal isOpen={sidebar} onClose={sidebar} isCentered size="4xl">
+          <ModalOverlay />
           <ModalContent style={sidebarContainer}>
             <div>
-              <div style={sidebarTitle}>Atlanta Construction 47</div>
+              <ModalHeader>Atlanta Construction 47</ModalHeader>
               <SectionSeperator />
               <ui>
                 <ShoppingCartItem
@@ -108,6 +67,48 @@ const NavBar = () => {
       )}
     </div>
   );
+};
+
+// styles
+const NavBarContainer = {
+  marginTop: "20px",
+  margineLeft: " 0",
+  paddingLeft: "50px",
+  paddingRight: "50px",
+  background: "#6D6E70",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  color: "white",
+  fontWeight: "bold",
+};
+
+const NavBarElement = {
+  padding: "10px",
+};
+
+const NavBarElementCart = {
+  display: "flex",
+  alignItems: "center",
+};
+
+const sidebarContainer = {
+  width: "400px",
+  height: "100vh",
+  float: "right",
+  textAlign: "center",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+};
+
+const exitButton = {
+  background: "#6D6E70",
+  borderRadius: "32px",
+  padding: "15px",
+  fontWeight: "bold",
+  color: "white",
+  marginBottom: "20px",
 };
 
 export default NavBar;
