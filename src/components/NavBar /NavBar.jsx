@@ -15,7 +15,7 @@ import ShoppingCartItem from "./ShoppingCartItem";
 
 const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [shoppingCartItems, setShoppingCartItems] = React.useState([
+  const [shoppingCartItems] = React.useState([
     { planName: "Ladder T-walls", imageNum: 2, commentNum: 8 },
     { planName: "Ladder T-walls", imageNum: 3, commentNum: 6 },
     { planName: "Ladder T-walls", imageNum: 1, commentNum: 2 },
@@ -25,7 +25,6 @@ const NavBar = () => {
 
   const handleClose = () => {
     onClose();
-    setShoppingCartItems(shoppingCartItems.slice(1));
   };
 
   return (
@@ -56,6 +55,8 @@ const NavBar = () => {
                   planName={item.planName}
                   imageNum={item.imageNum}
                   commentNum={item.commentNum}
+                  shoppingCartItems={item.shoppingCartItems}
+                  // setShoppingCartItems={item.setShoppingCartItems}
                 />
               ))}
             </ui>

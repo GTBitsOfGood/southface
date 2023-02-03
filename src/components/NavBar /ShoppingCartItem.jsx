@@ -2,10 +2,19 @@ import { Box, Button, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import SectionSeperator from "./SectionSeperator";
 
-const ShoppingCartItem = ({ planName, num1, num2 }) => {
+const ShoppingCartItem = ({
+  planName,
+  imageNum,
+  commentNum,
+  shoppingCartItems,
+  setShoppingCartItems,
+}) => {
   const [hasCartItem, setHasCartItem] = useState(true);
 
   const toggleRemovebtn = () => {
+    if (shoppingCartItems) {
+      setShoppingCartItems(shoppingCartItems.slice(1));
+    }
     setHasCartItem(false);
   };
 
@@ -31,7 +40,7 @@ const ShoppingCartItem = ({ planName, num1, num2 }) => {
               {planName}
             </Text>
             <div>
-              {num1} images * {num2} comments
+              {imageNum} images * {commentNum} comments
             </div>
             <Button
               onClick={toggleRemovebtn}
