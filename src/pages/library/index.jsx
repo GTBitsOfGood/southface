@@ -9,19 +9,19 @@ const LibraryPage = () => {
           src="/static/MultifamilyIcon.png"
           alt="MultiFamily Icon"
           title="Multifamily"
-          href="librare/multifamily"
+          href="library/multifamily"
         />
         <BuildingType
           src="/static/SingleFamilyIcon.png"
           alt="SinglyFamily Icon"
           title="Single Family"
-          href="librare/single-family"
+          href="library/single-family"
         />
         <BuildingType
           src="/static/CommercialIcon.png"
           alt="Commerical Icon"
           title="Commerical"
-          href="librare/commercial"
+          href="library/commercial"
         />
       </Flex>
     </Flex>
