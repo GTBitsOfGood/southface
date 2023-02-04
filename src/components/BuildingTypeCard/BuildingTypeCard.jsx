@@ -4,7 +4,7 @@ import Link from "next/link";
 function BuildingTypeCard(props) {
   return (
     <Flex justifyContent="center" direction="column" height="full" id="test">
-      <Link href="categories/">
+      <Link href={props.href}>
         <Flex alignItems="center" direction="column" cursor="pointer">
           <Image
             src={props.src}

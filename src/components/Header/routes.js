@@ -22,11 +22,6 @@ const routes = [
     auth: false,
     atEnd: true,
   },
-  {
-    name: "Primary Categories",
-    link: urls.pages.categories,
-    auth: false,
-  },
 ];
 
 export default routes;

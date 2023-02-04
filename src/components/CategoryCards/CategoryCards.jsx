@@ -1,17 +1,22 @@
+import { categoryNames } from "../../../server/mongodb/models/Card";
 import CategoryCard from "./CategoryCard";
 
-function CategoryCards() {
+function CategoryCards(props) {
   return (
     <>
-      <CategoryCard initials="SP" title="Site Planning" />
-      <CategoryCard initials="RE" title="Resource Efficiency" />
-      <CategoryCard initials="DU" title="Durability and Moisture Management" />
-      <CategoryCard initials="BE" title="High Performance Building Envelope" />
-      <CategoryCard initials="ES" title="Energy Efficient HVAC Systems" />
-      <CategoryCard initials="IAQ" title="Indoor Air Quality" />
-      <CategoryCard initials="PI" title="Plumbing and Irrigation" />
-      <CategoryCard initials="LA" title="Efficient Lighting and Appliances" />
-      <CategoryCard initials="EO" title="Education and Operations" />
+      {categoryNames.map((category) => {
+        const newCategoryParts = category.split("(");
+        const newCategoryName = newCategoryParts[0].trim();
+        const initials = newCategoryParts[1].split(")")[0];
+        return (
+          <CategoryCard
+            routerQuery={props.routerQuery}
+            initials={initials}
+            title={newCategoryName}
+            key={newCategoryName}
+          />
+        );
+      })}
     </>
   );
 }

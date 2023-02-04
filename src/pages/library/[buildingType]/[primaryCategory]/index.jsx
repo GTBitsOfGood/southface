@@ -1,14 +1,14 @@
+import { Flex, Heading } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import PaginationTab from "src/components/PaginationTab";
+import SearchBar, { useSearch } from "src/components/SearchBar";
+import StandardCardTable from "src/components/StandardCardTable";
 import {
   getCardsCount,
   getCardsPagination,
-} from "../../server/mongodb/actions/Card";
-import { Flex, Heading } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import StandardCardTable from "src/components/StandardCardTable";
-import PaginationTab from "src/components/PaginationTab";
-import SearchBar, { useSearch } from "src/components/SearchBar";
+} from "../../../../../server/mongodb/actions/Card";
 
-const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
+const LibraryCategoryPage = ({ cardsFromDatabase, numPagesInitial }) => {
   const [cards, setCards] = useState(cardsFromDatabase);
   const [isRefresehing, setIsRefreshing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,4 +73,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default LibraryPage;
+export default LibraryCategoryPage;

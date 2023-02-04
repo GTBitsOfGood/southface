@@ -4,7 +4,6 @@ export default {
     login: "/login",
     library: "/library",
     planbuilder: "/plan-builder",
-    categories: "/categories",
   },
   api: {
     example: "/api/example",

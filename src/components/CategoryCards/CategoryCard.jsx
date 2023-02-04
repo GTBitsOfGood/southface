@@ -2,8 +2,11 @@ import { Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
 function CategoryCard(props) {
+  console.log(props.routerQuery);
   return (
-    <Link href="/library">
+    <Link
+      href={`${props.routerQuery.buildingType}/${props.initials.toLowerCase()}`}
+    >
       <Flex
         direction="column"
         alignItems="center"
@@ -12,6 +15,7 @@ function CategoryCard(props) {
         height="12rem"
         width="12rem"
         textAlign="center"
+        cursor="pointer"
       >
         <Text fontWeight="extrabold" fontSize="4xl">
           {props.initials}
