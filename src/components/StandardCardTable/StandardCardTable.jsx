@@ -25,6 +25,20 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
 
   const unauthorizedToast = useToast();
 
+  const handleAddCard = () => {
+    if (!user || !user.isAdmin) {
+      unauthorizedToast({
+        title: "Unauthorized!",
+        description: "You must log in as an admin.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    onOpen();
+  };
+
   useEffect(() => {
     setClientSide(true);
   }, []);
@@ -44,23 +58,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
             </Button>
           )}
 
-          <Button
-            onClick={() => {
-              if (!user || !user.isAdmin) {
-                unauthorizedToast({
-                  title: "Unauthorized!",
-                  description: "You must log in as an admin.",
-                  status: "error",
-                  duration: 3000,
-                  isClosable: true,
-                });
-                return;
-              }
-              onOpen();
-            }}
-            rounded={4}
-            boxShadow="base"
-          >
+          <Button onClick={handleAddCard} rounded={4} boxShadow="base">
             Add Card
           </Button>
           <AddCardModal isOpen={isOpen} onClose={onClose} setCards={setCards} />

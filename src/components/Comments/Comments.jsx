@@ -42,6 +42,7 @@ const Comments = ({
 
   const commentRef = useRef();
   const unauthorizedToast = useToast();
+  const { user } = useUser();
 
   useEffect(() => {
     setCurrCommentIdx(comments.length - 1);
@@ -78,41 +79,48 @@ const Comments = ({
       return;
     }
     setIsEditing(true);
-
     commentRef.current.focus();
   };
 
-  const { user } = useUser();
+  const handleDeleting = () => {
+    if (!user || !user.isAdmin) {
+      unauthorizedToast({
+        title: "Unauthorized!",
+        description: "You must log in as an admin.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    onDeleteOpen();
+  };
+
+  const handleAdding = () => {
+    if (!user || !user.isAdmin) {
+      unauthorizedToast({
+        title: "Unauthorized!",
+        description: "You must log in as an admin.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    onAddOpen();
+  };
 
   const handleSaveEdit = async () => {
-    try {
-      const updatedCard = await updateCardById(cardId, { comments }, true);
-
-      setCards((cards) => {
-        return cards.map((card) => {
-          if (cardId === card._id) {
-            return updatedCard;
-          } else {
-            return card;
-          }
-        });
+    const updatedCard = await updateCardById(cardId, { comments }, true);
+    setCards((cards) => {
+      return cards.map((card) => {
+        if (cardId === card._id) {
+          return updatedCard;
+        } else {
+          return card;
+        }
       });
-    } catch (error) {
-      if (
-        error.message === "Not Logged In" ||
-        error.message === "Unauthorized"
-      ) {
-        unauthorizedToast({
-          title: "Unauthorized!",
-          description: "You must log in as an admin.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      } else {
-        throw error;
-      }
-    }
+    });
     setIsEditing(false);
   };
 
@@ -223,19 +231,7 @@ const Comments = ({
                 icon={<AddIcon />}
                 size="sm"
                 rounded="full"
-                onClick={() => {
-                  if (!user || !user.isAdmin) {
-                    unauthorizedToast({
-                      title: "Unauthorized!",
-                      description: "You must log in as an admin.",
-                      status: "error",
-                      duration: 3000,
-                      isClosable: true,
-                    });
-                    return;
-                  }
-                  onAddOpen();
-                }}
+                onClick={handleAdding}
               />
               <AddCommentModal
                 isOpen={isAddOpen}
@@ -257,19 +253,7 @@ const Comments = ({
                 icon={<DeleteIcon />}
                 size="sm"
                 rounded="full"
-                onClick={() => {
-                  if (!user || !user.isAdmin) {
-                    unauthorizedToast({
-                      title: "Unauthorized!",
-                      description: "You must log in as an admin.",
-                      status: "error",
-                      duration: 3000,
-                      isClosable: true,
-                    });
-                    return;
-                  }
-                  onDeleteOpen();
-                }}
+                onClick={handleDeleting}
               />
               <DeleteCommentModal
                 isOpen={isDeleteOpen}

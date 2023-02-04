@@ -121,6 +121,21 @@ const CardModal = ({
       </>
     );
   };
+
+  const handleEditing = () => {
+    if (!user || !user.isAdmin) {
+      unauthorizedToast({
+        title: "Unauthorized!",
+        description: "You must log in as an admin.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    onEditCard();
+  };
+
   const {
     AddToPlanButton = (
       <Button bgColor="#D9D9D9" alignSelf="end" size="lg" rounded={16}>
@@ -279,19 +294,7 @@ const CardModal = ({
                   variant="link"
                   alignSelf="end"
                   color="#0065C1"
-                  onClick={() => {
-                    if (!user || !user.isAdmin) {
-                      unauthorizedToast({
-                        title: "Unauthorized!",
-                        description: "You must log in as an admin.",
-                        status: "error",
-                        duration: 3000,
-                        isClosable: true,
-                      });
-                      return;
-                    }
-                    onEditCard();
-                  }}
+                  onClick={handleEditing}
                 >
                   Edit
                 </Button>
