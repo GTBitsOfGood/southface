@@ -12,6 +12,11 @@ export default {
       login: "/api/user/login",
       logout: "/api/user/logout",
       getCurrent: "/api/user",
+      activePlan: {
+        add: "/api/user/active-plan/add",
+        remove: "/api/user/active-plan/remove",
+        update: "/api/user/active-plan/update",
+      },
     },
     card: {
       create: "/api/card/create/",

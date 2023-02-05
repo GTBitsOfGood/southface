@@ -70,34 +70,46 @@ export const getUserFromId = async (id) => {
 export const addToActivePlan = async (userId, card) => {
   await mongoDB();
   try {
-    console.log(userId);
-    console.log(card);
+    if (user == null) {
+      throw new Error();
+    }
+    const user = await User.findByIdAndUpdate(userId, {
+      $push: { "activePlan.cards": card },
+    });
+    return user.activePlan;
   } catch (e) {
     throw new Error("Bruh");
   }
-  // unfinished
 };
 
 export const removeFromActivePlan = async (userId, card) => {
   await mongoDB();
   try {
-    console.log(userId);
-    console.log(card);
+    if (user == null) {
+      throw new Error();
+    }
+    const user = await User.findByIdAndUpdate(userId, {
+      $pull: { "activePlan.cards": { _id: card._id } },
+    });
+    return user.activePlan;
   } catch (e) {
     throw new Error("Bruh");
   }
-  // unfinished
 };
 
 export const updateActivePlan = async (userId, plan) => {
   await mongoDB();
   try {
-    console.log(userId);
-    console.log(plan);
+    if (user == null) {
+      throw new Error();
+    }
+    const user = await User.findByIdAndUpdate(userId, {
+      $set: { activePlan: plan },
+    });
+    return user.activePlan;
   } catch (e) {
     throw new Error("Bruh");
   }
-  // unfinished
 };
 
 export const getUsers = async () => {
