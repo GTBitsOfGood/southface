@@ -18,7 +18,6 @@ import {
   SimpleGrid,
   Tag,
   TagLeftIcon,
-  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import useEditCardModal from "../../../lib/hooks/useEditCard";
@@ -40,7 +39,6 @@ const CardModal = ({
   setCards,
   ...rest
 }) => {
-  const unauthorizedToast = useToast();
   const {
     isEditing,
     title,
@@ -62,16 +60,9 @@ const CardModal = ({
     imageOnClose,
     setImages,
     setTags,
-  } = useEditCardModal(
-    cardTitle,
-    cardComments,
-    cardImages,
-    cardTags,
-    cardId,
-    unauthorizedToast
-  );
+  } = useEditCardModal(cardTitle, cardComments, cardImages, cardTags, cardId);
 
-  const { user } = useUser();
+  const { ifAdmin } = useUser();
 
   const TagInput = (props) => {
     const [width, setWidth] = useState(0.5);
@@ -120,20 +111,6 @@ const CardModal = ({
         </HStack>
       </>
     );
-  };
-
-  const handleEditing = () => {
-    if (!user || !user.isAdmin) {
-      unauthorizedToast({
-        title: "Unauthorized!",
-        description: "You must log in as an admin.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-    onEditCard();
   };
 
   const {
@@ -294,7 +271,7 @@ const CardModal = ({
                   variant="link"
                   alignSelf="end"
                   color="#0065C1"
-                  onClick={handleEditing}
+                  onClick={() => ifAdmin(onEditCard)}
                 >
                   Edit
                 </Button>

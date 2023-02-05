@@ -18,7 +18,6 @@ import {
   Spacer,
   Text,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import useUser from "src/lib/hooks/useUser";
@@ -41,8 +40,7 @@ const Comments = ({
   const [isEditing, setIsEditing] = useState(false);
 
   const commentRef = useRef();
-  const unauthorizedToast = useToast();
-  const { user } = useUser();
+  const { ifAdmin } = useUser();
 
   useEffect(() => {
     setCurrCommentIdx(comments.length - 1);
@@ -65,49 +63,6 @@ const Comments = ({
 
   const lastComment = () => {
     setCurrCommentIdx(currCommentIdx + 1);
-  };
-
-  const handleEditing = () => {
-    if (!user || !user.isAdmin) {
-      unauthorizedToast({
-        title: "Unauthorized!",
-        description: "You must log in as an admin.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-    setIsEditing(true);
-    commentRef.current.focus();
-  };
-
-  const handleDeleting = () => {
-    if (!user || !user.isAdmin) {
-      unauthorizedToast({
-        title: "Unauthorized!",
-        description: "You must log in as an admin.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-    onDeleteOpen();
-  };
-
-  const handleAdding = () => {
-    if (!user || !user.isAdmin) {
-      unauthorizedToast({
-        title: "Unauthorized!",
-        description: "You must log in as an admin.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-    onAddOpen();
   };
 
   const handleSaveEdit = async () => {
@@ -231,7 +186,7 @@ const Comments = ({
                 icon={<AddIcon />}
                 size="sm"
                 rounded="full"
-                onClick={handleAdding}
+                onClick={() => ifAdmin(onAddOpen)}
               />
               <AddCommentModal
                 isOpen={isAddOpen}
@@ -246,14 +201,19 @@ const Comments = ({
                 icon={<EditIcon />}
                 size="sm"
                 rounded="full"
-                onClick={handleEditing}
+                onClick={() => {
+                  ifAdmin(() => {
+                    setIsEditing(true);
+                  });
+                  commentRef.current.focus();
+                }}
               />
 
               <IconButton
                 icon={<DeleteIcon />}
                 size="sm"
                 rounded="full"
-                onClick={handleDeleting}
+                onClick={() => ifAdmin(onDeleteOpen)}
               />
               <DeleteCommentModal
                 isOpen={isDeleteOpen}
