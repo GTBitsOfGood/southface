@@ -2,7 +2,6 @@ import { Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
 function CategoryCard(props) {
-  console.log(props.routerQuery);
   return (
     <Link
       href={`${props.routerQuery.buildingType}/${props.initials.toLowerCase()}`}

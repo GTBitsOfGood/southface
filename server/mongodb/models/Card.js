@@ -2,19 +2,23 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-export const categoryNames = [
-  "Site Planning (SP)",
-  "Resource Efficiency (RE)",
-  "Durabiliy and Moisture Management (DU)",
-  "High Performance Building Envelope (BE)",
-  "Energy Efficient HVAC Systems (ES)",
-  "Indoor Air Quality (IAQ)",
-  "Plumbing and Irrigation (PI)",
-  "Efficient Lighting and Applications (LA)",
-  "Education and Operations (EO)",
-];
+const primaryCategoryNames = {
+  SP: "Site Planning",
+  RE: "Resource Efficiency",
+  DU: "Durability and Moisture Management",
+  BE: "High Performance Building Envelope",
+  ES: "Energy Efficient HVAC Systems",
+  IAQ: "Indoor Air Quality",
+  PI: "Plumbing and Irrigation",
+  LA: "Efficient Lighting and Applications",
+  EO: "Education and Operations",
+};
 
-export const buildingTypeNames = ["commercial", "multifamily", "single-family"];
+const buildingTypeNames = {
+  commercial: "Commercial",
+  multifamily: "Multifamily",
+  "single-family": "Single Family",
+};
 
 const CardSchema = new Schema({
   images: [
@@ -48,11 +52,11 @@ const CardSchema = new Schema({
   },
   buildingType: {
     type: String,
-    enum: buildingTypeNames,
+    enum: Object.keys(buildingTypeNames),
   },
-  category: {
+  primaryCategory: {
     type: String,
-    enum: categoryNames,
+    enum: Object.keys(primaryCategoryNames),
   },
 });
 

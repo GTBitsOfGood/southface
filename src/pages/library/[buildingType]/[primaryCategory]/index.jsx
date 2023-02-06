@@ -1,4 +1,6 @@
-import { Flex, Heading } from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, Flex, Heading } from "@chakra-ui/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import PaginationTab from "src/components/PaginationTab";
 import SearchBar, { useSearch } from "src/components/SearchBar";
@@ -7,12 +9,21 @@ import {
   getCardsCount,
   getCardsPagination,
 } from "../../../../../server/mongodb/actions/Card";
+import {
+  buildingTypeNames,
+  primaryCategoryNames,
+} from "../../../../lib/utils/constants";
 
-const LibraryCategoryPage = ({ cardsFromDatabase, numPagesInitial }) => {
+const LibraryCategoryPage = (props) => {
+  const cardsFromDatabase = props.cardsFromDatabase;
+  const numPagesInitial = props.numPages;
+  const router = useRouter();
   const [cards, setCards] = useState(cardsFromDatabase);
   const [isRefresehing, setIsRefreshing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(numPagesInitial);
+  const [buildingType, setBuildingType] = useState("");
+  const [primaryCategory, setPrimaryCategory] = useState("");
   const { handleSearch } = useSearch(
     cardsFromDatabase,
     setNumPages,
@@ -25,6 +36,23 @@ const LibraryCategoryPage = ({ cardsFromDatabase, numPagesInitial }) => {
     setIsRefreshing(false);
   }, [cards]);
 
+  useEffect(() => {
+    if (
+      !(
+        Object.keys(buildingTypeNames).includes(props.buildingType) &&
+        Object.keys(primaryCategoryNames).includes(
+          props.primaryCategory.toUpperCase()
+        )
+      )
+    ) {
+      router.push("/");
+    }
+    setBuildingType(buildingTypeNames[props.buildingType]);
+    setPrimaryCategory(
+      primaryCategoryNames[props.primaryCategory.toUpperCase()]
+    );
+  }, [router, buildingType, props.buildingType, props.primaryCategory]);
+
   return isRefresehing ? (
     ""
   ) : (
@@ -33,6 +61,17 @@ const LibraryCategoryPage = ({ cardsFromDatabase, numPagesInitial }) => {
         {" "}
         Library
       </Heading>
+      <Breadcrumb separator=">" fontWeight="semibold" pb="5">
+        <BreadcrumbItem>
+          <Link href="/library">Digital Library</Link>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <Link href={`/library/${props.buildingType}`}>{buildingType}</Link>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <p>{primaryCategory}</p>
+        </BreadcrumbItem>
+      </Breadcrumb>
 
       <SearchBar handleSearch={handleSearch} />
 
@@ -54,7 +93,7 @@ const LibraryCategoryPage = ({ cardsFromDatabase, numPagesInitial }) => {
 /**
  * Errors in getServerSideProps will display the page in 'pages/500.js' (https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props)
  */
-export async function getServerSideProps() {
+LibraryCategoryPage.getInitialProps = async (context) => {
   const pageNumber = 0;
   const cards = await getCardsPagination(pageNumber);
   const cardsCount = await getCardsCount();
@@ -65,12 +104,11 @@ export async function getServerSideProps() {
   }
 
   return {
-    props: {
-      cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
-      numPages,
-      pageNumber: pageNumber + 1,
-    },
+    cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
+    numPages,
+    pageNumber: pageNumber + 1,
+    ...context.query,
   };
-}
+};
 
 export default LibraryCategoryPage;

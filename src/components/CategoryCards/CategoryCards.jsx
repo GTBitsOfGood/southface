@@ -1,17 +1,17 @@
-import { categoryNames } from "../../../server/mongodb/models/Card";
+import { primaryCategoryNames } from "../../lib/utils/constants";
 import CategoryCard from "./CategoryCard";
 
 function CategoryCards(props) {
   return (
     <>
-      {categoryNames.map((category) => {
-        const newCategoryParts = category.split("(");
+      {Object.keys(primaryCategoryNames).map((categoryInitials) => {
+        const name = primaryCategoryNames[categoryInitials];
+        const newCategoryParts = name.split("(");
         const newCategoryName = newCategoryParts[0].trim();
-        const initials = newCategoryParts[1].split(")")[0];
         return (
           <CategoryCard
             routerQuery={props.routerQuery}
-            initials={initials}
+            initials={categoryInitials}
             title={newCategoryName}
             key={newCategoryName}
           />

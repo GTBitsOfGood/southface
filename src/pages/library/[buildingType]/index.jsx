@@ -1,31 +1,47 @@
-import { Flex } from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, Flex } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { buildingTypeNames } from "../../../../server/mongodb/models/Card";
+import { useEffect, useState } from "react";
 import CategoryCards from "../../../components/CategoryCards";
+import { buildingTypeNames } from "../../../lib/utils/constants";
 
-function CategoriesPage() {
+function CategoriesPage(props) {
   const router = useRouter();
+  const [buildingType, setBuildingType] = useState("");
 
   useEffect(() => {
-    if (router.query) {
-      const { buildingType } = router.query;
-      if (!buildingTypeNames.includes(buildingType)) {
-        router.push("/");
-      }
+    if (!Object.keys(buildingTypeNames).includes(props.buildingType)) {
+      router.push("/");
     }
-  }, [router]);
+    setBuildingType(buildingTypeNames[buildingType]);
+  }, [router, buildingType, props.buildingType]);
 
   return (
-    <Flex gap="4rem" flexWrap="wrap" padding="2rem">
-      <CategoryCards routerQuery={router.query} />
+    <Flex
+      padding="2rem"
+      flexDirection="column"
+      gap="2rem"
+      fontWeight="semibold"
+    >
+      <Breadcrumb separator=">">
+        <BreadcrumbItem>
+          <Link href="/library">Digital Library</Link>
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <p>{buildingTypeNames[props.buildingType]}</p>
+        </BreadcrumbItem>
+      </Breadcrumb>
+      <Flex flexWrap="wrap" gap="4rem">
+        <CategoryCards routerQuery={router.query} />
+      </Flex>
     </Flex>
   );
 }
 
-// Prevent SSG in order to enable the use of useRouter()
-CategoriesPage.getInitialProps = async () => {
-  return {};
+CategoriesPage.getInitialProps = async (context) => {
+  return {
+    ...context.query,
+  };
 };
 
 export default CategoriesPage;
