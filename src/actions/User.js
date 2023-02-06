@@ -91,18 +91,77 @@ export const getCurrentUser = (cookies) => {
     });
 };
 
-export const addToActivePlan = (card) => {
-  console.log(card);
-  return fetch();
-  // unfinished
+export const addToActivePlan = (userId, card) => {
+  return fetch(urls.api.user.activePlan.add, {
+    method: "PUT",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+      card,
+    }),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+      return json.payload;
+    });
+  // untested
 };
-export const removeFromActivePlan = (card) => {
-  console.log(card);
-  return fetch();
-  // unfinished
+
+export const removeFromActivePlan = (userId, card) => {
+  return fetch(urls.api.user.activePlan.remove, {
+    method: "PUT",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+      card,
+    }),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+      return json.payload;
+    });
+  // untested
 };
-export const updateActivePlan = (plan) => {
-  console.log(plan);
-  return fetch();
-  // unfinished
+
+export const updateActivePlan = (userId, plan) => {
+  return fetch(urls.api.user.activePlan.update, {
+    method: "PUT",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+      plan,
+    }),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+      return json.payload;
+    });
+  // untested
 };
