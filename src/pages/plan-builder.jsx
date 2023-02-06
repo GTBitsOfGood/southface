@@ -40,8 +40,8 @@ const ProjectPlanBuilder = () => {
   const nameRef = useRef();
 
   const standardMapper = (card) => {
-    return <ProjectPlanStandard card={card}/>
-  }
+    return <ProjectPlanStandard card={card} />;
+  };
 
   return (
     <>
@@ -82,9 +82,7 @@ const ProjectPlanBuilder = () => {
             <HStack>
               {hasLoaded && (
                 <PDFDownloadLink
-                  document={
-                    <Box>Bruh 2</Box>
-                  }
+                  document={<Box>Bruh 2</Box>}
                   fileName="plan.pdf"
                 >
                   {({ loading }) => (
@@ -97,12 +95,7 @@ const ProjectPlanBuilder = () => {
                 </PDFDownloadLink>
               )}
               {hasLoaded && (
-                <PDFDownloadLink
-                  document={
-                    <Box>Bruh</Box>
-                  }
-                  fileName="plan.pdf"
-                >
+                <PDFDownloadLink document={<Box>Bruh</Box>} fileName="plan.pdf">
                   {({ loading }) => (
                     <Button>
                       {loading ? "Loading document..." : "Download"}

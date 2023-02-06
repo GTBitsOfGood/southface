@@ -30,7 +30,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
   const { user } = useUser();
   const addHandler = () => {
     addToActivePlan(user.id, card);
-  }
+  };
 
   const {
     setSelection = () => undefined,
@@ -129,9 +129,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
               </Tag>
             );
           })}
-          <Button onClick={addHandler}>
-            Add to project plan
-          </Button>
+          <Button onClick={addHandler}>Add to project plan</Button>
         </HStack>
         {/* For now the selectable button is disabled due to bugs */}
         {selectable ? (
