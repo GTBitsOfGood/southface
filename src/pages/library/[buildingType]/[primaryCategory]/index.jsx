@@ -8,11 +8,12 @@ import StandardCardTable from "src/components/StandardCardTable";
 import {
   getCardsCount,
   getCardsPagination,
-} from "../../../../../server/mongodb/actions/Card";
+} from "server/mongodb/actions/Card";
 import {
   buildingTypeNames,
   primaryCategoryNames,
-} from "../../../../lib/utils/constants";
+} from "src/lib/utils/constants";
+import { getCards } from "../../../../actions/Card";
 
 const LibraryCategoryPage = (props) => {
   const cardsFromDatabase = props.cardsFromDatabase;
@@ -94,21 +95,40 @@ const LibraryCategoryPage = (props) => {
  * Errors in getServerSideProps will display the page in 'pages/500.js' (https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props)
  */
 LibraryCategoryPage.getInitialProps = async (context) => {
-  const pageNumber = 0;
-  const cards = await getCardsPagination(pageNumber);
-  const cardsCount = await getCardsCount();
-  let numPages = Math.floor(cardsCount / 4);
-
-  if (cardsCount % 4 > 0) {
-    numPages += 1;
+  const req = context.req;
+  if (req) {
+    const pageNumber = 0;
+    const cards = await getCardsPagination(pageNumber);
+    const cardsCount = await getCardsCount();
+    let numPages = Math.floor(cardsCount / 4);
+  
+    if (cardsCount % 4 > 0) {
+      numPages += 1;
+    }
+  
+    return {
+      cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
+      numPages,
+      pageNumber: pageNumber + 1,
+      ...context.query,
+    };
+  } else {
+      const pageNumber = 0;
+      const cards = await getCards();
+      const cardsCount = cards.length;
+      let numPages = Math.floor(cardsCount / 4);
+    
+      if (cardsCount % 4 > 0) {
+        numPages += 1;
+      }
+    
+      return {
+        cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
+        numPages,
+        pageNumber: pageNumber + 1,
+        ...context.query,
+      };
   }
-
-  return {
-    cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
-    numPages,
-    pageNumber: pageNumber + 1,
-    ...context.query,
-  };
 };
 
 export default LibraryCategoryPage;
