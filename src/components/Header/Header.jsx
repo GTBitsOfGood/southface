@@ -14,6 +14,7 @@ import { logout } from "src/actions/User";
 import useUser from "src/lib/hooks/useUser";
 import NavLink from "../NavLink";
 import routes from "./routes";
+import Router from "next/router";
 
 const Header = () => {
   const { user } = useUser();
@@ -27,6 +28,12 @@ const Header = () => {
       <MobileHeader user={user} display={{ base: "flex", md: "none" }} />
     </Flex>
   );
+};
+
+const logoutHandler = () => {
+  logout()
+    .then(Router.reload(window.location.pathname))
+    .catch((error) => window.alert(error.message));
 };
 
 const DesktopHeader = ({ user, ...props }) => (
@@ -70,10 +77,7 @@ const DesktopHeader = ({ user, ...props }) => (
             py={2}
             rounded={20}
             _last={{ ml: "auto" }}
-            onClick={() => {
-              logout().catch((error) => window.alert(error.message));
-              window.location.reload();
-            }}
+            onClick={logoutHandler}
           >
             <Text fontSize="lg">{name}</Text>
           </NavLink>
@@ -95,13 +99,7 @@ const MobileHeader = ({ user, ...props }) => {
       alignItems="center"
     >
       {user?.isLoggedIn ? (
-        <NavLink
-          href={toggleButton.link}
-          onClick={() => {
-            logout().catch((error) => window.alert(error.message));
-            window.location.reload();
-          }}
-        >
+        <NavLink href={toggleButton.link} onClick={logoutHandler}>
           <Text fontSize="lg" color="whiteAlpha.900">
             {toggleButton.name}
           </Text>
