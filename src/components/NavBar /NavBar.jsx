@@ -1,21 +1,11 @@
-import {
-  Box,
-  Button,
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  IconButton,
-  useDisclosure,
-} from "@chakra-ui/react";
-import React from "react";
+import { IconButton, useDisclosure } from "@chakra-ui/react";
+import { useState } from "react";
 import { BiBookBookmark as ShoppingCartIcon } from "react-icons/bi";
-import SectionSeperator from "./SectionSeperator";
-import ShoppingCartItem from "./ShoppingCartItem";
+import ShoppingCartDrawer from "../ShoppingCartView/ShoppingCartDrawer";
 
 const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [shoppingCartItems] = React.useState([
+  const [shoppingCartItems] = useState([
     { planName: "Ladder T-walls", imageNum: 2, commentNum: 8 },
     { planName: "Ladder T-walls", imageNum: 3, commentNum: 6 },
     { planName: "Ladder T-walls", imageNum: 1, commentNum: 2 },
@@ -40,40 +30,11 @@ const NavBar = () => {
         </div>
       </nav>
 
-      <Drawer isOpen={isOpen} onClose={handleClose}>
-        <DrawerOverlay />
-        <DrawerContent justifyContent="space-between">
-          <Box>
-            <DrawerHeader display="flex" justifyContent="center">
-              Atlanta Construction 47
-            </DrawerHeader>
-            <SectionSeperator />
-            <ui>
-              {shoppingCartItems.slice(0, 3).map((item, index) => (
-                <ShoppingCartItem
-                  key={index}
-                  planName={item.planName}
-                  imageNum={item.imageNum}
-                  commentNum={item.commentNum}
-                  shoppingCartItems={item.shoppingCartItems}
-                  // setShoppingCartItems={item.setShoppingCartItems}
-                />
-              ))}
-            </ui>
-          </Box>
-          <Box display="flex" justifyContent="center">
-            <Button
-              onClick={handleClose}
-              background="#6D6E70"
-              borderRadius="32px"
-              color="white"
-              marginBottom="20"
-            >
-              View Full Plan
-            </Button>
-          </Box>
-        </DrawerContent>
-      </Drawer>
+      <ShoppingCartDrawer
+        isOpen={isOpen}
+        onClose={handleClose}
+        shoppingCartItems={shoppingCartItems}
+      />
     </div>
   );
 };

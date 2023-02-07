@@ -1,6 +1,5 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Divider, Image, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import SectionSeperator from "./SectionSeperator";
 
 const ShoppingCartItem = ({
   planName,
@@ -18,19 +17,20 @@ const ShoppingCartItem = ({
     setHasCartItem(false);
   };
 
-  const imageURL =
-    "https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png";
-
   return (
     hasCartItem && (
-      <div>
-        <Box display="flex" marginY="20px">
-          <Box flex="1" paddingLeft="10px">
-            <img src={imageURL} alt="Logo" layout="fill" />
+      <Box>
+        <Box display="flex" marginY="3">
+          <Box flex="1" paddingLeft="2.5">
+            <Image
+              src="../../../public/static/ShoppingCartImg.png"
+              fallbackSrc="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
+              alt="Shopping Cart Image"
+            />
           </Box>
           <Box
             flex="1.8"
-            paddingX="10px"
+            paddingX="2"
             display="flex"
             flexDirection="column"
             alignItems="flex-start"
@@ -39,23 +39,23 @@ const ShoppingCartItem = ({
             <Text fontSize="xl" as="b">
               {planName}
             </Text>
-            <div>
+            <Box>
               {imageNum} images * {commentNum} comments
-            </div>
+            </Box>
             <Button
               onClick={toggleRemovebtn}
               backgroundColor="#B90000"
-              borderRadius="20px"
+              borderRadius="3xl"
               color="white"
-              fontSize="10px"
+              fontSize="xs"
               fontWeight="bold"
             >
               Remove from project plan
             </Button>
           </Box>
         </Box>
-        <SectionSeperator />
-      </div>
+        <Divider orientation="horizontal" />
+      </Box>
     )
   );
 };
