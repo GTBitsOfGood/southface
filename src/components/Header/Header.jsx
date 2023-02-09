@@ -9,12 +9,12 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import Router from "next/router";
 import React from "react";
 import { logout } from "src/actions/User";
 import useUser from "src/lib/hooks/useUser";
 import NavLink from "../NavLink";
 import routes from "./routes";
-import Router from "next/router";
 
 const Header = () => {
   const { user } = useUser();
@@ -32,7 +32,7 @@ const Header = () => {
 
 const logoutHandler = () => {
   logout()
-    .then(Router.reload(window.location.pathname))
+    .then(Router.reload())
     .catch((error) => window.alert(error.message));
 };
 

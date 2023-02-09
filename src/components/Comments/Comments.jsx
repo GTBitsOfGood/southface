@@ -65,6 +65,13 @@ const Comments = ({
     setCurrCommentIdx(currCommentIdx + 1);
   };
 
+  const handleEditing = () => {
+    ifAdmin(() => {
+      setIsEditing(true);
+    });
+    commentRef.current.focus();
+  };
+
   const handleSaveEdit = async () => {
     const updatedCard = await updateCardById(cardId, { comments }, true);
     setCards((cards) => {
@@ -201,12 +208,7 @@ const Comments = ({
                 icon={<EditIcon />}
                 size="sm"
                 rounded="full"
-                onClick={() => {
-                  ifAdmin(() => {
-                    setIsEditing(true);
-                  });
-                  commentRef.current.focus();
-                }}
+                onClick={handleEditing}
               />
 
               <IconButton
