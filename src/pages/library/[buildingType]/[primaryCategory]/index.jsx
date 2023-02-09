@@ -1,30 +1,28 @@
-import { Breadcrumb, BreadcrumbItem, Flex, Heading } from "@chakra-ui/react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Flex,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import PaginationTab from "src/components/PaginationTab";
 import SearchBar, { useSearch } from "src/components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import {
-  getCardsCount,
-  getCardsPagination,
-} from "server/mongodb/actions/Card";
-import {
   buildingTypeNames,
   primaryCategoryNames,
 } from "src/lib/utils/constants";
-import { getCards } from "../../../../actions/Card";
 
 const LibraryCategoryPage = (props) => {
   const cardsFromDatabase = props.cardsFromDatabase;
   const numPagesInitial = props.numPages;
-  const router = useRouter();
   const [cards, setCards] = useState(cardsFromDatabase);
   const [isRefresehing, setIsRefreshing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(numPagesInitial);
-  const [buildingType, setBuildingType] = useState("");
-  const [primaryCategory, setPrimaryCategory] = useState("");
   const { handleSearch } = useSearch(
     cardsFromDatabase,
     setNumPages,
@@ -32,27 +30,10 @@ const LibraryCategoryPage = (props) => {
     setCards
   );
 
-  // Without this useEffect, it opens modals for inconsistent cards with regards to pagination.
+  // This is needed for editing the card (otherwise modal opens with inconsistent cards)
   useEffect(() => {
     setIsRefreshing(false);
   }, [cards]);
-
-  useEffect(() => {
-    if (
-      !(
-        Object.keys(buildingTypeNames).includes(props.buildingType) &&
-        Object.keys(primaryCategoryNames).includes(
-          props.primaryCategory.toUpperCase()
-        )
-      )
-    ) {
-      router.push("/");
-    }
-    setBuildingType(buildingTypeNames[props.buildingType]);
-    setPrimaryCategory(
-      primaryCategoryNames[props.primaryCategory.toUpperCase()]
-    );
-  }, [router, buildingType, props.buildingType, props.primaryCategory]);
 
   return isRefresehing ? (
     ""
@@ -67,10 +48,12 @@ const LibraryCategoryPage = (props) => {
           <Link href="/library">Digital Library</Link>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <Link href={`/library/${props.buildingType}`}>{buildingType}</Link>
+          <Link href={`/library/${props.params.buildingType}`}>
+            {props.buildingType}
+          </Link>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <p>{primaryCategory}</p>
+          <Text>{props.primaryCategory}</Text>
         </BreadcrumbItem>
       </Breadcrumb>
 
@@ -91,44 +74,47 @@ const LibraryCategoryPage = (props) => {
   );
 };
 
-/**
- * Errors in getServerSideProps will display the page in 'pages/500.js' (https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props)
- */
-LibraryCategoryPage.getInitialProps = async (context) => {
-  const req = context.req;
-  if (req) {
-    const pageNumber = 0;
-    const cards = await getCardsPagination(pageNumber);
-    const cardsCount = await getCardsCount();
-    let numPages = Math.floor(cardsCount / 4);
-  
-    if (cardsCount % 4 > 0) {
-      numPages += 1;
-    }
-  
-    return {
+export async function getStaticProps({ params }) {
+  const pageNumber = 0;
+  const cards = await getCardsPagination(pageNumber);
+  const cardsCount = await getCardsCount();
+  let numPages = Math.floor(cardsCount / 4);
+
+  if (cardsCount % 4 > 0) {
+    numPages += 1;
+  }
+
+  return {
+    props: {
       cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
       numPages,
       pageNumber: pageNumber + 1,
-      ...context.query,
-    };
-  } else {
-      const pageNumber = 0;
-      const cards = await getCards();
-      const cardsCount = cards.length;
-      let numPages = Math.floor(cardsCount / 4);
-    
-      if (cardsCount % 4 > 0) {
-        numPages += 1;
-      }
-    
-      return {
-        cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
-        numPages,
-        pageNumber: pageNumber + 1,
-        ...context.query,
-      };
-  }
-};
+      buildingType: buildingTypeNames[params.buildingType],
+      primaryCategory:
+        primaryCategoryNames[params.primaryCategory.toUpperCase()],
+      params,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  const paths = Object.keys(buildingTypeNames)
+    .map((buildingType) => {
+      return Object.keys(primaryCategoryNames).map((primaryCategoryInitial) => {
+        return {
+          params: {
+            buildingType: buildingType,
+            primaryCategory: primaryCategoryInitial.toLowerCase(),
+          },
+        };
+      });
+    })
+    .flat();
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
 
 export default LibraryCategoryPage;

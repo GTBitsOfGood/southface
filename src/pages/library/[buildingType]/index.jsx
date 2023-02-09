@@ -1,20 +1,11 @@
-import { Breadcrumb, BreadcrumbItem, Flex } from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import CategoryCards from "../../../components/CategoryCards";
-import { buildingTypeNames } from "../../../lib/utils/constants";
+import CategoryCards from "src/components/CategoryCards";
+import { buildingTypeNames } from "src/lib/utils/constants";
 
-function CategoriesPage(props) {
+function CategoriesPage({ buildingType } ) {
   const router = useRouter();
-  const [buildingType, setBuildingType] = useState("");
-
-  useEffect(() => {
-    if (!Object.keys(buildingTypeNames).includes(props.buildingType)) {
-      router.push("/");
-    }
-    setBuildingType(buildingTypeNames[buildingType]);
-  }, [router, buildingType, props.buildingType]);
 
   return (
     <Flex
@@ -28,7 +19,7 @@ function CategoriesPage(props) {
           <Link href="/library">Digital Library</Link>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <p>{buildingTypeNames[props.buildingType]}</p>
+          <Text>{buildingTypeNames[buildingType]}</Text>
         </BreadcrumbItem>
       </Breadcrumb>
       <Flex flexWrap="wrap" gap="4rem">
@@ -38,10 +29,24 @@ function CategoriesPage(props) {
   );
 }
 
-CategoriesPage.getInitialProps = async (context) => {
+
+export async function getStaticProps({ params }) {
   return {
-    ...context.query,
+    props: {
+      buildingType: params.buildingType,
+    },
   };
-};
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: Object.keys(buildingTypeNames).map((buildingType) => {
+      return {
+        params: { buildingType },
+      };
+    }),
+    fallback: false,
+  };
+}
 
 export default CategoriesPage;

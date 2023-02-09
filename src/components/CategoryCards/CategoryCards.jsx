@@ -5,15 +5,13 @@ function CategoryCards(props) {
   return (
     <>
       {Object.keys(primaryCategoryNames).map((categoryInitials) => {
-        const name = primaryCategoryNames[categoryInitials];
-        const newCategoryParts = name.split("(");
-        const newCategoryName = newCategoryParts[0].trim();
+        const name = primaryCategoryNames[categoryInitials].trim();
         return (
           <CategoryCard
             routerQuery={props.routerQuery}
             initials={categoryInitials}
-            title={newCategoryName}
-            key={newCategoryName}
+            title={name}
+            key={name}
           />
         );
       })}
