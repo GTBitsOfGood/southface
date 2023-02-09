@@ -35,7 +35,7 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
       </Heading>
       <SearchBar handleSearch={handleSearch} />
       {/* Navbar is used for testing purposes for the ShoppingCart Component */}
-      <NavBar></NavBar>
+      <NavBar />
       <StandardCardTable cards={cards} setCards={setCards} />
       <PaginationTab
         numPages={numPages}

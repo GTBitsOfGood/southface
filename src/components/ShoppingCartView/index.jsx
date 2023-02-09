@@ -1,3 +1,3 @@
-import ShoppingCartDrawer from "./ShoppingCartDrawer";
+import ShoppingCartView from "./ShoppingCartView";
 
-export default ShoppingCartDrawer;
+export default ShoppingCartView;

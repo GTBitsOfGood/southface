@@ -1,7 +1,7 @@
 import { IconButton, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { BiBookBookmark as ShoppingCartIcon } from "react-icons/bi";
-import ShoppingCartDrawer from "../ShoppingCartView/ShoppingCartDrawer";
+import ShoppingCartView from "../ShoppingCartView";
 
 const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,7 +30,7 @@ const NavBar = () => {
         </div>
       </nav>
 
-      <ShoppingCartDrawer
+      <ShoppingCartView
         isOpen={isOpen}
         onClose={handleClose}
         shoppingCartItems={shoppingCartItems}

@@ -7,9 +7,11 @@ import {
   DrawerHeader,
   DrawerOverlay,
 } from "@chakra-ui/react";
-import ShoppingCartItem from "../ShoppingCartView/ShoppingCartItem";
+import Link from "next/link";
+import urls from "src/lib/utils/urls";
+import ShoppingCartItem from "./ShoppingCartItem";
 
-const ShoppingCartDrawer = ({ isOpen, onClose, shoppingCartItems }) => {
+const ShoppingCartView = ({ isOpen, onClose, shoppingCartItems }) => {
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
       <DrawerOverlay />
@@ -31,20 +33,20 @@ const ShoppingCartDrawer = ({ isOpen, onClose, shoppingCartItems }) => {
           ))}
         </Box>
         <Box display="flex" justifyContent="center">
-          <Button
-            as="a"
-            href="/plan-builder"
-            background="#6D6E70"
-            borderRadius="3xl"
-            color="white"
-            marginBottom="20"
-          >
-            View Full Plan
-          </Button>
+          <Link href={urls.pages.planbuilder}>
+            <Button
+              background="#6D6E70"
+              borderRadius="3xl"
+              color="white"
+              marginBottom="20"
+            >
+              View Full Plan
+            </Button>
+          </Link>
         </Box>
       </DrawerContent>
     </Drawer>
   );
 };
 
-export default ShoppingCartDrawer;
+export default ShoppingCartView;
