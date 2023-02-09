@@ -4,7 +4,7 @@ import { withSessionRoute } from "src/lib/utils/session";
 // @desc    Logout current user
 // @access  Public
 const handler = async (req, res) => {
-  req.session.destroy();
+  await req.session.destroy();
   return res.status(200).json({
     success: true,
   });

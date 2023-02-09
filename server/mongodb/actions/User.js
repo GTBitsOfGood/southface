@@ -22,6 +22,7 @@ export async function login({ username, password }) {
 
   return {
     id: user._id,
+    isAdmin: user.isAdmin,
   };
 }
 
@@ -44,6 +45,7 @@ export async function signUp({ username, password }) {
     .then((user) => {
       return {
         id: user._id,
+        isAdmin: user.isAdmin,
       };
     });
 }

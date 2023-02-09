@@ -51,7 +51,7 @@ export const login = (username, password) =>
 
 export const logout = () =>
   fetch(urls.api.user.logout, {
-    method: "GET",
+    method: "POST",
     mode: "same-origin",
     credentials: "include",
   })
