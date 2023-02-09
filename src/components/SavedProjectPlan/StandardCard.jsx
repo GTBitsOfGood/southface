@@ -13,7 +13,7 @@ const StandardCard = () => {
       <CardHeader>
         <Heading size="lg">Standard 1</Heading>
       </CardHeader>
-      <CardBody>
+      <CardBody marginLeft="3" marginRight="3">
         <Flex>
           <Box flex="1">
             <Image
@@ -34,7 +34,7 @@ const StandardCard = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. 
+          aliquip ex ea commodo consequat.
         </Box>
       </CardBody>
     </Card>

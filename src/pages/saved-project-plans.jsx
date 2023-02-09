@@ -28,7 +28,6 @@ const SavedProjectPlans = () => {
         <Spacer />
         <Button
           as="a"
-          href="/plan-builder"
           background="#6D6E70"
           borderRadius="3xl"
           color="white"
