@@ -1,13 +1,13 @@
+import { Flex, Heading } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import PaginationTab from "src/components/PaginationTab";
+import SearchBar, { useSearch } from "src/components/SearchBar";
+import StandardCardTable from "src/components/StandardCardTable";
 import {
   getCardsCount,
   getCardsPagination,
 } from "../../server/mongodb/actions/Card";
-import { Flex, Heading } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import StandardCardTable from "src/components/StandardCardTable";
-import PaginationTab from "src/components/PaginationTab";
-import SearchBar, { useSearch } from "src/components/SearchBar";
-
+import NavBar from "../components/NavBar /NavBar";
 const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
   const [cards, setCards] = useState(cardsFromDatabase);
   const [isRefresehing, setIsRefreshing] = useState(false);
@@ -33,11 +33,10 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
         {" "}
         Library
       </Heading>
-
       <SearchBar handleSearch={handleSearch} />
-
+      {/* Navbar is used for testing purposes for the ShoppingCart Component */}
+      <NavBar />
       <StandardCardTable cards={cards} setCards={setCards} />
-
       <PaginationTab
         numPages={numPages}
         alignSelf="center"
@@ -47,6 +46,7 @@ const LibraryPage = ({ cardsFromDatabase, numPagesInitial }) => {
         setCards={setCards}
         setIsRefreshing={setIsRefreshing}
       />
+      BiBookBookmark
     </Flex>
   );
 };
