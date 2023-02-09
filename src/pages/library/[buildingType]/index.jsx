@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import CategoryCards from "src/components/CategoryCards";
 import { buildingTypeNames } from "src/lib/utils/constants";
 
-function CategoriesPage({ buildingType } ) {
+function CategoriesPage({ buildingType }) {
   const router = useRouter();
 
   return (
@@ -28,7 +28,6 @@ function CategoriesPage({ buildingType } ) {
     </Flex>
   );
 }
-
 
 export async function getStaticProps({ params }) {
   return {
