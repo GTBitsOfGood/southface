@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useToast } from "@chakra-ui/react";
 import Router from "next/router";
+import { useEffect } from "react";
 import useSWR from "swr";
 
 export default function useUser({
@@ -8,6 +9,7 @@ export default function useUser({
 } = {}) {
   const { data, mutate: mutateUser } = useSWR("/api/user");
   const user = data?.payload;
+  const unauthorizedToast = useToast();
 
   useEffect(() => {
     // if no redirect needed, just return (example: already on /dashboard)
@@ -24,5 +26,19 @@ export default function useUser({
     }
   }, [user, redirectIfFound, redirectTo]);
 
-  return { user, mutateUser };
+  const ifAdmin = (action) => {
+    if (!user || !user.isAdmin) {
+      unauthorizedToast({
+        title: "Unauthorized!",
+        description: "You must log in as an admin.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    action();
+  };
+
+  return { user, mutateUser, ifAdmin };
 }

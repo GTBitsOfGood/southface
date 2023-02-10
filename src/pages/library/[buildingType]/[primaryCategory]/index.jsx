@@ -2,7 +2,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   Flex,
-  Heading,
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -38,11 +37,7 @@ const LibraryCategoryPage = (props) => {
   return isRefresehing ? (
     ""
   ) : (
-    <Flex alignItems="stretch" flexDirection="column">
-      <Heading fontSize={{ base: "4xl", lg: "5xl" }} pb="5">
-        {" "}
-        Library
-      </Heading>
+    <Flex alignItems="stretch" flexDirection="column" p="2rem">
       <Breadcrumb separator=">" fontWeight="semibold" pb="5">
         <BreadcrumbItem>
           <Link href="/library">Digital Library</Link>

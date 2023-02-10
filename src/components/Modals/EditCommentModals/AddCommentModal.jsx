@@ -10,7 +10,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useToast,
 } from "@chakra-ui/react";
 
 import { useState } from "react";
@@ -27,48 +26,32 @@ const AddCommentModal = ({
 }) => {
   const [newComment, setNewComment] = useState({ body: "", date: "" });
 
-  const unauthorizedToast = useToast();
-
   const handleChange = (e) => {
     setNewComment({ body: e.target.value, date: new Date() });
   };
 
   const handleAddComment = async () => {
-    try {
-      const newComments = comments.concat(newComment);
-      const updatedCard = await updateCardById(cardId, {
+    const newComments = comments.concat(newComment);
+    const updatedCard = await updateCardById(
+      cardId,
+      {
         comments: newComments,
+      },
+      true
+    );
+
+    setComments(newComments);
+    setCurrCommentIdx((currCommentIdx) => currCommentIdx + 1);
+
+    setCards((cards) => {
+      return cards.map((card) => {
+        if (cardId === card._id) {
+          return updatedCard;
+        } else {
+          return card;
+        }
       });
-
-      setComments(newComments);
-      setCurrCommentIdx((currCommentIdx) => currCommentIdx + 1);
-
-      setCards((cards) => {
-        return cards.map((card) => {
-          if (cardId === card._id) {
-            return updatedCard;
-          } else {
-            return card;
-          }
-        });
-      });
-    } catch (error) {
-      if (
-        error.message === "Unauthorized" ||
-        error.message === "Not Logged In"
-      ) {
-        unauthorizedToast({
-          title: "Unauthorized!",
-          description: "You must log in as an admin.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      } else {
-        throw error;
-      }
-    }
-
+    });
     onClose();
   };
 

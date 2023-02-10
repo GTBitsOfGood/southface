@@ -1,14 +1,13 @@
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useState } from "react";
-import { updateCardById, getCardById } from "../../actions/Card";
+import { getCardById, updateCardById } from "../../actions/Card";
 
 const useEditCardModal = (
   cardTitle,
   cardComments,
   cardImages,
   cardTags,
-  cardId,
-  unauthorizedToast
+  cardId
 ) => {
   const {
     isOpen: imageIsOpen,
@@ -59,47 +58,30 @@ const useEditCardModal = (
   /*------------- ALL SUBMIT BUTTON METHODS -------------*/
 
   const applyEdit = async (setCards) => {
-    try {
-      const updatedCardInput = {
-        images,
-        title,
-        comments: comments.length === 0 ? newComment : comments,
-        tags,
-      };
+    const updatedCardInput = {
+      images,
+      title,
+      comments: comments.length === 0 ? newComment : comments,
+      tags,
+    };
 
-      const updatedCard = await updateCardById(cardId, updatedCardInput);
+    const updatedCard = await updateCardById(cardId, updatedCardInput);
 
-      setIsEditing(!isEditing);
-      setComments(updatedCard.comments);
-      setTitle(updatedCard.title);
-      setImages(updatedCard.images);
-      setTags(updatedCard.tags);
+    setIsEditing(!isEditing);
+    setComments(updatedCard.comments);
+    setTitle(updatedCard.title);
+    setImages(updatedCard.images);
+    setTags(updatedCard.tags);
 
-      setCards((cards) => {
-        return cards.map((card) => {
-          if (cardId === card._id) {
-            return updatedCard;
-          } else {
-            return card;
-          }
-        });
+    setCards((cards) => {
+      return cards.map((card) => {
+        if (cardId === card._id) {
+          return updatedCard;
+        } else {
+          return card;
+        }
       });
-    } catch (error) {
-      if (
-        error.message === "Not Logged In" ||
-        error.message === "Unauthorized"
-      ) {
-        unauthorizedToast({
-          title: "Unauthorized!",
-          description: "You must log in as an admin.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      } else {
-        throw error; // this part just shows the next.js error modal, but is bad for production
-      }
-    }
+    });
   };
 
   const cancelEdit = async () => {

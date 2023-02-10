@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
 import Head from "next/head";
+import PropTypes from "prop-types";
+import React from "react";
+import NavBar from "src/components/NavBar/NavBar";
 import { SWRConfig } from "swr";
 
-import Header from "src/components/Header";
 import fetchJson from "src/lib/utils/fetchJson";
 
 import "focus-visible/dist/focus-visible.min.js";
@@ -23,12 +23,8 @@ const MyApp = ({ Component, pageProps }) => (
       <title>Next.js-Starter</title>
     </Head>
     <ChakraProvider>
-      <div className="App">
-        <Header />
-        <div className="Content">
+        <NavBar />
           <Component {...pageProps} />
-        </div>
-      </div>
     </ChakraProvider>
   </SWRConfig>
 );
