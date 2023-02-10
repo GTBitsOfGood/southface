@@ -11,7 +11,15 @@ import Link from "next/link";
 import urls from "src/lib/utils/urls";
 import ShoppingCartItem from "./ShoppingCartItem";
 
-const ShoppingCartView = ({ isOpen, onClose, shoppingCartItems }) => {
+const ShoppingCartView = ({ isOpen, onClose }) => {
+  const shoppingCartItems = [
+    { planName: "Ladder T-walls", imageNum: 2, commentNum: 8 },
+    { planName: "Ladder T-walls", imageNum: 3, commentNum: 6 },
+    { planName: "Ladder T-walls", imageNum: 1, commentNum: 2 },
+    { planName: "Ladder T-walls", imageNum: 4, commentNum: 5 },
+    { planName: "Ladder T-walls", imageNum: 6, commentNum: 7 },
+  ];
+
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
       <DrawerOverlay />
