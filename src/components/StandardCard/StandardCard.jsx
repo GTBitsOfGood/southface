@@ -104,7 +104,9 @@ const StandardCard = ({ card, setCards, ...props }) => {
       />
 
       <Flex p={3} flexDirection="column" flex={1}>
-        <Heading my={2} size="md">{card.title}</Heading>
+        <Heading my={2} size="md">
+          {card.title}
+        </Heading>
 
         <HStack>
           {card.tags.map((tag, index) => {
