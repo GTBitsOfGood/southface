@@ -6,7 +6,7 @@ const LibraryPage = () => {
     <Flex justifyContent="center" height="40vh" paddingX="10vw">
       <Flex justifyContent="space-between" height="40vw" width="full">
         <BuildingType
-          src="/static/MultifamilyIcon.png"
+          src="/static/MultiFamilyIcon.png"
           alt="MultiFamily Icon"
           title="Multifamily"
           href="library/multifamily"
