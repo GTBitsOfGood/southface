@@ -23,8 +23,8 @@ const MyApp = ({ Component, pageProps }) => (
       <title>Next.js-Starter</title>
     </Head>
     <ChakraProvider>
-        <NavBar />
-          <Component {...pageProps} />
+      <NavBar />
+      <Component {...pageProps} />
     </ChakraProvider>
   </SWRConfig>
 );

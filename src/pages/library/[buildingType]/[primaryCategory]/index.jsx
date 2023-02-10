@@ -1,9 +1,4 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Flex,
-  Text,
-} from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";

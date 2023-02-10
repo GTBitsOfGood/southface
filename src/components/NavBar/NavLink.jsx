@@ -2,7 +2,6 @@ import { Button } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 
-
 /**
  * Component for routing to different pages
  * @param href - The link you are trying to route to
@@ -15,11 +14,10 @@ const NavLink = ({ href, name, ...rest }) => {
     </Link>
   ) : (
     <NavButton name={name} {...rest} />
-  )
+  );
 };
 
-
-const NavButton = ({name, href, children, ...rest}) => (
+const NavButton = ({ name, href, children, ...rest }) => (
   <Button
     as={href ? "a" : "button"}
     color="white"
@@ -31,6 +29,6 @@ const NavButton = ({name, href, children, ...rest}) => (
   >
     {name || children}
   </Button>
-)
+);
 
 export default NavLink;

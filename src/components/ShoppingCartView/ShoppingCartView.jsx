@@ -19,7 +19,7 @@ const ShoppingCartView = ({ isOpen, onClose }) => {
     { planName: "Ladder T-walls", imageNum: 4, commentNum: 5 },
     { planName: "Ladder T-walls", imageNum: 6, commentNum: 7 },
   ];
-  
+
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
       <DrawerOverlay />
