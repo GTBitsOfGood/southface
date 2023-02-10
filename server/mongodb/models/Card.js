@@ -36,6 +36,9 @@ const CardSchema = new Schema({
       date: Date,
     },
   ],
+  criteria: {
+    type: String,
+  },
   tags: [
     {
       type: String,

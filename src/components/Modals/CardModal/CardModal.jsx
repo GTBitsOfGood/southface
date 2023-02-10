@@ -18,12 +18,12 @@ import {
   SimpleGrid,
   Tag,
   TagLeftIcon,
+  Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import useEditCardModal from "../../../lib/hooks/useEditCard";
 
 import useUser from "src/lib/hooks/useUser";
-import Comments from "../../Comments/Comments";
 import ModalImage from "../ModalImage";
 import ModifyImageModal from "../ModifyImageModal";
 import RatingStars from "./RatingStars";
@@ -32,25 +32,22 @@ const CardModal = ({
   isOpen,
   onClose,
   cardTitle,
-  cardComments,
+  cardCriteria,
   cardId,
   cardImages,
   cardTags,
   setCards,
   ...rest
 }) => {
+  // not being used right now since admin view is not being worked on.
   const {
     isEditing,
     title,
     onEditCard,
-    comments,
-    setComments,
-    createNewComment,
     tags,
     images,
     setAddingTag,
     addingTag,
-    handleCommentsUpdate,
     handleTitleChange,
     applyEdit,
     onDeleteTag,
@@ -60,7 +57,7 @@ const CardModal = ({
     imageOnClose,
     setImages,
     setTags,
-  } = useEditCardModal(cardTitle, cardComments, cardImages, cardTags, cardId);
+  } = useEditCardModal(cardTitle, "placeholder", cardImages, cardTags, cardId);
 
   const { ifAdmin } = useUser();
 
@@ -242,30 +239,14 @@ const CardModal = ({
                 </>
               )}
             </Flex>
+
             <SimpleGrid
               mt={6}
               mb={15}
               columns={3}
               justifyContent="space-between"
             >
-              {isEditing && comments.length === 0 ? (
-                <Input
-                  flexBasis="sm"
-                  fontSize="sm"
-                  onChange={createNewComment}
-                  placeholder="Add Card Comment"
-                />
-              ) : (
-                <Comments
-                  isEditing={isEditing}
-                  comments={comments}
-                  handleCommentsUpdate={handleCommentsUpdate}
-                  cardId={cardId}
-                  setComments={setComments}
-                  setCards={setCards}
-                />
-              )}
-
+              <Text>{cardCriteria}</Text>
               {!isEditing ? (
                 <Button
                   variant="link"
