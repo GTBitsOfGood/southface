@@ -144,6 +144,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           cardId={card._id}
           cardTags={card.tags}
           cardTitle={card.title}
+          cardDescription={card.description}
           cardComments={card.comments}
           cardImages={card.images}
           AddToPlanButton={<SelectorButton />}
