@@ -22,11 +22,7 @@ const ModalImage = ({
   // };
 
   return (
-    <Box
-      position="relative"
-      width="250px"
-      {...props}
-    >
+    <Box position="relative" width="250px" {...props}>
       <Image
         src={image}
         objectFit="cover"

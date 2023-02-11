@@ -9,7 +9,7 @@ import {
   IconButton,
   Image,
   Tag,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
 import React from "react";
 import Comments from "../Comments";
@@ -144,7 +144,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           cardId={card._id}
           cardTags={card.tags}
           cardTitle={card.title}
-          cardDescription={card.description}
+          cardCriteria={card.criteria}
           cardComments={card.comments}
           cardImages={card.images}
           AddToPlanButton={<SelectorButton />}

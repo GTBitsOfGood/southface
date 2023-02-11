@@ -1,4 +1,10 @@
-import { AddIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@chakra-ui/icons";
+import {
+  AddIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CloseIcon
+} from "@chakra-ui/icons";
 import {
   Button,
   Flex,
@@ -113,6 +119,23 @@ const CardModal = ({
     );
   };
 
+  const ChevronIcon = (props) => {
+    const styles = {
+      pos: "absolute",
+      top: "0",
+      bottom:  "0",
+      margin: "auto 0",
+      color: "white",
+      zIndex: 2,
+      boxSize: 12,
+    };
+    if (props.orientation == "right") {
+      return <ChevronRightIcon {...styles} right="20px" />
+    } else if (props.orientation == "left") {
+      return <ChevronLeftIcon {...styles} left="20px" />
+    }
+  }
+
   return (
     <Modal
       {...rest}
@@ -157,30 +180,8 @@ const CardModal = ({
                   },
                 ]}
                 containerStyle={{ minHeight: "250px", margin: "0 -20px 20px" }}
-                arrowLeft={
-                  <ChevronLeftIcon
-                    pos="absolute"
-                    top="0"
-                    bottom="0"
-                    margin="auto 0"
-                    color="white"
-                    left="20px"
-                    zIndex="2"
-                    boxSize={12}
-                  />
-                }
-                arrowRight={
-                  <ChevronRightIcon
-                    pos="absolute"
-                    top="0"
-                    bottom="0"
-                    margin="auto 0"
-                    color="white"
-                    right="20px"
-                    zIndex="2"
-                    boxSize={12}
-                  />
-                }
+                arrowLeft={<ChevronIcon orientation="left" />}
+                arrowRight={<ChevronIcon orientation="right"/>}
               >
                 {images.map((image, index) => {
                   return (
@@ -201,7 +202,11 @@ const CardModal = ({
                 })}
               </Carousel>
             ) : (
-              <Flex minHeight="250px" justifyContent="center" alignItems="center">
+              <Flex
+                minHeight="250px"
+                justifyContent="center"
+                alignItems="center"
+              >
                 <Text>Add images for this standard!</Text>
               </Flex>
             )}
@@ -210,7 +215,6 @@ const CardModal = ({
               {cardCriteria}
             </Text>
             <HStack spacing={5}>
-              
               {isEditing && (
                 <>
                   {images.length === 0 ? (
@@ -286,7 +290,7 @@ const CardModal = ({
                   rounded={16}
                   color="#6d6e70"
                   border="solid 1px #6d6e70"
-                  fontSize={{lg: "22px", md: "16px", base: "12px"}}
+                  fontSize={{ lg: "22px", md: "16px", base: "12px" }}
                   width="auto"
                 >
                   View Notes
@@ -296,10 +300,10 @@ const CardModal = ({
                   size="lg"
                   rounded={16}
                   color="white"
-                  fontSize={{lg: "22px", md: "16px", base: "12px"}}
+                  fontSize={{ lg: "22px", md: "16px", base: "12px" }}
                   width="auto"
-                  _hover={{bgColor: "#0690a7"}}
-                  _active={{bgColor: "#057b8f"}}
+                  _hover={{ bgColor: "#0690a7" }}
+                  _active={{ bgColor: "#057b8f" }}
                 >
                   Add to Plan
                 </Button>
