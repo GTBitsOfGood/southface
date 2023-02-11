@@ -1,9 +1,11 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { AddIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
+  FormLabel,
   Heading,
   HStack,
+  IconButton,
   Input,
   Modal,
   ModalBody,
@@ -13,20 +15,21 @@ import {
   ModalOverlay,
   SimpleGrid,
   Tag,
+  TagLeftIcon,
   Text,
-  useToast,
+  useToast
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Carousel from "react-grid-carousel";
 import useEditCardModal from "../../../lib/hooks/useEditCard";
 import ModalImage from "../ModalImage";
-import Carousel from "react-grid-carousel";
-import styles from "./CardModal.module.css";
+import ModifyImageModal from "../ModifyImageModal";
 
 const CardModal = ({
   isOpen,
   onClose,
   cardTitle,
-  cardDescription,
+  cardCriteria,
   cardComments,
   cardId,
   cardImages,
@@ -39,23 +42,19 @@ const CardModal = ({
     isEditing,
     title,
     // onEditCard,
-    // comments,
-    // setComments,
-    // createNewComment,
     tags,
     images,
-    // setAddingTag,
-    // addingTag,
-    // handleCommentsUpdate,
+    setAddingTag,
+    addingTag,
     handleTitleChange,
     // applyEdit,
-    // onDeleteTag,
+    onDeleteTag,
     // cancelEdit,
-    // imageIsOpen,
-    // imageOnOpen,
-    // imageOnClose,
+    imageIsOpen,
+    imageOnOpen,
+    imageOnClose,
     setImages,
-    // setTags,
+    setTags,
   } = useEditCardModal(
     cardTitle,
     cardComments,
@@ -65,78 +64,61 @@ const CardModal = ({
     unauthorizedToast
   );
 
-  // const TagInput = (props) => {
-  //   const [width, setWidth] = useState(0.5);
-  //   const [editTagValue, setEditTagValue] = useState("");
+  const TagInput = (props) => {
+    const [width, setWidth] = useState(0.5);
+    const [editTagValue, setEditTagValue] = useState("");
 
-  //   const handleTagChange = (e) => {
-  //     setWidth(e.target.value.length);
-  //     setEditTagValue(e.target.value);
-  //   };
-
-  //   const submitTagEdit = () => {
-  //     if (editTagValue.length !== 0) {
-  //       if (tags) {
-  //         setTags([...tags, editTagValue]);
-  //       } else {
-  //         setTags([editTagValue]);
-  //       }
-
-  //       setAddingTag(!addingTag);
-  //     }
-  //   };
-
-  //   return (
-  //     <>
-  //       <Input
-  //         {...props}
-  //         width={width + "ch"}
-  //         minWidth="0.5ch"
-  //         autoFocus
-  //         onChange={handleTagChange}
-  //       />
-
-  //       <HStack display={props.display}>
-  //         <IconButton
-  //           icon={<CheckIcon />}
-  //           onClick={submitTagEdit}
-  //           size="xs"
-  //           rounded="full"
-  //         />
-  //         <IconButton
-  //           icon={<CloseIcon />}
-  //           onClick={() => setAddingTag(false)}
-  //           size="xs"
-  //           rounded="full"
-  //         />
-  //       </HStack>
-  //     </>
-  //   );
-  // };
-
-  const [windowWidth, setWindowWidth] = useState();
-
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
-  }, []);
-  useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowWidth(window.innerWidth);
+    const handleTagChange = (e) => {
+      setWidth(e.target.value.length);
+      setEditTagValue(e.target.value);
     };
 
-    window.addEventListener("resize", handleWindowResize);
+    const submitTagEdit = () => {
+      if (editTagValue.length !== 0) {
+        if (tags) {
+          setTags([...tags, editTagValue]);
+        } else {
+          setTags([editTagValue]);
+        }
 
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
+        setAddingTag(!addingTag);
+      }
     };
-  });
+
+    return (
+      <>
+        <Input
+          {...props}
+          width={width + "ch"}
+          minWidth="0.5ch"
+          autoFocus
+          onChange={handleTagChange}
+        />
+
+        <HStack display={props.display}>
+          <IconButton
+            icon={<CheckIcon />}
+            onClick={submitTagEdit}
+            size="xs"
+            rounded="full"
+          />
+          <IconButton
+            icon={<CloseIcon />}
+            onClick={() => setAddingTag(false)}
+            size="xs"
+            rounded="full"
+          />
+        </HStack>
+      </>
+    );
+  };
 
   return (
     <Modal
       {...rest}
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "sm", md: "2xl", lg: "4xl" }}
+      size={{ base: "xs", md: "2xl", lg: "4xl" }}
     >
       <ModalOverlay />
       <ModalContent rounded={14}>
@@ -158,9 +140,6 @@ const CardModal = ({
             ) : (
               <Heading mb={2}>{title}</Heading>
             )}
-            {/* <Box display={{ base: isEditing ? "none" : "block", md: "block" }}>
-              <RatingStars edit={false} value={4} />
-            </Box> */}
           </Flex>
         </ModalHeader>
 
@@ -170,7 +149,7 @@ const CardModal = ({
               <Carousel
                 cols={3}
                 rows={1}
-                // gap={10}
+                gap={10}
                 responsiveLayout={[
                   {
                     breakpoint: 991,
@@ -180,13 +159,25 @@ const CardModal = ({
                 containerStyle={{ minHeight: "250px", margin: "0 -20px 20px" }}
                 arrowLeft={
                   <ChevronLeftIcon
-                    id={styles.cardModal__chevronLeft}
+                    pos="absolute"
+                    top="0"
+                    bottom="0"
+                    margin="auto 0"
+                    color="white"
+                    left="20px"
+                    zIndex="2"
                     boxSize={12}
                   />
                 }
                 arrowRight={
                   <ChevronRightIcon
-                    id={styles.cardModal__chevronRight}
+                    pos="absolute"
+                    top="0"
+                    bottom="0"
+                    margin="auto 0"
+                    color="white"
+                    right="20px"
+                    zIndex="2"
                     boxSize={12}
                   />
                 }
@@ -199,12 +190,7 @@ const CardModal = ({
                     >
                       <ModalImage
                         key={index}
-                        floatRight={
-                          windowWidth &&
-                          windowWidth > 767 &&
-                          windowWidth < 992 &&
-                          index % 2 == 1
-                        }
+                        index={index}
                         currentImageIndex={index}
                         image={image}
                         isEditing={isEditing}
@@ -215,15 +201,15 @@ const CardModal = ({
                 })}
               </Carousel>
             ) : (
-              <Flex id={styles.cardModal__noImagesText}>
+              <Flex minHeight="250px" justifyContent="center" alignItems="center">
                 <Text>Add images for this standard!</Text>
               </Flex>
             )}
 
-            <Text id={styles.cardModal__cardDescription}>
-              {cardDescription}
+            <Text lineHeight="normal" fontSize="18px">
+              {cardCriteria}
             </Text>
-            {/* <HStack spacing={5}>
+            <HStack spacing={5}>
               
               {isEditing && (
                 <>
@@ -248,13 +234,13 @@ const CardModal = ({
                   />
                 </>
               )}
-            </HStack> */}
+            </HStack>
             <SimpleGrid mt={3} mb={15} columns={2}>
               <HStack flexWrap="wrap" gap={1}>
                 {tags.map((tag, index) => {
                   return (
-                    <Tag id={styles.cardModal__tag} key={index}>
-                      {/* {isEditing && (
+                    <Tag bgColor="#c4d600" borderRadius="30px" key={index}>
+                      {isEditing && (
                         <TagLeftIcon
                           as={CloseIcon}
                           boxSize="9px"
@@ -263,20 +249,20 @@ const CardModal = ({
                             cursor: "pointer",
                           }}
                         />
-                      )} */}
+                      )}
                       {tag}
                     </Tag>
                   );
                 })}
 
-                {/* <TagInput
+                <TagInput
                   variant="unstyled"
                   display={addingTag ? "block" : "none"}
                   bgColor="#D9D9D9"
                   fontSize="sm"
-                /> */}
+                />
 
-                {/* {isEditing && !addingTag && (
+                {isEditing && !addingTag && (
                   <>
                     {tags && tags.length === 0 && (
                       <FormLabel fontWeight="bold">Add Tags</FormLabel>
@@ -291,44 +277,33 @@ const CardModal = ({
                       }}
                     />
                   </>
-                )} */}
+                )}
               </HStack>
               <Flex gap={2} justifyContent="right">
                 <Button
-                  id={styles.cardModal__viewNotesBtn}
                   bgColor="white"
                   size="lg"
                   rounded={16}
+                  color="#6d6e70"
+                  border="solid 1px #6d6e70"
+                  fontSize={{lg: "22px", md: "16px", base: "12px"}}
+                  width="auto"
                 >
                   View Notes
                 </Button>
                 <Button
-                  id={styles.cardModal__addToPlanBtn}
                   bgColor="#00ACC8"
                   size="lg"
                   rounded={16}
+                  color="white"
+                  fontSize={{lg: "22px", md: "16px", base: "12px"}}
+                  width="auto"
+                  _hover={{bgColor: "#0690a7"}}
+                  _active={{bgColor: "#057b8f"}}
                 >
                   Add to Plan
                 </Button>
               </Flex>
-
-              {/* {isEditing && comments.length === 0 ? (
-                <Input
-                  flexBasis="sm"
-                  fontSize="sm"
-                  onChange={createNewComment}
-                  placeholder="Add Card Comment"
-                />
-              ) : (
-                <Comments
-                  isEditing={isEditing}
-                  comments={comments}
-                  handleCommentsUpdate={handleCommentsUpdate}
-                  cardId={cardId}
-                  setComments={setComments}
-                  setCards={setCards}
-                />
-              )} */}
 
               {/* {!isEditing ? (
                 <Button

@@ -12,15 +12,15 @@ const CardSchema = new Schema({
   title: {
     type: String,
   },
-  description: {
-    type: String,
-  },
   comments: [
     {
       body: String,
       date: Date,
     },
   ],
+  criteria: {
+    type: String,
+  },
   tags: [
     {
       type: String,

@@ -7,7 +7,6 @@ const ModalImage = ({
   image,
   // currentImageIndex,
   // setImages,
-  floatRight,
   ...props
 }) => {
   // const {
@@ -26,7 +25,6 @@ const ModalImage = ({
     <Box
       position="relative"
       width="250px"
-      float={floatRight ? "right" : "left"}
       {...props}
     >
       <Image
@@ -43,7 +41,7 @@ const ModalImage = ({
         bottom="15px"
         borderRadius="30px"
         right="10px"
-        height="var(--chakra-sizes-7)"
+        height={7}
         backgroundColor="#FFFFFF"
         color="#6D6E70"
         boxShadow="xl"
