@@ -1,12 +1,18 @@
-import useUser from "src/lib/hooks/useUser";
+import { Button, Heading, HStack } from "@chakra-ui/react";
 import { removeFromActivePlan } from "../../actions/User";
 
 const ProjectPlanStandard = ({ card }) => {
-  const { user } = useUser();
   const handler = () => {
-    removeFromActivePlan(user.id, card);
+    removeFromActivePlan(card);
   };
-  return <h1 onClick={handler}>{card.title}</h1>;
+  return (
+    <>
+      <HStack>
+        <Heading>{card.title}</Heading>
+        <Button onClick={handler}>Remove from plan</Button>
+      </HStack>
+    </>
+  );
 };
 
 export { ProjectPlanStandard };

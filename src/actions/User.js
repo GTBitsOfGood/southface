@@ -91,7 +91,28 @@ export const getCurrentUser = (cookies) => {
     });
 };
 
-export const addToActivePlan = (userId, card) => {
+export const getActivePlan = (userId) => {
+  return fetch(urls.api.user.activePlan.get + "/" + userId, {
+    method: "GET",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        console.log(json);
+        throw new Error(json.message);
+      }
+      return json.payload;
+    });
+  // untested
+};
+export const addToActivePlan = (card) => {
   return fetch(urls.api.user.activePlan.add, {
     method: "PUT",
     mode: "same-origin",
@@ -99,10 +120,7 @@ export const addToActivePlan = (userId, card) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      userId,
-      card,
-    }),
+    body: JSON.stringify(card),
   })
     .then((response) => response.json())
     .then((json) => {
@@ -117,7 +135,7 @@ export const addToActivePlan = (userId, card) => {
   // untested
 };
 
-export const removeFromActivePlan = (userId, card) => {
+export const removeFromActivePlan = (card) => {
   return fetch(urls.api.user.activePlan.remove, {
     method: "PUT",
     mode: "same-origin",
@@ -125,10 +143,7 @@ export const removeFromActivePlan = (userId, card) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      userId,
-      card,
-    }),
+    body: JSON.stringify(card),
   })
     .then((response) => response.json())
     .then((json) => {

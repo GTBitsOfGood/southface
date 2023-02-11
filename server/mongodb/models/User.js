@@ -21,11 +21,6 @@ const UserSchema = new Schema({
   activePlan: {
     type: PlanSchema,
     required: false,
-    default: {
-      userId: "63583f93c37389bc196bae24", // literally random, please change
-      name: "Active Plan",
-      cards: [],
-    },
   },
 });
 

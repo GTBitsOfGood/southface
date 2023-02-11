@@ -13,6 +13,7 @@ export default {
       logout: "/api/user/logout",
       getCurrent: "/api/user",
       activePlan: {
+        get: "/api/user/active-plan/get",
         add: "/api/user/active-plan/add",
         remove: "/api/user/active-plan/remove",
         update: "/api/user/active-plan/update",

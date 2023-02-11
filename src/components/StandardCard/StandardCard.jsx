@@ -15,7 +15,6 @@ import React from "react";
 import Comments from "../Comments";
 import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
-import useUser from "src/lib/hooks/useUser";
 import { addToActivePlan } from "../../actions/User";
 
 const StandardCard = ({ card, setCards, ...props }) => {
@@ -27,9 +26,8 @@ const StandardCard = ({ card, setCards, ...props }) => {
   } = useDisclosure();
 
   const { renderType = "default" } = { ...props }; // sets what kind of standardCard to show
-  const { user } = useUser();
   const addHandler = () => {
-    addToActivePlan(user.id, card);
+    addToActivePlan(card);
   };
 
   const {

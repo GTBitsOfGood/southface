@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Card,
   CardBody,
@@ -11,25 +10,28 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+// import { PDFDownloadLink } from "@react-pdf/renderer";
 // import Link from "next/link";
 // import PlanDocumentPDF from "src/components/PlanDocumentPDF/PlanDocumentPDF";
 // import StandardCard from "src/components/StandardCard";
 // import StandardCard from "../components/StandardCard/StandardCard";
 import { useEffect, useRef, useState } from "react";
-import { getCards } from "src/actions/Card";
+// import { getCards } from "src/actions/Card";
 import PlanConfirmationModal from "src/components/Modals/PlanConfirmationModal";
 import { ProjectPlanStandard } from "../components/StandardCard/ProjectPlanStandard";
+import useUser from "src/lib/hooks/useUser";
+import { getActivePlan } from "../actions/User";
 
 const ProjectPlanBuilder = () => {
-  const [cards, setCards] = useState([]);
+  const { user } = useUser();
+  const [plan, setPlan] = useState({});
   useEffect(() => {
-    getCards().then((res) => {
-      console.log(cards);
-      setCards(res);
-    });
-    // for the love of God don't put dependency array here
-  }, []);
+    if (user) {
+      getActivePlan(user.id).then((res) => {
+        setPlan(res);
+      });
+    }
+  }, [user]);
 
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -39,14 +41,13 @@ const ProjectPlanBuilder = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const nameRef = useRef();
 
-  const standardMapper = (card) => {
-    return <ProjectPlanStandard card={card} />;
+  const standardMapper = (card, index) => {
+    return <ProjectPlanStandard card={card} key={index} />;
   };
 
   return (
     <>
       <HStack alignItems="flex-start" spacing={3}>
-        {cards.map(standardMapper)}
         <VStack
           flex={2}
           as={Card}
@@ -80,31 +81,11 @@ const ProjectPlanBuilder = () => {
               </Button>
             </Flex>
             <HStack>
-              {hasLoaded && (
-                <PDFDownloadLink
-                  document={<Box>Bruh 2</Box>}
-                  fileName="plan.pdf"
-                >
-                  {({ loading }) => (
-                    <Button>
-                      {loading
-                        ? "Loading document..."
-                        : "PDF (Jk also download for now lol)"}
-                    </Button>
-                  )}
-                </PDFDownloadLink>
-              )}
-              {hasLoaded && (
-                <PDFDownloadLink document={<Box>Bruh</Box>} fileName="plan.pdf">
-                  {({ loading }) => (
-                    <Button>
-                      {loading ? "Loading document..." : "Download"}
-                    </Button>
-                  )}
-                </PDFDownloadLink>
-              )}
+              <Button>Broken Download</Button>
+              <Button>Broken PDF</Button>
             </HStack>
           </CardBody>
+          {plan.cards ? plan.cards.map(standardMapper) : "something is null"}
         </VStack>
         <VStack flex={1}>
           <Card w="100%">
