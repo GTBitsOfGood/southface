@@ -3,7 +3,7 @@ import {
   CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  CloseIcon
+  CloseIcon,
 } from "@chakra-ui/icons";
 import {
   Button,
@@ -23,7 +23,7 @@ import {
   Tag,
   TagLeftIcon,
   Text,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Carousel from "react-grid-carousel";
@@ -123,18 +123,18 @@ const CardModal = ({
     const styles = {
       pos: "absolute",
       top: "0",
-      bottom:  "0",
+      bottom: "0",
       margin: "auto 0",
       color: "white",
       zIndex: 2,
       boxSize: 12,
     };
     if (props.orientation == "right") {
-      return <ChevronRightIcon {...styles} right="20px" />
+      return <ChevronRightIcon {...styles} right="20px" />;
     } else if (props.orientation == "left") {
-      return <ChevronLeftIcon {...styles} left="20px" />
+      return <ChevronLeftIcon {...styles} left="20px" />;
     }
-  }
+  };
 
   return (
     <Modal
@@ -181,7 +181,7 @@ const CardModal = ({
                 ]}
                 containerStyle={{ minHeight: "250px", margin: "0 -20px 20px" }}
                 arrowLeft={<ChevronIcon orientation="left" />}
-                arrowRight={<ChevronIcon orientation="right"/>}
+                arrowRight={<ChevronIcon orientation="right" />}
               >
                 {images.map((image, index) => {
                   return (

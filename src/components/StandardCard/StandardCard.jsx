@@ -9,7 +9,7 @@ import {
   IconButton,
   Image,
   Tag,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
 import Comments from "../Comments";
