@@ -18,11 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useEditCardModal from "../../../lib/hooks/useEditCard";
-
 import ModalImage from "../ModalImage";
-
 import Carousel from "react-grid-carousel";
-
 import styles from "./CardModal.module.css";
 
 const CardModal = ({
