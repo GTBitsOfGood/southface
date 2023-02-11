@@ -1,7 +1,9 @@
 import {
   Box,
+  Divider,
   Flex,
   HStack,
+  IconButton,
   Image,
   Modal,
   ModalBody,
@@ -12,14 +14,25 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
+import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const ImagePreviewModal = ({ isOpen, onClose, cardImages, cardComments }) => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const [showBackArrow, setShowBackArrow] = React.useState(false);
   const [showNextArrow, setShowNextArrow] = React.useState(false);
+
+  const [selectedButton, setSelectedButton] = useState(null);
+
+  const handleClick = (button) => {
+    if (selectedButton === button) {
+      setSelectedButton(null);
+    } else {
+      setSelectedButton(button);
+    }
+  };
 
   useEffect(() => {
     if (cardImages.length <= 1) {
@@ -114,6 +127,29 @@ const ImagePreviewModal = ({ isOpen, onClose, cardImages, cardComments }) => {
                     </Box>
                   );
                 })}
+
+                <Box>
+                  <Divider />
+                  <Text>Was this image helpful?</Text>
+                  <IconButton
+                    aria-label="Send email"
+                    icon={<FaRegThumbsUp />}
+                    style={{
+                      backgroundColor:
+                        selectedButton === "up" ? "lightblue" : "initial",
+                    }}
+                    onClick={() => handleClick("up")}
+                  />
+                  <IconButton
+                    aria-label="Send email"
+                    icon={<FaRegThumbsDown />}
+                    style={{
+                      backgroundColor:
+                        selectedButton === "down" ? "lightblue" : "initial",
+                    }}
+                    onClick={() => handleClick("down")}
+                  />
+                </Box>
               </VStack>
             </HStack>
           </ModalBody>

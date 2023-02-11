@@ -1,15 +1,15 @@
-import React from "react";
 import {
   Button,
-  Image,
   Flex,
   Heading,
-  Text,
   HStack,
-  Tag,
+  Image,
   Stack,
+  Tag,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import React from "react";
 import CardModal from "../Modals/CardModal";
 
 const SelectableCard = ({ selected, setSelect, cardProps }) => {

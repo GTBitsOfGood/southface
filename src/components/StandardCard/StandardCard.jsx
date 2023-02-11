@@ -47,7 +47,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
       onClick={() => setSelection(!card.selected)}
       flex="1"
     >
-      {card.selected ? "Remove from plan" : "Add to Plan"}
+      {card.selected ? "Remove from " : "Add to Plan"}
     </Button>
   );
 
