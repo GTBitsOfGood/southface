@@ -9,10 +9,10 @@ import {
   IconButton,
   Image,
   Tag,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import Comments from "../Comments";
 import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
 
@@ -104,14 +104,10 @@ const StandardCard = ({ card, setCards, ...props }) => {
       />
 
       <Flex p={3} flexDirection="column" flex={1}>
-        <Heading size="md">{card.title}</Heading>
-        <Comments
-          mt="2"
-          mb="5"
-          comments={card.comments}
-          cardId={card._id}
-          canEdit={false}
-        />
+        <Heading my={2} size="md">
+          {card.title}
+        </Heading>
+
         <HStack>
           {card.tags.map((tag, index) => {
             return (
@@ -137,6 +133,8 @@ const StandardCard = ({ card, setCards, ...props }) => {
             View Full Standard
           </Button>
         )}
+
+        <Text mt={4}>{card.criteria}</Text>
         <CardModal
           isOpen={isOpen}
           onClose={onClose}
@@ -145,7 +143,6 @@ const StandardCard = ({ card, setCards, ...props }) => {
           cardTags={card.tags}
           cardTitle={card.title}
           cardCriteria={card.criteria}
-          cardComments={card.comments}
           cardImages={card.images}
           AddToPlanButton={<SelectorButton />}
           setCards={setCards}

@@ -15,7 +15,6 @@ import {
   ModalOverlay,
   Tag,
   TagLeftIcon,
-  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { createCard } from "../../../actions/Card";
@@ -43,40 +42,20 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
     addingTag,
   } = useEditCardModal();
 
-  const unauthorizedToast = useToast();
-
   const addCard = async () => {
-    try {
-      const addCardInput = {
-        images,
-        title,
-        comments: newComment,
-        tags,
-      };
-      const newCard = await createCard(addCardInput);
-      setComments([]);
-      setTitle("");
-      setImages([]);
-      setTags([]);
-      setCards((cards) => [newCard, ...cards]);
-
-      onClose();
-    } catch (error) {
-      if (
-        error.message === "Not Logged In" ||
-        error.message === "Unauthorized"
-      ) {
-        unauthorizedToast({
-          title: "Unauthorized!",
-          description: "You must log in as an admin.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      } else {
-        throw error;
-      }
-    }
+    const addCardInput = {
+      images,
+      title,
+      comments: newComment,
+      tags,
+    };
+    const newCard = await createCard(addCardInput);
+    setComments([]);
+    setTitle("");
+    setImages([]);
+    setTags([]);
+    setCards((cards) => [newCard, ...cards]);
+    onClose();
   };
 
   const TagInput = (props) => {

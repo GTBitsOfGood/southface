@@ -9,7 +9,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  useToast,
 } from "@chakra-ui/react";
 
 import { updateCardById } from "../../../actions/Card";
@@ -24,43 +23,28 @@ const DeleteCommentModal = ({
   setCurrCommentIdx,
   setCards,
 }) => {
-  const unauthorizedToast = useToast();
   const handleDeleteComment = async () => {
-    try {
-      const newComments = comments.filter((_, idx) => idx !== currCommentIdx);
+    const newComments = comments.filter((_, idx) => idx !== currCommentIdx);
 
-      const updatedCard = await updateCardById(cardId, {
+    const updatedCard = await updateCardById(
+      cardId,
+      {
         comments: newComments,
-      });
+      },
+      true
+    );
 
-      setComments(newComments);
-      setCurrCommentIdx(0);
-      setCards((cards) => {
-        return cards.map((card) => {
-          if (cardId === card._id) {
-            return updatedCard;
-          } else {
-            return card;
-          }
-        });
+    setComments(newComments);
+    setCurrCommentIdx(0);
+    setCards((cards) => {
+      return cards.map((card) => {
+        if (cardId === card._id) {
+          return updatedCard;
+        } else {
+          return card;
+        }
       });
-    } catch (error) {
-      if (
-        error.message === "Unauthorized" ||
-        error.message === "Not Logged In"
-      ) {
-        unauthorizedToast({
-          title: "Unauthorized!",
-          description: "You must log in as an admin.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      } else {
-        throw error;
-      }
-    }
-
+    });
     onClose();
   };
 

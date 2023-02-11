@@ -6,6 +6,7 @@ import {
   CloseIcon,
 } from "@chakra-ui/icons";
 import {
+  // Box,
   Button,
   Flex,
   FormLabel,
@@ -23,7 +24,6 @@ import {
   Tag,
   TagLeftIcon,
   Text,
-  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Carousel from "react-grid-carousel";
@@ -36,14 +36,13 @@ const CardModal = ({
   onClose,
   cardTitle,
   cardCriteria,
-  cardComments,
   cardId,
   cardImages,
   cardTags,
   // setCards,
   ...rest
 }) => {
-  const unauthorizedToast = useToast();
+  // not being used right now since admin view is not being worked on.
   const {
     isEditing,
     title,
@@ -61,14 +60,9 @@ const CardModal = ({
     imageOnClose,
     setImages,
     setTags,
-  } = useEditCardModal(
-    cardTitle,
-    cardComments,
-    cardImages,
-    cardTags,
-    cardId,
-    unauthorizedToast
-  );
+  } = useEditCardModal(cardTitle, "placeholder", cardImages, cardTags, cardId);
+
+  // const { ifAdmin } = useUser();
 
   const TagInput = (props) => {
     const [width, setWidth] = useState(0.5);
@@ -314,7 +308,7 @@ const CardModal = ({
                   variant="link"
                   alignSelf="end"
                   color="#0065C1"
-                  onClick={onEditCard}
+                  onClick={() => ifAdmin(onEditCard)}
                 >
                   Edit
                 </Button>
