@@ -1,6 +1,7 @@
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
-  IconButton,
+  Box,
+  Button,
+  ButtonGroup,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,73 +10,103 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  VStack,
 } from "@chakra-ui/react";
-
-import { updateCardById } from "../../../actions/Card";
 
 const DeleteNoteModal = ({
   isOpen,
   onClose,
-  cardId,
-  notes,
-  currNoteIdx,
+  // cardId,
+  // notes,
+  // currNoteIdx,
   noteBody,
   noteDate,
-  setNotes,
-  setCards,
+  // setNotes,
+  // setCards,
 }) => {
   // TODO: ensure this logic works
   const handleDeleteNote = async () => {
-    const newNotes = notes.filter((_, idx) => idx !== currNoteIdx);
+    console.log("deleting", noteBody);
+    // const newNotes = notes.filter((_, idx) => idx !== currNoteIdx);
 
-    const updatedCard = await updateCardById(
-      cardId,
-      {
-        notes: newNotes,
-      },
-      true
-    );
+    // const updatedCard = await updateCardById(
+    //   cardId,
+    //   {
+    //     notes: newNotes,
+    //   },
+    //   true
+    // );
 
-    setNotes(newNotes);
-    setCards((cards) => {
-      return cards.map((card) => {
-        if (cardId === card._id) {
-          return updatedCard;
-        } else {
-          return card;
-        }
-      });
-    });
+    // setNotes(newNotes);
+    // setCards((cards) => {
+    //   return cards.map((card) => {
+    //     if (cardId === card._id) {
+    //       return updatedCard;
+    //     } else {
+    //       return card;
+    //     }
+    //   });
+    // });
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered={true}
+      size={{ base: "md", xl: "lg", "2xl": "xl" }}
+    >
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Delete Note</ModalHeader>
+      <ModalContent rounded={14}>
+        <ModalHeader
+          pt={10}
+          display="flex"
+          justifyContent="center"
+          fontSize="lg"
+        >
+          Are you sure you want to delete this note?
+        </ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          <Text mb={4}>Are you sure you want to delete:</Text>
-          <Text fontSize="sm">{noteBody}</Text>
-          <Text as="span" color="#6d6e70" fontSize="sm">
-            {noteDate}
-          </Text>
+        <ModalBody display="flex" justifyContent="center">
+          <VStack>
+            <Box w="60%" border="1px solid #cccccc" p={3} rounded={14} mb={4}>
+              <Text fontSize="sm">{noteBody}</Text>
+              <Text as="span" color="#6d6e70" fontSize="sm">
+                {noteDate}
+              </Text>
+            </Box>
+            <Text justifyContent="center">
+              You will be unable to recover it after it is deleted.
+            </Text>
+          </VStack>
         </ModalBody>
 
-        <ModalFooter>
-          <IconButton
-            icon={<CloseIcon />}
-            colorScheme="blue"
-            mr={3}
-            onClick={onClose}
-          />
-          <IconButton
-            icon={<CheckIcon />}
-            colorScheme="blue"
-            mr={3}
-            onClick={handleDeleteNote}
-          />
+        <ModalFooter justifyContent="center" pb={10}>
+          <ButtonGroup>
+            <Button
+              bgColor="white"
+              size="sm"
+              rounded={16}
+              color="#6d6e70"
+              border="solid 1px #6d6e70"
+              fontSize="md"
+              width="auto"
+              onClick={onClose}
+            >
+              No, return to notes.
+            </Button>
+            <Button
+              colorScheme="red"
+              size="sm"
+              rounded={16}
+              fontSize="md"
+              width="auto"
+              onClick={handleDeleteNote}
+            >
+              Yes, delete note.
+            </Button>
+          </ButtonGroup>
         </ModalFooter>
       </ModalContent>
     </Modal>

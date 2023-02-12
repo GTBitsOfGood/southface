@@ -1,9 +1,8 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Box,
   Editable,
-  EditablePreview,
   EditableInput,
+  EditablePreview,
   Flex,
   IconButton,
   SimpleGrid,
@@ -12,6 +11,8 @@ import {
   useEditableControls,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { IoMdTrash } from "react-icons/io";
+import { MdEdit } from "react-icons/md";
 import useUser from "src/lib/hooks/useUser";
 // import { updateCardById } from "../../actions/Card";
 // import AddCommentModal from "../Modals/EditCommentModals/AddCommentModal";
@@ -50,7 +51,7 @@ const Note = ({
 
     return (
       <IconButton
-        icon={<EditIcon />}
+        icon={<MdEdit />}
         size="sm"
         bg="none"
         w="24px"
@@ -85,7 +86,7 @@ const Note = ({
             <EditButton />
 
             <IconButton
-              icon={<DeleteIcon />}
+              icon={<IoMdTrash />}
               size="sm"
               bg="none"
               w="24px"
