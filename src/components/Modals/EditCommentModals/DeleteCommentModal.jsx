@@ -13,29 +13,30 @@ import {
 
 import { updateCardById } from "../../../actions/Card";
 
-const DeleteCommentModal = ({
+const DeleteNoteModal = ({
   isOpen,
   onClose,
   cardId,
-  comments,
-  currCommentIdx,
-  setComments,
-  setCurrCommentIdx,
+  notes,
+  currNoteIdx,
+  noteBody,
+  noteDate,
+  setNotes,
   setCards,
 }) => {
-  const handleDeleteComment = async () => {
-    const newComments = comments.filter((_, idx) => idx !== currCommentIdx);
+  // TODO: ensure this logic works
+  const handleDeleteNote = async () => {
+    const newNotes = notes.filter((_, idx) => idx !== currNoteIdx);
 
     const updatedCard = await updateCardById(
       cardId,
       {
-        comments: newComments,
+        notes: newNotes,
       },
       true
     );
 
-    setComments(newComments);
-    setCurrCommentIdx(0);
+    setNotes(newNotes);
     setCards((cards) => {
       return cards.map((card) => {
         if (cardId === card._id) {
@@ -52,16 +53,13 @@ const DeleteCommentModal = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Delete Comment</ModalHeader>
+        <ModalHeader>Delete Note</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Text mb={4}>Are you sure you want to delete:</Text>
-          <Text fontSize="sm">{`"${comments[currCommentIdx].body}"`}</Text>
-          <Text fontSize="sm">
-            {`-- Commented on ${" "}`}
-            <Text as="span" color="#FFD600" fontWeight="bold">
-              {new Date(comments[currCommentIdx].date).toDateString()}
-            </Text>
+          <Text fontSize="sm">{noteBody}</Text>
+          <Text as="span" color="#6d6e70" fontSize="sm">
+            {noteDate}
           </Text>
         </ModalBody>
 
@@ -76,7 +74,7 @@ const DeleteCommentModal = ({
             icon={<CheckIcon />}
             colorScheme="blue"
             mr={3}
-            onClick={handleDeleteComment}
+            onClick={handleDeleteNote}
           />
         </ModalFooter>
       </ModalContent>
@@ -84,4 +82,4 @@ const DeleteCommentModal = ({
   );
 };
 
-export default DeleteCommentModal;
+export default DeleteNoteModal;

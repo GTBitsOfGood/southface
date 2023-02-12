@@ -7,6 +7,7 @@ const ModalImage = ({
   image,
   // currentImageIndex,
   // setImages,
+  openImagePreviewCallback,
   ...props
 }) => {
   // const {
@@ -41,6 +42,7 @@ const ModalImage = ({
         backgroundColor="#FFFFFF"
         color="#6D6E70"
         boxShadow="xl"
+        onClick={openImagePreviewCallback}
       >
         Enlarge Image
       </Button>
