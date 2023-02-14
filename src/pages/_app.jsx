@@ -4,7 +4,6 @@ import React from "react";
 import NavBar from "src/components/NavBar/NavBar";
 import { SWRConfig } from "swr";
 
-
 import fetchJson from "src/lib/utils/fetchJson";
 import { southfaceTheme } from "src/styles/theme";
 
