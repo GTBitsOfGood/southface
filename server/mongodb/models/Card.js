@@ -9,6 +9,12 @@ const CardSchema = new Schema({
       default: [],
     },
   ],
+  selectedImages: [
+    {
+      type: Boolean,
+      required: false,
+    }
+  ],
   title: {
     type: String,
   },
@@ -24,14 +30,6 @@ const CardSchema = new Schema({
       default: [],
     },
   ],
-  selected: {
-    type: Boolean,
-    default: false,
-  },
-  selectionIndex: {
-    type: Number,
-    default: 0,
-  },
 });
 
 export { CardSchema };

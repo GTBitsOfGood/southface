@@ -157,7 +157,7 @@ export const removeFromActivePlan = (card) => {
   // untested
 };
 
-export const updateActivePlan = (userId, plan) => {
+export const updateActivePlan = (plan) => {
   return fetch(urls.api.user.activePlan.update, {
     method: "PUT",
     mode: "same-origin",
@@ -165,10 +165,7 @@ export const updateActivePlan = (userId, plan) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      userId,
-      plan,
-    }),
+    body: JSON.stringify(plan),
   })
     .then((response) => response.json())
     .then((json) => {
