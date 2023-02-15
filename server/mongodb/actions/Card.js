@@ -27,6 +27,37 @@ export async function getCards() {
   return Card.find({}).sort({ _id: -1 });
 }
 
+// thumbs up and down logic for connect to db
+export async function thumbUpCard(id) {
+  await mongoDB();
+
+  const card = await Card.findById(id);
+
+  if (!card) {
+    throw new Error(`Card with id ${id} not found.`);
+  }
+
+  card.thumbsUp += 1;
+
+  return Card.findOneAndUpdate({ _id: id }, card, {
+    returnDocument: "after",
+  });
+}
+
+export async function thumbDownCard(id) {
+  await mongoDB();
+
+  return Card.findOneAndUpdate(
+    { _id: id },
+    {
+      $inc: {
+        thumbDown: 1,
+      },
+    },
+    { returnDocument: "after" }
+  );
+}
+
 export async function getCardsPagination(
   pageNumber,
   searchFilterString,

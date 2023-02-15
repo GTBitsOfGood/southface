@@ -23,8 +23,18 @@ const buildingTypeNames = {
 const CardSchema = new Schema({
   images: [
     {
-      type: String,
-      default: [],
+      imageUrl: {
+        type: String,
+        default: "",
+      },
+      thumbsUp: {
+        type: Number,
+        default: 0,
+      },
+      thumbsDown: {
+        type: Number,
+        default: 0,
+      },
     },
   ],
   title: {
@@ -36,6 +46,7 @@ const CardSchema = new Schema({
       date: Date,
     },
   ],
+
   criteria: {
     type: String,
   },
