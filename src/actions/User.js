@@ -91,8 +91,8 @@ export const getCurrentUser = (cookies) => {
     });
 };
 
-export const getActivePlan = (userId) => {
-  return fetch(urls.api.user.activePlan.get + "/" + userId, {
+export const getActivePlan = () => {
+  return fetch(urls.api.user.activePlan.get, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -132,7 +132,6 @@ export const addToActivePlan = (card) => {
       }
       return json.payload;
     });
-  // untested
 };
 
 export const removeFromActivePlan = (card) => {
@@ -154,7 +153,6 @@ export const removeFromActivePlan = (card) => {
       }
       return json.payload;
     });
-  // untested
 };
 
 export const updateActivePlan = (plan) => {
