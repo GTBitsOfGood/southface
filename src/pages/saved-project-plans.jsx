@@ -12,7 +12,7 @@ const SavedProjectPlans = () => {
 
   return (
     <Box>
-      <Flex mb="10">
+      <Flex margin="10">
         <Button
           as="a"
           href="/plan-builder"
