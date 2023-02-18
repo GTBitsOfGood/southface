@@ -1,5 +1,5 @@
+import { getRecentStandards } from "server/mongodb/actions/User";
 import { withSessionRoute } from "src/lib/utils/session";
-import { getRecentStandards } from "../../../../../../server/mongodb/actions/User";
 
 // @route   GET api/user/standards/get/[count]
 // @desc    Gets a COUNT amount of recent standards on a user with its ID
