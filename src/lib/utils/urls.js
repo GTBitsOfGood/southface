@@ -12,10 +12,13 @@ export default {
       login: "/api/user/login",
       logout: "/api/user/logout",
       getCurrent: "/api/user",
+      getStandards: "/api/user/standards/get/",
+      updateStandards: "/api/user/standards/update",
     },
     card: {
       create: "/api/card/create/",
       get: "/api/card/get/",
+      getIds: "/api/card/getIds/",
       getPagination: "/api/card/getPagination?page=",
       update: "/api/card/update/",
       delete: "/api/card/delete/",

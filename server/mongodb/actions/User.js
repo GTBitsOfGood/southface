@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import mongoDB from "../index";
 import User from "../models/User";
+import { getCardsByIds } from "./Card";
 
 export async function login({ username, password }) {
   if (username == null || password == null) {
@@ -63,6 +64,7 @@ export const getUserFromId = async (id) => {
       id,
       username: user.username,
       isAdmin: user.isAdmin,
+      recentStandards: user?.recentStandards,
     };
   } catch (e) {
     throw new Error("Invalid token!");
@@ -79,4 +81,58 @@ export const deleteUserById = async (id) => {
   await mongoDB();
 
   return User.findOneAndRemove({ _id: id });
+};
+
+export const updateRecentStandards = async (id, cardId) => {
+  await mongoDB();
+
+  const query = { _id: id };
+  const newData = {
+    // creates if element doesn't exist, updates element with planId's timeUpdated
+    $elemMatch: { cardId: { $eq: cardId } },
+    $set: {
+      "recentStandards.$.timeOpened": new Date().getUTCDate(),
+    },
+    // db.getCollection("users").findOneAndUpdate({"_id": ObjectId("63c5be32a7d3c693fa1d332f"),
+    //    recentStandards: { $elemMatch: { "planId": { $eq: "test" } } }}, { $set: { "recentStandards.$.timeUpdated": Date() }});
+  };
+  let result = await User.findOneAndUpdate(query, newData);
+  if (result == null) {
+    // notably this returns all the standards, so a duplicate call is not required
+    // tried for a while to make this one statement, couldn't.
+    result = await User.updateOne(
+      {
+        _id: id,
+        "recentStandards.cardId": { $ne: cardId },
+      },
+      {
+        $push: { recentStandards: { planId: cardId, timeUpdated: new Date() } },
+      }
+    );
+    if (result.modifiedCount == 0) {
+      throw new Error("Failed to update user's recentStandards.");
+    }
+  }
+  return result;
+};
+
+export const getRecentStandards = async (id, count = 100) => {
+  await mongoDB();
+
+  const user = await User.findById(id);
+  if (!user) {
+    throw new Error(`User with id ${id} not found`);
+  }
+
+  const cards = await getCardsByIds(
+    user.recentStandards
+      .map((s) => {
+        return s.cardId;
+      })
+      .sort((a, b) => {
+        return a.timeUpdated - b.timeUpdated;
+      })
+      .slice(0, count)
+  );
+  return cards;
 };

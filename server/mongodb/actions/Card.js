@@ -115,6 +115,14 @@ export async function getCardById(id) {
   return Card.findById(id);
 }
 
+export async function getCardsByIds(ids) {
+  await mongoDB();
+
+  return Card.find({
+    _id: { $in: ids },
+  });
+}
+
 export async function deleteAllCards() {
   await mongoDB();
   return Card.deleteMany({});

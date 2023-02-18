@@ -17,6 +17,12 @@ const UserSchema = new Schema({
     type: Boolean,
     required: false,
   },
+  recentStandards: [
+    {
+      cardId: String,
+      timeOpened: Date,
+    },
+  ],
 });
 
 export default mongoose.models?.User ?? mongoose.model("User", UserSchema);
