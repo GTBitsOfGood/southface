@@ -100,7 +100,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
         isOpen={isOpenImagePreviewModal}
         onClose={onCloseImagePreviewModal}
         cardImages={card.images}
-        cardComments={card.comments}
+        cardNotes={card.notes}
       />
 
       <Flex p={3} flexDirection="column" flex={1}>
@@ -142,7 +142,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           cardId={card._id}
           cardTags={card.tags}
           cardTitle={card.title}
-          cardNotes={card.comments}
+          cardNotes={card.notes}
           cardCriteria={card.criteria}
           cardImages={card.images}
           AddToPlanButton={<SelectorButton />}

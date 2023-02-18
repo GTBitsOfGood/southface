@@ -12,44 +12,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { formatNoteDateString } from "./utils";
 
-const DeleteNoteModal = ({
-  isOpen,
-  onClose,
-  // cardId,
-  // notes,
-  // currNoteIdx,
-  noteBody,
-  noteDate,
-  // setNotes,
-  // setCards,
-}) => {
-  // TODO: ensure this logic works
-  const handleDeleteNote = async () => {
-    console.log("deleting", noteBody);
-    // const newNotes = notes.filter((_, idx) => idx !== currNoteIdx);
-
-    // const updatedCard = await updateCardById(
-    //   cardId,
-    //   {
-    //     notes: newNotes,
-    //   },
-    //   true
-    // );
-
-    // setNotes(newNotes);
-    // setCards((cards) => {
-    //   return cards.map((card) => {
-    //     if (cardId === card._id) {
-    //       return updatedCard;
-    //     } else {
-    //       return card;
-    //     }
-    //   });
-    // });
-    onClose();
-  };
-
+const DeleteNoteModal = ({ isOpen, onClose, note, handleDeleteNote }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -71,9 +36,9 @@ const DeleteNoteModal = ({
         <ModalBody display="flex" justifyContent="center">
           <VStack>
             <Box w="60%" border="1px solid #cccccc" p={3} rounded={14} mb={4}>
-              <Text fontSize="sm">{noteBody}</Text>
+              <Text fontSize="sm">{note.body}</Text>
               <Text as="span" color="#6d6e70" fontSize="sm">
-                {noteDate}
+                {formatNoteDateString(note.date)}
               </Text>
             </Box>
             <Text justifyContent="center">

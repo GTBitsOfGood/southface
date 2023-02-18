@@ -40,19 +40,13 @@ export async function getCardsPagination(
     const regex = new RegExp(searchFilterString, "i");
 
     query = {
-      $or: [
-        { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } },
-      ],
+      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
       tags: { $all: searchFilterTags },
     };
   } else if (searchFilterString) {
     const regex = new RegExp(searchFilterString, "i");
     query = {
-      $or: [
-        { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } },
-      ],
+      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
     };
   } else if (searchFilterTags) {
     query = {
@@ -74,19 +68,13 @@ export async function getCardsCount(searchFilterString, searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
 
     query = {
-      $or: [
-        { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } },
-      ],
+      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
       tags: { $all: searchFilterTags },
     };
   } else if (searchFilterString) {
     const regex = new RegExp(searchFilterString, "i");
     query = {
-      $or: [
-        { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } },
-      ],
+      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
     };
   } else if (searchFilterTags) {
     query = {

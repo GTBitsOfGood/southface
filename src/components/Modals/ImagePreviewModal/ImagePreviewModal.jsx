@@ -17,6 +17,7 @@ const ImagePreviewModal = ({
   cardId,
   cardImages,
   cardNotes,
+  setCards,
 }) => {
   return (
     <Modal
@@ -31,7 +32,7 @@ const ImagePreviewModal = ({
           <HStack alignItems="top" minH="80vh" h="80vh">
             <LgImageCarousel cardImages={cardImages} />
 
-            <Notes cardId={cardId} notes={cardNotes} />
+            <Notes cardId={cardId} notes={cardNotes} setCards={setCards} />
           </HStack>
         </ModalBody>
       </ModalContent>

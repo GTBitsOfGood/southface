@@ -1,81 +1,94 @@
 import {
+  Box,
   Flex,
   Heading,
   HStack,
-  IconButton,
   SimpleGrid,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import Note from "./Note";
-import { MdOutlineThumbUpAlt, MdOutlineThumbDownAlt } from "react-icons/md";
+
+import { updateCardById } from "../../actions/Card";
 import AddNewNote from "./AddNewNote";
+import Note from "./Note";
+import { SentimentButton } from "./utils";
 
-const SentimentButton = (props) => {
-  const styles = {
-    bg: "none",
-    _hover: { bg: "none" },
-    w: "24px",
-    h: "24px",
-    minWidth: "auto",
-    minH: "auto",
-  };
-  if (props.type == "like") {
-    return (
-      <IconButton icon={<MdOutlineThumbUpAlt color="#03acc8" />} {...styles} />
-    );
-  } else if (props.type == "dislike") {
-    return (
-      <IconButton
-        icon={<MdOutlineThumbDownAlt color="#03acc8" />}
-        {...styles}
-      />
-    );
-  }
-};
-
-const Notes = ({
-  cardId,
-  notes,
-  // handleCommentsUpdate,
-  // setCards,
-}) => {
-  const [revNotes, setRevNotes] = useState(notes.map((c) => c).reverse());
-  const [newNote, setNewNote] = useState("");
+const Notes = ({ cardId, notes, setCards }) => {
+  const [revNotes, setRevNotes] = useState(notes.map((n) => n).reverse());
+  const [newNote, setNewNote] = useState({ body: "", date: "" });
 
   useEffect(() => {
     setRevNotes(notes.map((c) => c).reverse());
   }, [notes]);
 
-  // const handleSaveEdit = async () => {
-  //   const updatedCard = await updateCardById(cardId, { comments }, true);
-  //   setCards((cards) => {
-  //     return cards.map((card) => {
-  //       if (cardId === card._id) {
-  //         return updatedCard;
-  //       } else {
-  //         return card;
-  //       }
-  //     });
-  //   });
-  //   setIsEditing(false);
-  // };
+  const handleSaveEdit = async (newNotes) => {
+    const updatedCard = await updateCardById(
+      cardId,
+      { notes: newNotes.map((n) => n).reverse() },
+      true
+    );
+    setCards((cards) => {
+      return cards.map((card) => {
+        if (cardId === card._id) {
+          return updatedCard;
+        } else {
+          return card;
+        }
+      });
+    });
+  };
+
+  const submitNewNote = async () => {
+    const newNotes = notes.concat(newNote);
+    const updatedCard = await updateCardById(
+      cardId,
+      {
+        notes: newNotes,
+      },
+      true
+    );
+
+    setCards((cards) => {
+      return cards.map((card) => {
+        if (cardId === card._id) {
+          return updatedCard;
+        } else {
+          return card;
+        }
+      });
+    });
+  };
 
   return (
-    <SimpleGrid rows={2} h="80vh" w="35%" p="5% 5% 5% 2%">
-      <VStack alignItems="left" overflow="scroll">
+    <SimpleGrid rows={2} gap={2} h="80vh" w="35%" p="5% 2% 5% 2%">
+      <VStack alignItems="left">
         <Heading size="lg" mt={3} mb={2}>
           Notes
         </Heading>
 
-        <AddNewNote newNote={newNote} setNewNote={setNewNote} />
+        <Box h="50vh" pr={1} overflowY="scroll">
+          <AddNewNote
+            newNote={newNote}
+            setNewNote={setNewNote}
+            submitNewNote={submitNewNote}
+          />
 
-        {revNotes.map((note, index) => {
-          return (
-            <Note key={index} cardId={cardId} currNoteIdx={index} note={note} />
-          );
-        })}
+          {revNotes.map((note, index) => {
+            return (
+              <Note
+                key={index}
+                cardId={cardId}
+                currNoteIdx={index}
+                note={note}
+                notes={revNotes}
+                setNotes={setRevNotes}
+                setCards={setCards}
+                handleSaveEdit={handleSaveEdit}
+              />
+            );
+          })}
+        </Box>
       </VStack>
 
       <Flex alignItems="end">

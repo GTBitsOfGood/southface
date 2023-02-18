@@ -6,9 +6,9 @@ import { withSessionRoute } from "src/lib/utils/session";
 // @access  Public
 const handler = async (req, res) => {
   try {
-    if (req.body.isOnlyComments == true) {
+    if (req.body.isOnlyNotes == true) {
       const updatedCard = await updateCardById(req.body.id, {
-        comments: req.body.card.comments,
+        notes: req.body.card.notes,
       });
 
       return res.status(200).json({

@@ -10,23 +10,17 @@ import {
   useDisclosure,
   useEditableControls,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoMdTrash } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
 import useUser from "src/lib/hooks/useUser";
-// import { updateCardById } from "../../actions/Card";
-// import AddCommentModal from "../Modals/EditCommentModals/AddCommentModal";
-import DeleteCommentModal from "../Modals/EditCommentModals/DeleteCommentModal";
+import DeleteNoteModal from "./DeleteNoteModal";
+import { formatNoteDateString } from "./utils";
 
-const Note = ({
-  cardId,
-  currNoteIdx,
-  note,
-  //   handleCommentsUpdate,
-  //   setComments,
-  setCards,
-}) => {
+const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
   const [currNote, setCurrNote] = useState(note.body);
+
+  const noteRef = useRef();
 
   const { ifAdmin } = useUser();
 
@@ -40,10 +34,24 @@ const Note = ({
     onClose: onDeleteClose,
   } = useDisclosure();
 
-  const formatDateString = (date) => {
-    const dateAsArr = new Date(date).toDateString().split(" ");
+  const handleEdit = () => {
+    const newNotes = notes.map((n, idx) => {
+      if (idx === currNoteIdx) {
+        n.body = currNote;
+        n.date = new Date();
+      }
+      return n;
+    });
 
-    return dateAsArr[1] + " " + dateAsArr[2] + ", " + dateAsArr[3];
+    handleSaveEdit(newNotes);
+  };
+
+  const handleDeleteNote = () => {
+    onDeleteClose();
+
+    const newNotes = notes.filter((_, idx) => idx !== currNoteIdx);
+
+    handleSaveEdit(newNotes);
   };
 
   const EditButton = () => {
@@ -64,22 +72,21 @@ const Note = ({
   };
 
   return (
-    <Box border="1px solid #cccccc" p={3} rounded={14}>
+    <Box border="1px solid #cccccc" p={3} mb={2} rounded={14}>
       <Editable
         placeholder="This note is empty!"
         value={currNote}
         isPreviewFocusable={false}
         selectAllOnFocus={false}
         onChange={(val) => setCurrNote(val)}
-        // TODO: Add submit logic
-        onSubmit={() => console.log("submitted")}
+        onSubmit={handleEdit}
       >
         <EditablePreview mb={1} />
-        <EditableInput mb={1} />
+        <EditableInput mb={1} pl={1} pr={1} ref={noteRef} />
         <SimpleGrid columns={2}>
           <Flex alignItems="center">
             <Text as="span" color="#6d6e70" fontSize="sm">
-              {formatDateString(note.date)}
+              {formatNoteDateString(note.date)}
             </Text>
           </Flex>
           <Flex justifyContent="right" gap={1}>
@@ -96,15 +103,11 @@ const Note = ({
               onClick={() => ifAdmin(onDeleteOpen)}
             />
 
-            <DeleteCommentModal
+            <DeleteNoteModal
               isOpen={isDeleteOpen}
               onClose={onDeleteClose}
-              cardId={cardId}
-              currNoteIdx={currNoteIdx}
-              noteBody={note.body}
-              noteDate={formatDateString(note.date)}
-              // setComments={setComments}
-              setCards={setCards}
+              note={note}
+              handleDeleteNote={handleDeleteNote}
             />
           </Flex>
         </SimpleGrid>
