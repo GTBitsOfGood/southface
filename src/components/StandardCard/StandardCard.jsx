@@ -12,7 +12,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
 
@@ -50,6 +50,11 @@ const StandardCard = ({ card, setCards, ...props }) => {
       {card.selected ? "Remove from plan" : "Add to Plan"}
     </Button>
   );
+
+  useEffect(() => {
+    if (isOpen) {
+    }
+  }, [isOpen]);
 
   return (
     <Flex
