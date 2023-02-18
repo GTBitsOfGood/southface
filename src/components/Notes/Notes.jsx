@@ -10,13 +10,16 @@ import {
 import React, { useEffect, useState } from "react";
 
 import { updateCardById } from "../../actions/Card";
+import useUser from "../../lib/hooks/useUser";
 import AddNewNote from "./AddNewNote";
 import Note from "./Note";
 import { SentimentButton } from "./utils";
 
 const Notes = ({ cardId, notes, setCards }) => {
   const [revNotes, setRevNotes] = useState(notes.map((n) => n).reverse());
-  const [newNote, setNewNote] = useState({ body: "", date: "" });
+  const [newNote, setNewNote] = useState({ body: "", userId: "", date: "" });
+
+  const { user } = useUser();
 
   useEffect(() => {
     setRevNotes(notes.map((c) => c).reverse());
@@ -75,6 +78,9 @@ const Notes = ({ cardId, notes, setCards }) => {
           />
 
           {revNotes.map((note, index) => {
+            if (note.userId !== user.id) {
+              return;
+            }
             return (
               <Note
                 key={index}

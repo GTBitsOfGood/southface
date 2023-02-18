@@ -33,6 +33,7 @@ const CardSchema = new Schema({
   notes: [
     {
       body: String,
+      userId: String,
       date: Date,
     },
   ],

@@ -6,12 +6,15 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useRef } from "react";
+import useUser from "../../lib/hooks/useUser";
 
 const AddNewNote = ({ newNote, setNewNote, submitNewNote }) => {
   const newNoteRef = useRef();
 
+  const { user } = useUser();
+
   const handleChange = (val) => {
-    setNewNote({ body: val, date: new Date() });
+    setNewNote({ body: val, userId: user.id, date: new Date() });
   };
 
   const onKeyPress = (e) => {
