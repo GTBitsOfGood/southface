@@ -5,11 +5,18 @@ import {
   CardHeader,
   Flex,
   Heading,
-  Image,
 } from "@chakra-ui/react";
+
+import Image from "next/image";
 
 const StandardCard = ({ title, imageUrl, criteria }) => {
   const [firstImage, secondImage] = imageUrl;
+
+  const ChakraNextImage = ({ src, alt, ...rest }) => (
+    <Box position="relative" {...rest}>
+      <Image layout="fill" src={src} alt={alt} />
+    </Box>
+  );
 
   return (
     <Card flex="1">
@@ -17,21 +24,19 @@ const StandardCard = ({ title, imageUrl, criteria }) => {
         <Heading size="lg">{title}</Heading>
       </CardHeader>
       <CardBody marginLeft="3" marginRight="3">
-        <Flex>
-          <Box flex="1">
-            <Image
-              src={firstImage}
-              fallbackSrc="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
-              alt="Shopping Cart Image"
-            />
-          </Box>
-          <Box flex="1">
-            <Image
-              src={secondImage}
-              fallbackSrc="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
-              alt="Shopping Cart Image"
-            />
-          </Box>
+        <Flex gap={2}>
+          <ChakraNextImage
+            src={firstImage}
+            alt="Shopping Cart Image"
+            height="5rem"
+            width="5rem"
+          />
+          <ChakraNextImage
+            src={secondImage}
+            alt="Shopping Cart Image"
+            height="5rem"
+            width="5rem"
+          />
         </Flex>
         <Box>{criteria}</Box>
       </CardBody>

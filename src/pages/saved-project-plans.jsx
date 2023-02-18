@@ -41,7 +41,7 @@ const SavedProjectPlans = () => {
         {/* {plans.map((plan, index) => {
           return <SavedProjectPlan key={index} plan={plan} />;
         })} */}
-        return <SavedProjectPlan />
+        <SavedProjectPlan />
       </VStack>
     </Box>
   );
