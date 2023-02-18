@@ -9,7 +9,7 @@ const SavedProjectPlan = () => {
       borderWidth="0.5px"
       borderColor="lightgrey"
     >
-      <ProjectPlanCard  />
+      <ProjectPlanCard />
       <ProjectPlanCard />
       <ProjectPlanCard />
     </Box>
