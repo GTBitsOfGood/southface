@@ -1,3 +1,4 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import {
   Box,
   Divider,
@@ -13,24 +14,53 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
+import { updateCardById } from "../../../actions/Card";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { useEffect, useState } from "react";
-
-const ImagePreviewModal = ({ isOpen, onClose, cardImages, cardComments }) => {
+const ImagePreviewModal = ({
+  isOpen,
+  onClose,
+  cardImages,
+  cardComments,
+  cardId,
+  setCards,
+}) => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const [showBackArrow, setShowBackArrow] = React.useState(false);
   const [showNextArrow, setShowNextArrow] = React.useState(false);
-
   const [selectedButton, setSelectedButton] = useState(null);
 
-  const handleClick = (button) => {
-    if (selectedButton === button) {
-      setSelectedButton(null);
-    } else {
-      setSelectedButton(button);
+  const handleClick = async (button) => {
+    try {
+      let updatedCard;
+      if (selectedButton === button) {
+        // unselect the currently selected button
+        setSelectedButton(null);
+        // update card with thumbs value set to null
+        updatedCard = await updateCardById(cardId, {
+          thumbsUp: null,
+          thumbsDown: null,
+        });
+      } else {
+        // select the clicked button
+        setSelectedButton(button);
+        let thumbsUp = null,
+          thumbsDown = null;
+        if (button === "up") {
+          thumbsUp = 1;
+        } else if (button === "down") {
+          thumbsDown = 1;
+        }
+        // update card with selected thumbs value
+        updatedCard = await updateCardById(cardId, { thumbsUp, thumbsDown });
+      }
+      // update the card in the cards list
+      setCards((cards) =>
+        cards.map((card) => (card._id === updatedCard._id ? updatedCard : card))
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 

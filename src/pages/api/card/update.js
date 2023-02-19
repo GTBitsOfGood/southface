@@ -17,7 +17,11 @@ const handler = async (req, res) => {
       });
     }
 
-    const updatedCard = await updateCardById(req.body.id, req.body.card);
+    const updatedCard = await updateCardById(req.body.id, {
+      ...req.body.card,
+      thumbsUp: req.body.card.thumbsUp || 0,
+      thumbsDown: req.body.card.thumbsDown || 0,
+    });
 
     return res.status(200).json({
       success: true,

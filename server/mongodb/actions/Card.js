@@ -10,9 +10,25 @@ export async function createCard(card) {
 export async function updateCardById(id, updatedCard) {
   await mongoDB();
 
-  return Card.findOneAndUpdate({ _id: id }, updatedCard, {
-    returnDocument: "after",
-  });
+  const { isThumbsUp, isThumbsDown, ...cardUpdate } = updatedCard;
+
+  if (isThumbsUp) {
+    return Card.findOneAndUpdate(
+      { _id: id },
+      { $inc: { thumbsUp: 1 } },
+      { new: true }
+    );
+  } else if (isThumbsDown) {
+    return Card.findOneAndUpdate(
+      { _id: id },
+      { $inc: { thumbsDown: 1 } },
+      { new: true }
+    );
+  } else {
+    return Card.findOneAndUpdate({ _id: id }, cardUpdate, {
+      returnDocument: "after",
+    });
+  }
 }
 
 export async function deleteCardById(id) {
@@ -25,37 +41,6 @@ export async function getCards() {
   await mongoDB();
 
   return Card.find({}).sort({ _id: -1 });
-}
-
-// thumbs up and down logic for connect to db
-export async function thumbUpCard(id) {
-  await mongoDB();
-
-  const card = await Card.findById(id);
-
-  if (!card) {
-    throw new Error(`Card with id ${id} not found.`);
-  }
-
-  card.thumbsUp += 1;
-
-  return Card.findOneAndUpdate({ _id: id }, card, {
-    returnDocument: "after",
-  });
-}
-
-export async function thumbDownCard(id) {
-  await mongoDB();
-
-  return Card.findOneAndUpdate(
-    { _id: id },
-    {
-      $inc: {
-        thumbDown: 1,
-      },
-    },
-    { returnDocument: "after" }
-  );
 }
 
 export async function getCardsPagination(
