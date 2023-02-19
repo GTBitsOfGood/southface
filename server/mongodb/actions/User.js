@@ -80,3 +80,9 @@ export const deleteUserById = async (id) => {
 
   return User.findOneAndRemove({ _id: id });
 };
+
+export const getArchivedProjectPlans = async (userId) => {
+  await mongoDB();
+  const user = await User.findOne({ _id: userId });
+  return user;
+};

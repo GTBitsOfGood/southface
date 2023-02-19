@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { PlanSchema } from "server/mongodb/models/Plan";
 
 const { Schema } = mongoose;
 
@@ -16,6 +17,9 @@ const UserSchema = new Schema({
   isAdmin: {
     type: Boolean,
     required: false,
+  },
+  archivedProjectPlan: {
+    type: [PlanSchema],
   },
 });
 
