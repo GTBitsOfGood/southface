@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Heading, Link } from "@chakra-ui/layout";
+import { Box, Center, Flex, Link, Text } from "@chakra-ui/layout";
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import React from "react";
 import { login } from "src/actions/User";
@@ -24,11 +24,16 @@ const LoginComponent = () => {
 
   return (
     <Flex direction="column" height="65%" width="60%" gap="1em">
-      <Heading size="lg">Login</Heading>
+      <Text fontSize="3xl" as="b">
+        Login
+      </Text>
       <Box>
         <FormControl height="4em">
           <FormLabel>Username</FormLabel>
-          <Input onChange={(event) => setUsername(event.target.value)} />
+          <Input
+            onChange={(event) => setUsername(event.target.value)}
+            borderColor="black"
+          />
         </FormControl>
       </Box>
       <Box>
@@ -37,6 +42,7 @@ const LoginComponent = () => {
           <Input
             type="password"
             onChange={(event) => setPassword(event.target.value)}
+            borderColor="black"
           />
         </FormControl>
       </Box>
