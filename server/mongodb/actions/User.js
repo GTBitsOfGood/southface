@@ -127,7 +127,7 @@ export const changeInActivePlan = async (userId, card) => {
     for (let i = 0; i < arr.length; i++) {
       console.log(arr[i]._id);
       if (arr[i]._id.toString() === card._id) {
-        console.log("match made")
+        console.log("match made");
         arr[i] = card;
         arr[i].title = "bruh";
         break;

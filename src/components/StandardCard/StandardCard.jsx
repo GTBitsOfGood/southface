@@ -11,7 +11,10 @@ import {
 import React, { useEffect, useState } from "react";
 import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
-import { addToActivePlan, /* changeInActivePlan, */ removeFromActivePlan } from "../../actions/User";
+import {
+  addToActivePlan,
+  /* changeInActivePlan, */ removeFromActivePlan,
+} from "../../actions/User";
 import useActivePlan from "../../lib/hooks/useAcivePlan";
 
 const StandardCard = ({ card, setCards, ...props }) => {
@@ -38,7 +41,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
     mutatePlan();
   };
 
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(false);
 
   const SelectorButton = () => (
     <Button onClick={addHandler}>
@@ -115,6 +118,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           cardImages={card.images}
           AddToPlanButton={<SelectorButton />}
           setCards={setCards}
+          selected={selected}
         />
       </Flex>
     </Flex>

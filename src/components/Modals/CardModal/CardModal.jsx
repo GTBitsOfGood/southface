@@ -27,6 +27,8 @@ import useUser from "src/lib/hooks/useUser";
 import ModalImage from "../ModalImage";
 import ModifyImageModal from "../ModifyImageModal";
 import RatingStars from "./RatingStars";
+import useActivePlan from "../../../lib/hooks/useAcivePlan";
+import { changeInActivePlan } from "../../../actions/User";
 
 const CardModal = ({
   isOpen,
@@ -58,7 +60,45 @@ const CardModal = ({
     setImages,
     setTags,
   } = useEditCardModal(cardTitle, "placeholder", cardImages, cardTags, cardId);
+  const { selected } = { ...rest };
 
+  const { mutatePlan, plan, isValidating } = useActivePlan();
+  const imageMapper = (image, index) => {
+    const arr = plan?.cards?.filter((c) => c._id === cardId);
+    // image is selected if card is selected and cardId is found within plan's cards
+    const imageSelected = (function () {
+      return (
+        !isValidating &&
+        selected &&
+        arr.length > 0 &&
+        index < arr[0].selectedImages.length &&
+        arr[0].selectedImages[index]
+      );
+    })();
+    const handler = () => {
+      if (arr.length > 0) {
+        const newArr = arr[0].selectedImages.concat(
+          Array(arr[0].images.length - arr[0].selectedImages.length).fill(false)
+        );
+        newArr[index] = !newArr[index];
+        arr[0].selectedImages = newArr;
+        changeInActivePlan(arr[0]).then(mutatePlan);
+      }
+    };
+    return (
+      <ModalImage
+        key={index}
+        currentImageIndex={index}
+        image={image}
+        isEditing={isEditing}
+        setImages={setImages}
+        borderColor={imageSelected ? "blue.500" : "none"}
+        borderWidth={imageSelected ? "10px" : 0}
+        margin={imageSelected ? "-10px" : 0}
+        onClick={handler}
+      />
+    );
+  };
   const { ifAdmin } = useUser();
 
   const TagInput = (props) => {
@@ -203,18 +243,7 @@ const CardModal = ({
         <ModalBody mx={6}>
           <Flex flexDirection="column">
             <Flex justifyContent={"space-between"}>
-              {images.map((image, index) => {
-                return (
-                  <ModalImage
-                    key={index}
-                    currentImageIndex={index}
-                    image={image}
-                    isEditing={isEditing}
-                    setImages={setImages}
-                  />
-                );
-              })}
-
+              {images.map(imageMapper)}
               {isEditing && (
                 <>
                   {images.length === 0 ? (
