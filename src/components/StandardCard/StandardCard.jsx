@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
-import { addToActivePlan, removeFromActivePlan } from "../../actions/User";
+import { addToActivePlan, /* changeInActivePlan, */ removeFromActivePlan } from "../../actions/User";
 import useActivePlan from "../../lib/hooks/useAcivePlan";
 
 const StandardCard = ({ card, setCards, ...props }) => {
@@ -25,7 +25,9 @@ const StandardCard = ({ card, setCards, ...props }) => {
   const { renderType = "default" } = { ...props }; // sets what kind of standardCard to show
   const { plan, mutatePlan, isValidating } = useActivePlan();
   useEffect(() => {
-    setSelected(plan.cards.map((card) => card._id).indexOf(card._id) >= 0);
+    if (!isValidating) {
+      setSelected(plan.cards.map((card) => card._id).indexOf(card._id) >= 0);
+    }
   }, [plan, isValidating, card._id]);
   const addHandler = async () => {
     if (selected) {
@@ -39,7 +41,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
   const [selected, setSelected] = useState();
 
   const SelectorButton = () => (
-    <Button flex="1" onClick={addHandler}>
+    <Button onClick={addHandler}>
       {selected ? "Remove from plan" : "Add to Plan"}
     </Button>
   );

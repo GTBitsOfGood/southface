@@ -17,6 +17,7 @@ export default {
         add: "/api/user/active-plan/add",
         remove: "/api/user/active-plan/remove",
         update: "/api/user/active-plan/update",
+        change: "/api/user/active-plan/change",
       },
     },
     card: {

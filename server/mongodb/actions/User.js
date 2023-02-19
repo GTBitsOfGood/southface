@@ -116,6 +116,31 @@ export const removeFromActivePlan = async (userId, card) => {
   }
 };
 
+export const changeInActivePlan = async (userId, card) => {
+  await mongoDB();
+  try {
+    const user = await User.findById(userId);
+    if (user == null) {
+      throw new Error();
+    }
+    const arr = user.activePlan.cards;
+    for (let i = 0; i < arr.length; i++) {
+      console.log(arr[i]._id);
+      if (arr[i]._id.toString() === card._id) {
+        console.log("match made")
+        arr[i] = card;
+        arr[i].title = "bruh";
+        break;
+      }
+    }
+    user.activePlan.cards = arr;
+    const updatedUser = await user.save();
+    return updatedUser;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const updateActivePlan = async (userId, plan) => {
   await mongoDB();
   try {
