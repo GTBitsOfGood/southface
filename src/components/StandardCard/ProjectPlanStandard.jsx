@@ -1,9 +1,13 @@
 import { Button, Heading, HStack } from "@chakra-ui/react";
-import { removeFromActivePlan } from "../../actions/User";
+import useActivePlan from "../../lib/hooks/useAcivePlan";
 
 const ProjectPlanStandard = ({ card }) => {
+  const { plan, updatePlan } = useActivePlan();
   const handler = () => {
-    removeFromActivePlan(card);
+    const arr = plan.cards;
+    const newPlan = { ...plan };
+    newPlan.cards = arr.filter(c => c._id !== card._id)
+    updatePlan(newPlan);
   };
   return (
     <>

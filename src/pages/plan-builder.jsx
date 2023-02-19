@@ -19,19 +19,23 @@ import { useEffect, useRef, useState } from "react";
 // import { getCards } from "src/actions/Card";
 import PlanConfirmationModal from "src/components/Modals/PlanConfirmationModal";
 import { ProjectPlanStandard } from "../components/StandardCard/ProjectPlanStandard";
-import useUser from "src/lib/hooks/useUser";
-import { getActivePlan } from "../actions/User";
+import useActivePlan from "../lib/hooks/useAcivePlan";
 
 const ProjectPlanBuilder = () => {
-  const { user } = useUser();
-  const [plan, setPlan] = useState({});
+  // const { user } = useUser();
+  // const [plan, setPlan] = useState({});
+  // useEffect(() => {
+  //   if (user) {
+  //     getActivePlan(user.id).then((res) => {
+  //       setPlan(res);
+  //     });
+  //   }
+  // }, [user]);
+  const { plan, isValidating } = useActivePlan();
   useEffect(() => {
-    if (user) {
-      getActivePlan(user.id).then((res) => {
-        setPlan(res);
-      });
-    }
-  }, [user]);
+    console.log("Plan cache update");
+    console.table(plan);
+  }, [plan])
 
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -85,7 +89,7 @@ const ProjectPlanBuilder = () => {
               <Button>Broken PDF</Button>
             </HStack>
           </CardBody>
-          {plan.cards ? plan.cards.map(standardMapper) : "something is null"}
+          {!isValidating && plan.cards.map(standardMapper)}
         </VStack>
         <VStack flex={1}>
           <Card w="100%">

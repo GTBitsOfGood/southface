@@ -9,15 +9,14 @@ import { getActivePlan, updateActivePlan } from "../../actions/User";
 //      key: cache key, if that's necessary for whatever reason
 export default function useActivePlan() {
   const url = "/api/user/active-plan/get";
-  const { data, mutate: mutatePlan } = useSWR(url, getActivePlan);
-  const plan = data?.payload;
+  const { data, mutate: mutatePlan, isValidating } = useSWR(url, getActivePlan);
   const updatePlan = (plan) => {
     updateActivePlan(plan).then((res) => {
       mutatePlan(
         res,
-        { optimisticData: plan,   } // Immediately update UI and revalidate after
+        { optimisticData: plan } // Immediately update UI and revalidate after
       );
     });
   };
-  return { plan, updatePlan, key: url };
+  return { plan: data, updatePlan, key: url, isValidating };
 }

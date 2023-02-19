@@ -86,7 +86,7 @@ export const addToActivePlan = async (userId, card) => {
     const user = await User.findByIdAndUpdate(
       userId,
       {
-        $push: { "activePlan.cards": card },
+        $addToSet: { "activePlan.cards": card },
       },
       { upsert: true }
     );
@@ -118,12 +118,12 @@ export const removeFromActivePlan = async (userId, card) => {
 export const updateActivePlan = async (userId, plan) => {
   await mongoDB();
   try {
-    if (user == null) {
-      throw new Error();
-    }
     const user = await User.findByIdAndUpdate(userId, {
       $set: { activePlan: plan },
     });
+    if (user == null) {
+      throw new Error();
+    }
     return user.activePlan;
   } catch (e) {
     throw new Error("Bruh");
