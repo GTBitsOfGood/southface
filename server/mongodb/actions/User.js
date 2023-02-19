@@ -63,6 +63,7 @@ export const getUserFromId = async (id) => {
       id,
       username: user.username,
       isAdmin: user.isAdmin,
+      archivedProjectPlan: user.archivedProjectPlan,
     };
   } catch (e) {
     throw new Error("Invalid token!");
@@ -79,10 +80,4 @@ export const deleteUserById = async (id) => {
   await mongoDB();
 
   return User.findOneAndRemove({ _id: id });
-};
-
-export const getArchivedProjectPlans = async (userId) => {
-  await mongoDB();
-  const user = await User.findOne({ _id: userId });
-  return user;
 };

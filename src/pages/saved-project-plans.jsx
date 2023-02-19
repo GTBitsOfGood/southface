@@ -1,15 +1,21 @@
 import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getPlans } from "src/actions/Plan";
+// import { getPlans } from "src/actions/Plan";
 import SavedProjectPlan from "src/components/SavedProjectPlan/SavedProjectPlan";
+import { getCurrentUser } from "../actions/User";
 
 const SavedProjectPlans = () => {
-  const [plans, setPlans] = useState([]);
+  // const [plans, setPlans] = useState([]);
+  const [archived, setArchived] = useState([]);
 
   useEffect(() => {
-    getPlans().then((res) => {
-      setPlans(res);
+    // getPlans().then((res) => {
+    //   setPlans(res);
+    // });
+    getCurrentUser().then((res) => {
+      setArchived(res.archivedProjectPlan);
+      console.log(res.archivedProjectPlan);
     });
   }, []);
 
@@ -25,7 +31,7 @@ const SavedProjectPlans = () => {
         </Heading>
       </Flex>
       <VStack p="0% 2% 0% 2%">
-        {plans.map((plan, index) => {
+        {archived.map((plan, index) => {
           return <SavedProjectPlan key={index} plan={plan} />;
         })}
       </VStack>
