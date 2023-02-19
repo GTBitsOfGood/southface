@@ -6,7 +6,7 @@ const ProjectPlanStandard = ({ card }) => {
   const handler = () => {
     const arr = plan.cards;
     const newPlan = { ...plan };
-    newPlan.cards = arr.filter(c => c._id !== card._id)
+    newPlan.cards = arr.filter((c) => c._id !== card._id);
     updatePlan(newPlan);
   };
   return (

@@ -105,7 +105,6 @@ export const getActivePlan = () => {
       if (json == null) {
         throw new Error("Could not connect to API!");
       } else if (!json.success) {
-        console.log(json);
         throw new Error(json.message);
       }
       return json.payload;
@@ -127,7 +126,6 @@ export const addToActivePlan = (card) => {
       if (json == null) {
         throw new Error("Could not connect to API!");
       } else if (!json.success) {
-        console.log(json);
         throw new Error(json.message);
       }
       return json.payload;

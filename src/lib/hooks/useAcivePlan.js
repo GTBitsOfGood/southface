@@ -18,5 +18,5 @@ export default function useActivePlan() {
       );
     });
   };
-  return { plan: data, updatePlan, key: url, isValidating };
+  return { plan: data, updatePlan, mutatePlan, key: url, isValidating };
 }

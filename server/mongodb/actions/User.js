@@ -102,7 +102,6 @@ export const addToActivePlan = async (userId, card) => {
 export const removeFromActivePlan = async (userId, card) => {
   await mongoDB();
   try {
-    console.log(card._id);
     const user = await User.findByIdAndUpdate(userId, {
       $pull: { "activePlan.cards": { _id: card._id } },
     });
@@ -126,7 +125,7 @@ export const updateActivePlan = async (userId, plan) => {
     }
     return user.activePlan;
   } catch (e) {
-    throw new Error("Bruh");
+    console.log(e);
   }
 };
 

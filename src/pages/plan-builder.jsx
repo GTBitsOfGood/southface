@@ -32,10 +32,6 @@ const ProjectPlanBuilder = () => {
   //   }
   // }, [user]);
   const { plan, isValidating } = useActivePlan();
-  useEffect(() => {
-    console.log("Plan cache update");
-    console.table(plan);
-  }, [plan])
 
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
