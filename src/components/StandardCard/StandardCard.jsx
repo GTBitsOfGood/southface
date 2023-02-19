@@ -9,7 +9,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import Comments from "../Comments";
 import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
 import { addToActivePlan, removeFromActivePlan } from "../../actions/User";
@@ -26,8 +25,8 @@ const StandardCard = ({ card, setCards, ...props }) => {
   const { renderType = "default" } = { ...props }; // sets what kind of standardCard to show
   const { plan, mutatePlan, isValidating } = useActivePlan();
   useEffect(() => {
-    setSelected(plan.cards.map(card => card._id).indexOf(card._id) >= 0)
-  }, [plan, isValidating, card._id])
+    setSelected(plan.cards.map((card) => card._id).indexOf(card._id) >= 0);
+  }, [plan, isValidating, card._id]);
   const addHandler = async () => {
     if (selected) {
       await removeFromActivePlan(card);
@@ -40,8 +39,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
   const [selected, setSelected] = useState();
 
   const SelectorButton = () => (
-    <Button flex="1" onClick={addHandler}
-    >
+    <Button flex="1" onClick={addHandler}>
       {selected ? "Remove from plan" : "Add to Plan"}
     </Button>
   );
@@ -87,14 +85,10 @@ const StandardCard = ({ card, setCards, ...props }) => {
       />
 
       <Flex p={3} flexDirection="column" flex={1}>
-        <Heading size="md">{card.title}</Heading>
-        <Comments
-          mt="2"
-          mb="5"
-          comments={card.comments}
-          cardId={card._id}
-          canEdit={false}
-        />
+        <Heading my={2} size="md">
+          {card.title}
+        </Heading>
+
         <HStack>
           {card.tags.map((tag, index) => {
             return (
@@ -115,7 +109,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           cardId={card._id}
           cardTags={card.tags}
           cardTitle={card.title}
-          cardComments={card.comments}
+          cardCriteria={card.criteria}
           cardImages={card.images}
           AddToPlanButton={<SelectorButton />}
           setCards={setCards}

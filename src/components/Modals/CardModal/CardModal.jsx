@@ -1,57 +1,53 @@
-import { useState } from "react";
-import useEditCardModal from "../../../lib/hooks/useEditCard";
+import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  Modal,
-  ModalCloseButton,
-  ModalBody,
+  Box,
   Button,
+  Center,
   Flex,
-  Tag,
-  Input,
+  FormLabel,
+  Heading,
   HStack,
   IconButton,
-  Heading,
-  Box,
-  TagLeftIcon,
-  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
-  Center,
-  useToast,
+  Tag,
+  TagLeftIcon,
+  Text,
 } from "@chakra-ui/react";
-import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import { useState } from "react";
+import useEditCardModal from "../../../lib/hooks/useEditCard";
 
-import RatingStars from "./RatingStars";
-import ModifyImageModal from "../ModifyImageModal";
+import useUser from "src/lib/hooks/useUser";
 import ModalImage from "../ModalImage";
-import Comments from "../../Comments/Comments";
+import ModifyImageModal from "../ModifyImageModal";
+import RatingStars from "./RatingStars";
 
 const CardModal = ({
   isOpen,
   onClose,
   cardTitle,
-  cardComments,
+  cardCriteria,
   cardId,
   cardImages,
   cardTags,
   setCards,
   ...rest
 }) => {
-  const unauthorizedToast = useToast();
+  // not being used right now since admin view is not being worked on.
   const {
     isEditing,
     title,
     onEditCard,
-    comments,
-    setComments,
-    createNewComment,
     tags,
     images,
     setAddingTag,
     addingTag,
-    handleCommentsUpdate,
     handleTitleChange,
     applyEdit,
     onDeleteTag,
@@ -61,14 +57,9 @@ const CardModal = ({
     imageOnClose,
     setImages,
     setTags,
-  } = useEditCardModal(
-    cardTitle,
-    cardComments,
-    cardImages,
-    cardTags,
-    cardId,
-    unauthorizedToast
-  );
+  } = useEditCardModal(cardTitle, "placeholder", cardImages, cardTags, cardId);
+
+  const { ifAdmin } = useUser();
 
   const TagInput = (props) => {
     const [width, setWidth] = useState(0.5);
@@ -118,6 +109,7 @@ const CardModal = ({
       </>
     );
   };
+
   const {
     AddToPlanButton = (
       <Button bgColor="#D9D9D9" alignSelf="end" size="lg" rounded={16}>
@@ -247,36 +239,20 @@ const CardModal = ({
                 </>
               )}
             </Flex>
+
             <SimpleGrid
               mt={6}
               mb={15}
               columns={3}
               justifyContent="space-between"
             >
-              {isEditing && comments.length === 0 ? (
-                <Input
-                  flexBasis="sm"
-                  fontSize="sm"
-                  onChange={createNewComment}
-                  placeholder="Add Card Comment"
-                />
-              ) : (
-                <Comments
-                  isEditing={isEditing}
-                  comments={comments}
-                  handleCommentsUpdate={handleCommentsUpdate}
-                  cardId={cardId}
-                  setComments={setComments}
-                  setCards={setCards}
-                />
-              )}
-
+              <Text>{cardCriteria}</Text>
               {!isEditing ? (
                 <Button
                   variant="link"
                   alignSelf="end"
                   color="#0065C1"
-                  onClick={onEditCard}
+                  onClick={() => ifAdmin(onEditCard)}
                 >
                   Edit
                 </Button>
