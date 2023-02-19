@@ -24,7 +24,6 @@ const ImagePreviewModal = ({
   cardImages,
   cardComments,
   cardId,
-  setCards,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const [showBackArrow, setShowBackArrow] = React.useState(false);
@@ -55,10 +54,11 @@ const ImagePreviewModal = ({
         // update card with selected thumbs value
         updatedCard = await updateCardById(cardId, { thumbsUp, thumbsDown });
       }
-      // update the card in the cards list
-      setCards((cards) =>
-        cards.map((card) => (card._id === updatedCard._id ? updatedCard : card))
-      );
+      console.log(updatedCard);
+      // // update the card in the cards list (this is not working rn since updatedCard is being returned as null!!)
+      // setCards((cards) =>
+      //   cards.map((card) => (card._id === updatedCard._id ? updatedCard : card))
+      // );
     } catch (error) {
       console.log(error);
     }
@@ -115,7 +115,7 @@ const ImagePreviewModal = ({
                 pos="relative"
                 width="65%"
                 fit="cover"
-                src={cardImages[currentImageIndex]}
+                src={cardImages[currentImageIndex].imageUrl}
                 alt="construction image"
               />
 

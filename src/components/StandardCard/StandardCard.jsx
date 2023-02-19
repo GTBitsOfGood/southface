@@ -90,7 +90,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           height="100%"
           width="full"
           fit="cover"
-          src={card.images[0]}
+          src={card.images[0].imageUrl}
           alt="construction image"
           onClick={onOpenImagePreviewModal}
         />
@@ -101,6 +101,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
         onClose={onCloseImagePreviewModal}
         cardImages={card.images}
         cardComments={card.comments}
+        setCards={setCards}
       />
 
       <Flex p={3} flexDirection="column" flex={1}>
