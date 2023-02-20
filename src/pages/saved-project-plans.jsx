@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Heading, Spacer, VStack } from "@chakra-ui/react";
-import SavedProjectPlan from "src/components/SavedProjectPlan/SavedProjectPlan";
+import ProjectPlanCard from "../components/SavedProjectPlan/ProjectPlanCard";
 
 const SavedProjectPlans = () => {
   // const [plans, setPlans] = useState([]);
@@ -41,7 +41,16 @@ const SavedProjectPlans = () => {
         {/* {plans.map((plan, index) => {
           return <SavedProjectPlan key={index} plan={plan} />;
         })} */}
-        <SavedProjectPlan />
+        <Box
+          padding="10"
+          borderRadius="25"
+          borderWidth="0.5px"
+          borderColor="lightgrey"
+        >
+          <ProjectPlanCard />
+          <ProjectPlanCard />
+          <ProjectPlanCard />
+        </Box>
       </VStack>
     </Box>
   );
