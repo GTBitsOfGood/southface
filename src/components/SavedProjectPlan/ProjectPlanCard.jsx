@@ -10,19 +10,12 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import StandardCard from "./StandardCard";
+import StandardCardDefaultProps from "./StandardCardDefaultProps";
 
 const ProjectPlanCard = () => {
   const [hasProjectPlanCard, setHasProjectPlanCard] = useState(true);
 
-  const defaultProps = {
-    //logic works, tested with other image urls
-    // imageUrl: ["https://bit.ly/dan-abramov", "https://via.placeholder.com/150"],
-    imageUrl: ["/static/ShoppingCartImg.png", "/static/ShoppingCartImg.png"],
-    criteria:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  };
-
-  const defaultPropsArray = Array(3).fill(defaultProps);
+  const defaultPropsArray = Array(3).fill(StandardCardDefaultProps);
 
   const handleRemove = () => {
     setHasProjectPlanCard(false);
@@ -69,7 +62,7 @@ const ProjectPlanCard = () => {
           <CardBody>
             <Flex justifyContent="space-between" marginRight="15em">
               {defaultPropsArray.map((defaultProps, index) => (
-                <React.Fragment key={index}>
+                <Flex key={index}>
                   <StandardCard
                     title={`Standard ${index + 1}`}
                     imageUrl={defaultProps.imageUrl}
@@ -78,7 +71,7 @@ const ProjectPlanCard = () => {
                   {index < defaultPropsArray.length - 1 && (
                     <Divider orientation="vertical" />
                   )}
-                </React.Fragment>
+                </Flex>
               ))}
             </Flex>
           </CardBody>

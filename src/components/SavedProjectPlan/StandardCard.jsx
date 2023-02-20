@@ -19,7 +19,7 @@ const StandardCard = ({ title, imageUrl, criteria }) => {
   );
 
   return (
-    <Card flex="1">
+    <Card boxShadow="none" flex="1">
       <CardHeader>
         <Heading size="lg">{title}</Heading>
       </CardHeader>
