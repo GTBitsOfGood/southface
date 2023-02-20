@@ -51,8 +51,8 @@ export const ChevronIcon = (props) => {
 };
 
 const CardModal = ({
-  isOpen,
-  onClose,
+  isOpenCardModal,
+  onCloseCardModal,
   cardTitle,
   cardNotes,
   cardCriteria,
@@ -140,7 +140,7 @@ const CardModal = ({
   } = useDisclosure();
 
   const openImagePreviewCallback = () => {
-    onClose();
+    onCloseCardModal();
     onOpenImagePreviewModal();
   };
 
@@ -148,8 +148,8 @@ const CardModal = ({
     <>
       <Modal
         {...rest}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenCardModal}
+        onClose={onCloseCardModal}
         size={{ base: "xs", md: "2xl", lg: "4xl" }}
       >
         <ModalOverlay />

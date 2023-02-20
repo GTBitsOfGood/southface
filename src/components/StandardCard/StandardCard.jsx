@@ -17,7 +17,11 @@ import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
 
 const StandardCard = ({ card, setCards, ...props }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenCardModal,
+    onOpen: onOpenCardModal,
+    onClose: onCloseCardModal,
+  } = useDisclosure();
   const {
     isOpen: isOpenImagePreviewModal,
     onOpen: onOpenImagePreviewModal,
@@ -122,22 +126,22 @@ const StandardCard = ({ card, setCards, ...props }) => {
           <HStack justify="space-evenly" pt="5">
             <SelectorButton />
             <IconButton
-              onClick={onOpen}
+              onClick={onOpenCardModal}
               fontSize="lg"
               isDisabled
               icon={<Icon as={InfoIcon} />}
             ></IconButton>
           </HStack>
         ) : (
-          <Button size="lg" mt={7} onClick={onOpen} bgColor="#D9D9D9">
+          <Button size="lg" mt={7} onClick={onOpenCardModal} bgColor="#D9D9D9">
             View Full Standard
           </Button>
         )}
 
         <Text mt={4}>{card.criteria}</Text>
         <CardModal
-          isOpen={isOpen}
-          onClose={onClose}
+          isOpenCardModal={isOpenCardModal}
+          onCloseCardModal={onCloseCardModal}
           isEditingFirst={false}
           cardId={card._id}
           cardTags={card.tags}
