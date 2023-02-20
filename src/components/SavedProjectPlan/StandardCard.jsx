@@ -5,8 +5,8 @@ import {
   CardHeader,
   Flex,
   Heading,
+  useBreakpointValue,
 } from "@chakra-ui/react";
-
 import Image from "next/image";
 
 const StandardCard = ({ title, imageUrl, criteria }) => {
@@ -18,24 +18,26 @@ const StandardCard = ({ title, imageUrl, criteria }) => {
     </Box>
   );
 
+  const imageSize = useBreakpointValue({ base: "8rem", "2xl": "10rem" });
+
   return (
     <Card boxShadow="none" flex="1">
       <CardHeader>
         <Heading size="lg">{title}</Heading>
       </CardHeader>
       <CardBody marginLeft="3" marginRight="3">
-        <Flex gap={2}>
+        <Flex gap={2} position="relative">
           <ChakraNextImage
             src={firstImage}
             alt="Shopping Cart Image"
-            height="5rem"
-            width="5rem"
+            height={imageSize}
+            width={imageSize}
           />
           <ChakraNextImage
             src={secondImage}
             alt="Shopping Cart Image"
-            height="5rem"
-            width="5rem"
+            height={imageSize}
+            width={imageSize}
           />
         </Flex>
         <Box>{criteria}</Box>
