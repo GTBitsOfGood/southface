@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Link, Text } from "@chakra-ui/layout";
+import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import React from "react";
 import { login } from "src/actions/User";
@@ -54,10 +54,10 @@ const LoginComponent = () => {
       >
         Log In
       </Button>
-      <Center gap="0.3em">
+      {/* <Center gap="0.3em">
         {"Don't have an account?"}
         <Link>Sign Up</Link>
-      </Center>
+      </Center> */}
     </Flex>
   );
 };

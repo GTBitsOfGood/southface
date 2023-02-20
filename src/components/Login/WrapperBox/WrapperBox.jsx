@@ -6,8 +6,8 @@ const WrapperBox = ({ children }) => {
       <Center
         rounded="md"
         boxShadow="dark-lg"
-        height={{ base: "30em", xl: "30em", "2xl": "33em" }}
-        width={{ base: "30em", xl: "30em", "2xl": "33em" }}
+        height={{ base: "30em", "2xl": "33em" }}
+        width={{ base: "30em", "2xl": "33em" }}
       >
         {children}
       </Center>
