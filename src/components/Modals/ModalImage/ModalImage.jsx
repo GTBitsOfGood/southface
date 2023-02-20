@@ -1,37 +1,52 @@
-import { Image, Flex, IconButton, useDisclosure, Box } from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { Box, Button, Image } from "@chakra-ui/react";
 
-import ModifyImageModal from "../ModifyImageModal";
+import { MdExpand } from "react-icons/md";
 
 const ModalImage = ({
   isEditing,
   image,
-  currentImageIndex,
-  setImages,
+  // currentImageIndex,
+  // setImages,
+  openImagePreviewCallback,
   ...props
 }) => {
-  const {
-    isOpen: editImageIsOpen,
-    onOpen: editImageOnOpen,
-    onClose: editImageOnClose,
-  } = useDisclosure();
+  // const {
+  //   isOpen: editImageIsOpen,
+  //   onOpen: editImageOnOpen,
+  //   onClose: editImageOnClose,
+  // } = useDisclosure();
 
-  const onDeleteImage = () => {
-    setImages((images) => {
-      return images.filter((_, index) => index !== currentImageIndex);
-    });
-  };
+  // const onDeleteImage = () => {
+  //   setImages((images) => {
+  //     return images.filter((_, index) => index !== currentImageIndex);
+  //   });
+  // };
 
   return (
-    <Box position="relative" {...props}>
+    <Box position="relative" width="250px" {...props}>
       <Image
         src={image}
         objectFit="cover"
         boxSize={isEditing ? "3xs" : "2xs"}
-        boxShadow="dark-lg"
+        boxShadow="lg"
         alt={"card image"}
+        margin="0 5px 7px 0px"
       />
-      {isEditing && (
+      <Button
+        leftIcon={<MdExpand />}
+        position="absolute"
+        bottom="15px"
+        borderRadius="30px"
+        right="10px"
+        height={7}
+        backgroundColor="#FFFFFF"
+        color="#6D6E70"
+        boxShadow="xl"
+        onClick={openImagePreviewCallback}
+      >
+        Enlarge Image
+      </Button>
+      {/* {isEditing && (
         <Flex justifyContent="center" gap={2} m={2}>
           <IconButton
             icon={<EditIcon />}
@@ -52,7 +67,7 @@ const ModalImage = ({
             setImages={setImages}
           />
         </Flex>
-      )}
+      )} */}
     </Box>
   );
 };

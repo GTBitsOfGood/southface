@@ -86,7 +86,7 @@ export const createCard = async (card) => {
     });
 };
 
-export const updateCardById = async (id, card, isOnlyComments) => {
+export const updateCardById = async (id, card, isOnlyNotes) => {
   return fetch(urls.api.card.update, {
     method: "PUT",
     mode: "same-origin",
@@ -97,7 +97,7 @@ export const updateCardById = async (id, card, isOnlyComments) => {
     body: JSON.stringify({
       id,
       card,
-      isOnlyComments,
+      isOnlyNotes,
     }),
   })
     .then((response) => response.json())

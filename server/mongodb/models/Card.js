@@ -30,9 +30,10 @@ const CardSchema = new Schema({
   title: {
     type: String,
   },
-  comments: [
+  notes: [
     {
       body: String,
+      userId: String,
       date: Date,
     },
   ],

@@ -14,7 +14,11 @@ import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
 
 const StandardCard = ({ card, setCards, ...props }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenCardModal,
+    onOpen: onOpenCardModal,
+    onClose: onCloseCardModal,
+  } = useDisclosure();
   const {
     isOpen: isOpenImagePreviewModal,
     onOpen: onOpenImagePreviewModal,
@@ -31,7 +35,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
       overflow="hidden"
       height="19rem"
       width="24rem"
-      onClick={onOpen}
+      onClick={onOpenCardModal}
       _hover={{
         cursor: "pointer",
         transition: "0.1s ease-in-out",
@@ -54,7 +58,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
         isOpen={isOpenImagePreviewModal}
         onClose={onCloseImagePreviewModal}
         cardImages={card.images}
-        cardComments={card.comments}
+        cardNotes={card.notes}
       />
 
       <Flex p={3} flexDirection="column" flex={1} mx="2">
@@ -86,12 +90,13 @@ const StandardCard = ({ card, setCards, ...props }) => {
           </Button>
         </HStack>
         <CardModal
-          isOpen={isOpen}
-          onClose={onClose}
+          isOpenCardModal={isOpenCardModal}
+          onCloseCardModal={onCloseCardModal}
           isEditingFirst={false}
           cardId={card._id}
           cardTags={card.tags}
           cardTitle={card.title}
+          cardNotes={card.notes}
           cardCriteria={card.criteria}
           cardImages={card.images}
           setCards={setCards}
