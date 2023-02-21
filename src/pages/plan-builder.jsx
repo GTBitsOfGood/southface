@@ -169,6 +169,9 @@ const ProjectPlanBuilder = () => {
         <Link href="/saved-project-plans">
           <Button href="/">View Saved Project Plans</Button>
         </Link>
+        <Link href="/saved-project-plans">
+          <Button href="/">See all archived project plans</Button>
+        </Link>
       </Flex>
       <Flex
         p={5}

@@ -14,5 +14,5 @@ const PlanSchema = new Schema({
     type: String,
   },
 });
-
+export { PlanSchema };
 export default mongoose.models?.Plan ?? mongoose.model("Plan", PlanSchema);

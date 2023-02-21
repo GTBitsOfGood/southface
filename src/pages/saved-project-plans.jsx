@@ -1,14 +1,11 @@
 import { Box, Button, Flex, Heading, Spacer, VStack } from "@chakra-ui/react";
-import ProjectPlanCard from "../components/SavedProjectPlan/ProjectPlanCard";
+import ProjectPlanCard from "src/components/ProjectPlanCard";
+import useUser from "src/lib/hooks/useUser";
 
 const SavedProjectPlans = () => {
-  // const [plans, setPlans] = useState([]);
+  const { user } = useUser();
 
-  // useEffect(() => {
-  //   getPlans().then((res) => {
-  //     setPlans(res);
-  //   });
-  // }, []);
+  if (!user) return "loading";
 
   return (
     <Box>
@@ -38,17 +35,18 @@ const SavedProjectPlans = () => {
         </Button>
       </Flex>
       <VStack p="0% 2% 0% 2%">
-        {/* {plans.map((plan, index) => {
-          return <SavedProjectPlan key={index} plan={plan} />;
-        })} */}
         <Box
           padding="10"
           borderRadius="25"
           borderWidth="0.5px"
           borderColor="lightgrey"
+          width="full"
         >
-          <ProjectPlanCard />
-          <ProjectPlanCard />
+          {user.isLoggedIn &&
+            user.archivedProjectPlan.map((plan, index) => {
+              return <ProjectPlanCard key={index} plan={plan} />;
+            })}
+          {/* rendering a plan with default props (exact styling from figma) */}
           <ProjectPlanCard />
         </Box>
       </VStack>

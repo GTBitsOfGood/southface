@@ -63,6 +63,7 @@ export const getUserFromId = async (id) => {
       id,
       username: user.username,
       isAdmin: user.isAdmin,
+      archivedProjectPlan: user.archivedProjectPlan,
     };
   } catch (e) {
     throw new Error("Invalid token!");

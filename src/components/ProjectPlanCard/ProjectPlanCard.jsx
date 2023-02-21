@@ -10,12 +10,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import StandardCard from "./StandardCard";
-import StandardCardDefaultProps from "./StandardCardDefaultProps";
+import defaultPlanProps from "./defaultPlanProps";
 
-const ProjectPlanCard = () => {
+const ProjectPlanCard = ({ plan }) => {
   const [hasProjectPlanCard, setHasProjectPlanCard] = useState(true);
-
-  const defaultPropsArray = Array(3).fill(StandardCardDefaultProps);
+  const planState = plan || defaultPlanProps;
 
   const handleRemove = () => {
     setHasProjectPlanCard(false);
@@ -24,7 +23,14 @@ const ProjectPlanCard = () => {
   return (
     hasProjectPlanCard && (
       <Flex>
-        <Card boxShadow="md" p="6" rounded="mlgd" bg="white" marginBottom="10">
+        <Card
+          boxShadow="md"
+          p="6"
+          rounded="mlgd"
+          bg="white"
+          marginBottom="10"
+          flex="1"
+        >
           <CardHeader display="flex" justifyContent="space-between">
             <Box display="flex">
               <Heading size="xl">Recent Project Plan</Heading>
@@ -61,14 +67,14 @@ const ProjectPlanCard = () => {
           </CardHeader>
           <CardBody>
             <Flex justifyContent="space-between" marginRight="15em">
-              {defaultPropsArray.map((defaultProps, index) => (
+              {planState.cards.map((card, index) => (
                 <Flex key={index}>
                   <StandardCard
-                    title={`Standard ${index + 1}`}
-                    imageUrl={defaultProps.imageUrl}
-                    criteria={defaultProps.criteria}
+                    title={card.title}
+                    images={card.images}
+                    criteria={card.criteria}
                   />
-                  {index < defaultPropsArray.length - 1 && (
+                  {index < planState.cards.length - 1 && (
                     <Divider orientation="vertical" />
                   )}
                 </Flex>
