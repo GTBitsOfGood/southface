@@ -19,15 +19,7 @@ export const getCards = async () => {
 };
 
 export const getCardsByIds = async (ids) => {
-  return fetch(urls.api.card.getIds, {
-    method: "POST",
-    mode: "same-origin",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(ids),
-  })
+  getCardsByIdsRequest(ids)
     .then((response) => response.json())
     .then((json) => {
       if (json == null) {
@@ -38,6 +30,18 @@ export const getCardsByIds = async (ids) => {
 
       return json.payload;
     });
+};
+
+export const getCardsByIdsRequest = (ids) => {
+  return fetch(urls.api.card.getIds, {
+    method: "POST",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(ids),
+  });
 };
 
 export const getCardsPagination = async (pageNumber, searchFilter) => {

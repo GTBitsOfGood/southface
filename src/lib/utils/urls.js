@@ -12,8 +12,10 @@ export default {
       login: "/api/user/login",
       logout: "/api/user/logout",
       getCurrent: "/api/user",
-      getStandards: "/api/user/standards/get/",
-      updateStandards: "/api/user/standards/update",
+      standards: {
+        get: "/api/user/standards/get/",
+        update: "/api/user/standards/update",
+      },
     },
     card: {
       create: "/api/card/create/",

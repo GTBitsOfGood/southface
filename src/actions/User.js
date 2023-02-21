@@ -91,16 +91,8 @@ export const getCurrentUser = (cookies) => {
     });
 };
 
-export const updateRecentStandards = (cardId) =>
-  fetch(urls.api.user.updateRecentStandards, {
-    method: "POST",
-    mode: "same-origin",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(cardId),
-  })
+export const updateRecentStandards = (userId, standardId) =>
+  updateRecentStandardsRequest(userId, standardId)
     .then((response) => response.json())
     .then((json) => {
       if (json == null) {
@@ -108,6 +100,17 @@ export const updateRecentStandards = (cardId) =>
       } else if (!json.success) {
         throw new Error(json.message);
       }
-
       return json.payload;
     });
+
+export const updateRecentStandardsRequest = (userId, standardId) => {
+  return fetch(urls.api.user.standards.update, {
+    method: "PATCH",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id: userId, standardId: standardId }),
+  });
+};

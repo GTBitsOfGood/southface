@@ -86,27 +86,27 @@ export const deleteUserById = async (id) => {
 export const updateRecentStandards = async (id, cardId) => {
   await mongoDB();
 
-  const query = { _id: id };
-  const newData = {
-    // creates if element doesn't exist, updates element with planId's timeUpdated
-    $elemMatch: { cardId: { $eq: cardId } },
-    $set: {
-      "recentStandards.$.timeOpened": new Date().getUTCDate(),
+  const query = {
+    _id: id,
+    recentStandards: {
+      $elemMatch: { cardId: { $eq: cardId } },
     },
-    // db.getCollection("users").findOneAndUpdate({"_id": ObjectId("63c5be32a7d3c693fa1d332f"),
-    //    recentStandards: { $elemMatch: { "planId": { $eq: "test" } } }}, { $set: { "recentStandards.$.timeUpdated": Date() }});
+  };
+  const newData = {
+    $set: {
+      "recentStandards.$.timeOpened": new Date(),
+    },
   };
   let result = await User.findOneAndUpdate(query, newData);
   if (result == null) {
-    // notably this returns all the standards, so a duplicate call is not required
-    // tried for a while to make this one statement, couldn't.
+    // standard does not exist yet in recents
     result = await User.updateOne(
       {
         _id: id,
         "recentStandards.cardId": { $ne: cardId },
       },
       {
-        $push: { recentStandards: { planId: cardId, timeUpdated: new Date() } },
+        $push: { recentStandards: { cardId: cardId, timeOpened: new Date() } },
       }
     );
     if (result.modifiedCount == 0) {
@@ -116,7 +116,7 @@ export const updateRecentStandards = async (id, cardId) => {
   return result;
 };
 
-export const getRecentStandards = async (id, count = 100) => {
+export const getRecentStandards = async (id, count = 3) => {
   await mongoDB();
 
   const user = await User.findById(id);
@@ -130,7 +130,7 @@ export const getRecentStandards = async (id, count = 100) => {
         return s.cardId;
       })
       .sort((a, b) => {
-        return a.timeUpdated - b.timeUpdated;
+        return a.timeOpened - b.timeOpened;
       })
       .slice(0, count)
   );

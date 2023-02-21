@@ -1,7 +1,7 @@
 import { withSessionRoute } from "src/lib/utils/session";
 import { getCardsByIds } from "../../../../server/mongodb/actions/Card";
 
-// @route   GET api/card/getIds
+// @route   POST api/card/getIds
 // @desc    Gets cards by their ids
 // @access  Public
 const handler = async (req, res) => {

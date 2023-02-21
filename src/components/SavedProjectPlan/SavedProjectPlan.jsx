@@ -3,8 +3,6 @@ import { Box, Button, Flex, Heading, HStack, VStack } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
 import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
-import useUser from "../../lib/hooks/useUser";
-import RecentStandardsView from "../RecentStandardsView";
 import StandardCard from "../StandardCard";
 
 const SavedProjectPlans = ({ plan }) => {
@@ -13,7 +11,6 @@ const SavedProjectPlans = ({ plan }) => {
   const [showNextArrow, setShowNextArrow] = useState(false);
   const [currentCardGroup, setCurrentCardGroup] = useState([]);
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
-  const { user } = useUser();
 
   useEffect(() => {
     setHasLoaded(true);
@@ -62,9 +59,6 @@ const SavedProjectPlans = ({ plan }) => {
         bgColor="#D9D9D9"
         mb="5%"
       >
-        <RecentStandardsView
-          standardsData={user?.recentStandards}
-        ></RecentStandardsView>
         <VStack display="block">
           <HStack mb="3%">
             <Heading mr="15px" size="lg">

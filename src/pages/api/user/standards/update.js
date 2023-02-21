@@ -1,17 +1,17 @@
-import { getRecentStandards } from "server/mongodb/actions/User";
+import { updateRecentStandards } from "server/mongodb/actions/User";
 import { withSessionRoute } from "src/lib/utils/session";
 
-// @route   GET api/user/standards/update
-// @desc    Gets a COUNT amount of recent standards on a user with its ID
+// @route   PATCH api/user/standards/update
+// @desc    Updates RecentStandards to have a standard's id stored with timestamp of the time opened
 // @access  Public
 const handler = async (req, res) => {
   try {
-    const { id, count } = req.query;
+    const { id, standardId } = req.query;
 
     const useId = id ? id : req.body.id;
-    const useCount = count ? count : req.body.count;
+    const useStandardId = standardId ? useStandardId : req.body.standardId;
 
-    const standards = await getRecentStandards(useId, useCount);
+    const standards = await updateRecentStandards(useId, useStandardId);
 
     return res.status(200).json({
       success: true,

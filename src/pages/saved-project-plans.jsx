@@ -3,9 +3,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getPlans } from "src/actions/Plan";
 import SavedProjectPlan from "src/components/SavedProjectPlan/SavedProjectPlan";
+import RecentStandardsView from "../components/RecentStandardsView";
+import useUser from "../lib/hooks/useUser";
 
 const SavedProjectPlans = () => {
   const [plans, setPlans] = useState([]);
+  const { user } = useUser();
 
   useEffect(() => {
     getPlans().then((res) => {
@@ -24,6 +27,10 @@ const SavedProjectPlans = () => {
           Saved Project Plans
         </Heading>
       </Flex>
+      <RecentStandardsView
+        standardsData={user?.recentStandards}
+        maxCards={3}
+      ></RecentStandardsView>
       <VStack p="0% 2% 0% 2%">
         {plans.map((plan, index) => {
           return <SavedProjectPlan key={index} plan={plan} />;

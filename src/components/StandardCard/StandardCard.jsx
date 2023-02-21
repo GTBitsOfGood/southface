@@ -12,17 +12,31 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import urls from "src/lib/utils/urls";
+import useSWRMutation from "swr/mutation";
+import { updateRecentStandardsRequest } from "../../actions/User";
+import useUser from "../../lib/hooks/useUser";
 import CardModal from "../Modals/CardModal";
 import ImagePreviewModal from "../Modals/ImagePreviewModal";
 
 const StandardCard = ({ card, setCards, ...props }) => {
+  if (card.images == undefined) card.images = [""];
+  const { user } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isOpenImagePreviewModal,
     onOpen: onOpenImagePreviewModal,
     onClose: onCloseImagePreviewModal,
   } = useDisclosure();
+  const { trigger, data, isMutating } = useSWRMutation(
+    urls.api.user.standards.update,
+    (route, { arg }) => {
+      return updateRecentStandardsRequest(arg.userId, arg.cardId);
+    }
+  );
+  const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
+    useState(false);
 
   const {
     setSelection = () => undefined,
@@ -50,6 +64,20 @@ const StandardCard = ({ card, setCards, ...props }) => {
       {card.selected ? "Remove from plan" : "Add to Plan"}
     </Button>
   );
+
+  useEffect(() => {
+    if (isOpen && user.id && !isMutating && !updateRecentStandardsTriggered) {
+      trigger({ userId: user.id, cardId: card._id });
+    } else if (!isOpen && updateRecentStandardsTriggered) {
+      setUpdateRecentStandardsTriggered(false);
+    }
+  }, [isOpen, card, user, trigger, isMutating, updateRecentStandardsTriggered]);
+
+  useEffect(() => {
+    if (data) {
+      setUpdateRecentStandardsTriggered(true);
+    }
+  }, [data]);
 
   return (
     <Flex
