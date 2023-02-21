@@ -34,27 +34,24 @@ const ImagePreviewModal = ({
     try {
       let updatedCard;
       if (selectedButton === button) {
-        // unselect the currently selected button
+        // unselect
         setSelectedButton(null);
-        // update card with thumbs value set to null
-        updatedCard = await updateCardById(cardId, {
-          thumbsUp: null,
-          thumbsDown: null,
-        });
       } else {
-        // select the clicked button
         setSelectedButton(button);
-        let thumbsUp = null,
-          thumbsDown = null;
-        if (button === "up") {
-          thumbsUp = 1;
-        } else if (button === "down") {
-          thumbsDown = 1;
-        }
-        // update card with selected thumbs value
-        updatedCard = await updateCardById(cardId, { thumbsUp, thumbsDown });
+        const thumbsUp = button === "up" ? 1 : 0;
+        const thumbsDown = button === "down" ? 1 : 0;
+        const imageId = "";
+
+        // update card
+        updatedCard = await updateCardById(cardId, {
+          thumbsUp,
+          thumbsDown,
+          imageId,
+        });
       }
+
       console.log(updatedCard);
+
       // // update the card in the cards list (this is not working rn since updatedCard is being returned as null!!)
       // setCards((cards) =>
       //   cards.map((card) => (card._id === updatedCard._id ? updatedCard : card))

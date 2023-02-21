@@ -10,24 +10,33 @@ export async function createCard(card) {
 export async function updateCardById(id, updatedCard) {
   await mongoDB();
 
-  const { isThumbsUp, isThumbsDown, ...cardUpdate } = updatedCard;
+  const { isThumbsUp, isThumbsDown, imageId, ...cardUpdate } = updatedCard;
 
   if (isThumbsUp) {
     return Card.findOneAndUpdate(
-      { _id: id },
-      { $inc: { thumbsUp: 1 } },
+      { _id: id, "images._id": imageId },
+      { $inc: { "images.$.thumbsUp": 1 } },
       { new: true }
     );
   } else if (isThumbsDown) {
     return Card.findOneAndUpdate(
-      { _id: id },
-      { $inc: { thumbsDown: 1 } },
+      { _id: id, "images._id": imageId },
+      { $inc: { "images.$.thumbsDown": 1 } },
       { new: true }
     );
   } else {
-    return Card.findOneAndUpdate({ _id: id }, cardUpdate, {
-      returnDocument: "after",
-    });
+    return Card.findOneAndUpdate(
+      { _id: id, "images._id": imageId },
+      {
+        $set: {
+          "images.$": updatedCard.images.find((image) => image._id === imageId),
+        },
+        ...cardUpdate,
+      },
+      {
+        returnDocument: "after",
+      }
+    );
   }
 }
 

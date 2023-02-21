@@ -46,9 +46,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
       isDisabled={mode === "switchYellow" || mode === "switchGray"}
       onClick={() => setSelection(!card.selected)}
       flex="1"
-    >
-      {card.selected ? "Remove from " : "Add to Plan"}
-    </Button>
+    ></Button>
   );
 
   return (
