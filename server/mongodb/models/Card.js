@@ -21,22 +21,25 @@ const buildingTypeNames = {
 };
 
 const CardSchema = new Schema({
-  images: [
-    {
-      imageUrl: {
-        type: String,
-        default: "",
+  images: {
+    type: [
+      {
+        imageUrl: {
+          type: String,
+          default: "",
+        },
+        thumbsUp: {
+          type: Number,
+          default: 0,
+        },
+        thumbsDown: {
+          type: Number,
+          default: 0,
+        },
       },
-      thumbsUp: {
-        type: Number,
-        default: 0,
-      },
-      thumbsDown: {
-        type: Number,
-        default: 0,
-      },
-    },
-  ],
+    ],
+    default: [],
+  },
   title: {
     type: String,
   },
