@@ -13,7 +13,4 @@ module.exports = withImages({
       },
     ];
   },
-  images: {
-    domains: ["localhost", "picsum.photos"], // <== Domain name
-  },
 });
