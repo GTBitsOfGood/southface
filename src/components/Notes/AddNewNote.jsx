@@ -3,12 +3,16 @@ import {
   Editable,
   EditableInput,
   EditablePreview,
+  IconButton,
   useColorModeValue,
+  useEditableControls,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import useUser from "../../lib/hooks/useUser";
 
-const AddNewNote = ({ newNote, setNewNote, submitNewNote }) => {
+import { MdUpload } from "react-icons/md";
+
+const AddNewNote = ({ newNote, setNewNote, createNewNote }) => {
   const newNoteRef = useRef();
 
   const { user } = useUser();
@@ -17,11 +21,25 @@ const AddNewNote = ({ newNote, setNewNote, submitNewNote }) => {
     setNewNote({ body: val, userId: user.id, date: new Date() });
   };
 
-  const onKeyPress = (e) => {
-    if (document.activeElement === newNoteRef.current && e.key == "Enter") {
-      submitNewNote();
-      setNewNote({ body: "", date: "" });
-    }
+  const EditableControls = () => {
+    const { isEditing, getSubmitButtonProps } = useEditableControls();
+
+    return (
+      isEditing && (
+        <IconButton
+          icon={<MdUpload />}
+          size="sm"
+          bg="none"
+          w="1.5rem"
+          h="1.5rem"
+          minWidth="auto"
+          minH="auto"
+          position="absolute"
+          mr=".2rem"
+          {...getSubmitButtonProps()}
+        />
+      )
+    );
   };
 
   return (
@@ -32,7 +50,14 @@ const AddNewNote = ({ newNote, setNewNote, submitNewNote }) => {
         value={newNote.body}
         fontSize="sm"
         onChange={(val) => handleChange(val)}
-        onKeyDown={onKeyPress}
+        submitOnBlur={false}
+        onSubmit={() => {
+          createNewNote();
+          setNewNote({ body: "", date: "" });
+        }}
+        display="flex"
+        alignItems="center"
+        justifyContent="end"
       >
         <EditablePreview
           w="100%"
@@ -41,6 +66,7 @@ const AddNewNote = ({ newNote, setNewNote, submitNewNote }) => {
           }}
         />
         <EditableInput ref={newNoteRef} pl={1} pr={1} />
+        <EditableControls />
       </Editable>
     </Box>
   );

@@ -1,10 +1,4 @@
-import {
-  AddIcon,
-  CheckIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CloseIcon,
-} from "@chakra-ui/icons";
+import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   // Box,
   Button,
@@ -27,28 +21,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import Carousel from "react-grid-carousel";
 import useEditCardModal from "../../../lib/hooks/useEditCard";
+import ArrowIcon from "../../Carousel/ArrowIcon";
+import Carousel from "../../Carousel/Carousel";
 import ImagePreviewModal from "../ImagePreviewModal";
 import ModalImage from "../ModalImage";
 import ModifyImageModal from "../ModifyImageModal";
-
-export const ChevronIcon = (props) => {
-  const styles = {
-    pos: "absolute",
-    top: "0",
-    bottom: "0",
-    margin: "auto 0",
-    color: "white",
-    zIndex: 2,
-    boxSize: 12,
-  };
-  if (props.orientation == "right") {
-    return <ChevronRightIcon {...styles} right="20px" />;
-  } else if (props.orientation == "left") {
-    return <ChevronLeftIcon {...styles} left="20px" />;
-  }
-};
 
 const CardModal = ({
   isOpenCardModal,
@@ -182,32 +160,22 @@ const CardModal = ({
                   cols={3}
                   rows={1}
                   gap={10}
-                  responsiveLayout={[
-                    {
-                      breakpoint: 991,
-                      cols: 2,
-                    },
-                  ]}
                   containerStyle={{
-                    minHeight: "250px",
-                    margin: "0 -20px 20px",
+                    marginBottom: "1.5rem",
                   }}
-                  arrowLeft={<ChevronIcon orientation="left" />}
-                  arrowRight={<ChevronIcon orientation="right" />}
+                  arrowLeft={<ArrowIcon orientation="left" />}
+                  arrowRight={<ArrowIcon orientation="right" />}
                 >
                   {images.map((image, index) => {
                     return (
-                      <Carousel.Item
-                        containerStyle={{ padding: "20px" }}
-                        key={index}
-                      >
+                      <Carousel.Item key={index}>
                         <ModalImage
                           key={index}
                           index={index}
-                          currentImageIndex={index}
+                          // currentImageIndex={index}
                           image={image}
                           isEditing={isEditing}
-                          setImages={setImages}
+                          // setImages={setImages}
                           openImagePreviewCallback={openImagePreviewCallback}
                         />
                       </Carousel.Item>
@@ -216,7 +184,7 @@ const CardModal = ({
                 </Carousel>
               ) : (
                 <Flex
-                  minHeight="250px"
+                  minHeight="10rem"
                   justifyContent="center"
                   alignItems="center"
                 >
@@ -308,7 +276,7 @@ const CardModal = ({
                     rounded={16}
                     color="#6d6e70"
                     border="solid 1px #6d6e70"
-                    fontSize={{ lg: "22px", md: "16px", base: "12px" }}
+                    fontSize="22px"
                     width="auto"
                     onClick={openImagePreviewCallback}
                   >
@@ -319,7 +287,7 @@ const CardModal = ({
                     size="lg"
                     rounded={16}
                     color="white"
-                    fontSize={{ lg: "22px", md: "16px", base: "12px" }}
+                    fontSize="22px"
                     width="auto"
                     _hover={{ bgColor: "#0690a7" }}
                     _active={{ bgColor: "#057b8f" }}

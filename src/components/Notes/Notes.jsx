@@ -13,16 +13,18 @@ import { updateCardById } from "../../actions/Card";
 import useUser from "../../lib/hooks/useUser";
 import AddNewNote from "./AddNewNote";
 import Note from "./Note";
-import { SentimentButton } from "./utils";
+import SentimentButton from "./SentimentButton";
 
 const Notes = ({ cardId, notes, setCards }) => {
-  const [revNotes, setRevNotes] = useState(notes.map((n) => n).reverse());
+  const [currentNotes, setCurrentNotes] = useState(
+    notes.map((n) => n).reverse()
+  );
   const [newNote, setNewNote] = useState({ body: "", userId: "", date: "" });
 
   const { user } = useUser();
 
   useEffect(() => {
-    setRevNotes(notes.map((c) => c).reverse());
+    setCurrentNotes(notes.map((c) => c).reverse());
   }, [notes]);
 
   const handleSaveEdit = async (newNotes) => {
@@ -42,7 +44,10 @@ const Notes = ({ cardId, notes, setCards }) => {
     });
   };
 
-  const submitNewNote = async () => {
+  const createNewNote = async () => {
+    if (newNote.body === "") {
+      return;
+    }
     const newNotes = notes.concat(newNote);
     const updatedCard = await updateCardById(
       cardId,
@@ -71,25 +76,24 @@ const Notes = ({ cardId, notes, setCards }) => {
         </Heading>
 
         <Box h="50vh" pr={1} overflowY="scroll">
-          <AddNewNote
-            newNote={newNote}
-            setNewNote={setNewNote}
-            submitNewNote={submitNewNote}
-          />
+          {user?.isLoggedIn && (
+            <AddNewNote
+              newNote={newNote}
+              setNewNote={setNewNote}
+              createNewNote={createNewNote}
+            />
+          )}
 
-          {revNotes.map((note, index) => {
-            if (note.userId !== user.id) {
+          {currentNotes.map((note, index) => {
+            if (!user.isAdmin && note.userId !== user.id) {
               return;
             }
             return (
               <Note
                 key={index}
-                cardId={cardId}
                 currNoteIdx={index}
                 note={note}
-                notes={revNotes}
-                setNotes={setRevNotes}
-                setCards={setCards}
+                notes={currentNotes}
                 handleSaveEdit={handleSaveEdit}
               />
             );
