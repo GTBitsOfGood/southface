@@ -40,7 +40,7 @@ const ImagePreviewModal = ({
         setSelectedButton(button);
         const thumbsUp = button === "up" ? 1 : 0;
         const thumbsDown = button === "down" ? 1 : 0;
-        const imageId = "";
+        const imageId = cardImages[currentImageIndex]._id;
 
         // update card
         updatedCard = await updateCardById(cardId, {
