@@ -13,7 +13,7 @@ import { updateCardById } from "../../actions/Card";
 import useUser from "../../lib/hooks/useUser";
 import AddNewNote from "./AddNewNote";
 import Note from "./Note";
-import { SentimentButton } from "./utils";
+import SentimentButton from "./SentimentButton";
 
 const Notes = ({ cardId, notes, setCards }) => {
   const [currentNotes, setCurrentNotes] = useState(

@@ -28,7 +28,7 @@ const ImagePreviewModal = ({
       <ModalOverlay />
       <ModalContent rounded={14}>
         <ModalCloseButton right={1} top={0} m={2} />
-        <ModalBody p="0px">
+        <ModalBody p="0">
           <HStack alignItems="top" minH="80vh" h="80vh">
             <LgImageCarousel cardImages={cardImages} />
 

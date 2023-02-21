@@ -161,18 +161,14 @@ const CardModal = ({
                   rows={1}
                   gap={10}
                   containerStyle={{
-                    minHeight: "250px",
-                    marginBottom: "20px",
+                    marginBottom: "1.5rem",
                   }}
                   arrowLeft={<ArrowIcon orientation="left" />}
                   arrowRight={<ArrowIcon orientation="right" />}
                 >
                   {images.map((image, index) => {
                     return (
-                      <Carousel.Item
-                        containerStyle={{ padding: "20px" }}
-                        key={index}
-                      >
+                      <Carousel.Item key={index}>
                         <ModalImage
                           key={index}
                           index={index}
@@ -188,7 +184,7 @@ const CardModal = ({
                 </Carousel>
               ) : (
                 <Flex
-                  minHeight="250px"
+                  minHeight="10rem"
                   justifyContent="center"
                   alignItems="center"
                 >
@@ -275,7 +271,7 @@ const CardModal = ({
                     rounded={16}
                     color="#6d6e70"
                     border="solid 1px #6d6e70"
-                    fontSize={{ lg: "22px", md: "16px", base: "12px" }}
+                    fontSize="22px"
                     width="auto"
                     onClick={openImagePreviewCallback}
                   >
@@ -286,7 +282,7 @@ const CardModal = ({
                     size="lg"
                     rounded={16}
                     color="white"
-                    fontSize={{ lg: "22px", md: "16px", base: "12px" }}
+                    fontSize="22px"
                     width="auto"
                     _hover={{ bgColor: "#0690a7" }}
                     _active={{ bgColor: "#057b8f" }}

@@ -33,8 +33,8 @@ const LgImageCarousel = ({ cardImages }) => {
           })}
         </Carousel>
       ) : (
-        <Flex minHeight="250px" justifyContent="center" alignItems="center">
-          <Text>Add images for this standard!</Text>
+        <Flex justifyContent="center" alignItems="center">
+          <Text color="white">Add images for this standard!</Text>
         </Flex>
       )}
     </Box>

@@ -25,8 +25,8 @@ const ModalImage = ({
   // };
 
   return (
-    <Box position="relative" width="250px" {...props}>
-      <Box boxShadow="lg" margin="0 5px 7px 0px">
+    <Box position="relative" {...props}>
+      <Box boxShadow="lg" margin="0 .3rem .5rem 0">
         <Image
           src={image}
           layout="responsive"
@@ -38,9 +38,9 @@ const ModalImage = ({
       <Button
         leftIcon={<MdExpand />}
         position="absolute"
-        bottom="15px"
-        borderRadius="30px"
-        right="10px"
+        bottom="1rem"
+        borderRadius="1rem"
+        right="1rem"
         height={7}
         backgroundColor="#FFFFFF"
         color="#6D6E70"

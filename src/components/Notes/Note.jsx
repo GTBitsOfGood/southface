@@ -62,8 +62,8 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
         icon={<MdEdit />}
         size="sm"
         bg="none"
-        w="24px"
-        h="24px"
+        w="1.5rem"
+        h="1.5rem"
         minWidth="auto"
         minH="auto"
         {...getEditButtonProps()}
@@ -96,8 +96,8 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
               icon={<IoMdTrash />}
               size="sm"
               bg="none"
-              w="24px"
-              h="24px"
+              w="1.5rem"
+              h="1.5rem"
               minWidth="auto"
               minH="auto"
               onClick={() => ifAdmin(onDeleteOpen)}
