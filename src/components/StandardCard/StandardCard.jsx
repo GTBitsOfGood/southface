@@ -1,20 +1,16 @@
-import { CheckIcon, CloseIcon, InfoIcon, RepeatIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Flex,
   Heading,
   HStack,
-  Icon,
-  IconButton,
-  Image,
   Tag,
   Text,
+  Image,
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
 import CardModal from "../Modals/CardModal";
-import ImagePreviewModal from "../Modals/ImagePreviewModal";
 
 const StandardCard = ({ card, setCards, ...props }) => {
   const {
@@ -22,38 +18,6 @@ const StandardCard = ({ card, setCards, ...props }) => {
     onOpen: onOpenCardModal,
     onClose: onCloseCardModal,
   } = useDisclosure();
-  const {
-    isOpen: isOpenImagePreviewModal,
-    onOpen: onOpenImagePreviewModal,
-    onClose: onCloseImagePreviewModal,
-  } = useDisclosure();
-
-  const {
-    setSelection = () => undefined,
-    mode = "green",
-    selectable = false,
-  } = { ...card };
-  const modeColors = {
-    green: "green.500",
-    red: "red.500",
-    switchGray: "gray.500",
-    switchYellow: "yellow.500",
-  };
-  const modeIcons = {
-    green: CheckIcon,
-    red: CloseIcon,
-    switchGray: RepeatIcon,
-    switchYellow: RepeatIcon,
-  };
-  const SelectorButton = () => (
-    <Button
-      isDisabled={mode === "switchYellow" || mode === "switchGray"}
-      onClick={() => setSelection(!card.selected)}
-      flex="1"
-    >
-      {card.selected ? "Remove from plan" : "Add to Plan"}
-    </Button>
-  );
 
   return (
     <Flex
@@ -61,84 +25,57 @@ const StandardCard = ({ card, setCards, ...props }) => {
       flexDirection="column"
       boxShadow="base"
       bgColor="white"
-      height={{ base: "sm", md: "md" }}
-      borderColor={
-        mode === "switchYellow" ? modeColors.switchYellow : "green.500"
-      }
-      borderWidth={
-        card.selected && (mode === "green" || mode === "switchYellow")
-          ? "5px"
-          : "0"
-      }
-      onClick={
-        mode === "switchYellow" || mode === "switchGray"
-          ? () => setSelection(!card.selected)
-          : () => undefined
-      }
+      rounded="23.3173px"
+      overflow="hidden"
+      height="19rem"
+      width="24rem"
+      onClick={onOpenCardModal}
+      _hover={{
+        cursor: "pointer",
+        transition: "0.1s ease-in-out",
+        boxShadow: "xl",
+      }}
+      transition="0.1s ease-in-out"
     >
-      <Box height="37%" position="relative">
-        {card.selected && mode !== "red" && (
-          <Icon
-            bgColor={modeColors[mode]}
-            color="white"
-            borderRadius="100%"
-            p="1"
-            as={modeIcons[mode]}
-            position="absolute"
-            fontSize="24"
-            left="5"
-            top="5"
-          />
-        )}
+      <Box height="47%" position="relative">
         <Image
           height="100%"
           width="full"
           fit="cover"
           src={card.images[0]}
           alt="construction image"
-          onClick={onOpenImagePreviewModal}
         />
+        {/* <StandardCardImageCarousel cardImages={card.images} /> */}
       </Box>
 
-      <ImagePreviewModal
-        isOpen={isOpenImagePreviewModal}
-        onClose={onCloseImagePreviewModal}
-        cardImages={card.images}
-        cardNotes={card.notes}
-      />
+      <Flex p={3} flexDirection="column" flex={1} mx="2">
+        <Heading size="md">{card.title}</Heading>
 
-      <Flex p={3} flexDirection="column" flex={1}>
-        <Heading my={2} size="md">
-          {card.title}
-        </Heading>
+        <Text fontSize="sm" lineHeight="1.2rem" maxHeight="5rem" noOfLines="3">
+          {card.criteria}
+        </Text>
 
-        <HStack>
-          {card.tags.map((tag, index) => {
+        <HStack mt="auto" position="relative" mb="0.5">
+          {card.tags.slice(0, 3).map((tag, index) => {
             return (
-              <Tag key={index} bgColor="#D9D9D9">
+              <Tag key={index} bgColor="#C4D600" rounded="14.7877px" px="2">
                 {tag}
               </Tag>
             );
           })}
-        </HStack>
-        {/* For now the selectable button is disabled due to bugs */}
-        {selectable ? (
-          <HStack justify="space-evenly" pt="5">
-            <SelectorButton />
-            <IconButton
-              onClick={onOpenCardModal}
-              fontSize="lg"
-              isDisabled
-              icon={<Icon as={InfoIcon} />}
-            ></IconButton>
-          </HStack>
-        ) : (
-          <Button size="lg" mt={7} onClick={onOpenCardModal} bgColor="#D9D9D9">
-            View Full Standard
+          <Button
+            position="absolute"
+            right="1"
+            bottom="0"
+            size="sm"
+            p="2"
+            variant="outline"
+            color="#00ACC8"
+            border="1px solid #00ACC8"
+          >
+            Add To Plan
           </Button>
-        )}
-
-        <Text mt={4}>{card.criteria}</Text>
+        </HStack>
         <CardModal
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}
@@ -149,7 +86,6 @@ const StandardCard = ({ card, setCards, ...props }) => {
           cardNotes={card.notes}
           cardCriteria={card.criteria}
           cardImages={card.images}
-          AddToPlanButton={<SelectorButton />}
           setCards={setCards}
         />
       </Flex>
