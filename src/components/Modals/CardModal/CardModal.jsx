@@ -256,7 +256,12 @@ const CardModal = ({
                 <HStack gap={1} overflowX="auto">
                   {tags.map((tag, index) => {
                     return (
-                      <Tag bgColor="#c4d600" borderRadius="30px" key={index} minWidth="fill">
+                      <Tag
+                        bgColor="#c4d600"
+                        borderRadius="30px"
+                        key={index}
+                        minWidth="fill"
+                      >
                         {isEditing && (
                           <TagLeftIcon
                             as={CloseIcon}

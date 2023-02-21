@@ -12,7 +12,6 @@ import {
 import React from "react";
 import CardModal from "../Modals/CardModal";
 
-
 const StandardCard = ({ card, setCards, ...props }) => {
   const {
     isOpen: isOpenCardModal,
