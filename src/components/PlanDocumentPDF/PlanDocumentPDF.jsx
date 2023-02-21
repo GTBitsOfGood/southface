@@ -73,7 +73,7 @@ const PlanDocumentPDF = ({ selectedPlanCards }) => {
                   })}
                 </View>
                 <View style={styles.description}>
-                  {card.comments.map((comment, index) => {
+                  {card.notes.map((comment, index) => {
                     {
                       return (
                         comment.body && (

@@ -1,37 +1,55 @@
-import { Image, Flex, IconButton, useDisclosure, Box } from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { Box, Button } from "@chakra-ui/react";
 
-import ModifyImageModal from "../ModifyImageModal";
+import { MdExpand } from "react-icons/md";
+
+import Image from "next/image";
 
 const ModalImage = ({
-  isEditing,
+  // isEditing,
   image,
-  currentImageIndex,
-  setImages,
+  // currentImageIndex,
+  // setImages,
+  openImagePreviewCallback,
   ...props
 }) => {
-  const {
-    isOpen: editImageIsOpen,
-    onOpen: editImageOnOpen,
-    onClose: editImageOnClose,
-  } = useDisclosure();
+  // const {
+  //   isOpen: editImageIsOpen,
+  //   onOpen: editImageOnOpen,
+  //   onClose: editImageOnClose,
+  // } = useDisclosure();
 
-  const onDeleteImage = () => {
-    setImages((images) => {
-      return images.filter((_, index) => index !== currentImageIndex);
-    });
-  };
+  // const onDeleteImage = () => {
+  //   setImages((images) => {
+  //     return images.filter((_, index) => index !== currentImageIndex);
+  //   });
+  // };
 
   return (
     <Box position="relative" {...props}>
-      <Image
-        src={image}
-        objectFit="cover"
-        boxSize={isEditing ? "3xs" : "2xs"}
-        boxShadow="dark-lg"
-        alt={"card image"}
-      />
-      {isEditing && (
+      <Box boxShadow="lg" margin="0 .3rem .5rem 0">
+        <Image
+          src={image}
+          layout="responsive"
+          width="100%"
+          height="100%"
+          alt={"card image"}
+        />
+      </Box>
+      <Button
+        leftIcon={<MdExpand />}
+        position="absolute"
+        bottom="1rem"
+        borderRadius="1rem"
+        right="1rem"
+        height={7}
+        backgroundColor="#FFFFFF"
+        color="#6D6E70"
+        boxShadow="xl"
+        onClick={openImagePreviewCallback}
+      >
+        Enlarge Image
+      </Button>
+      {/* {isEditing && (
         <Flex justifyContent="center" gap={2} m={2}>
           <IconButton
             icon={<EditIcon />}
@@ -52,7 +70,7 @@ const ModalImage = ({
             setImages={setImages}
           />
         </Flex>
-      )}
+      )} */}
     </Box>
   );
 };
