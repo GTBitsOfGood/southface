@@ -132,10 +132,7 @@ const Carousel = ({
           display="flex"
           alignItems="center"
           justifyContent="center"
-          bottom="-12px"
-          h="10px"
-          w="100%"
-          lineHeight="10px"
+          bottom="2rem"
           textAlign="center"
         >
           {[...Array(page)].map((_, i) => (

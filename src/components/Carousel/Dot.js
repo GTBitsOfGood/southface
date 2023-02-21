@@ -8,16 +8,18 @@ const Dot = ({ index, isActive = false, onClick }) => {
   }, [index, onClick]);
 
   return (
-    <Box display="flex" margin="0 5px" cursor="pointer" onClick={handleClick}>
+    <Box
+      display="flex"
+      margin="0 0.3rem"
+      cursor="pointer"
+      onClick={handleClick}
+    >
       <Box
-        style={{
-          marginTop: "-50px",
-          width: "8px",
-          height: "8px",
-          borderRadius: "50%",
-          border: "1px solid white",
-          background: `${isActive ? "white" : "none"}`,
-        }}
+        width="0.5rem"
+        height="0.5rem"
+        borderRadius="50%"
+        border="1px solid white"
+        background={isActive ? "white" : "none"}
       ></Box>
     </Box>
   );
