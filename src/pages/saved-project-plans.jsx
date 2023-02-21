@@ -3,10 +3,8 @@ import Link from "next/link";
 import useUser from "src/lib/hooks/useUser";
 import SavedProjectPlan from "src/components/SavedProjectPlan/SavedProjectPlan";
 
-
 const SavedProjectPlans = () => {
-  
-const {user} = useUser();
+  const { user } = useUser();
 
   if (!user) return "loading";
 

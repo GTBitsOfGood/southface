@@ -22,7 +22,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
     isOpen: isOpenImagePreviewModal,
     onOpen: onOpenImagePreviewModal,
     onClose: onCloseImagePreviewModal,
-  } = useDisclosure(); 
+  } = useDisclosure();
 
   const {
     setSelection = () => undefined,
