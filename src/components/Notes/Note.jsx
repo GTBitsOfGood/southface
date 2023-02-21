@@ -1,5 +1,7 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
   Editable,
   EditableInput,
   EditablePreview,
@@ -35,6 +37,10 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
   } = useDisclosure();
 
   const handleEdit = () => {
+    if (currNote === "") {
+      setCurrNote(note.body);
+      return;
+    }
     const newNotes = notes.map((n, idx) => {
       if (idx === currNoteIdx) {
         n.body = currNote;
@@ -54,20 +60,75 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
     handleSaveEdit(newNotes);
   };
 
-  const EditButton = () => {
-    const { getEditButtonProps } = useEditableControls();
+  const Toolbar = () => {
+    const {
+      isEditing,
+      getCancelButtonProps,
+      getEditButtonProps,
+      getSubmitButtonProps,
+    } = useEditableControls();
 
-    return (
-      <IconButton
-        icon={<MdEdit />}
-        size="sm"
-        bg="none"
-        w="1.5rem"
-        h="1.5rem"
-        minWidth="auto"
-        minH="auto"
-        {...getEditButtonProps()}
-      />
+    return isEditing ? (
+      <ButtonGroup display="flex" justifyContent="end" mt={1}>
+        <Button
+          bgColor="white"
+          size="xs"
+          rounded={16}
+          color="#6d6e70"
+          border="solid 1px #6d6e70"
+          fontSize="sm"
+          width="auto"
+          {...getCancelButtonProps()}
+        >
+          Cancel
+        </Button>
+        <Button
+          bgColor="#03acc8"
+          _hover={{
+            bgColor: "#029ab5",
+          }}
+          color="white"
+          size="xs"
+          rounded={16}
+          fontSize="sm"
+          width="auto"
+          {...getSubmitButtonProps()}
+        >
+          Save changes
+        </Button>
+      </ButtonGroup>
+    ) : (
+      <SimpleGrid columns={2}>
+        <Flex alignItems="center">
+          <Text as="span" color="#6d6e70" fontSize="sm">
+            {formatNoteDateString(note.date)}
+          </Text>
+        </Flex>
+        <Flex justifyContent="right" gap={1}>
+          <ButtonGroup>
+            <IconButton
+              icon={<MdEdit />}
+              size="sm"
+              bg="none"
+              w="1.5rem"
+              h="1.5rem"
+              minWidth="auto"
+              minH="auto"
+              {...getEditButtonProps()}
+            />
+            <IconButton
+              icon={<IoMdTrash />}
+              size="sm"
+              bg="none"
+              w="1.5rem"
+              h="1.5rem"
+              minWidth="auto"
+              minH="auto"
+              onClick={() => ifAdmin(onDeleteOpen)}
+            />
+          </ButtonGroup>
+        </Flex>
+      </SimpleGrid>
     );
   };
 
@@ -79,39 +140,19 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
         isPreviewFocusable={false}
         selectAllOnFocus={false}
         onChange={(val) => setCurrNote(val)}
+        submitOnBlur={false}
         onSubmit={handleEdit}
       >
         <EditablePreview mb={1} />
         <EditableInput mb={1} pl={1} pr={1} ref={noteRef} />
-        <SimpleGrid columns={2}>
-          <Flex alignItems="center">
-            <Text as="span" color="#6d6e70" fontSize="sm">
-              {formatNoteDateString(note.date)}
-            </Text>
-          </Flex>
-          <Flex justifyContent="right" gap={1}>
-            <EditButton />
-
-            <IconButton
-              icon={<IoMdTrash />}
-              size="sm"
-              bg="none"
-              w="1.5rem"
-              h="1.5rem"
-              minWidth="auto"
-              minH="auto"
-              onClick={() => ifAdmin(onDeleteOpen)}
-            />
-
-            <DeleteNoteModal
-              isOpen={isDeleteOpen}
-              onClose={onDeleteClose}
-              note={note}
-              handleDeleteNote={handleDeleteNote}
-            />
-          </Flex>
-        </SimpleGrid>
+        <Toolbar />
       </Editable>
+      <DeleteNoteModal
+        isOpen={isDeleteOpen}
+        onClose={onDeleteClose}
+        note={note}
+        handleDeleteNote={handleDeleteNote}
+      />
     </Box>
   );
 };

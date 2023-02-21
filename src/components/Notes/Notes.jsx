@@ -45,6 +45,9 @@ const Notes = ({ cardId, notes, setCards }) => {
   };
 
   const createNewNote = async () => {
+    if (newNote.body === "") {
+      return;
+    }
     const newNotes = notes.concat(newNote);
     const updatedCard = await updateCardById(
       cardId,
@@ -73,11 +76,13 @@ const Notes = ({ cardId, notes, setCards }) => {
         </Heading>
 
         <Box h="50vh" pr={1} overflowY="scroll">
-          <AddNewNote
-            newNote={newNote}
-            setNewNote={setNewNote}
-            createNewNote={createNewNote}
-          />
+          {user?.isLoggedIn && (
+            <AddNewNote
+              newNote={newNote}
+              setNewNote={setNewNote}
+              createNewNote={createNewNote}
+            />
+          )}
 
           {currentNotes.map((note, index) => {
             if (!user.isAdmin && note.userId !== user.id) {
