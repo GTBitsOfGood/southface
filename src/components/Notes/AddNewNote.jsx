@@ -8,7 +8,7 @@ import {
 import { useRef } from "react";
 import useUser from "../../lib/hooks/useUser";
 
-const AddNewNote = ({ newNote, setNewNote, submitNewNote }) => {
+const AddNewNote = ({ newNote, setNewNote, createNewNote }) => {
   const newNoteRef = useRef();
 
   const { user } = useUser();
@@ -19,7 +19,7 @@ const AddNewNote = ({ newNote, setNewNote, submitNewNote }) => {
 
   const onKeyPress = (e) => {
     if (document.activeElement === newNoteRef.current && e.key == "Enter") {
-      submitNewNote();
+      createNewNote();
       setNewNote({ body: "", date: "" });
     }
   };
