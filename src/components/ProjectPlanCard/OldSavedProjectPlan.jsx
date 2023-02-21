@@ -2,7 +2,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Box, Button, Flex, Heading, HStack, VStack } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
-import PlanDocumentPDF from "../../components/PlanDocumentPDF/PlanDocumentPDF";
+import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
 import StandardCard from "../StandardCard";
 
 const SavedProjectPlans = ({ plan }) => {
