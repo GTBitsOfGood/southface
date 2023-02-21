@@ -1,10 +1,4 @@
-import {
-  AddIcon,
-  CheckIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CloseIcon,
-} from "@chakra-ui/icons";
+import { AddIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   // Box,
   Button,
@@ -27,28 +21,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import Carousel from "react-grid-carousel";
 import useEditCardModal from "../../../lib/hooks/useEditCard";
+import ArrowIcon from "../../Carousel/ArrowIcon";
+import Carousel from "../../Carousel/Carousel";
+import ImagePreviewModal from "../ImagePreviewModal";
 import ModalImage from "../ModalImage";
 import ModifyImageModal from "../ModifyImageModal";
-import ImagePreviewModal from "../ImagePreviewModal";
-
-export const ChevronIcon = (props) => {
-  const styles = {
-    pos: "absolute",
-    top: "0",
-    bottom: "0",
-    margin: "auto 0",
-    color: "white",
-    zIndex: 2,
-    boxSize: 12,
-  };
-  if (props.orientation == "right") {
-    return <ChevronRightIcon {...styles} right="20px" />;
-  } else if (props.orientation == "left") {
-    return <ChevronLeftIcon {...styles} left="20px" />;
-  }
-};
 
 const CardModal = ({
   isOpenCardModal,
@@ -182,18 +160,12 @@ const CardModal = ({
                   cols={3}
                   rows={1}
                   gap={10}
-                  responsiveLayout={[
-                    {
-                      breakpoint: 991,
-                      cols: 2,
-                    },
-                  ]}
                   containerStyle={{
                     minHeight: "250px",
-                    margin: "0 -20px 20px",
+                    marginBottom: "20px",
                   }}
-                  arrowLeft={<ChevronIcon orientation="left" />}
-                  arrowRight={<ChevronIcon orientation="right" />}
+                  arrowLeft={<ArrowIcon orientation="left" />}
+                  arrowRight={<ArrowIcon orientation="right" />}
                 >
                   {images.map((image, index) => {
                     return (
@@ -204,10 +176,10 @@ const CardModal = ({
                         <ModalImage
                           key={index}
                           index={index}
-                          currentImageIndex={index}
+                          // currentImageIndex={index}
                           image={image}
                           isEditing={isEditing}
-                          setImages={setImages}
+                          // setImages={setImages}
                           openImagePreviewCallback={openImagePreviewCallback}
                         />
                       </Carousel.Item>

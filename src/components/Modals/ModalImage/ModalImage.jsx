@@ -1,9 +1,11 @@
-import { Box, Button, Image } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 
 import { MdExpand } from "react-icons/md";
 
+import Image from "next/image";
+
 const ModalImage = ({
-  isEditing,
+  // isEditing,
   image,
   // currentImageIndex,
   // setImages,
@@ -24,14 +26,15 @@ const ModalImage = ({
 
   return (
     <Box position="relative" width="250px" {...props}>
-      <Image
-        src={image}
-        objectFit="cover"
-        boxSize={isEditing ? "3xs" : "2xs"}
-        boxShadow="lg"
-        alt={"card image"}
-        margin="0 5px 7px 0px"
-      />
+      <Box boxShadow="lg" margin="0 5px 7px 0px">
+        <Image
+          src={image}
+          layout="responsive"
+          width="100%"
+          height="100%"
+          alt={"card image"}
+        />
+      </Box>
       <Button
         leftIcon={<MdExpand />}
         position="absolute"
