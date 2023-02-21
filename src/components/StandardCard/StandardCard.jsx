@@ -4,25 +4,20 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Tag,
   Text,
+  Image,
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
 import CardModal from "../Modals/CardModal";
-import ImagePreviewModal from "../Modals/ImagePreviewModal";
+
 
 const StandardCard = ({ card, setCards, ...props }) => {
   const {
     isOpen: isOpenCardModal,
     onOpen: onOpenCardModal,
     onClose: onCloseCardModal,
-  } = useDisclosure();
-  const {
-    isOpen: isOpenImagePreviewModal,
-    onOpen: onOpenImagePreviewModal,
-    onClose: onCloseImagePreviewModal,
   } = useDisclosure();
 
   return (
@@ -50,16 +45,9 @@ const StandardCard = ({ card, setCards, ...props }) => {
           fit="cover"
           src={card.images[0]}
           alt="construction image"
-          onClick={onOpenImagePreviewModal}
         />
+        {/* <StandardCardImageCarousel cardImages={card.images} /> */}
       </Box>
-
-      <ImagePreviewModal
-        isOpen={isOpenImagePreviewModal}
-        onClose={onCloseImagePreviewModal}
-        cardImages={card.images}
-        cardNotes={card.notes}
-      />
 
       <Flex p={3} flexDirection="column" flex={1} mx="2">
         <Heading size="md">{card.title}</Heading>

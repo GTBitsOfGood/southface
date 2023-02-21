@@ -29,9 +29,9 @@ import {
 import { useState } from "react";
 import Carousel from "react-grid-carousel";
 import useEditCardModal from "../../../lib/hooks/useEditCard";
+import ImagePreviewModal from "../ImagePreviewModal";
 import ModalImage from "../ModalImage";
 import ModifyImageModal from "../ModifyImageModal";
-import ImagePreviewModal from "../ImagePreviewModal";
 
 export const ChevronIcon = (props) => {
   const styles = {
@@ -253,10 +253,10 @@ const CardModal = ({
                 )}
               </HStack>
               <SimpleGrid mt={3} mb={15} columns={2}>
-                <HStack flexWrap="wrap" gap={1}>
+                <HStack gap={1} overflowX="auto">
                   {tags.map((tag, index) => {
                     return (
-                      <Tag bgColor="#c4d600" borderRadius="30px" key={index}>
+                      <Tag bgColor="#c4d600" borderRadius="30px" key={index} minWidth="fill">
                         {isEditing && (
                           <TagLeftIcon
                             as={CloseIcon}
