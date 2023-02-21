@@ -17,7 +17,6 @@ const StandardCard = ({ title, images, criteria }) => {
     </Box>
   );
 
-
   const imageSize = useBreakpointValue({ base: "8rem", "2xl": "10rem" });
 
   return (

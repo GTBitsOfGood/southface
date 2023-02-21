@@ -46,7 +46,7 @@ const SavedProjectPlans = () => {
             user.archivedProjectPlan.map((plan, index) => {
               return <ProjectPlanCard key={index} plan={plan} />;
             })}
-            {/* rendering a plan with default props (exact styling from figma) */}
+          {/* rendering a plan with default props (exact styling from figma) */}
           <ProjectPlanCard />
         </Box>
       </VStack>
