@@ -34,8 +34,15 @@ const DeleteNoteModal = ({ isOpen, onClose, note, handleDeleteNote }) => {
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody display="flex" justifyContent="center">
-          <VStack>
-            <Box w="60%" border="1px solid #cccccc" p={3} rounded={14} mb={4}>
+          <VStack maxW="100%">
+            <Box
+              minW="60%"
+              maxW="80%"
+              border="1px solid #cccccc"
+              p={3}
+              rounded={14}
+              mb={4}
+            >
               <Text fontSize="sm">{note.body}</Text>
               <Text as="span" color="#6d6e70" fontSize="sm">
                 {formatNoteDateString(note.date)}

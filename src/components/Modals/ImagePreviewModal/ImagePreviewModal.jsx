@@ -1,5 +1,5 @@
 import {
-  HStack,
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -29,11 +29,11 @@ const ImagePreviewModal = ({
       <ModalContent rounded={14}>
         <ModalCloseButton right={1} top={0} m={2} />
         <ModalBody p="0">
-          <HStack alignItems="top" minH="80vh" h="80vh">
+          <Flex minH="80vh" h="80vh">
             <LgImageCarousel cardImages={cardImages} />
 
             <Notes cardId={cardId} notes={cardNotes} setCards={setCards} />
-          </HStack>
+          </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>

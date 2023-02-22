@@ -65,7 +65,7 @@ const AddNewNote = ({ newNote, setNewNote, createNewNote }) => {
             background: useColorModeValue("gray.100", "gray.700"),
           }}
         />
-        <EditableInput ref={newNoteRef} pl={1} pr={1} />
+        <EditableInput ref={newNoteRef} pl={1} pr={8} />
         <EditableControls />
       </Editable>
     </Box>

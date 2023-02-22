@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  HStack,
-  SimpleGrid,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import { updateCardById } from "../../actions/Card";
@@ -28,11 +20,9 @@ const Notes = ({ cardId, notes, setCards }) => {
   }, [notes]);
 
   const handleSaveEdit = async (newNotes) => {
-    const updatedCard = await updateCardById(
-      cardId,
-      { notes: newNotes.map((n) => n).reverse() },
-      true
-    );
+    const updatedCard = await updateCardById(cardId, {
+      notes: newNotes.map((n) => n).reverse(),
+    });
     setCards((cards) => {
       return cards.map((card) => {
         if (cardId === card._id) {
@@ -49,13 +39,9 @@ const Notes = ({ cardId, notes, setCards }) => {
       return;
     }
     const newNotes = notes.concat(newNote);
-    const updatedCard = await updateCardById(
-      cardId,
-      {
-        notes: newNotes,
-      },
-      true
-    );
+    const updatedCard = await updateCardById(cardId, {
+      notes: newNotes,
+    });
 
     setCards((cards) => {
       return cards.map((card) => {
@@ -69,13 +55,13 @@ const Notes = ({ cardId, notes, setCards }) => {
   };
 
   return (
-    <SimpleGrid rows={2} gap={2} h="80vh" w="35%" p="5% 2% 5% 2%">
-      <VStack alignItems="left">
+    <VStack h="80vh" w="35%" p="5% 2% 5% 2%" alignItems="left">
+      <VStack alignItems="left" w="100%" pb={10}>
         <Heading size="lg" mt={3} mb={2}>
           Notes
         </Heading>
 
-        <Box h="50vh" pr={1} overflowY="scroll">
+        <Box h="50vh" overflowY="scroll">
           {user?.isLoggedIn && (
             <AddNewNote
               newNote={newNote}
@@ -110,7 +96,7 @@ const Notes = ({ cardId, notes, setCards }) => {
           </HStack>
         </VStack>
       </Flex>
-    </SimpleGrid>
+    </VStack>
   );
 };
 

@@ -143,7 +143,7 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
         submitOnBlur={false}
         onSubmit={handleEdit}
       >
-        <EditablePreview mb={1} />
+        <EditablePreview mb={1} maxW="100%" />
         <EditableInput mb={1} pl={1} pr={1} ref={noteRef} />
         <Toolbar />
       </Editable>
