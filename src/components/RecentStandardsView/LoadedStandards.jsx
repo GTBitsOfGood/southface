@@ -33,7 +33,6 @@ function LoadedStandards(props) {
               return card;
             })
             .sort((a, b) => {
-              console.log(a);
               return new Date(b.timeOpened) - new Date(a.timeOpened);
             });
           setCards(returnedCards);

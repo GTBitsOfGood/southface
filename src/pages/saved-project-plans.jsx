@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import { getPlans } from "src/actions/Plan";
 import SavedProjectPlan from "src/components/SavedProjectPlan/SavedProjectPlan";
 import RecentStandardsView from "../components/RecentStandardsView";
-import useUser from "../lib/hooks/useUser";
 
 const SavedProjectPlans = () => {
   const [plans, setPlans] = useState([]);
-  const { user } = useUser();
 
   useEffect(() => {
     getPlans().then((res) => {
