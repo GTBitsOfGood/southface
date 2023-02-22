@@ -46,14 +46,6 @@ const CardSchema = new Schema({
       default: [],
     },
   ],
-  selected: {
-    type: Boolean,
-    default: false,
-  },
-  selectionIndex: {
-    type: Number,
-    default: 0,
-  },
   buildingType: {
     type: String,
     enum: Object.keys(buildingTypeNames),
