@@ -27,10 +27,7 @@ const SavedProjectPlans = () => {
           Saved Project Plans
         </Heading>
       </Flex>
-      <RecentStandardsView
-        standardsData={user?.recentStandards}
-        maxCards={3}
-      ></RecentStandardsView>
+      <RecentStandardsView maxCards={3}></RecentStandardsView>
       <VStack p="0% 2% 0% 2%">
         {plans.map((plan, index) => {
           return <SavedProjectPlan key={index} plan={plan} />;
