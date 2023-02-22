@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import mongoDB from "../index";
 import User from "../models/User";
-import { getCardsByIds } from "./Card";
 
 export async function login({ username, password }) {
   if (username == null || password == null) {
@@ -114,25 +113,4 @@ export const updateRecentStandards = async (id, cardId) => {
     }
   }
   return result;
-};
-
-export const getRecentStandards = async (id, count = 3) => {
-  await mongoDB();
-
-  const user = await User.findById(id);
-  if (!user) {
-    throw new Error(`User with id ${id} not found`);
-  }
-
-  const cards = await getCardsByIds(
-    user.recentStandards
-      .map((s) => {
-        return s.cardId;
-      })
-      .sort((a, b) => {
-        return a.timeOpened - b.timeOpened;
-      })
-      .slice(0, count)
-  );
-  return cards;
 };
