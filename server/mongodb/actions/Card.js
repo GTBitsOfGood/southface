@@ -7,6 +7,12 @@ export async function createCard(card) {
   return Card.create(card);
 }
 
+export async function insertManyCards(cards) {
+  await mongoDB();
+
+  return Card.insertMany(cards);
+}
+
 export async function updateCardById(id, updatedCard) {
   await mongoDB();
 

@@ -3,7 +3,7 @@ export default {
     index: "/",
     login: "/login",
     library: "/library",
-    planbuilder: "/plan-builder",
+    reportbuilder: "/report-builder",
   },
   api: {
     example: "/api/example",
@@ -25,11 +25,11 @@ export default {
       update: "/api/comment/update",
       delete: "/api/comment/delete",
     },
-    plan: {
-      create: "/api/plan/create",
-      get: "/api/plan/get",
-      update: "/api/plan/update",
-      delete: "/api/plan/delete",
+    report: {
+      create: "/api/report/create",
+      get: "/api/report/get",
+      update: "/api/report/update",
+      delete: "/api/report/delete",
     },
   },
 };

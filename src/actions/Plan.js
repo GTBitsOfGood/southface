@@ -1,8 +1,8 @@
 import fetch from "isomorphic-unfetch";
 import urls from "src/lib/utils/urls";
 
-export const getPlans = async () => {
-  return fetch(urls.api.plan.get, {
+export const getReports = async () => {
+  return fetch(urls.api.report.get, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -19,8 +19,8 @@ export const getPlans = async () => {
     });
 };
 
-export const getPlanById = async (id) => {
-  return fetch(urls.api.plan.get + "/" + id, {
+export const getReportById = async (id) => {
+  return fetch(urls.api.report.get + "/" + id, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",
@@ -37,15 +37,15 @@ export const getPlanById = async (id) => {
     });
 };
 
-export const createPlan = async (plan) => {
-  return fetch(urls.api.plan.create, {
+export const createReport = async (report) => {
+  return fetch(urls.api.report.create, {
     method: "PUT",
     mode: "same-origin",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(plan),
+    body: JSON.stringify(report),
   })
     .then((response) => response.json())
     .then((json) => {
@@ -59,8 +59,8 @@ export const createPlan = async (plan) => {
     });
 };
 
-export const updatePlanById = async (id, plan) => {
-  return fetch(urls.api.plan.update, {
+export const updateReportById = async (id, report) => {
+  return fetch(urls.api.report.update, {
     method: "POST",
     mode: "same-origin",
     credentials: "include",
@@ -69,7 +69,7 @@ export const updatePlanById = async (id, plan) => {
     },
     body: JSON.stringify({
       id,
-      plan,
+      report,
     }),
   })
     .then((response) => response.json())
@@ -84,8 +84,8 @@ export const updatePlanById = async (id, plan) => {
     });
 };
 
-export const deletePlanById = async (id) => {
-  return fetch(urls.api.plan.delete, {
+export const deleteReportById = async (id) => {
+  return fetch(urls.api.report.delete, {
     method: "DELETE",
     mode: "same-origin",
     credentials: "include",

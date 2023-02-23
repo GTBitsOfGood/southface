@@ -1,16 +1,16 @@
 import { Alert, AlertIcon, Heading, VStack } from "@chakra-ui/react";
 import { PDFViewer } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
-import PlanDocumentPDF from "./PlanDocumentPDF";
+import ReportDocumentPDF from "./ReportDocumentPDF";
 
-const PlanPDFViewer = ({ plan }) => {
+const ReportPDFViewer = ({ report }) => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (plan) {
+    if (report) {
       setLoaded(true);
     }
-  }, [plan]);
+  }, [report]);
 
   if (!loaded) {
     return null;
@@ -18,11 +18,11 @@ const PlanPDFViewer = ({ plan }) => {
 
   return (
     <VStack style={{ height: "100%" }}>
-      <Heading mb="10px">Viewing Plan: {plan.name}</Heading>
-      {plan.cards.length == 0 ? (
+      <Heading mb="10px">Viewing Report: {report.name}</Heading>
+      {report.cards.length == 0 ? (
         <Alert status="error">
           <AlertIcon />
-          This Project Plan has no cards
+          This Report has no cards
         </Alert>
       ) : (
         <PDFViewer
@@ -30,11 +30,11 @@ const PlanPDFViewer = ({ plan }) => {
           width={"100%"}
           height={"100%"}
         >
-          <PlanDocumentPDF selectedPlanCards={plan.cards} />
+          <ReportDocumentPDF selectedReportCards={report.cards} />
         </PDFViewer>
       )}
     </VStack>
   );
 };
 
-export default PlanPDFViewer;
+export default ReportPDFViewer;

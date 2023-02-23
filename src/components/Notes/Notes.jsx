@@ -68,6 +68,17 @@ const Notes = ({ cardId, notes, setCards }) => {
     });
   };
 
+  if (!user?.isLoggedIn) {
+    return (
+      <Box>
+        <Heading size="lg" mt={3} mb={2}>
+          Notes
+        </Heading>
+        <Text>Login to view notes</Text>
+      </Box>
+    );
+  }
+
   return (
     <SimpleGrid rows={2} gap={2} h="80vh" w="35%" p="5% 2% 5% 2%">
       <VStack alignItems="left">
@@ -85,7 +96,7 @@ const Notes = ({ cardId, notes, setCards }) => {
           )}
 
           {currentNotes.map((note, index) => {
-            if (!user.isAdmin && note.userId !== user.id) {
+            if (!user?.isAdmin && note.userId !== user?.id) {
               return;
             }
             return (

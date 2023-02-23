@@ -9,19 +9,19 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import defaultReportProps from "./defaultReportProps";
 import StandardCard from "./StandardCard";
-import defaultPlanProps from "./defaultPlanProps";
 
-const ProjectPlanCard = ({ plan }) => {
-  const [hasProjectPlanCard, setHasProjectPlanCard] = useState(true);
-  const planState = plan || defaultPlanProps;
+const ArchivedReportCard = ({ report }) => {
+  const [hasReportCard, setHasReportCard] = useState(true);
+  const reportState = report || defaultReportProps;
 
   const handleRemove = () => {
-    setHasProjectPlanCard(false);
+    setHasReportCard(false);
   };
 
   return (
-    hasProjectPlanCard && (
+    hasReportCard && (
       <Flex>
         <Card
           boxShadow="md"
@@ -33,7 +33,7 @@ const ProjectPlanCard = ({ plan }) => {
         >
           <CardHeader display="flex" justifyContent="space-between">
             <Box display="flex">
-              <Heading size="xl">Recent Project Plan</Heading>
+              <Heading size="xl">Recent Report</Heading>
               <Button
                 as="a"
                 background="#6D6E70"
@@ -61,20 +61,20 @@ const ProjectPlanCard = ({ plan }) => {
                 color="white"
                 onClick={handleRemove}
               >
-                Remove from Saved Project Plans
+                Remove from Reports
               </Button>
             </Box>
           </CardHeader>
           <CardBody>
             <Flex justifyContent="space-between" marginRight="15em">
-              {planState.cards.map((card, index) => (
+              {reportState.cards.map((card, index) => (
                 <Flex key={index}>
                   <StandardCard
                     title={card.title}
                     images={card.images}
                     criteria={card.criteria}
                   />
-                  {index < planState.cards.length - 1 && (
+                  {index < reportState.cards.length - 1 && (
                     <Divider orientation="vertical" />
                   )}
                 </Flex>
@@ -87,4 +87,4 @@ const ProjectPlanCard = ({ plan }) => {
   );
 };
 
-export default ProjectPlanCard;
+export default ArchivedReportCard;

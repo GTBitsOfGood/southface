@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const PlanDocumentPDF = ({ selectedPlanCards }) => {
+const ReportDocumentPDF = ({ selectedReportCards }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.outerContainer}>
-          {selectedPlanCards.map((card, index) => {
+          {selectedReportCards.map((card, index) => {
             return (
               <View
                 break={card.images.length > 1 && index != 0}
@@ -94,4 +94,4 @@ const PlanDocumentPDF = ({ selectedPlanCards }) => {
   );
 };
 
-export default PlanDocumentPDF;
+export default ReportDocumentPDF;

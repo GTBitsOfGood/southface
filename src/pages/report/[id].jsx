@@ -1,15 +1,15 @@
 import { Alert, AlertIcon } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import React from "react";
-import { getPlanById } from "src/actions/Plan";
+import { getReportById } from "src/actions/Report";
 
-const PlanPDFViewer = dynamic(
-  () => import("../../components/PlanDocumentPDF/PlanPDFViewer"),
+const ReportPDFViewer = dynamic(
+  () => import("../../components/ReportDocumentPDF/ReportPDFViewer"),
   { ssr: false }
 );
 
 const PDFWrapper = (props) => {
-  const { plan, error } = props;
+  const { report, error } = props;
 
   if (error) {
     return (
@@ -20,7 +20,7 @@ const PDFWrapper = (props) => {
     );
   }
 
-  return <PlanPDFViewer plan={plan} />;
+  return <ReportPDFViewer report={report} />;
 };
 
 /**
@@ -29,11 +29,11 @@ const PDFWrapper = (props) => {
 export async function getServerSideProps(context) {
   const id = context.query.id;
   try {
-    const plan = await getPlanById(id);
+    const report = await getReportById(id);
 
     return {
       props: {
-        plan: plan[0],
+        report: report[0],
       },
     };
   } catch (e) {

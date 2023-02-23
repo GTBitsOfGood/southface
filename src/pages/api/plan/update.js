@@ -1,13 +1,13 @@
-import { updatePlanById } from "server/mongodb/actions/Plan";
+import { updateReportById } from "server/mongodb/actions/Report";
 import { withSessionRoute } from "src/lib/utils/session";
 
-// @route   POST api/plan/update
-// @desc    Update Plan Request
+// @route   POST api/report/update
+// @desc    Update Report Request
 // @access  Public
 const handler = async (req, res) => {
   try {
-    const { id, plan } = req.body;
-    await updatePlanById(id, plan);
+    const { id, report } = req.body;
+    await updateReportById(id, report);
 
     return res.status(200).json({
       success: true,

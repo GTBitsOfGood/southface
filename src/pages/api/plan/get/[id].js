@@ -1,8 +1,8 @@
-import { getPlanById } from "server/mongodb/actions/Plan";
+import { getReportById } from "server/mongodb/actions/Report";
 import { withSessionRoute } from "src/lib/utils/session";
 
-// @route   GET api/plan/get/[id]
-// @desc    Gets a Plan by its ID
+// @route   GET api/report/get/[id]
+// @desc    Gets a Report by its ID
 // @access  Public
 const handler = async (req, res) => {
   try {
@@ -10,11 +10,11 @@ const handler = async (req, res) => {
 
     const useId = id ? id : req.body;
 
-    const plans = await getPlanById(useId);
+    const reports = await getReportById(useId);
 
     return res.status(200).json({
       success: true,
-      payload: plans,
+      payload: reports,
     });
   } catch (error) {
     res.status(400).json({

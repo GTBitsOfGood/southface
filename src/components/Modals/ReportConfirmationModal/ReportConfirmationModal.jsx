@@ -9,20 +9,20 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 
-export default function PlanConfirmationModal(props) {
+export default function ReportConfirmationModal(props) {
   const { onClose, isOpen, handleSave, handleDiscard } = { ...props };
   return (
     <Modal onClose={onClose} isOpen={isOpen}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>End Project Plan</ModalHeader>
+        <ModalHeader>End Report</ModalHeader>
         <ModalCloseButton />
         <Center m="25%" fontSize="xl">
-          Do you want to save this project plan before marking it as complete?
+          Do you want to save this report before marking it as complete?
         </Center>
         <HStack justify="space-evenly" p={3}>
-          <Button onClick={handleSave}>Yes, save project plan</Button>
-          <Button onClick={handleDiscard}>No, discard project plan</Button>
+          <Button onClick={handleSave}>Yes, save report</Button>
+          <Button onClick={handleDiscard}>No, discard report</Button>
         </HStack>
       </ModalContent>
     </Modal>

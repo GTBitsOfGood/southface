@@ -1,16 +1,16 @@
-import { getReports } from "server/mongodb/actions/Report";
+import { insertManyCards } from "server/mongodb/actions/Card";
 import { withSessionRoute } from "src/lib/utils/session";
 
-// @route   GET api/report/get
-// @desc    Gets reports for a user
+// @route   POST api/card/create
+// @desc    Create Card Request
 // @access  Public
 const handler = async (req, res) => {
   try {
-    const userId = req.session.user.id;
-    const reports = await getReports(userId);
+    const createdCard = await insertManyCards(req.body);
+
     return res.status(200).json({
       success: true,
-      payload: reports,
+      payload: createdCard,
     });
   } catch (error) {
     res.status(400).json({

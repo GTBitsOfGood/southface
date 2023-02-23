@@ -1,16 +1,16 @@
-import { createPlan } from "server/mongodb/actions/Plan";
+import { createReport } from "server/mongodb/actions/Report";
 import { withSessionRoute } from "src/lib/utils/session";
 
-// @route   PUT api/plan/create
-// @desc    Create Plan Request
+// @route   PUT api/report/create
+// @desc    Create Report Request
 // @access  Public
 const handler = async (req, res) => {
   try {
-    const plan = await createPlan(req.body);
+    const report = await createReport(req.body);
 
     return res.status(200).json({
       success: true,
-      payload: plan,
+      payload: report,
     });
   } catch (error) {
     res.status(400).json({

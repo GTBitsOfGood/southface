@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 import useUser from "src/lib/hooks/useUser";
 import AddCardModal from "../Modals/AddCardModal";
-import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
+import ReportDocumentPDF from "../ReportDocumentPDF/ReportDocumentPDF";
 import StandardCard from "../StandardCard/StandardCard";
 
 const StandardCardTable = ({ cards, setCards, ...props }) => {
@@ -33,8 +33,8 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
           {enablepdfexport && (
             <Button
               as={PDFDownloadLink}
-              document={<PlanDocumentPDF selectedPlanCards={cards} />}
-              fileName="plan.pdf"
+              document={<ReportDocumentPDF selectedReportCards={cards} />}
+              fileName="report.pdf"
               boxShadow="base"
             >
               Download PDF

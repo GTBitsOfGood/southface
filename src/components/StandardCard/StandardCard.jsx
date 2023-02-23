@@ -4,9 +4,9 @@ import {
   Flex,
   Heading,
   HStack,
+  Image,
   Tag,
   Text,
-  Image,
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
@@ -42,7 +42,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           height="100%"
           width="full"
           fit="cover"
-          src={card.images[0]}
+          src={card.images[0].imageUrl}
           alt="construction image"
         />
         {/* <StandardCardImageCarousel cardImages={card.images} /> */}
@@ -73,19 +73,13 @@ const StandardCard = ({ card, setCards, ...props }) => {
             color="#00ACC8"
             border="1px solid #00ACC8"
           >
-            Add To Plan
+            Add To Report
           </Button>
         </HStack>
         <CardModal
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}
-          isEditingFirst={false}
-          cardId={card._id}
-          cardTags={card.tags}
-          cardTitle={card.title}
-          cardNotes={card.notes}
-          cardCriteria={card.criteria}
-          cardImages={card.images}
+          card={card}
           setCards={setCards}
         />
       </Flex>
