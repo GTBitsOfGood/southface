@@ -4,12 +4,7 @@ import { MdExpand } from "react-icons/md";
 
 import Image from "next/image";
 
-const ModalImage = ({
-  image,
-  openImagePreviewCallback,
-  ...props
-}) => {
-
+const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
   console.log(image);
   return (
     <Box position="relative" {...props}>
