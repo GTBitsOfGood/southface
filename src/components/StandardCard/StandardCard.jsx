@@ -9,15 +9,44 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import urls from "src/lib/utils/urls";
+import useSWRMutation from "swr/mutation";
+import { updateRecentStandardsRequest } from "../../actions/User";
+import useUser from "../../lib/hooks/useUser";
 import CardModal from "../Modals/CardModal";
 
 const StandardCard = ({ card, setCards, ...props }) => {
+  if (card.images == undefined) card.images = [""];
+  const { user } = useUser();
   const {
     isOpen: isOpenCardModal,
     onOpen: onOpenCardModal,
     onClose: onCloseCardModal,
   } = useDisclosure();
+  const { trigger, data, isMutating } = useSWRMutation(
+    urls.api.user.standards.update,
+    (route, { arg }) => {
+      return updateRecentStandardsRequest(arg.userId, arg.cardId);
+    }
+  );
+  const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
+    useState(false);
+
+
+  useEffect(() => {
+    if (isOpenCardModal && user.id && !isMutating && !updateRecentStandardsTriggered) {
+      trigger({ userId: user.id, cardId: card._id });
+    } else if (!isOpenCardModal && updateRecentStandardsTriggered) {
+      setUpdateRecentStandardsTriggered(false);
+    }
+  }, [isOpenCardModal, card, user, trigger, isMutating, updateRecentStandardsTriggered]);
+
+  useEffect(() => {
+    if (data) {
+      setUpdateRecentStandardsTriggered(true);
+    }
+  }, [data]);
 
   return (
     <Flex

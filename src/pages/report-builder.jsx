@@ -3,6 +3,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import useUser from "src/lib/hooks/useUser";
+import RecentStandardsView from "../components/RecentStandardsView";
 
 const ReportBuilder = () => {
   // For PDF exporting
@@ -20,6 +21,7 @@ const ReportBuilder = () => {
         <Button opacity="0" cursor="default">
           View Reports
         </Button>
+        <RecentStandardsView maxCards={3}></RecentStandardsView>
         <Heading flex="1" gridArea="stack" textAlign="center">
           Report Builder
         </Heading>

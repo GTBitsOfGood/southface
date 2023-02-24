@@ -15,10 +15,15 @@ export default {
       getAll: "/api/user/get",
       getCurrentTesting: "/api/user/get", // add id to query
       getArchivedReports: "/api/user/get/archivedReports",
+      standards: {
+        get: "/api/user/standards/get/",
+        update: "/api/user/standards/update",
+      },
     },
     card: {
       create: "/api/card/create/",
       get: "/api/card/get/",
+      getIds: "/api/card/getIds/",
       getPagination: "/api/card/getPagination?page=",
       update: "/api/card/update/",
       delete: "/api/card/delete/",

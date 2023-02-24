@@ -21,6 +21,12 @@ const UserSchema = new Schema({
   archivedReports: {
     type: [ReportSchema], // this is embedded
   },
+  recentStandards: [
+    {
+      cardId: String,
+      timeOpened: Date,
+    },
+  ],
 });
 
 export default mongoose.models?.User ?? mongoose.model("User", UserSchema);
