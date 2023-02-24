@@ -61,7 +61,6 @@ const StandardCard = ({ card, setCards, ...props }) => {
   return (
     <Flex
       {...props}
-      
       flexDirection="column"
       boxShadow="base"
       bgColor="white"
