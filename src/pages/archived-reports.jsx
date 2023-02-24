@@ -2,11 +2,14 @@ import { Box, Button, Flex, Heading, Spacer, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import ArchivedReportCard from "src/components/ArchivedReportCard";
 import useUser from "src/lib/hooks/useUser";
+import urls from "src/lib/utils/urls";
+import useSWR from "swr";
 
-const SavedReports = () => {
-  const { user } = useUser();
-
-  console.log(user);
+const ArchivedReports = () => {
+  // this has to be refactored later on
+  const { user } = useUser({getArchivedReports: true});
+  const { data } = useSWR(urls.api.user.getArchivedReports);
+  const archivedReports = data?.payload.archivedReports;
 
   return (
     <Box>
@@ -44,8 +47,8 @@ const SavedReports = () => {
           borderColor="lightgrey"
           width="full"
         >
-          {user?.isLoggedIn &&
-            user?.archivedReports.map((archivedReport, index) => {
+          {user?.isLoggedIn && archivedReports &&
+            archivedReports.map((archivedReport, index) => {
               return <ArchivedReportCard key={index} report={archivedReport} />;
             })}
           {/* rendering an archived report with default props (exact styling from figma) */}
@@ -55,4 +58,4 @@ const SavedReports = () => {
     </Box>
   );
 };
-export default SavedReports;
+export default ArchivedReports;

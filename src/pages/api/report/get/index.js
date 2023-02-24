@@ -6,8 +6,7 @@ import { withSessionRoute } from "src/lib/utils/session";
 // @access  Public
 const handler = async (req, res) => {
   try {
-    const userId = req.session.user.id;
-    const reports = await getReports(userId);
+    const reports = await getReports();
     return res.status(200).json({
       success: true,
       payload: reports,

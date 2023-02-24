@@ -12,9 +12,8 @@ import React, { useState } from "react";
 import defaultReportProps from "./defaultReportProps";
 import StandardCard from "./StandardCard";
 
-const ArchivedReportCard = ({ report }) => {
+const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const [hasReportCard, setHasReportCard] = useState(true);
-  const reportState = report || defaultReportProps;
 
   const handleRemove = () => {
     setHasReportCard(false);
@@ -67,14 +66,14 @@ const ArchivedReportCard = ({ report }) => {
           </CardHeader>
           <CardBody>
             <Flex justifyContent="space-between" marginRight="15em">
-              {reportState.cards.map((card, index) => (
+              {report.cards.map((card, index) => (
                 <Flex key={index}>
                   <StandardCard
                     title={card.title}
                     images={card.images}
                     criteria={card.criteria}
                   />
-                  {index < reportState.cards.length - 1 && (
+                  {index < report.cards.length - 1 && (
                     <Divider orientation="vertical" />
                   )}
                 </Flex>

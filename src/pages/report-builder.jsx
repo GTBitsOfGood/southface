@@ -2,11 +2,13 @@ import { Box, Button, Flex, Heading, HStack, Input } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import useUser from "src/lib/hooks/useUser";
 
 const ReportBuilder = () => {
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => setHasLoaded(true), []);
+  const { user } = useUser();
 
   // Confimation modal
   // const { isOpen, onOpen, onClose } = useDisclosure();
@@ -21,9 +23,11 @@ const ReportBuilder = () => {
         <Heading flex="1" gridArea="stack" textAlign="center">
           Report Builder
         </Heading>
-        <Link href="/archived-reports">
-          <Button href="/">View Reports</Button>
-        </Link>
+        {user?.isLoggedIn && (
+          <Link href="/archived-reports">
+            <Button href="/">View Archived Reports</Button>
+          </Link>
+        )}
       </Flex>
       <Flex
         p={5}

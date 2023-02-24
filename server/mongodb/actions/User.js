@@ -63,12 +63,29 @@ export const getUserFromId = async (id) => {
       id,
       username: user.username,
       isAdmin: user.isAdmin,
-      archivedReports: user.archivedReports,
     };
   } catch (e) {
     throw new Error("Invalid token!");
   }
 };
+
+
+export const getUserArchivedReports = async (id) => {
+  await mongoDB();
+  try {
+    const user = await User.findOne({ _id: id }).populate(
+      "archivedReports.cards"
+    );
+
+    if (user == null) {
+      throw new Error();
+    }
+
+    return user.archivedReports;
+  } catch (e) {
+    throw new Error("Invalid token!");
+  }
+}
 
 export const getUsers = async () => {
   await mongoDB();

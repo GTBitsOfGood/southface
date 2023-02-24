@@ -1,15 +1,10 @@
 import mongoose from "mongoose";
-import { CardSchema } from "server/mongodb/models/Card.js";
 
 const { Schema } = mongoose;
 
 const ReportSchema = new Schema({
-  userId: {
-    type: String,
-    required: true,
-  },
   cards: {
-    type: [CardSchema],
+    type: [{type: Schema.Types.ObjectId, ref: "Card"}],
     required: true,
   },
   name: {

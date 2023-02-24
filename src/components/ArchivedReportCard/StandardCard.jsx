@@ -4,8 +4,8 @@ import {
   CardBody,
   CardHeader,
   Flex,
-  Text,
   Heading,
+  Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import Image from "next/image";
@@ -26,7 +26,7 @@ const StandardCard = ({ title, images, criteria }) => {
       </CardHeader>
       <CardBody marginLeft="3" marginRight="3">
         <Flex gap={2} position="relative">
-          {images.slice(0, 2).map((image, index) => (
+          {images.slice(0, 2).map(({ imageUrl: image }, index) => (
             <ChakraNextImage
               src={image}
               alt="Shopping Cart Image"

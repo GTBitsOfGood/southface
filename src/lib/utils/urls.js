@@ -12,6 +12,9 @@ export default {
       login: "/api/user/login",
       logout: "/api/user/logout",
       getCurrent: "/api/user",
+      getAll: "/api/user/get",
+      getCurrentTesting: "/api/user/get", // add id to query
+      getArchivedReports: "/api/user/get/archivedReports"
     },
     card: {
       create: "/api/card/create/",

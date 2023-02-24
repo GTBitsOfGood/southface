@@ -29,8 +29,8 @@ export async function getReportById(id) {
   return report;
 }
 
-export async function getReports(userId) {
+export async function getReports() {
   await mongoDB();
 
-  return Report.find({ userId: userId });
+  return Report.find().populate("cards");
 }
