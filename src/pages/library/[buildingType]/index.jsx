@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import CategoryCards from "src/components/CategoryCards";
 import { buildingTypeNames } from "src/lib/utils/constants";
 
+
 function CategoriesPage({ buildingType }) {
   const router = useRouter();
 

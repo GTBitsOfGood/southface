@@ -69,7 +69,6 @@ export const getUserFromId = async (id) => {
   }
 };
 
-
 export const getUserArchivedReports = async (id) => {
   await mongoDB();
   try {
@@ -85,7 +84,7 @@ export const getUserArchivedReports = async (id) => {
   } catch (e) {
     throw new Error("Invalid token!");
   }
-}
+};
 
 export const getUsers = async () => {
   await mongoDB();

@@ -9,6 +9,10 @@ import {
   buildingTypeNames,
   primaryCategoryNames,
 } from "src/lib/utils/constants";
+import {
+  capitalizeAndRemoveDash,
+  uncapitalizeAndAddDash,
+} from "src/lib/utils/utilFunctions";
 
 const LibraryCategoryPage = (props) => {
   const cardsFromDatabase = props.cardsFromDatabase;
@@ -66,8 +70,18 @@ const LibraryCategoryPage = (props) => {
 
 export async function getStaticProps({ params }) {
   const pageNumber = 0;
-  const cards = await getCardsPagination(pageNumber);
-  const cardsCount = await getCardsCount();
+  const { buildingType, primaryCategory } = params;
+  const cards = await getCardsPagination({
+    pageNumber,
+    buildingType: params.buildingType,
+    primaryCategory: params.primaryCategory,
+  });
+
+  console.log("here");
+  const cardsCount = await getCardsCount({
+    buildingType,
+    primaryCategory,
+  });
   let numPages = Math.floor(cardsCount / 4);
 
   if (cardsCount % 4 > 0) {
@@ -80,8 +94,7 @@ export async function getStaticProps({ params }) {
       numPages,
       pageNumber: pageNumber + 1,
       buildingType: buildingTypeNames[params.buildingType],
-      primaryCategory:
-        primaryCategoryNames[params.primaryCategory.toUpperCase()],
+      primaryCategory: capitalizeAndRemoveDash(params.primaryCategory),
       params,
     },
   };
@@ -94,7 +107,9 @@ export async function getStaticPaths() {
         return {
           params: {
             buildingType: buildingType,
-            primaryCategory: primaryCategoryInitial.toLowerCase(),
+            primaryCategory: uncapitalizeAndAddDash(
+              primaryCategoryNames[primaryCategoryInitial]
+            ),
           },
         };
       });

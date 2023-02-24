@@ -5,7 +5,6 @@ import { withSessionRoute } from "src/lib/utils/session";
 // @desc    Get current user from cookie
 // @access  Public
 const handler = async (req, res) => {
-
   const id = req.session.user?.id || req.query.userId;
   try {
     const archivedReports = await getUserArchivedReports(id);

@@ -1,7 +1,6 @@
 import fetch from "isomorphic-unfetch";
 import urls from "src/lib/utils/urls";
 
-
 export const signUp = (username, password) =>
   fetch(urls.api.user.signUp, {
     method: "POST",
@@ -73,8 +72,6 @@ export const getCurrentUser = (cookies) => {
       cookie: cookies,
     };
   }
-
-
 
   return fetch(urls.api.user.getCurrent, {
     method: "GET",

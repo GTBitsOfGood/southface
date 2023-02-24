@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { ReportSchema } from "server/mongodb/models/Report";
 
-
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({

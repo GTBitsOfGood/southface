@@ -7,7 +7,7 @@ import useSWR from "swr";
 
 const ArchivedReports = () => {
   // this has to be refactored later on
-  const { user } = useUser({getArchivedReports: true});
+  const { user } = useUser({ getArchivedReports: true });
   const { data } = useSWR(urls.api.user.getArchivedReports);
   const archivedReports = data?.payload.archivedReports;
 
@@ -47,7 +47,8 @@ const ArchivedReports = () => {
           borderColor="lightgrey"
           width="full"
         >
-          {user?.isLoggedIn && archivedReports &&
+          {user?.isLoggedIn &&
+            archivedReports &&
             archivedReports.map((archivedReport, index) => {
               return <ArchivedReportCard key={index} report={archivedReport} />;
             })}

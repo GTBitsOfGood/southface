@@ -4,7 +4,7 @@ import Link from "next/link";
 function CategoryCard(props) {
   return (
     <Link
-      href={`${props.routerQuery.buildingType}/${props.initials.toLowerCase()}`}
+      href={`${props.routerQuery.buildingType}/${props.title.toLowerCase().replace(/ /g,"-")}`}
     >
       <Flex
         direction="column"

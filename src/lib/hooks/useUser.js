@@ -8,7 +8,6 @@ export default function useUser({
   redirectTo = "",
   redirectIfFound = false,
 } = {}) {
-  
   const { data, mutate: mutateUser } = useSWR(urls.api.user.getCurrent);
   const user = data?.payload;
   const unauthorizedToast = useToast();
