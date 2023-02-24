@@ -7,8 +7,10 @@ const ArrowIcon = (props) => {
     bottom: "0",
     margin: "auto 0",
     color: "white",
+    bgColor: "black",
+    rounded: "full",
     zIndex: 2,
-    boxSize: 12,
+    boxSize: 8,
   };
   if (props.orientation == "right") {
     return <ChevronRightIcon {...styles} />;

@@ -4,26 +4,7 @@ import { MdExpand } from "react-icons/md";
 
 import Image from "next/image";
 
-const ModalImage = ({
-  // isEditing,
-  image,
-  // currentImageIndex,
-  // setImages,
-  openImagePreviewCallback,
-  ...props
-}) => {
-  // const {
-  //   isOpen: editImageIsOpen,
-  //   onOpen: editImageOnOpen,
-  //   onClose: editImageOnClose,
-  // } = useDisclosure();
-
-  // const onDeleteImage = () => {
-  //   setImages((images) => {
-  //     return images.filter((_, index) => index !== currentImageIndex);
-  //   });
-  // };
-
+const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
   return (
     <Box position="relative" {...props}>
       <Box boxShadow="lg" margin="0 .3rem .5rem 0">
@@ -49,28 +30,6 @@ const ModalImage = ({
       >
         Enlarge Image
       </Button>
-      {/* {isEditing && (
-        <Flex justifyContent="center" gap={2} m={2}>
-          <IconButton
-            icon={<EditIcon />}
-            boxShadow="base"
-            onClick={editImageOnOpen}
-          />
-          <IconButton
-            icon={<DeleteIcon />}
-            boxShadow="base"
-            onClick={onDeleteImage}
-          />
-          <ModifyImageModal
-            isOpen={editImageIsOpen}
-            onClose={editImageOnClose}
-            isAdd={false}
-            currentImageIndex={currentImageIndex}
-            imageProp={image}
-            setImages={setImages}
-          />
-        </Flex>
-      )} */}
     </Box>
   );
 };

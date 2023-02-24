@@ -6,18 +6,7 @@ import { withSessionRoute } from "src/lib/utils/session";
 // @access  Public
 const handler = async (req, res) => {
   try {
-    if (req.body.isOnlyNotes == true) {
-      const updatedCard = await updateCardById(req.body.id, {
-        notes: req.body.card.notes,
-      });
-
-      return res.status(200).json({
-        success: true,
-        payload: updatedCard,
-      });
-    }
-
-    const updatedCard = await updateCardById(req.body.id, req.body.card);
+    const updatedCard = await updateCardById(req.body.id, { ...req.body.card });
 
     return res.status(200).json({
       success: true,

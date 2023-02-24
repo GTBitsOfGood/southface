@@ -63,8 +63,25 @@ export const getUserFromId = async (id) => {
       id,
       username: user.username,
       isAdmin: user.isAdmin,
-      archivedProjectPlan: user.archivedProjectPlan,
+      recentStandards: user?.recentStandards,
     };
+  } catch (e) {
+    throw new Error("Invalid token!");
+  }
+};
+
+export const getUserArchivedReports = async (id) => {
+  await mongoDB();
+  try {
+    const user = await User.findOne({ _id: id }).populate(
+      "archivedReports.cards"
+    );
+
+    if (user == null) {
+      throw new Error();
+    }
+
+    return user.archivedReports;
   } catch (e) {
     throw new Error("Invalid token!");
   }
@@ -80,4 +97,37 @@ export const deleteUserById = async (id) => {
   await mongoDB();
 
   return User.findOneAndRemove({ _id: id });
+};
+
+export const updateRecentStandards = async (id, cardId) => {
+  await mongoDB();
+
+  const query = {
+    _id: id,
+    recentStandards: {
+      $elemMatch: { cardId: { $eq: cardId } },
+    },
+  };
+  const newData = {
+    $set: {
+      "recentStandards.$.timeOpened": new Date(),
+    },
+  };
+  let result = await User.findOneAndUpdate(query, newData);
+  if (result == null) {
+    // standard does not exist yet in recents
+    result = await User.updateOne(
+      {
+        _id: id,
+        "recentStandards.cardId": { $ne: cardId },
+      },
+      {
+        $push: { recentStandards: { cardId: cardId, timeOpened: new Date() } },
+      }
+    );
+    if (result.modifiedCount == 0) {
+      throw new Error("Failed to update user's recentStandards.");
+    }
+  }
+  return result;
 };

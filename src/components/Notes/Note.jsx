@@ -15,7 +15,6 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { IoMdTrash } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
-import useUser from "src/lib/hooks/useUser";
 import DeleteNoteModal from "./DeleteNoteModal";
 import { formatNoteDateString } from "./utils";
 
@@ -23,8 +22,6 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
   const [currNote, setCurrNote] = useState(note.body);
 
   const noteRef = useRef();
-
-  const { ifAdmin } = useUser();
 
   useEffect(() => {
     setCurrNote(note.body);
@@ -124,7 +121,7 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
               h="1.5rem"
               minWidth="auto"
               minH="auto"
-              onClick={() => ifAdmin(onDeleteOpen)}
+              onClick={onDeleteOpen}
             />
           </ButtonGroup>
         </Flex>
@@ -143,7 +140,7 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes }) => {
         submitOnBlur={false}
         onSubmit={handleEdit}
       >
-        <EditablePreview mb={1} />
+        <EditablePreview mb={1} maxW="100%" />
         <EditableInput mb={1} pl={1} pr={1} ref={noteRef} />
         <Toolbar />
       </Editable>

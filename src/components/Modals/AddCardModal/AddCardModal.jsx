@@ -214,7 +214,7 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
               />
 
               <Button bgColor="#D9D9D9" alignSelf="end" size="lg" rounded={16}>
-                Add to Plan
+                Add to Report
               </Button>
             </Flex>
             <Flex justifyContent="space-between" maxWidth="sm" my={3}>

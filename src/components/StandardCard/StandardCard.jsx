@@ -4,20 +4,59 @@ import {
   Flex,
   Heading,
   HStack,
+  Image,
   Tag,
   Text,
-  Image,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import urls from "src/lib/utils/urls";
+import useSWRMutation from "swr/mutation";
+import { updateRecentStandardsRequest } from "../../actions/User";
+import useUser from "../../lib/hooks/useUser";
 import CardModal from "../Modals/CardModal";
 
 const StandardCard = ({ card, setCards, ...props }) => {
+  const { user } = useUser();
   const {
     isOpen: isOpenCardModal,
     onOpen: onOpenCardModal,
     onClose: onCloseCardModal,
   } = useDisclosure();
+  const { trigger, data, isMutating } = useSWRMutation(
+    urls.api.user.standards.update,
+    (route, { arg }) => {
+      return updateRecentStandardsRequest(arg.userId, arg.cardId);
+    }
+  );
+  const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
+    useState(false);
+
+  useEffect(() => {
+    if (
+      isOpenCardModal &&
+      user.id &&
+      !isMutating &&
+      !updateRecentStandardsTriggered
+    ) {
+      trigger({ userId: user.id, cardId: card._id });
+    } else if (!isOpenCardModal && updateRecentStandardsTriggered) {
+      setUpdateRecentStandardsTriggered(false);
+    }
+  }, [
+    isOpenCardModal,
+    card,
+    user,
+    trigger,
+    isMutating,
+    updateRecentStandardsTriggered,
+  ]);
+
+  useEffect(() => {
+    if (data) {
+      setUpdateRecentStandardsTriggered(true);
+    }
+  }, [data]);
 
   return (
     <Flex
@@ -42,7 +81,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           height="100%"
           width="full"
           fit="cover"
-          src={card.images[0]}
+          src={card.images[0].imageUrl}
           alt="construction image"
         />
         {/* <StandardCardImageCarousel cardImages={card.images} /> */}
@@ -73,19 +112,13 @@ const StandardCard = ({ card, setCards, ...props }) => {
             color="#00ACC8"
             border="1px solid #00ACC8"
           >
-            Add To Plan
+            Add To Report
           </Button>
         </HStack>
         <CardModal
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}
-          isEditingFirst={false}
-          cardId={card._id}
-          cardTags={card.tags}
-          cardTitle={card.title}
-          cardNotes={card.notes}
-          cardCriteria={card.criteria}
-          cardImages={card.images}
+          card={card}
           setCards={setCards}
         />
       </Flex>
