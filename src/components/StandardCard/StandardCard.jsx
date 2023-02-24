@@ -17,7 +17,6 @@ import useUser from "../../lib/hooks/useUser";
 import CardModal from "../Modals/CardModal";
 
 const StandardCard = ({ card, setCards, ...props }) => {
-  if (card.images == undefined) card.images = [""];
   const { user } = useUser();
   const {
     isOpen: isOpenCardModal,
@@ -33,14 +32,25 @@ const StandardCard = ({ card, setCards, ...props }) => {
   const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
     useState(false);
 
-
   useEffect(() => {
-    if (isOpenCardModal && user.id && !isMutating && !updateRecentStandardsTriggered) {
+    if (
+      isOpenCardModal &&
+      user.id &&
+      !isMutating &&
+      !updateRecentStandardsTriggered
+    ) {
       trigger({ userId: user.id, cardId: card._id });
     } else if (!isOpenCardModal && updateRecentStandardsTriggered) {
       setUpdateRecentStandardsTriggered(false);
     }
-  }, [isOpenCardModal, card, user, trigger, isMutating, updateRecentStandardsTriggered]);
+  }, [
+    isOpenCardModal,
+    card,
+    user,
+    trigger,
+    isMutating,
+    updateRecentStandardsTriggered,
+  ]);
 
   useEffect(() => {
     if (data) {
@@ -51,6 +61,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
   return (
     <Flex
       {...props}
+      
       flexDirection="column"
       boxShadow="base"
       bgColor="white"

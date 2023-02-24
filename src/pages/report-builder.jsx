@@ -21,7 +21,7 @@ const ReportBuilder = () => {
         <Button opacity="0" cursor="default">
           View Reports
         </Button>
-        <RecentStandardsView maxCards={3}></RecentStandardsView>
+
         <Heading flex="1" gridArea="stack" textAlign="center">
           Report Builder
         </Heading>
@@ -82,6 +82,7 @@ const ReportBuilder = () => {
         handleSave={SaveReportHandler}
         handleDiscard={DiscardReportHandler}
       /> */}
+      <RecentStandardsView maxCards={3}></RecentStandardsView>
     </>
   );
 };

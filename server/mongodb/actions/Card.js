@@ -45,7 +45,7 @@ export async function getCardsPagination({
 
   // match is being used since without it causes wierd refresh issues
   let query = {
-    $match: [{buildingType}, {primaryCategory}]
+    $match: [{ buildingType }, { primaryCategory }],
   };
 
   if (searchFilterString && searchFilterTags) {
@@ -84,7 +84,7 @@ export async function getCardsCount({
   await mongoDB();
 
   let query = {
-    $match: [{buildingType}, {primaryCategory}]
+    $match: [{ buildingType }, { primaryCategory }],
   };
 
   if (searchFilterString && searchFilterTags) {

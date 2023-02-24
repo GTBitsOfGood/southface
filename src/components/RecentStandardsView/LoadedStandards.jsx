@@ -61,7 +61,7 @@ function LoadedStandards(props) {
       {props.standardsData ? (
         cards.map((card, index) => {
           {
-            return <StandardCard key={index} card={card}></StandardCard>;
+            return <StandardCard key={index} card={card} height="3rem" width="4rem"></StandardCard>;
           }
         })
       ) : (
