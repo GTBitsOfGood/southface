@@ -22,7 +22,7 @@ function RecentStandardsView(props) {
       </Link>
       <Flex gap="2rem" overflowX="auto">
         <LoadedStandards
-          standardsData={user?.standardsData}
+          standardsData={user?.recentStandards}
           maxCards={props.maxCards}
         ></LoadedStandards>
       </Flex>
