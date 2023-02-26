@@ -2,10 +2,12 @@ import { Breadcrumb, BreadcrumbItem, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import CategoryCards from "src/components/CategoryCards";
+import SearchBar, { useSearch } from "src/components/SearchBar";
 import { buildingTypeNames } from "src/lib/utils/constants";
 
 function CategoriesPage({ buildingType }) {
   const router = useRouter();
+  const { cards, setCards, filteredData, handleSearch } = useSearch([]);
 
   return (
     <Flex
@@ -22,8 +24,14 @@ function CategoriesPage({ buildingType }) {
           <Text>{buildingTypeNames[buildingType]}</Text>
         </BreadcrumbItem>
       </Breadcrumb>
+      <SearchBar handleSearch={handleSearch} />
       <Flex flexWrap="wrap" gap="4rem">
-        <CategoryCards routerQuery={router.query} />
+        <CategoryCards
+          routerQuery={router.query}
+          data={filteredData}
+          setCards={setCards}
+          cards={cards}
+        />
       </Flex>
     </Flex>
   );

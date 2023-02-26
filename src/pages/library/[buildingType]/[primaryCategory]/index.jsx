@@ -7,11 +7,11 @@ import SearchBar, { useSearch } from "src/components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import {
   buildingTypeNames,
-  primaryCategoryNames,
+  primaryCategoryNames
 } from "src/lib/utils/constants";
 import {
   capitalizeAndRemoveDash,
-  uncapitalizeAndAddDash,
+  uncapitalizeAndAddDash
 } from "src/lib/utils/utilFunctions";
 
 const LibraryCategoryPage = (props) => {
