@@ -65,8 +65,8 @@ function LoadedStandards(props) {
               <StandardCard
                 key={index}
                 card={card}
-                height="3rem"
-                width="4rem"
+                maxH={{ base: "13rem", "2xl": "14.5rem" }}
+                minW={{ base: "23rem", "2xl": "24rem" }}
               ></StandardCard>
             );
           }

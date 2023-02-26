@@ -1,4 +1,4 @@
-import { Button, Flex, Heading } from "@chakra-ui/react";
+import { Button, Flex, Heading, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import useUser from "../../lib/hooks/useUser";
 import LoadedStandards from "./LoadedStandards";
@@ -8,23 +8,24 @@ function RecentStandardsView(props) {
 
   return (
     <Flex flexDirection={"column"} gap="16px">
-      <Heading size="lg">Recent Standards</Heading>
+      <Heading fontSize="1.5em">Recent Standards</Heading>
       <Link href="/library">
         <Button
-          h="30px"
+          href="/"
           bgColor="#727474"
           borderRadius="20"
           textColor="white"
-          width="max"
+          width="8em"
+          height="1.9em"
         >
-          See All Standards
+          <Text fontSize="xs">See All Standards</Text>
         </Button>
       </Link>
-      <Flex gap="2rem" overflowX="auto">
+      <Flex gap="2rem" overflowX="auto" p={2}>
         <LoadedStandards
           standardsData={user?.recentStandards}
           maxCards={props.maxCards}
-        ></LoadedStandards>
+        />
       </Flex>
     </Flex>
   );

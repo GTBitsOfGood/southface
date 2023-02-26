@@ -18,8 +18,8 @@ const ArchivedReportView = () => {
             bgColor="#727474"
             borderRadius="20"
             textColor="white"
-            width="10em"
-            height="1.6em"
+            width="10.8em"
+            height="1.9em"
           >
             <Text fontSize="xs">See All Completed Reports</Text>
           </Button>

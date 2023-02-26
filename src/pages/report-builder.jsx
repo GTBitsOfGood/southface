@@ -15,14 +15,14 @@ const ReportBuilder = () => {
   return (
     <>
       <HStack spacing={5} p={8} alignItems="flex-start">
-        <VStack flex={2} h="40em" as={Card}>
+        <VStack flex={2} h="50em" as={Card}>
           <Heading width="100%">Report Builder</Heading>
         </VStack>
-        <VStack flex={1} maxWidth={{ base: "36%", "2xl": "23%" }}>
+        <VStack flex={1} maxWidth={{ base: "29%", "2xl": "28%" }}>
           <Card w="100%" p={4} gap={3}>
             <ArchivedReportView />
           </Card>
-          <Card w="100%">
+          <Card w="100%" p={4} gap={3}>
             <RecentStandardsView maxCards={3}></RecentStandardsView>
           </Card>
         </VStack>
