@@ -39,5 +39,9 @@ export default {
       update: "/api/report/update",
       delete: "/api/report/delete",
     },
+    tag: {
+      create: "/api/tag/create",
+      get: "/api/tag/get",
+    },
   },
 };

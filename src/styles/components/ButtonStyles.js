@@ -1,8 +1,15 @@
 const generateButtonStyles = (color, hoverColor, activeColor) => {
+  const hoverState = {
+    transition: "0.1s ease-in-out",
+    bgColor: hoverColor,
+    color: "white",
+  };
+  const activeState = {
+    transition: "0.1s ease-in-out",
+    bgColor: activeColor,
+    color: "white",
+  };
 
-  const hoverState = { transition: "0.1s ease-in-out", bgColor: hoverColor, color: "white" };
-  const activeState = { transition: "0.1s ease-in-out", bgColor: activeColor, color: "white" };
- 
   return {
     [color]: {
       bg: color,
@@ -49,7 +56,7 @@ export const ButtonStyles = {
       cursor: "pointer",
     },
   },
-  
+
   // styles for different sizes ("sm", "md", "lg")
   sizes: {},
 
@@ -64,4 +71,3 @@ export const ButtonStyles = {
     variant: "blue",
   },
 };
-

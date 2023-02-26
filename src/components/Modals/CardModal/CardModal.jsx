@@ -103,12 +103,7 @@ const CardModal = ({
                   >
                     View Notes
                   </Button>
-                  <Button
-                    variant="blue"
-                    fontSize="22px"
-                    width="auto"
-                    size="lg"
-                  >
+                  <Button variant="blue" fontSize="22px" width="auto" size="lg">
                     Add to Report
                   </Button>
                 </Flex>
