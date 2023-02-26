@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {Box} from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react";
 
 /**
  * Must specificy height and width! Otherwise image might not be displayed/
@@ -11,5 +11,3 @@ const ChakraNextImage = ({ src, alt, ...rest }) => (
 );
 
 export default ChakraNextImage;
-
-

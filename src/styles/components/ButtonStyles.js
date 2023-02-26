@@ -63,8 +63,8 @@ export const ButtonStyles = {
   sizes: {
     lg: {
       rounded: "16",
-      fontSize: "22px"
-    }
+      fontSize: "22px",
+    },
   },
 
   variants: {

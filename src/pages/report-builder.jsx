@@ -10,19 +10,20 @@ const ReportBuilder = () => {
   const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => setHasLoaded(true), []);
   const { user } = useUser();
-  
+
   const nameRef = useRef();
 
   return (
     <>
       <Flex flexFlow="row nowrap" mb="10">
-
         <Heading flex="1" gridArea="stack" textAlign="center">
           Report Builder
         </Heading>
         {user?.isLoggedIn && (
           <Link href="/archived-reports">
-            <Button href="/" variant="blue">View Archived Reports</Button>
+            <Button href="/" variant="blue">
+              View Archived Reports
+            </Button>
           </Link>
         )}
       </Flex>

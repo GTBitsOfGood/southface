@@ -46,7 +46,7 @@ export async function signUp({ username, password, isAdmin }) {
       return {
         id: user._id,
         isAdmin: user.isAdmin,
-        password: user.password
+        password: user.password,
       };
     });
 }

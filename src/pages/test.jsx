@@ -1,11 +1,9 @@
-
 import ConfirmActionModal from "../components/Modals/ConfirmActionModal";
-import {Button, Box, Heading, useDisclosure} from "@chakra-ui/react";
-
+import { Button, Box, Heading, useDisclosure } from "@chakra-ui/react";
 
 const TestPage = () => {
-  const {isOpen, onOpen, onClose} = useDisclosure();
-  
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box>
       <Heading>hey, my name is tawsif.</Heading>

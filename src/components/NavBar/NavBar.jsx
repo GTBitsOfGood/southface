@@ -38,7 +38,8 @@ const NavBar = () => {
       <NavLink name="Digital Library" href={urls.pages.library} />
       <NavLink name="Report Builder" href={urls.pages.reportbuilder} />
       <NavLink name="Shopping Cart" onClick={onOpen} />
-      <Box ml="auto" />
+      <Box ml="auto" />  {/*This is an empty div to right-align the last nav link */}
+
       <NavLinkAuth />
 
       <ShoppingCartView isOpen={isOpen} onClose={onClose} />

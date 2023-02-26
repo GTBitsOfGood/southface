@@ -19,7 +19,6 @@ const handler = async (req, res) => {
       success: true,
       payload: user,
     });
-    
   } catch (error) {
     res.status(400).json({
       success: false,

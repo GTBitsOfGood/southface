@@ -33,7 +33,6 @@ const NavButton = ({ name, href, children, ...rest }) => (
     variant="link"
     mx={8}
     mt={1}
-  
     {...rest}
   >
     {name || children}

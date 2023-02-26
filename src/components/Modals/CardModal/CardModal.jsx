@@ -97,7 +97,6 @@ const CardModal = ({
                   <Button
                     size="lg"
                     variant="grey-outlined"
-            
                     onClick={openImagePreviewCallback}
                   >
                     View Notes
