@@ -7,6 +7,12 @@ export async function createCard(card) {
   return Card.create(card);
 }
 
+export async function insertManyCards(cards) {
+  await mongoDB();
+
+  return Card.insertMany(cards);
+}
+
 export async function updateCardById(id, updatedCard) {
   await mongoDB();
 
@@ -27,35 +33,38 @@ export async function getCards() {
   return Card.find({}).sort({ _id: -1 });
 }
 
-export async function getCardsPagination(
+export async function getCardsPagination({
   pageNumber,
-  searchFilterString,
-  searchFilterTags,
-  cardsPerPage = 4
-) {
+  buildingType,
+  primaryCategory,
+  searchFilterString = null,
+  searchFilterTags = null,
+  cardsPerPage = 4,
+}) {
   await mongoDB();
 
-  let query = {};
+  // match is being used since without it causes wierd refresh issues
+  let query = {
+    $match: [{ buildingType }, { primaryCategory }],
+  };
+
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
 
     query = {
-      $or: [
-        { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } },
-      ],
+      ...query,
+      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
       tags: { $all: searchFilterTags },
     };
   } else if (searchFilterString) {
     const regex = new RegExp(searchFilterString, "i");
     query = {
-      $or: [
-        { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } },
-      ],
+      ...query,
+      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
     };
   } else if (searchFilterTags) {
     query = {
+      ...query,
       tags: { $all: searchFilterTags },
     };
   }
@@ -66,30 +75,35 @@ export async function getCardsPagination(
     .limit(cardsPerPage);
 }
 
-export async function getCardsCount(searchFilterString, searchFilterTags) {
+export async function getCardsCount({
+  buildingType,
+  primaryCategory,
+  searchFilterString = null,
+  searchFilterTags = null,
+}) {
   await mongoDB();
 
-  let query = {};
+  let query = {
+    $match: [{ buildingType }, { primaryCategory }],
+  };
+
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
 
     query = {
-      $or: [
-        { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } },
-      ],
+      ...query,
+      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
       tags: { $all: searchFilterTags },
     };
   } else if (searchFilterString) {
     const regex = new RegExp(searchFilterString, "i");
     query = {
-      $or: [
-        { title: { $regex: regex } },
-        { "comments.body": { $regex: regex } },
-      ],
+      ...query,
+      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
     };
   } else if (searchFilterTags) {
     query = {
+      ...query,
       tags: { $all: searchFilterTags },
     };
   }
@@ -113,6 +127,14 @@ export async function getCardById(id) {
   await mongoDB();
 
   return Card.findById(id);
+}
+
+export async function getCardsByIds(ids) {
+  await mongoDB();
+
+  return Card.find({
+    _id: { $in: ids },
+  });
 }
 
 export async function deleteAllCards() {

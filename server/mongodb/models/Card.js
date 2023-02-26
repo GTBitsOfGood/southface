@@ -3,15 +3,15 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const primaryCategoryNames = {
-  SP: "Site Planning",
-  RE: "Resource Efficiency",
-  DU: "Durability and Moisture Management",
-  BE: "High Performance Building Envelope",
-  ES: "Energy Efficient HVAC Systems",
-  IAQ: "Indoor Air Quality",
-  PI: "Plumbing and Irrigation",
-  LA: "Efficient Lighting and Applications",
-  EO: "Education and Operations",
+  "site-planning": "Site Reportning",
+  "resource-efficiency": "Resource Efficiency",
+  "durability-moisture-and-management": "Durability and Moisture Management",
+  "high-performance-building-envelope": "High Performance Building Envelope",
+  "energy-efficient-hvac-systems": "Energy Efficient HVAC Systems",
+  "indoor-air-quality": "Indoor Air Quality",
+  "plumbing-and-irrigation": "Plumbing and Irrigation",
+  "efficient-lighting-and-applications": "Efficient Lighting and Applications",
+  "education-and-operations": "Education and Operations",
 };
 
 const buildingTypeNames = {
@@ -21,23 +21,44 @@ const buildingTypeNames = {
 };
 
 const CardSchema = new Schema({
-  images: [
-    {
-      type: String,
-      default: [],
-    },
-  ],
+  images: {
+    type: [
+      {
+        imageUrl: String,
+        thumbsUp: Number,
+        thumbsDown: Number,
+      },
+    ],
+    required: true,
+  },
   title: {
     type: String,
+    required: true,
   },
-  comments: [
-    {
-      body: String,
-      date: Date,
-    },
-  ],
+  notes: {
+    type: [
+      {
+        body: {
+          type: String,
+          required: true,
+        },
+        userId: {
+          type: String,
+          required: true,
+          default: "63c5be6fa7d3c693fa1d335a", // userId for testNonAdmin account
+        },
+        date: {
+          type: Date,
+          required: true,
+          default: Date.now(),
+        },
+      },
+    ],
+    default: [],
+  },
   criteria: {
     type: String,
+    required: true,
   },
   tags: [
     {
@@ -45,20 +66,14 @@ const CardSchema = new Schema({
       default: [],
     },
   ],
-  selected: {
-    type: Boolean,
-    default: false,
-  },
-  selectionIndex: {
-    type: Number,
-    default: 0,
-  },
   buildingType: {
     type: String,
+    required: true,
     enum: Object.keys(buildingTypeNames),
   },
   primaryCategory: {
     type: String,
+    required: true,
     enum: Object.keys(primaryCategoryNames),
   },
 });

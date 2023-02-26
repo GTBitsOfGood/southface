@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 import useUser from "src/lib/hooks/useUser";
 import AddCardModal from "../Modals/AddCardModal";
-import PlanDocumentPDF from "../PlanDocumentPDF/PlanDocumentPDF";
+import ReportDocumentPDF from "../ReportDocumentPDF/ReportDocumentPDF";
 import StandardCard from "../StandardCard/StandardCard";
 
 const StandardCardTable = ({ cards, setCards, ...props }) => {
@@ -33,8 +33,8 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
           {enablepdfexport && (
             <Button
               as={PDFDownloadLink}
-              document={<PlanDocumentPDF selectedPlanCards={cards} />}
-              fileName="plan.pdf"
+              document={<ReportDocumentPDF selectedReportCards={cards} />}
+              fileName="report.pdf"
               boxShadow="base"
             >
               Download PDF
@@ -49,19 +49,17 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
       )}
       <Grid
         templateColumns={{
-          base: "repeat(1, 1fr)",
-          sm: "repeat(2, 1fr)",
-          md: "repeat(3, 1fr)",
-          lg: "repeat(4, 1fr)",
+          base: "repeat(3, 1fr)",
+          "2xl": "repeat(4, 1fr)",
         }}
-        gap={4}
+        gap={10}
         py={{ base: "" }}
         justifyContent="center"
         width="90%"
         m="3% auto"
       >
         {cards.map((card, index) => (
-          <GridItem w="100%" key={index} rounded={12}>
+          <GridItem w="100%" key={index}>
             <StandardCard card={card} setCards={setCards} />
           </GridItem>
         ))}

@@ -2,7 +2,7 @@ import { Box, Button, Divider, Image, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 
 const ShoppingCartItem = ({
-  planName,
+  reportName,
   imageNum,
   commentNum,
   shoppingCartItems,
@@ -37,7 +37,7 @@ const ShoppingCartItem = ({
             justifyContent="space-between"
           >
             <Text fontSize="xl" as="b">
-              {planName}
+              {reportName}
             </Text>
             <Box>
               {imageNum} images * {commentNum} comments
@@ -50,7 +50,7 @@ const ShoppingCartItem = ({
               fontSize="xs"
               fontWeight="bold"
             >
-              Remove from project plan
+              Remove from report
             </Button>
           </Box>
         </Box>
