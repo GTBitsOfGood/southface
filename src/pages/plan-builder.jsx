@@ -19,7 +19,7 @@ import { useEffect, useRef, useState } from "react";
 // import { getCards } from "src/actions/Card";
 import PlanConfirmationModal from "src/components/Modals/PlanConfirmationModal";
 import { ProjectPlanStandard } from "../components/StandardCard/ProjectPlanStandard";
-import useActivePlan from "../lib/hooks/useAcivePlan";
+import useActiveReport from "../lib/hooks/useActiveReport";
 
 const ProjectPlanBuilder = () => {
   // const { user } = useUser();
@@ -31,7 +31,7 @@ const ProjectPlanBuilder = () => {
   //     });
   //   }
   // }, [user]);
-  const { plan, isValidating } = useActivePlan();
+  const { plan, isValidating } = useActiveReport();
 
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);

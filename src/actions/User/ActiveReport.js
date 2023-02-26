@@ -1,8 +1,8 @@
 import fetch from "isomorphic-unfetch";
-import urls from "src/libs/utils/urls";
+import urls from "src/lib/utils/urls";
 
-export const addToActivePlan = (card) => {
-  return fetch(urls.api.user.activePlan.add, {
+export const addToActiveReport = (card) => {
+  return fetch(urls.api.user.activeReport.add, {
     method: "PUT",
     mode: "same-origin",
     credentials: "include",
@@ -22,8 +22,8 @@ export const addToActivePlan = (card) => {
     });
 };
 
-export const changeInActivePlan = (card) => {
-  return fetch(urls.api.user.activePlan.change, {
+export const changeInActiveReport = (card) => {
+  return fetch(urls.api.user.activeReport.change, {
     method: "PUT",
     mode: "same-origin",
     credentials: "include",
@@ -43,8 +43,8 @@ export const changeInActivePlan = (card) => {
     });
 };
 
-export const removeFromActivePlan = (card) => {
-  return fetch(urls.api.user.activePlan.remove, {
+export const removeFromActiveReport = (card) => {
+  return fetch(urls.api.user.activeReport.remove, {
     method: "PUT",
     mode: "same-origin",
     credentials: "include",
@@ -64,8 +64,8 @@ export const removeFromActivePlan = (card) => {
     });
 };
 
-export const updateActivePlan = (plan) => {
-  return fetch(urls.api.user.activePlan.update, {
+export const updateActiveReport = (plan) => {
+  return fetch(urls.api.user.activeReport.update, {
     method: "PUT",
     mode: "same-origin",
     credentials: "include",
@@ -86,8 +86,8 @@ export const updateActivePlan = (plan) => {
   // untested
 };
 
-export const getActivePlan = () => {
-  return fetch(urls.api.user.activePlan.get, {
+export const getActiveReport = () => {
+  return fetch(urls.api.user.activeReport.get, {
     method: "GET",
     mode: "same-origin",
     credentials: "include",

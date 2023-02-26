@@ -13,6 +13,8 @@ import React, { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
 import useSWRMutation from "swr/mutation";
 import { updateRecentStandardsRequest } from "../../actions/User";
+import { addToActiveReport } from "../../actions/User/ActiveReport";
+import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import CardModal from "../Modals/CardModal";
 
@@ -57,6 +59,12 @@ const StandardCard = ({ card, setCards, ...props }) => {
       setUpdateRecentStandardsTriggered(true);
     }
   }, [data]);
+
+  // Active report
+  const {report, mutateReport, isValidating} = useActiveReport();
+  const addToReportHandler = () => {
+    addToActiveReport(card);
+  };
 
   return (
     <Flex
@@ -111,6 +119,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
             variant="outline"
             color="#00ACC8"
             border="1px solid #00ACC8"
+            onClick={addToReportHandler}
           >
             Add To Report
           </Button>

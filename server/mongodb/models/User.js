@@ -27,6 +27,10 @@ const UserSchema = new Schema({
       timeOpened: Date,
     },
   ],
+  activeReport: {
+    type: [ReportSchema],
+    required: false,
+  }
 });
 
 export default mongoose.models?.User ?? mongoose.model("User", UserSchema);

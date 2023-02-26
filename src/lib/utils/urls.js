@@ -26,13 +26,13 @@ export default {
       standards: {
         get: "/api/user/standards/get/",
         update: "/api/user/standards/update",
-        activePlan: {
-          get: "/api/user/active-plan/get",
-          add: "/api/user/active-plan/add",
-          remove: "/api/user/active-plan/remove",
-          update: "/api/user/active-plan/update",
-          change: "/api/user/active-plan/change",
-        },
+      },
+      activeReport: {
+        get: "/api/user/active-report/get",
+        add: "/api/user/active-report/add",
+        remove: "/api/user/active-report/remove",
+        update: "/api/user/active-report/update",
+        change: "/api/user/active-report/change",
       },
       comment: {
         create: "/api/comment/create",

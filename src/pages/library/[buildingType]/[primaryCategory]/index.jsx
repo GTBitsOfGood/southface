@@ -13,6 +13,7 @@ import {
   capitalizeAndRemoveDash,
   uncapitalizeAndAddDash,
 } from "src/lib/utils/utilFunctions";
+import useActiveReport from "../../../../lib/hooks/useActiveReport";
 
 const LibraryCategoryPage = (props) => {
   const cardsFromDatabase = props.cardsFromDatabase;
@@ -32,6 +33,8 @@ const LibraryCategoryPage = (props) => {
   useEffect(() => {
     setIsRefreshing(false);
   }, [cards]);
+
+  const { report, mutatePlan, isValidating } = useActiveReport();
 
   return isRefresehing ? (
     ""

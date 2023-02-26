@@ -81,8 +81,7 @@ const ReportBuilder = () => {
     ],
   };
 
-  const { data } = useSWRConfig(urls.api.user.getArchivedReports);
-  const archivedReports = data?.payload.archivedReports;
+  const { report, mutateReport, isValidating } = useSWRConfig(urls.api.user.getArchivedReports);
 
   const nameRef = useRef();
 
@@ -122,8 +121,8 @@ const ReportBuilder = () => {
               </Button>
             </Flex>
           </CardBody>
-          {Array(5).fill(
-            <CardBody>
+          {report && report.cards.map((card, index) =>
+            <CardBody key={index}>
               <ReportStandard card={sampleCard} />
             </CardBody>
           )}
@@ -139,7 +138,7 @@ const ReportBuilder = () => {
             divider={<StackDivider />}
           >
             {Array(3)
-              .fill(sampleReport)
+              .fill(report)
               .map((report, index) =>
                 index === 0 ? (
                   <Box key={index}>

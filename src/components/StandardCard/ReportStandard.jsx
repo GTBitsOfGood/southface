@@ -1,9 +1,9 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
-import useActivePlan from "../../lib/hooks/useAcivePlan";
+import useActiveReport from "../../lib/hooks/useActiveReport";
 import StandardCardImageCarousel from "./StandardCardImageCarousel";
 
 const ReportStandard = ({ card, setCards, ...props }) => {
-  const { plan, updatePlan } = useActivePlan();
+  const { plan, updatePlan } = useActiveReport();
   const handler = () => {
     const arr = plan.cards;
     const newPlan = { ...plan };

@@ -1,13 +1,13 @@
-import { changeInActivePlan } from "server/mongodb/actions/User";
+import { getActiveReport } from "server/mongodb/actions/User/ActiveReport";
 import { withSessionRoute } from "src/lib/utils/session";
 
-const handler = (req, res) => {
+const handler = async (req, res) => {
   try {
     const userId = req.session.user.id;
-    const updatedActivePlan = changeInActivePlan(userId, req.body);
+    const activePlan = await getActiveReport(userId);
     return res.status(200).json({
       success: true,
-      payload: updatedActivePlan,
+      payload: activePlan,
     });
   } catch (e) {
     return res.status(400).json({

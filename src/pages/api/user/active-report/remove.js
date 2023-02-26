@@ -1,10 +1,10 @@
-import { updateActivePlan } from "server/mongodb/actions/User";
+import { removeFromActiveReport } from "server/mongodb/actions/User/ActiveReport";
 import { withSessionRoute } from "src/lib/utils/session";
 
 const handler = (req, res) => {
   try {
     const userId = req.session.user.id;
-    const updatedActivePlan = updateActivePlan(userId, req.body);
+    const updatedActivePlan = removeFromActiveReport(userId, req.body);
     return res.status(200).json({
       success: true,
       payload: updatedActivePlan,
