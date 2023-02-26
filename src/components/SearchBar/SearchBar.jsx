@@ -91,13 +91,17 @@ const SearchBar = (props) => {
       <Flex margin="auto" width="80%" {...rest} flexDirection="column">
         <Box mb="3">
           <InputGroup size="lg">
-            <Input
-              ref={textInput}
-              placeholder="Search specs"
-              onInput={() => setSearchString(textInput.current.value)}
-            />
+            <Input ref={textInput} placeholder="Search specs" />
             <InputRightAddon>
-              <Icon as={SearchIcon} />
+              <Icon
+                as={SearchIcon}
+                onClick={() =>
+                  setSearch({
+                    searchString: textInput.current.value,
+                    tags: criteria.tags,
+                  })
+                }
+              />
             </InputRightAddon>
           </InputGroup>
         </Box>
