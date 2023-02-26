@@ -3,40 +3,48 @@ export default {
     index: "/",
     login: "/login",
     library: "/library",
-    planbuilder: "/plan-builder",
+    reportbuilder: "/report-builder",
   },
   api: {
     example: "/api/example",
+    card: {
+      create: "/api/card/create/",
+      get: "/api/card/get/",
+      getIds: "/api/card/getIds/",
+      getPagination: "/api/card/getPagination?page=",
+      update: "/api/card/update/",
+      delete: "/api/card/delete/",
+    },
     user: {
       signUp: "/api/user/sign-up",
       login: "/api/user/login",
       logout: "/api/user/logout",
       getCurrent: "/api/user",
-      activePlan: {
-        get: "/api/user/active-plan/get",
-        add: "/api/user/active-plan/add",
-        remove: "/api/user/active-plan/remove",
-        update: "/api/user/active-plan/update",
-        change: "/api/user/active-plan/change",
+      getAll: "/api/user/get",
+      getCurrentTesting: "/api/user/get", // add id to query
+      getArchivedReports: "/api/user/get/archivedReports",
+      standards: {
+        get: "/api/user/standards/get/",
+        update: "/api/user/standards/update",
+        activePlan: {
+          get: "/api/user/active-plan/get",
+          add: "/api/user/active-plan/add",
+          remove: "/api/user/active-plan/remove",
+          update: "/api/user/active-plan/update",
+          change: "/api/user/active-plan/change",
+        },
       },
-    },
-    card: {
-      create: "/api/card/create/",
-      get: "/api/card/get/",
-      getPagination: "/api/card/getPagination?page=",
-      update: "/api/card/update/",
-      delete: "/api/card/delete/",
-    },
-    comment: {
-      create: "/api/comment/create",
-      update: "/api/comment/update",
-      delete: "/api/comment/delete",
-    },
-    plan: {
-      create: "/api/plan/create",
-      get: "/api/plan/get",
-      update: "/api/plan/update",
-      delete: "/api/plan/delete",
+      comment: {
+        create: "/api/comment/create",
+        update: "/api/comment/update",
+        delete: "/api/comment/delete",
+      },
+      report: {
+        create: "/api/report/create",
+        get: "/api/report/get",
+        update: "/api/report/update",
+        delete: "/api/report/delete",
+      },
     },
   },
 };

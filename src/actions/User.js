@@ -91,15 +91,8 @@ export const getCurrentUser = (cookies) => {
     });
 };
 
-export const getActivePlan = () => {
-  return fetch(urls.api.user.activePlan.get, {
-    method: "GET",
-    mode: "same-origin",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
+export const updateRecentStandards = (userId, standardId) =>
+  updateRecentStandardsRequest(userId, standardId)
     .then((response) => response.json())
     .then((json) => {
       if (json == null) {
@@ -109,5 +102,15 @@ export const getActivePlan = () => {
       }
       return json.payload;
     });
-  // untested
+
+export const updateRecentStandardsRequest = (userId, standardId) => {
+  return fetch(urls.api.user.standards.update, {
+    method: "PATCH",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id: userId, standardId: standardId }),
+  });
 };

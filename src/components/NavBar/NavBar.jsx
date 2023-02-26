@@ -53,7 +53,7 @@ const NavBar = () => {
         fontWeight="bold"
       >
         <NavLink name="Digital Library" href={urls.pages.library} />
-        <NavLink name="Project Plan Builder" href={urls.pages.planbuilder} />
+        <NavLink name="Report Builder" href={urls.pages.reportbuilder} />
         <NavLink name="Shopping Cart" onClick={onOpen} />
         <NavLinkAuth />
       </Flex>

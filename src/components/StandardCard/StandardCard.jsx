@@ -6,48 +6,57 @@ import {
   HStack,
   Image,
   Tag,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import urls from "src/lib/utils/urls";
+import useSWRMutation from "swr/mutation";
+import { updateRecentStandardsRequest } from "../../actions/User";
+import useUser from "../../lib/hooks/useUser";
 import CardModal from "../Modals/CardModal";
-import ImagePreviewModal from "../Modals/ImagePreviewModal";
-import {
-  addToActivePlan,
-  /* changeInActivePlan, */ removeFromActivePlan,
-} from "../../actions/User";
-import useActivePlan from "../../lib/hooks/useAcivePlan";
 
 const StandardCard = ({ card, setCards, ...props }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useUser();
   const {
-    isOpen: isOpenImagePreviewModal,
-    onOpen: onOpenImagePreviewModal,
-    onClose: onCloseImagePreviewModal,
+    isOpen: isOpenCardModal,
+    onOpen: onOpenCardModal,
+    onClose: onCloseCardModal,
   } = useDisclosure();
-
-  const { renderType = "default" } = { ...props }; // sets what kind of standardCard to show
-  const { plan, mutatePlan, isValidating } = useActivePlan();
-  useEffect(() => {
-    if (!isValidating) {
-      setSelected(plan.cards.map((card) => card._id).indexOf(card._id) >= 0);
+  const { trigger, data, isMutating } = useSWRMutation(
+    urls.api.user.standards.update,
+    (route, { arg }) => {
+      return updateRecentStandardsRequest(arg.userId, arg.cardId);
     }
-  }, [plan, isValidating, card._id]);
-  const addHandler = async () => {
-    if (selected) {
-      await removeFromActivePlan(card);
-    } else {
-      await addToActivePlan(card);
-    }
-    mutatePlan();
-  };
-
-  const [selected, setSelected] = useState(false);
-
-  const SelectorButton = () => (
-    <Button onClick={addHandler}>
-      {selected ? "Remove from plan" : "Add to Plan"}
-    </Button>
   );
+  const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
+    useState(false);
+
+  useEffect(() => {
+    if (
+      isOpenCardModal &&
+      user.id &&
+      !isMutating &&
+      !updateRecentStandardsTriggered
+    ) {
+      trigger({ userId: user.id, cardId: card._id });
+    } else if (!isOpenCardModal && updateRecentStandardsTriggered) {
+      setUpdateRecentStandardsTriggered(false);
+    }
+  }, [
+    isOpenCardModal,
+    card,
+    user,
+    trigger,
+    isMutating,
+    updateRecentStandardsTriggered,
+  ]);
+
+  useEffect(() => {
+    if (data) {
+      setUpdateRecentStandardsTriggered(true);
+    }
+  }, [data]);
 
   return (
     <Flex
@@ -55,70 +64,63 @@ const StandardCard = ({ card, setCards, ...props }) => {
       flexDirection="column"
       boxShadow="base"
       bgColor="white"
-      height={{ base: "sm", md: "md" }}
+      rounded="23.3173px"
+      overflow="hidden"
+      height="19rem"
+      width="24rem"
+      onClick={onOpenCardModal}
+      _hover={{
+        cursor: "pointer",
+        transition: "0.1s ease-in-out",
+        boxShadow: "xl",
+      }}
+      transition="0.1s ease-in-out"
     >
-      {renderType}
-      <Box height="37%" position="relative">
-        {/* {card.selected && mode !== "red" && (
-          <Icon
-            bgColor={modeColors[mode]}
-            color="white"
-            borderRadius="100%"
-            p="1"
-            as={modeIcons[mode]}
-            position="absolute"
-            fontSize="24"
-            left="5"
-            top="5"
-          />
-        )} */}
+      <Box height="47%" position="relative">
         <Image
           height="100%"
           width="full"
           fit="cover"
-          src={card.images[0]}
+          src={card.images[0].imageUrl}
           alt="construction image"
-          onClick={onOpenImagePreviewModal}
         />
+        {/* <StandardCardImageCarousel cardImages={card.images} /> */}
       </Box>
 
-      <ImagePreviewModal
-        isOpen={isOpenImagePreviewModal}
-        onClose={onCloseImagePreviewModal}
-        cardImages={card.images}
-        cardComments={card.comments}
-      />
+      <Flex p={3} flexDirection="column" flex={1} mx="2">
+        <Heading size="md">{card.title}</Heading>
 
-      <Flex p={3} flexDirection="column" flex={1}>
-        <Heading my={2} size="md">
-          {card.title}
-        </Heading>
+        <Text fontSize="sm" lineHeight="1.2rem" maxHeight="5rem" noOfLines="3">
+          {card.criteria}
+        </Text>
 
-        <HStack>
-          {card.tags.map((tag, index) => {
+        <HStack mt="auto" position="relative" mb="0.5">
+          {card.tags.slice(0, 3).map((tag, index) => {
             return (
-              <Tag key={index} bgColor="#D9D9D9">
+              <Tag key={index} bgColor="#C4D600" rounded="14.7877px" px="2">
                 {tag}
               </Tag>
             );
           })}
+          <Button
+            position="absolute"
+            right="1"
+            bottom="0"
+            size="sm"
+            p="2"
+            variant="outline"
+            color="#00ACC8"
+            border="1px solid #00ACC8"
+          >
+            Add To Report
+          </Button>
         </HStack>
-        <SelectorButton />
-        <Button size="lg" mt={7} onClick={onOpen} bgColor="#D9D9D9">
-          View Full Standard
-        </Button>
         <CardModal
-          isOpen={isOpen}
-          onClose={onClose}
-          isEditingFirst={false}
-          cardId={card._id}
-          cardTags={card.tags}
-          cardTitle={card.title}
-          cardCriteria={card.criteria}
-          cardImages={card.images}
-          AddToPlanButton={<SelectorButton />}
+          isOpenCardModal={isOpenCardModal}
+          onCloseCardModal={onCloseCardModal}
+          card={card}
           setCards={setCards}
-          selected={selected}
+          selected={false}
         />
       </Flex>
     </Flex>

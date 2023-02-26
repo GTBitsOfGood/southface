@@ -13,11 +13,11 @@ import ShoppingCartItem from "./ShoppingCartItem";
 
 const ShoppingCartView = ({ isOpen, onClose }) => {
   const shoppingCartItems = [
-    { planName: "Ladder T-walls", imageNum: 2, commentNum: 8 },
-    { planName: "Ladder T-walls", imageNum: 3, commentNum: 6 },
-    { planName: "Ladder T-walls", imageNum: 1, commentNum: 2 },
-    { planName: "Ladder T-walls", imageNum: 4, commentNum: 5 },
-    { planName: "Ladder T-walls", imageNum: 6, commentNum: 7 },
+    { reportName: "Ladder T-walls", imageNum: 2, commentNum: 8 },
+    { reportName: "Ladder T-walls", imageNum: 3, commentNum: 6 },
+    { reportName: "Ladder T-walls", imageNum: 1, commentNum: 2 },
+    { reportName: "Ladder T-walls", imageNum: 4, commentNum: 5 },
+    { reportName: "Ladder T-walls", imageNum: 6, commentNum: 7 },
   ];
 
   return (
@@ -32,7 +32,7 @@ const ShoppingCartView = ({ isOpen, onClose }) => {
           {shoppingCartItems.slice(0, 3).map((item, index) => (
             <ShoppingCartItem
               key={index}
-              planName={item.planName}
+              reportName={item.reportName}
               imageNum={item.imageNum}
               commentNum={item.commentNum}
               shoppingCartItems={item.shoppingCartItems}
@@ -41,14 +41,14 @@ const ShoppingCartView = ({ isOpen, onClose }) => {
           ))}
         </Box>
         <Box display="flex" justifyContent="center">
-          <Link href={urls.pages.planbuilder}>
+          <Link href={urls.pages.reportbuilder}>
             <Button
               background="#6D6E70"
               borderRadius="3xl"
               color="white"
               marginBottom="20"
             >
-              View Full Plan
+              View Full Report
             </Button>
           </Link>
         </Box>
