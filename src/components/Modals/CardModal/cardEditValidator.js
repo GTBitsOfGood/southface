@@ -1,10 +1,10 @@
 const cardEditValidator = (values) => {
   const errors = {};
-  if (!values.notes) {
-    errors.tags = "Required";
+  if (!values.criteria) {
+    errors.criteria = "Criteria is are required";
   }
   if (!values.images) {
-    errors.lastName = "One image minimum is required";
+    errors.images = "One image minimum is required";
   }
   return errors;
 };

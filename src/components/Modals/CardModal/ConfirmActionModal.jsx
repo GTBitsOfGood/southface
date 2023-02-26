@@ -8,37 +8,38 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
 } from "@chakra-ui/react";
 
-const DiscardChangesModal = ({
+const ConfirmActionModal = ({
   isOpen,
   onClose,
   prompt,
   subcontent,
   confirmActionText,
   abandonActionText,
-  handleDiscardChanges,
+  handleAction,
   colorScheme = "blue",
 }) => {
   const colorSchemeProperties = {};
   if (colorScheme == "blue") {
-    colorSchemeProperties.confirm = {
+    colorSchemeProperties.abandon = {
       bgColor: "white",
       color: "#6d6e70",
+      border: "solid 1px #6d6e70",
     };
-    colorSchemeProperties.abandon = {
+    colorSchemeProperties.confirm = {
       bgColor: "#00ACC8",
       color: "white",
       _hover: { bgColor: "#0690a7" },
       _active: { bgColor: "#057b8f" },
     };
   } else if (colorScheme == "red") {
-    colorSchemeProperties.confirm = {
+    colorSchemeProperties.abandon = {
       bgColor: "white",
       color: "#6d6e70",
+      border: "solid 1px #6d6e70",
     };
-    colorSchemeProperties.abandon = {
+    colorSchemeProperties.confirm = {
       bgColor: "#B90000",
       color: "white",
       _hover: { border: "solid 2px #B90000" },
@@ -65,7 +66,7 @@ const DiscardChangesModal = ({
         <ModalCloseButton />
         {subcontent ? (
           <ModalBody display="flex" justifyContent="center" textAlign="center">
-            <Text>{subcontent}</Text>
+            {subcontent}
           </ModalBody>
         ) : (
           <></>
@@ -74,26 +75,24 @@ const DiscardChangesModal = ({
         <ModalFooter justifyContent="center" pb={10}>
           <ButtonGroup>
             <Button
-              bgColor="white"
-              size="sm"
-              rounded={16}
-              color="#6d6e70"
-              border="solid 1px #6d6e70"
-              fontSize="md"
-              width="auto"
-              onClick={onClose}
-            >
-              {confirmActionText}
-            </Button>
-            <Button
               {...colorSchemeProperties.abandon}
               size="sm"
               rounded={16}
               fontSize="md"
               width="auto"
-              onClick={handleDiscardChanges}
+              onClick={onClose}
             >
               {abandonActionText}
+            </Button>
+            <Button
+              {...colorSchemeProperties.confirm}
+              size="sm"
+              rounded={16}
+              fontSize="md"
+              width="auto"
+              onClick={handleAction}
+            >
+              {confirmActionText}
             </Button>
           </ButtonGroup>
         </ModalFooter>
@@ -102,4 +101,4 @@ const DiscardChangesModal = ({
   );
 };
 
-export default DiscardChangesModal;
+export default ConfirmActionModal;

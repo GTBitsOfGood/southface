@@ -5,6 +5,9 @@ import { MdExpand } from "react-icons/md";
 import ConfirmActionsModal from "../CardModal/ConfirmActionModal";
 
 const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
+  const imagePath = new URL(image).pathname.split("/");
+  const filename = imagePath[imagePath.length - 1];
+
   return (
     <>
       <Box position="relative" {...props}>
@@ -54,15 +57,19 @@ const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
       <ConfirmActionsModal
         isOpen={props.isImageDeleteOpen}
         onClose={props.onImageDeleteClose}
-        handleDiscardChanges={() => {}}
+        handleAction={() => {
+          props.handleDeleteImage(image);
+        }}
         prompt="Are you sure you want to delete this image?"
         subcontent={
           <Box>
+            <Text fontSize="lg" color="gray.500">
+              {filename}
+            </Text>
             <Image
               src={image}
-              layout="responsive"
-              width="25px"
-              height="25px"
+              width="100px"
+              height="100px"
               alt={"card image"}
             />
             <Text>
@@ -70,8 +77,8 @@ const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
             </Text>
           </Box>
         }
-        abandonActionText="Yes, delete standard"
-        confirmActionText="No, return to edit"
+        confirmActionText="Yes, delete image"
+        abandonActionText="No, return to edit"
         colorScheme="red"
       />
     </>
