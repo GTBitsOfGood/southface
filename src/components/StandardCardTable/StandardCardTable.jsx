@@ -1,26 +1,14 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
 
-import useUser from "src/lib/hooks/useUser";
-import AddCardModal from "../Modals/AddCardModal";
 import ReportDocumentPDF from "../ReportDocumentPDF/ReportDocumentPDF";
 import StandardCard from "../StandardCard/StandardCard";
 
 const StandardCardTable = ({ cards, setCards, ...props }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [isClientSide, setClientSide] = useState(false);
 
   const { enablepdfexport = false } = { ...props };
-
-  const { ifAdmin } = useUser();
 
   useEffect(() => {
     setClientSide(true);
@@ -40,11 +28,6 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
               Download PDF
             </Button>
           )}
-
-          <Button onClick={() => ifAdmin(onOpen)} rounded={4} boxShadow="base">
-            Add Card
-          </Button>
-          <AddCardModal isOpen={isOpen} onClose={onClose} setCards={setCards} />
         </Flex>
       )}
       <Grid

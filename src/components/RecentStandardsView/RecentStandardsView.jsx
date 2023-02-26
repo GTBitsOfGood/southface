@@ -11,11 +11,8 @@ function RecentStandardsView(props) {
       <Heading size="lg">Recent Standards</Heading>
       <Link href="/library">
         <Button
-          h="30px"
-          bgColor="#727474"
-          borderRadius="20"
-          textColor="white"
           width="max"
+          variant="grey-outlined"
         >
           See All Standards
         </Button>
