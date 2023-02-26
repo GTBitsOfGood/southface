@@ -3,9 +3,20 @@ import { ButtonStyles as Button } from "./components/ButtonStyles";
 
 export const southfaceTheme = extendTheme({
   colors: {
-    primary: "#B90000",
-    secondary: "#6D6E70",
-    tertiary: "#00ACC8",
+    // red
+    red: "#B90000",
+    darkRed: "#8C0000",
+    darkestRed: "#7E0000",
+
+    // blue
+    blue: "#00ACC8",
+    darkBlue: "#007A8F",
+    darkestBlue: "#006779",
+
+    // grey
+    grey: "#6D6E70",
+    darkGrey: "#3F3F3F",
+    darkestGrey: "#2D2C2C",
   },
   fonts: {
     body: "Inter, sans-serif",
