@@ -66,7 +66,7 @@ function LoadedStandards(props) {
                 key={index}
                 card={card}
                 height="3rem"
-                width="4rem"
+                minW="300px"
               ></StandardCard>
             );
           }

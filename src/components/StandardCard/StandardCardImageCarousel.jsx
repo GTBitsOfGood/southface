@@ -2,7 +2,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Box, Image } from "@chakra-ui/react";
 import Carousel from "react-grid-carousel";
 
-const StandardCardImageCarousel = ({ cardImages }) => {
+const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
   const ChevronIcon = (props) => {
     const styles = {
       pos: "absolute",
@@ -33,11 +33,13 @@ const StandardCardImageCarousel = ({ cardImages }) => {
     ></Box>
   );
 
+  const {cols = 5, rows = 1, gap = 10} = {...rest};
+
   return (
     <Carousel
-      cols={1}
-      rows={1}
-      gap={10}
+      cols={cols}
+      rows={rows}
+      gap={gap}
       showDots={true}
       dot={MyDot}
       containerStyle={{
@@ -48,7 +50,7 @@ const StandardCardImageCarousel = ({ cardImages }) => {
       arrowLeft={<ChevronIcon orientation="left" />}
       arrowRight={<ChevronIcon orientation="right" />}
     >
-      {cardImages.map((image, index) => {
+      {cardImages.map(({ imageUrl: image }, index) => {
         return (
           <Carousel.Item key={index}>
             <Image

@@ -7,7 +7,7 @@ function RecentStandardsView(props) {
   const { user } = useUser();
 
   return (
-    <Flex flexDirection={"column"} gap="16px">
+    <Flex flexDirection={"column"} gap="16px" overflowX="scroll">
       <Heading size="lg">Recent Standards</Heading>
       <Link href="/library">
         <Button
