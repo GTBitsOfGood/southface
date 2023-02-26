@@ -63,7 +63,6 @@ const StandardCard = ({ card, setCards, ...props }) => {
       {...props}
       flexDirection="column"
       boxShadow="base"
-      bgColor="white"
       rounded="23.3173px"
       overflow="hidden"
       height="19rem"
@@ -106,11 +105,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
             position="absolute"
             right="1"
             bottom="0"
-            size="sm"
-            p="2"
-            variant="outline"
-            color="#00ACC8"
-            border="1px solid #00ACC8"
+            variant="blue-outlined"
           >
             Add To Report
           </Button>

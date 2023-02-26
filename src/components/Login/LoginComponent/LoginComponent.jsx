@@ -49,7 +49,7 @@ const LoginComponent = () => {
       <Button
         width="100%"
         height="2.3em"
-        colorScheme="green"
+        variant="blue"
         onClick={handleSubmit}
       >
         Log In
