@@ -7,15 +7,19 @@ import { withSessionRoute } from "src/lib/utils/session";
 const handler = async (req, res) => {
   try {
     const user = await signUp(req.body);
-    req.session.user = {
-      ...user,
-      isLoggedIn: true,
-    };
-    await req.session.save();
+
+    // req.session.user = {
+    //   ...user,
+    //   isLoggedIn: true,
+    // };
+
+    // await req.session.save();
 
     return res.status(200).json({
       success: true,
+      payload: user,
     });
+    
   } catch (error) {
     res.status(400).json({
       success: false,

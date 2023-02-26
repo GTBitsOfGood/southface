@@ -1,7 +1,7 @@
-import { Box, Flex, useDisclosure } from "@chakra-ui/react";
-import Image from "next/image";
+import { Flex, Box, useDisclosure } from "@chakra-ui/react";
 import Router from "next/router";
 import { logout } from "src/actions/User";
+import Image from "src/components/Image";
 import useUser from "src/lib/hooks/useUser";
 import urls from "src/lib/utils/urls";
 import ShoppingCartView from "../ShoppingCartView";
@@ -17,48 +17,32 @@ const NavBar = () => {
       .catch((error) => window.alert(error.message));
   };
 
-  const NavLinkAuth = () => {
+  const NavLinkAuth = (props) => {
     if (!user?.isLoggedIn) {
-      return <NavLink name="Login" href={urls.pages.login} />;
+      return <NavLink name="Login" href={urls.pages.login} {...props} />;
     } else {
-      return <NavLink name="Logout" onClick={logoutHandler} />;
+      return <NavLink name="Logout" onClick={logoutHandler} {...props} />;
     }
   };
 
-  const ChakraNextImage = ({ src, alt, ...rest }) => (
-    <Box position="relative" {...rest}>
-      <Image layout="fill" objectFit="cover" src={src} alt={alt} />
-    </Box>
-  );
-
   return (
-    <Box>
-      <ChakraNextImage
+    <Flex boxShadow="base" py="2">
+      <Image
         src="/static/EarthcraftLogo.png"
         alt="Earthcraft-Logo"
-        height="5em"
-        width="16em"
+        height="6em"
+        width="14em"
         right={5}
-        my={2}
       />
 
-      <Flex
-        mt={4}
-        py={1}
-        px={2}
-        bg="#6D6E70"
-        flexDir="row"
-        justifyContent="space-evenly"
-        color="white"
-        fontWeight="bold"
-      >
-        <NavLink name="Digital Library" href={urls.pages.library} />
-        <NavLink name="Report Builder" href={urls.pages.reportbuilder} />
-        <NavLink name="Shopping Cart" onClick={onOpen} />
-        <NavLinkAuth />
-      </Flex>
+      <NavLink name="Digital Library" href={urls.pages.library} />
+      <NavLink name="Report Builder" href={urls.pages.reportbuilder} />
+      <NavLink name="Shopping Cart" onClick={onOpen} />
+      <Box ml="auto" />
+      <NavLinkAuth />
+
       <ShoppingCartView isOpen={isOpen} onClose={onClose} />
-    </Box>
+    </Flex>
   );
 };
 

@@ -33,26 +33,15 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
           <CardHeader display="flex" justifyContent="space-between">
             <Box display="flex" alignItems="center">
               <Heading size="xl">Recent Report</Heading>
-              <Button
-                as="a"
-                variant="grey-rounded"
-                marginLeft="15"
-              >
+              <Button as="a" variant="grey-rounded" marginLeft="15">
                 Download
               </Button>
-              <Button
-                as="a"
-                variant="red-rounded"
-                marginLeft="15"
-              >
+              <Button as="a" variant="red-rounded" marginLeft="15">
                 Print to PDF
               </Button>
             </Box>
             <Box>
-              <Button
-                onClick={handleRemove}
-                variant="red-rounded"
-              >
+              <Button onClick={handleRemove} variant="red-rounded">
                 Remove from Reports
               </Button>
             </Box>

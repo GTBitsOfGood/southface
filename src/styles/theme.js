@@ -1,7 +1,19 @@
 import { extendTheme } from "@chakra-ui/react";
-import { ButtonStyles as Button } from "./components/ButtonStyles";
+import { ButtonStyles } from "./components/ButtonStyles";
 
 export const southfaceTheme = extendTheme({
+  textStyles: {
+    h1: {
+      textTransform: "capitalize",
+      fontColor: "red",
+    },
+    h2: {
+      fontColor: "red",
+    },
+    p: {
+      fontColor: "red",
+    },
+  },
   colors: {
     // red
     red: "#B90000",
@@ -27,6 +39,20 @@ export const southfaceTheme = extendTheme({
     "2xl": "1536px",
   },
   components: {
-    Button,
+    Button: ButtonStyles,
+    Heading: {
+      baseStyle: {
+        textTransform: "capitalize",
+        whiteSpace: "trim",
+      },
+    },
+    Text: {
+      baseStyle: {
+        "::first-letter": {
+          textTransform: "uppercase",
+        },
+        whiteSpace: "trim",
+      },
+    },
   },
 });

@@ -96,7 +96,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
         <HStack mt="auto" position="relative" mb="0.5">
           {card.tags.slice(0, 3).map((tag, index) => {
             return (
-              <Tag key={index} bgColor="#C4D600" rounded="14.7877px" px="2">
+              <Tag key={index} textTransform="capitalize" bgColor="#C4D600" rounded="14.7877px" px="2">
                 {tag}
               </Tag>
             );

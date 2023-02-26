@@ -97,18 +97,12 @@ const CardModal = ({
                   <Button
                     size="lg"
                     variant="grey-outlined"
-                    fontSize="22px"
-                    width="auto"
+            
                     onClick={openImagePreviewCallback}
                   >
                     View Notes
                   </Button>
-                  <Button
-                    variant="blue"
-                    fontSize="22px"
-                    width="auto"
-                    size="lg"
-                  >
+                  <Button variant="blue" size="lg">
                     Add to Report
                   </Button>
                 </Flex>
