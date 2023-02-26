@@ -68,9 +68,9 @@ export const ButtonStyles = {
   },
 
   variants: {
-    ...generateButtonStyles("red", "darkRed", "darkestRed"),
-    ...generateButtonStyles("blue", "darkBlue", "darkestBlue"),
-    ...generateButtonStyles("grey", "darkGrey", "darkestGrey"),
+    ...generateButtonStyles("Red", "darkRed", "darkestRed"),
+    ...generateButtonStyles("Blue", "darkBlue", "darkestBlue"),
+    ...generateButtonStyles("Grey", "darkGrey", "darkestGrey"),
   },
   // default values for 'size', 'variant' and 'colorScheme'
   defaultProps: {

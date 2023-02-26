@@ -34,14 +34,12 @@ const NavBar = () => {
         width="14em"
         right={5}
       />
-
       <NavLink name="Digital Library" href={urls.pages.library} />
       <NavLink name="Report Builder" href={urls.pages.reportbuilder} />
       <NavLink name="Shopping Cart" onClick={onOpen} />
-      <Box ml="auto" />  {/*This is an empty div to right-align the last nav link */}
-
+      <Box ml="auto" />{" "}
+      {/*This is an empty div to right-align the last nav link */}
       <NavLinkAuth />
-
       <ShoppingCartView isOpen={isOpen} onClose={onClose} />
     </Flex>
   );

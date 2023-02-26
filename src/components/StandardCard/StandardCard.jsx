@@ -35,7 +35,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
   useEffect(() => {
     if (
       isOpenCardModal &&
-      user.id &&
+      user?.id &&
       !isMutating &&
       !updateRecentStandardsTriggered
     ) {
