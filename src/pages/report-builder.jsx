@@ -1,37 +1,33 @@
-import { Box, Button, Flex, Heading, HStack, Input } from "@chakra-ui/react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import useUser from "src/lib/hooks/useUser";
+import { Card, Heading, HStack, VStack } from "@chakra-ui/react";
+import ArchivedReportView from "../components/ArchivedReportView";
 import RecentStandardsView from "../components/RecentStandardsView";
 
 const ReportBuilder = () => {
   // For PDF exporting
-  const [hasLoaded, setHasLoaded] = useState(false);
-  useEffect(() => setHasLoaded(true), []);
-  const { user } = useUser();
+  // const [hasLoaded, setHasLoaded] = useState(false);
+  // useEffect(() => setHasLoaded(true), []);
+  // const { user } = useUser();
 
   // Confimation modal
   // const { isOpen, onOpen, onClose } = useDisclosure();
-  const nameRef = useRef();
+  // const nameRef = useRef();
 
   return (
     <>
-      <Flex flexFlow="row nowrap" mb="10">
-        <Button opacity="0" cursor="default">
-          View Reports
-        </Button>
-
-        <Heading flex="1" gridArea="stack" textAlign="center">
-          Report Builder
-        </Heading>
-        {user?.isLoggedIn && (
-          <Link href="/archived-reports">
-            <Button href="/">View Archived Reports</Button>
-          </Link>
-        )}
-      </Flex>
-      <Flex
+      <HStack spacing={5} p={8} alignItems="flex-start">
+        <VStack flex={2} h="40em" as={Card}>
+          <Heading width="100%">Report Builder</Heading>
+        </VStack>
+        <VStack flex={1} maxWidth={{ base: "36%", "2xl": "23%" }}>
+          <Card w="100%" p={4} gap={3}>
+            <ArchivedReportView />
+          </Card>
+          <Card w="100%">
+            <RecentStandardsView maxCards={3}></RecentStandardsView>
+          </Card>
+        </VStack>
+      </HStack>
+      {/* <Flex
         p={5}
         borderRadius={15}
         flexDirection="column"
@@ -70,19 +66,18 @@ const ReportBuilder = () => {
                 )}
               </PDFDownloadLink>
             )}
-            {/* <Button onClick={onOpen} bg="gold" color="white">
+            <Button onClick={onOpen} bg="gold" color="white">
               End Report
-            </Button> */}
+            </Button>
           </HStack>
         </Flex>
-      </Flex>
+      </Flex> */}
       {/* <ReportConfirmationModal
         isOpen={isOpen}
         onClose={onClose}
         handleSave={SaveReportHandler}
         handleDiscard={DiscardReportHandler}
       /> */}
-      <RecentStandardsView maxCards={3}></RecentStandardsView>
     </>
   );
 };

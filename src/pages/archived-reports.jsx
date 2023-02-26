@@ -53,7 +53,7 @@ const ArchivedReports = () => {
               return <ArchivedReportCard key={index} report={archivedReport} />;
             })}
           {/* rendering an archived report with default props (exact styling from figma) */}
-          <ArchivedReportCard />
+          {/* <ArchivedReportCard /> */}
         </Box>
       </VStack>
     </Box>
