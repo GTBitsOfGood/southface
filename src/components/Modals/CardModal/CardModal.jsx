@@ -96,19 +96,12 @@ const CardModal = ({
                 <Flex gap={2} justifyContent="right">
                   <Button
                     size="lg"
-                    variant="grey-outlined"
-                    fontSize="22px"
-                    width="auto"
+                    variant="Grey-outlined"
                     onClick={openImagePreviewCallback}
                   >
                     View Notes
                   </Button>
-                  <Button
-                    variant="blue"
-                    fontSize="22px"
-                    width="auto"
-                    size="lg"
-                  >
+                  <Button variant="Blue" size="lg">
                     Add to Report
                   </Button>
                 </Flex>

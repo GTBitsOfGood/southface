@@ -11,23 +11,19 @@ const ReportBuilder = () => {
   useEffect(() => setHasLoaded(true), []);
   const { user } = useUser();
 
-  // Confimation modal
-  // const { isOpen, onOpen, onClose } = useDisclosure();
   const nameRef = useRef();
 
   return (
     <>
       <Flex flexFlow="row nowrap" mb="10">
-        <Button opacity="0" cursor="default">
-          View Reports
-        </Button>
-
         <Heading flex="1" gridArea="stack" textAlign="center">
           Report Builder
         </Heading>
         {user?.isLoggedIn && (
           <Link href="/archived-reports">
-            <Button href="/">View Archived Reports</Button>
+            <Button href="/" variant="Blue">
+              View Archived Reports
+            </Button>
           </Link>
         )}
       </Flex>

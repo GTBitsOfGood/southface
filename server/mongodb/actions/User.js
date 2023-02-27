@@ -26,7 +26,7 @@ export async function login({ username, password }) {
   };
 }
 
-export async function signUp({ username, password }) {
+export async function signUp({ username, password, isAdmin }) {
   if (username == null || password == null) {
     throw new Error("All parameters must be provided!");
   }
@@ -39,13 +39,14 @@ export async function signUp({ username, password }) {
       User.create({
         username,
         password: hashedPassword,
-        isAdmin: false,
+        isAdmin: isAdmin || false,
       })
     )
     .then((user) => {
       return {
         id: user._id,
         isAdmin: user.isAdmin,
+        password: user.password,
       };
     });
 }
