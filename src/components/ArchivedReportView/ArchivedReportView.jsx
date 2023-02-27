@@ -12,15 +12,13 @@ const ArchivedReportView = () => {
     <>
       <Heading fontSize="1.5em">Completed Reports</Heading>
       {user?.isLoggedIn && (
-        <Link href="/archived-reports">
-          <Button
-            href="/"
-            bgColor="#727474"
-            borderRadius="20"
-            textColor="white"
-            width="10.8em"
-            height="1.9em"
-          >
+        <Link
+          href="/archived-reports"
+          w="max"
+          textDecor="none"
+          _hover={{ textDecoration: "none" }}
+        >
+          <Button href="/" width="max" height="1.9em" variant="Grey-outlined">
             <Text fontSize="xs">See All Completed Reports</Text>
           </Button>
         </Link>
