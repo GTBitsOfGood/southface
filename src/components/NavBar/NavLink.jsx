@@ -20,9 +20,9 @@ const NavLink = ({ href, name, ...rest }) => {
 const NavButton = ({ name, href, children, ...rest }) => (
   <Button
     as={href ? "a" : "button"}
-    color="grey"
+    color="Grey"
     _hover={{
-      color: "blue",
+      color: "Blue",
       transform: "scale(1.01)",
       textDecoration: "underline",
       textDecorationThickness: "0.20em",

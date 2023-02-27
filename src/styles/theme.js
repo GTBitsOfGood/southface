@@ -2,30 +2,19 @@ import { extendTheme } from "@chakra-ui/react";
 import { ButtonStyles } from "./components/ButtonStyles";
 
 export const southfaceTheme = extendTheme({
-  textStyles: {
-    h1: {
-      textTransform: "capitalize",
-      fontColor: "red",
-    },
-    h2: {
-      fontColor: "red",
-    },
-    p: {
-      fontColor: "red",
-    },
-  },
+
   colors: {
-    // red
+    // Red
     Red: "#B90000",
     darkRed: "#8C0000",
     darkestRed: "#7E0000",
 
-    // blue
+    // Blue
     Blue: "#00ACC8",
     darkBlue: "#007A8F",
     darkestBlue: "#006779",
 
-    // grey
+    // Grey
     Grey: "#6D6E70",
     darkGrey: "#3F3F3F",
     darkestGrey: "#2D2C2C",
@@ -52,14 +41,6 @@ export const southfaceTheme = extendTheme({
           textTransform: "uppercase",
         },
         whiteSpace: "trim",
-      },
-    },
-    Checkbox: {
-      baseStyle: {
-        bgColor: "blue",
-        _checked: {
-          bgColor: "green",
-        },
       },
     },
   },

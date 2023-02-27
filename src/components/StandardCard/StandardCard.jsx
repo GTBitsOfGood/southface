@@ -111,7 +111,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
             position="absolute"
             right="1"
             bottom="0"
-            variant="blue-outlined"
+            variant="Blue-outlined"
           >
             Add To Report
           </Button>

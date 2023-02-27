@@ -46,7 +46,7 @@ const LoginComponent = () => {
           />
         </FormControl>
       </Box>
-      <Button width="100%" height="2.3em" variant="blue" onClick={handleSubmit}>
+      <Button width="100%" height="2.3em" variant="Blue" onClick={handleSubmit}>
         Log In
       </Button>
       {/* <Center gap="0.3em">

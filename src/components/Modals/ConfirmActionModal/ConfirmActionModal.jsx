@@ -53,7 +53,7 @@ const ConfirmActionModal = ({
       <ModalFooter justifyContent="center" pb={10}>
         <ButtonGroup>
           <Button
-            variant="grey-outlined"
+            variant="Grey-outlined"
             size="sm"
             rounded={16}
             fontSize="md"
@@ -63,7 +63,7 @@ const ConfirmActionModal = ({
             {cancelButtonText}
           </Button>
           <Button
-            variant={isDanger ? "red" : "blue"}
+            variant={isDanger ? "Red" : "Blue"}
             size="sm"
             rounded={16}
             fontSize="md"

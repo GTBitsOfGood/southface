@@ -21,7 +21,7 @@ const ReportBuilder = () => {
         </Heading>
         {user?.isLoggedIn && (
           <Link href="/archived-reports">
-            <Button href="/" variant="blue">
+            <Button href="/" variant="Blue">
               View Archived Reports
             </Button>
           </Link>
