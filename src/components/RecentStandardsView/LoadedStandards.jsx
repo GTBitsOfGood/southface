@@ -1,3 +1,4 @@
+import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
 import useSWRMutation from "swr/mutation";
@@ -58,22 +59,17 @@ function LoadedStandards(props) {
 
   return (
     <>
-      {props.standardsData ? (
-        cards.map((card, index) => {
-          {
-            return (
-              <StandardCard
-                key={index}
-                card={card}
-                maxH={{ base: "13rem", "2xl": "14.5rem" }}
-                minW={{ base: "23rem", "2xl": "24rem" }}
-              ></StandardCard>
-            );
-          }
-        })
-      ) : (
-        <></>
-      )}
+      <HStack height="21rem">
+        {props.standardsData ? (
+          cards.map((card, index) => {
+            {
+              return <StandardCard key={index} card={card}></StandardCard>;
+            }
+          })
+        ) : (
+          <></>
+        )}
+      </HStack>
     </>
   );
 }

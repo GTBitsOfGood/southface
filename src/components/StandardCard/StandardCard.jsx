@@ -78,7 +78,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
       <Box height="47%" position="relative">
         <Image
           height="100%"
-          width="full"
+          width="100%"
           fit="cover"
           src={card.images[0].imageUrl}
           alt="construction image"
@@ -87,9 +87,14 @@ const StandardCard = ({ card, setCards, ...props }) => {
       </Box>
 
       <Flex p={3} flexDirection="column" flex={1} mx="2">
-        <Heading size="md">{card.title}</Heading>
+        <Heading fontSize="1rem">{card.title}</Heading>
 
-        <Text fontSize="sm" lineHeight="1.2rem" maxHeight="5rem" noOfLines="3">
+        <Text
+          fontSize=".92rem"
+          lineHeight="1.2rem"
+          maxHeight="4rem"
+          noOfLines="3"
+        >
           {card.criteria}
         </Text>
 
