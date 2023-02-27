@@ -44,11 +44,8 @@ const ShoppingCartItem = ({
             </Box>
             <Button
               onClick={toggleRemovebtn}
-              backgroundColor="#B90000"
-              borderRadius="3xl"
-              color="white"
+              variant="Red-rounded"
               fontSize="xs"
-              fontWeight="bold"
             >
               Remove from report
             </Button>

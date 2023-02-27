@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Spacer, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import ArchivedReportCard from "src/components/ArchivedReportCard";
 import useUser from "src/lib/hooks/useUser";
@@ -15,19 +15,11 @@ const ArchivedReports = () => {
     <Box>
       <Flex margin="10">
         <Link href="/report-builder">
-          <Button
-            background="#6D6E70"
-            borderRadius="3xl"
-            color="white"
-            marginBottom="20"
-          >
+          <Button variant="Grey-rounded" marginBottom="20">
             Return to Report Builder Home
           </Button>
         </Link>
 
-        <Spacer />
-        <Heading>Reports</Heading>
-        <Spacer />
         <Button
           as="a"
           background="#6D6E70"
