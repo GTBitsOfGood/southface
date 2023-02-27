@@ -42,7 +42,7 @@ const ShoppingCartView = ({ isOpen, onClose }) => {
         </Box>
         <Box display="flex" justifyContent="center">
           <Link href={urls.pages.reportbuilder}>
-            <Button variant="grey-rounded" size="lg" marginBottom="20">
+            <Button variant="Grey-rounded" size="lg" marginBottom="20">
               View Full Report
             </Button>
           </Link>

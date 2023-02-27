@@ -130,7 +130,7 @@ const SearchBar = (props) => {
               </Button>
             </InputRightAddon>
           </InputGroup>
-          <Button bgColor="red.200" {...buttonStyles} onClick={ClearFilterTags}>
+          <Button variant="Red" {...buttonStyles} onClick={ClearFilterTags}>
             Clear filters
           </Button>
           <Popover placement="bottom-end">
