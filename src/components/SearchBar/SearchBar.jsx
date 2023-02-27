@@ -133,11 +133,11 @@ const SearchBar = (props) => {
           <Button bgColor="red.200" {...buttonStyles} onClick={ClearFilterTags}>
             Clear filters
           </Button>
-          <Popover>
+          <Popover placement="bottom-end">
             <PopoverTrigger>
               <Button>Filter</Button>
             </PopoverTrigger>
-            <PopoverContent>
+            <PopoverContent width="max-content">
               <Tag />
             </PopoverContent>
           </Popover>
