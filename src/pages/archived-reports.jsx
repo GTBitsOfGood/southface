@@ -15,7 +15,7 @@ const ArchivedReports = () => {
     <Box>
       <Flex margin="10">
         <Link href="/report-builder">
-          <Button variant="grey-rounded" marginBottom="20">
+          <Button variant="Grey-rounded" marginBottom="20">
             Return to Report Builder Home
           </Button>
         </Link>

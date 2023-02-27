@@ -232,7 +232,7 @@ const AddCardModal = ({ isOpen, onClose, setCards, ...rest }) => {
                     onClick={onClose}
                     size="sm"
                     rounded="full"
-                    bgColor="red"
+                    bgColor="Red"
                   />
                 </HStack>
                 <FormLabel fontWeight="bold">Add Card/Cancel</FormLabel>

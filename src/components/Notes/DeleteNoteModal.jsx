@@ -69,7 +69,7 @@ const DeleteNoteModal = ({ isOpen, onClose, note, handleDeleteNote }) => {
               No, return to notes.
             </Button>
             <Button
-              colorScheme="red"
+              colorScheme="Red"
               size="sm"
               rounded={16}
               fontSize="md"
