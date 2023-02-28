@@ -2,7 +2,6 @@ import { extendTheme } from "@chakra-ui/react";
 import { ButtonStyles } from "./components/ButtonStyles";
 
 export const southfaceTheme = extendTheme({
-
   colors: {
     // Red
     Red: "#B90000",
