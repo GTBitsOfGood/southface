@@ -155,7 +155,7 @@ const SearchBar = (props) => {
           </InputGroup> */}
 
           {/* clear filter */}
-          {/* <Button bgColor="red.200" {...buttonStyles} onClick={ClearFilterTags}>
+          {/* <Button variant="Red" {...buttonStyles} onClick={ClearFilterTags}>
             Clear filters
           </Button> */}
 

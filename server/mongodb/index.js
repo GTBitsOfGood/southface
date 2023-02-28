@@ -9,6 +9,12 @@ export default async () => {
     );
   }
 
+  /**
+   * THIS SETS WHICH DATABASE YOU ARE USING!! Choose wisely
+   * either choose processs.env.DB_URL_DEV (local) || process.env.DB_URL_PRODUCTION (atlas)
+   *
+   *  */
+
   await mongoose
     .connect(process.env.DB_URL, {
       dbName: process.env.DB_NAME,

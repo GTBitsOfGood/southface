@@ -10,13 +10,7 @@ function RecentStandardsView(props) {
     <Flex flexDirection={"column"} gap="16px">
       <Heading size="lg">Recent Standards</Heading>
       <Link href="/library">
-        <Button
-          h="30px"
-          bgColor="#727474"
-          borderRadius="20"
-          textColor="white"
-          width="max"
-        >
+        <Button width="max" variant="Grey-outlined">
           See All Standards
         </Button>
       </Link>

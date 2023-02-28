@@ -92,13 +92,13 @@ const ModifyImageModal = ({
         <ModalFooter>
           <IconButton
             icon={<CloseIcon />}
-            colorScheme="blue"
+            colorScheme="Blue"
             mr={3}
             onClick={onClose}
           />
           <IconButton
             icon={<CheckIcon />}
-            colorScheme="blue"
+            colorScheme="Blue"
             mr={3}
             onClick={isAdd ? handleAddSubmit : handleEditSubmit}
           />
