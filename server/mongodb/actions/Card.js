@@ -43,10 +43,21 @@ export async function getCardsPagination({
 }) {
   await mongoDB();
 
-  // match is being used since without it causes wierd refresh issues
-  let query = {
-    $match: [{ buildingType }, { primaryCategory }],
-  };
+  let query = {};
+
+  if (primaryCategory) {
+    query = {
+      ...query,
+      primaryCategory,
+    };
+  }
+
+  if (buildingType) {
+    query = {
+      ...query,
+      buildingType,
+    };
+  }
 
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
