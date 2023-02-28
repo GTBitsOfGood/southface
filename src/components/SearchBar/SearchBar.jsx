@@ -1,12 +1,14 @@
 import { Icon, SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
-  // Button,
+  Button,
   Flex,
   Input,
   InputGroup,
-  InputRightAddon,
+  InputLeftAddon,
+  Select,
 } from "@chakra-ui/react";
+
 import { useRef } from "react";
 // import {
 //   BiCategory as CategoryIcon,
@@ -86,11 +88,15 @@ const SearchBar = (props) => {
           setFilterTags={setTags}
         />
       )} */}
-      <Flex margin="auto" width="80%" {...rest} flexDirection="column">
+      <Flex {...rest} justifyContent="flex-end">
+        {/* search bar */}
         <Box mb="3">
           <InputGroup size="lg">
+            <InputLeftAddon bg="transparent" borderRight="none">
+              <Icon as={SearchIcon} />
+            </InputLeftAddon>
             <Input ref={textInput} placeholder="Search specs" />
-            <InputRightAddon>
+            {/* <InputRightAddon>
               <Icon
                 as={SearchIcon}
                 onClick={() =>
@@ -100,9 +106,32 @@ const SearchBar = (props) => {
                   })
                 }
               />
-            </InputRightAddon>
+            </InputRightAddon> */}
           </InputGroup>
         </Box>
+        {/* filter  */}
+
+        <Box mb="3">
+          <Select placeholder="Filter">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+          </Select>
+        </Box>
+
+        <Button
+          colorScheme="blue"
+          onClick={() =>
+            setSearch({
+              searchString: textInput.current.value,
+              tags: criteria.tags,
+            })
+          }
+        >
+          Submit
+        </Button>
+
+        {/* enter button  */}
 
         {/* <Flex width="100%" flexFlow="row wrap" gap="5"> */}
         {/* {Object.keys(criteria.tags).map((tag, index) => (
