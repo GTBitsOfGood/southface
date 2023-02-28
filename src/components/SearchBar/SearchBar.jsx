@@ -1,4 +1,6 @@
 import { Icon, SearchIcon } from "@chakra-ui/icons";
+import { FaLongArrowAltRight } from "react-icons/fa";
+
 import {
   Box,
   Button,
@@ -90,8 +92,8 @@ const SearchBar = (props) => {
       )} */}
       <Flex {...rest} justifyContent="flex-end">
         {/* search bar */}
-        <Box mb="3">
-          <InputGroup size="lg">
+        <Box mr="1">
+          <InputGroup size="lg" borderWidth="">
             <InputLeftAddon bg="transparent" borderRight="none">
               <Icon as={SearchIcon} />
             </InputLeftAddon>
@@ -111,8 +113,8 @@ const SearchBar = (props) => {
         </Box>
         {/* filter  */}
 
-        <Box mb="3">
-          <Select placeholder="Filter">
+        <Box mr="3">
+          <Select placeholder="Filter" size="lg" borderRadius="lg">
             <option value="option1">Option 1</option>
             <option value="option2">Option 2</option>
             <option value="option3">Option 3</option>
@@ -120,7 +122,9 @@ const SearchBar = (props) => {
         </Box>
 
         <Button
-          colorScheme="blue"
+          variant="Blue"
+          size="lg"
+          mr="3"
           onClick={() =>
             setSearch({
               searchString: textInput.current.value,
@@ -128,7 +132,7 @@ const SearchBar = (props) => {
             })
           }
         >
-          Submit
+          {<FaLongArrowAltRight />}
         </Button>
 
         {/* enter button  */}
