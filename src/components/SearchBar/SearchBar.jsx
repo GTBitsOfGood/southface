@@ -7,6 +7,7 @@ import {
   InputGroup,
   InputRightAddon,
   Popover,
+  PopoverArrow,
   PopoverContent,
   PopoverTrigger,
   useDisclosure,
@@ -133,12 +134,13 @@ const SearchBar = (props) => {
           <Button variant="Red" {...buttonStyles} onClick={ClearFilterTags}>
             Clear filters
           </Button>
-          <Popover placement="bottom-end">
+          <Popover placement="bottom-end" isLazy>
             <PopoverTrigger>
-              <Button>Filter</Button>
+              <Button variant="Grey-outlined">Filter</Button>
             </PopoverTrigger>
-            <PopoverContent width="max-content">
-              <Tag />
+            <PopoverContent width="80em">
+              <PopoverArrow />
+              <Tag width="80em" height="55em" />
             </PopoverContent>
           </Popover>
           {allowTemplates && (

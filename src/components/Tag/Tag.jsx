@@ -13,10 +13,11 @@ import { createTag } from "src/actions/Tag";
 import useSWR from "swr";
 import TagBox from "./TagBox";
 
-const Tag = () => {
+const Tag = (props) => {
   const { data } = useSWR(urls.api.tag.get);
   const tags = data?.payload;
   const alphabetGroups = {};
+
   tags?.forEach((item) => {
     const firstLetter = item.name.charAt(0).toUpperCase();
     if (!alphabetGroups[firstLetter]) {
@@ -26,35 +27,38 @@ const Tag = () => {
   });
 
   const [tagName, setTagName] = useState("");
+  const [selectedTag, setSelectedTag] = useState([]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const selectTag = (id) => {
+    const copy = [...selectedTag];
+    copy.push(id);
+    setSelectedTag(copy);
+  };
 
-    createTag(tagName)
-      .catch((error) => window.alert(error.message))
-      .then((data) => {
-        const firstLetter = data.name.charAt(0).toUpperCase();
-        if (!alphabetGroups[firstLetter]) {
-          alphabetGroups[firstLetter] = [];
-        }
-        alphabetGroups[firstLetter].push(data);
-        alphabetGroups[firstLetter].sort();
-        setTagName("");
-      });
+  const deselectTag = (id) => {
+    const copy = [...selectedTag];
+    copy.splice(copy.indexOf(id), 1);
+    setSelectedTag(copy);
+  };
+
+  const handleSubmit = () => {
+    tagName &&
+      createTag(tagName)
+        .catch((error) => window.alert(error.message))
+        .then((data) => {
+          const firstLetter = data.name.charAt(0).toUpperCase();
+          if (!alphabetGroups[firstLetter]) {
+            alphabetGroups[firstLetter] = [];
+          }
+          alphabetGroups[firstLetter].push(data);
+          setTagName("");
+        });
   };
 
   return (
     <>
       <VStack gap="1em" width="max">
-        <Flex
-          //   autoFlow="column"
-          //   templateRows={{ base: "repeat(5, 1fr)", "2xl": "repeat(4, 1fr)" }}
-          //   gap={3}
-          direction="row"
-          wrap="wrap"
-          w="80em"
-          h="min-content"
-        >
+        <Flex {...props} direction="column" wrap="wrap">
           {tags &&
             Object.keys(alphabetGroups).map((letter) => {
               return (
@@ -62,6 +66,8 @@ const Tag = () => {
                   key={letter}
                   letter={letter}
                   list={alphabetGroups[letter]}
+                  selectTag={selectTag}
+                  deselectTag={deselectTag}
                 />
               );
             })}

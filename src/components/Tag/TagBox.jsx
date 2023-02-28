@@ -8,9 +8,17 @@ const TagBox = (props) => {
         <Heading w="5%" fontSize="2xl">
           {props.letter}
         </Heading>
-        <VStack w="100%" paddingTop={1}>
+        <VStack w="100%">
           {props.list.map((item) => {
-            return <TagSelect key={item.id} name={item.name} />;
+            return (
+              <TagSelect
+                key={item._id}
+                id={item._id}
+                name={item.name}
+                selectTag={props.selectTag}
+                deselectTag={props.deselectTag}
+              />
+            );
           })}
         </VStack>
       </HStack>

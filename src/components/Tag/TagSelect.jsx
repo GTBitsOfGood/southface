@@ -1,21 +1,29 @@
-import { Checkbox, Text } from "@chakra-ui/react";
+import { Box, Checkbox, FormControl } from "@chakra-ui/react";
 import { useState } from "react";
 
 const TagSelect = (props) => {
   const [isChecked, setIsChecked] = useState(false);
-  const handleChange = () => {
+  const handleInputChange = (e) => {
     setIsChecked(!isChecked);
+    if (!isChecked) {
+      props.selectTag(e.target.id);
+    } else {
+      props.deselectTag(e.target.id);
+    }
   };
   return (
     <>
-      <Checkbox
-        iconColor="black"
-        isChecked={isChecked}
-        onChange={handleChange}
-        w="100%"
-      >
-        <Text fontSize="xs">{props.name}</Text>
-      </Checkbox>
+      <FormControl>
+        <Checkbox
+          id={props.id}
+          color="Grey"
+          w="100%"
+          onChange={handleInputChange}
+          checked={isChecked}
+        >
+          <Box>{props.name}</Box>
+        </Checkbox>
+      </FormControl>
     </>
   );
 };
