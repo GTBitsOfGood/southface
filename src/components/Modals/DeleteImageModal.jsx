@@ -1,6 +1,6 @@
 import { Heading, VStack } from "@chakra-ui/react";
 import Image from "next/image";
-import DeleteModal from "./DeleteModal";
+import ConfirmActionModal from "./ConfirmActionModal/ConfirmActionModal";
 
 const DeleteImageModal = ({
   isOpen,
@@ -10,30 +10,31 @@ const DeleteImageModal = ({
   handleDeleteImage,
 }) => {
   return (
-    <DeleteModal
+    <ConfirmActionModal
       isOpen={isOpen}
       onClose={onClose}
-      modalBody={
-        <VStack>
-          <Heading size="xs" color="#6D6E70" fontWeight="semibold" mb={1}>
-            {image.name}
-          </Heading>
-          <Image
-            src="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
-            height={125}
-            width={125}
-            alt="construction image"
-          />
-        </VStack>
-      }
-      headerText="Are you sure you want to delete this image?"
-      closeText="No, return to standard."
-      submitText="Yes, delete image."
-      onSubmit={() => {
+      mainText="Are you sure you want to delete this image?"
+      subText={true}
+      confirmButtonText="Yes, delete image."
+      cancelButtonText="No, return to standard."
+      handleAction={() => {
         handleDeleteImage(index);
         onClose();
       }}
-    />
+      isDanger={true}
+    >
+      <VStack>
+        <Heading size="xs" color="Grey" fontWeight="semibold" mb={1}>
+          {image.name}
+        </Heading>
+        <Image
+          src="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
+          height={125}
+          width={125}
+          alt="construction image"
+        />
+      </VStack>
+    </ConfirmActionModal>
   );
 };
 

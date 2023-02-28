@@ -3,20 +3,19 @@ import {
   Heading,
   HStack,
   Input,
-  useColorModeValue,
   useDisclosure,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRef } from "react";
-import { useField, useFormState } from "react-final-form";
+import { useField, useForm, useFormState } from "react-final-form";
 import { IoMdTrash } from "react-icons/io";
 import { MdUpload } from "react-icons/md";
 
-import DeleteImageModal from "../Modals/DeleteImageModal";
 import Control from "../FormComponents/Control";
 import Error from "../FormComponents/Error";
+import DeleteImageModal from "../Modals/DeleteImageModal";
 
 const ImageControl = ({ img, idx, handleDeleteImage }) => {
   const {
@@ -34,9 +33,8 @@ const ImageControl = ({ img, idx, handleDeleteImage }) => {
       />
       <Button
         leftIcon={<IoMdTrash />}
-        colorScheme="red"
+        variant="Red-rounded"
         size="xs"
-        rounded={16}
         fontSize="sm"
         width="auto"
         onClick={onDeleteOpen}
@@ -54,10 +52,11 @@ const ImageControl = ({ img, idx, handleDeleteImage }) => {
   );
 };
 
-const ImageUpload = ({ name, setValue }) => {
+const ImageUpload = ({ name }) => {
   const { input, meta } = useField(name, { subscription: { value: false } });
   const ref = useRef();
   const { values } = useFormState();
+  const { mutators } = useForm();
 
   const handleUploadImages = (files) => {
     const newFiles = Array.prototype.slice.call(files);
@@ -67,13 +66,13 @@ const ImageUpload = ({ name, setValue }) => {
       images.push(img);
     });
 
-    setValue("uploadImages", images);
+    mutators.setValue("uploadImages", images);
   };
 
   const handleDeleteImage = (index) => {
     const images = values.uploadImages.filter((_, i) => i != index);
 
-    setValue("uploadImages", images);
+    mutators.setValue("uploadImages", images);
   };
 
   return (
@@ -82,13 +81,8 @@ const ImageUpload = ({ name, setValue }) => {
         <HStack>
           <Button
             leftIcon={<MdUpload />}
-            bgColor={useColorModeValue("blackAlpha.500")}
-            _hover={{
-              bgColor: `${useColorModeValue("blackAlpha.600")}`,
-            }}
-            color="white"
+            variant="Grey-rounded"
             size="sm"
-            rounded={16}
             fontSize="md"
             width="auto"
             onClick={() => ref.current.click()}
@@ -112,7 +106,7 @@ const ImageUpload = ({ name, setValue }) => {
           {Array.from(values.uploadImages).map((img, idx) => {
             return (
               <VStack key={idx}>
-                <Heading size="xs" color="#6D6E70" fontWeight="semibold" mb={1}>
+                <Heading size="xs" color="Grey" fontWeight="semibold" mb={1}>
                   {img.name}
                 </Heading>
                 <ImageControl

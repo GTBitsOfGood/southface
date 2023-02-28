@@ -3,37 +3,13 @@
     https://codesandbox.io/s/github/final-form/react-final-form/tree/master/examples/chakra?file=/index.js
 */
 
-import { Box, Button, Flex, FormLabel, Heading } from "@chakra-ui/react";
-import React from "react";
+import { Box, Heading, HStack } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { Form } from "react-final-form";
-import ImageUploadControl from "./ImageUpload";
-import InputControl from "../FormComponents/InputControl";
-import Multiselect from "../FormComponents/Multiselect";
-import TextareaControl from "../FormComponents/TextareaControl";
-import CreateTag from "./CreateTag";
-
-const ReviewAddButton = () => (
-  <Button
-    bgColor="#03acc8"
-    _hover={{
-      bgColor: "#029ab5",
-    }}
-    p={4}
-    mr="15%"
-    color="white"
-    size="md"
-    rounded={16}
-    fontSize="md"
-    width="auto"
-    type="submit"
-  >
-    Review and Add
-  </Button>
-);
-
-const onSubmit = () => {
-  console.log("submitting");
-};
+import { createCard } from "../../actions/Card";
+import EditAddStandard from "./EditAddStandard";
+import OpenStandardPopup from "./OpenStandardPopup";
+import ViewAddStandard from "./ViewAddStandard";
 
 const validate = (values) => {
   const errors = {};
@@ -56,20 +32,44 @@ const validate = (values) => {
   return errors;
 };
 
-const buildingTypes = ["Multifamily", "Single Family", "Commercial"];
-const primaryCategories = [
-  "Site Planning",
-  "Resource Efficiency",
-  "Durability and Moisture Management",
-  "High Performance Building Envelope",
-  "Energy Efficient HVAC Systems",
-  "Indoor Air Quality",
-  "Plumbing and Irrigation",
-  "Efficient Lighting and Appliances",
-  "Education and Operations",
-];
-
 const AddStandardForm = () => {
+  const [prevSubmitted, setPrevSubmitted] = useState();
+
+  const onSubmit = async (values, form) => {
+    console.log(values, form);
+    if (values.isEditing) {
+      form.mutators.setValue("isEditing", false);
+      return;
+    }
+    const images = values.uploadImages.map(() => {
+      return {
+        imageUrl:
+          "https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png",
+        thumbsUp: 0,
+        thumbsDown: 0,
+      };
+    });
+
+    const card = {
+      images: images,
+      title: values.title,
+      criteria: values.standardCriteria,
+      tags: values.tagArray || [],
+      buildingType: values.buildingType,
+      primaryCategory: values.primaryCategory,
+      notes: [],
+    };
+
+    const newCard = await createCard(card);
+
+    setPrevSubmitted({
+      title: newCard.title,
+      buildingType: newCard.buildingType,
+      primaryCategory: newCard.primaryCategory,
+    });
+    form.reset();
+  };
+
   return (
     <Form
       onSubmit={onSubmit}
@@ -79,54 +79,26 @@ const AddStandardForm = () => {
           changeValue(state, field, () => value);
         },
       }}
-      render={({
-        handleSubmit,
-        form: {
-          mutators: { setValue },
-        },
-      }) => (
-        <Box p={8} pb={14} as="form" onSubmit={handleSubmit}>
-          <Box w="50%">
-            <Heading as="h1" size="lg" color="#6D6E70" textAlign="left" mb={8}>
+      initialValues={{
+        isEditing: true,
+      }}
+      render={({ handleSubmit, values }) => (
+        <Box p={14} pb={14} w="full" as="form" onSubmit={handleSubmit}>
+          <HStack>
+            <Heading as="h1" size="lg" color="Grey" textAlign="left" my={2}>
               Add a New Standard
             </Heading>
-            <FormLabel
-              fontSize="xl"
-              color="#8C8C8C"
-              fontWeight="bold"
-              textAlign="left"
-              mb={1}
-              mt={5}
-            >
-              General Information
-            </FormLabel>
-            <InputControl name="title" label="Title of Standard" type="text" />
 
-            <TextareaControl
-              name="standardCriteria"
-              label="Standard Criteria"
-            />
+            {prevSubmitted && values.isEditing && (
+              <OpenStandardPopup prevSubmitted={prevSubmitted || {}} />
+            )}
+          </HStack>
 
-            <ImageUploadControl name="uploadImages" setValue={setValue} />
-
-            <Multiselect
-              name="buildingType"
-              label="Building Type"
-              entries={buildingTypes}
-            />
-
-            <Multiselect
-              name="primaryCategory"
-              label="Primary Category"
-              entries={primaryCategories}
-            />
-
-            <CreateTag />
-          </Box>
-
-          <Flex width="100%" justifyContent="right">
-            <ReviewAddButton onSubmit={onSubmit} />
-          </Flex>
+          {values.isEditing ? (
+            <EditAddStandard handleSubmit={handleSubmit} />
+          ) : (
+            <ViewAddStandard handleSubmit={handleSubmit} />
+          )}
         </Box>
       )}
     />

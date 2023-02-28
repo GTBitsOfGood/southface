@@ -1,37 +1,35 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
-import DeleteModal from "../Modals/DeleteModal";
+import ConfirmActionModal from "../Modals/ConfirmActionModal";
 import { formatNoteDateString } from "./utils";
 
 const DeleteNoteModal = ({ isOpen, onClose, note, handleDeleteNote }) => {
   return (
-    <DeleteModal
+    <ConfirmActionModal
       isOpen={isOpen}
       onClose={onClose}
-      modalBody={
-        <VStack maxW="100%">
-          <Box
-            minW="60%"
-            maxW="80%"
-            border="1px solid #cccccc"
-            p={3}
-            rounded={14}
-            mb={4}
-          >
-            <Text fontSize="sm">{note.body}</Text>
-            <Text as="span" color="#6d6e70" fontSize="sm">
-              {formatNoteDateString(note.date)}
-            </Text>
-          </Box>
-          <Text justifyContent="center">
-            You will be unable to recover it after it is deleted.
+      mainText="Are you sure you want to delete this note?"
+      subText="You will be unable to recover it after it is deleted."
+      confirmButtonText="Yes, delete note."
+      cancelButtonText="No, return to notes."
+      handleAction={handleDeleteNote}
+      isDanger={true}
+    >
+      <VStack maxW="full">
+        <Box
+          minW="60%"
+          maxW="80%"
+          border="1px solid #cccccc"
+          p={3}
+          rounded={14}
+          mb={4}
+        >
+          <Text fontSize="sm">{note.body}</Text>
+          <Text as="span" color="Grey" fontSize="sm">
+            {formatNoteDateString(note.date)}
           </Text>
-        </VStack>
-      }
-      headerText="Are you sure you want to delete this note?"
-      closeText="No, return to notes."
-      submitText="Yes, delete note."
-      onSubmit={handleDeleteNote}
-    />
+        </Box>
+      </VStack>
+    </ConfirmActionModal>
   );
 };
 

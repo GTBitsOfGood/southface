@@ -14,7 +14,7 @@ const CheckboxArrayControl = ({ name, value, children }) => {
       {...input}
       isChecked={checked}
       isInvalid={error && touched}
-      color="#6D6E70"
+      color="Grey"
     >
       {children}
     </Checkbox>

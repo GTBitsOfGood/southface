@@ -8,13 +8,14 @@ const InputControl = ({ name, label, type }) => {
   return (
     <Control name={name}>
       <HStack>
-        <FormLabel htmlFor={name} m={0} color="#6D6E70">
+        <FormLabel htmlFor={name} m={0} color="Grey">
           {label}
         </FormLabel>
         <Error name={name} />
       </HStack>
       <Input
         {...input}
+        color="Grey"
         isInvalid={meta.error && meta.touched}
         id={name}
         type={type}
