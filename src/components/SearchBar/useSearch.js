@@ -5,7 +5,9 @@ export default function useSearch(
   cards,
   setNumPages,
   setCurrentPage,
-  setCards
+  setCards,
+  buildingType,
+  primaryCategory
 ) {
   const [criteria, setSearch] = useState({
     searchString: "",
@@ -13,7 +15,14 @@ export default function useSearch(
   });
 
   useEffect(() => {
-    getCardsPagination(1, criteria).then(({ cards, cardsCount }) => {
+    const searchFilter = {
+      searchString: criteria.searchString,
+      tags: criteria.tags,
+      buildingType: buildingType,
+      primaryCategory: primaryCategory,
+    };
+
+    getCardsPagination(1, searchFilter).then(({ cards, cardsCount }) => {
       let numPages = Math.floor(cardsCount / 4);
       if (cardsCount % 4 > 0) {
         numPages += 1;
@@ -24,7 +33,14 @@ export default function useSearch(
         setCards(cards);
       }
     });
-  }, [criteria, setNumPages, setCurrentPage, setCards]);
+  }, [
+    criteria,
+    setNumPages,
+    setCurrentPage,
+    setCards,
+    buildingType,
+    primaryCategory,
+  ]);
 
   const filter = (card) => {
     const matchesSearch = card.title
@@ -38,7 +54,16 @@ export default function useSearch(
             .map((tag) => tag.toLowerCase())
             .includes(tag)
         ) || Object.keys(criteria.tags).length === 0;
-    return matchesSearch && matchesTags;
+    const matchesBuildingType =
+      !buildingType || card.buildingType === buildingType;
+    const matchesPrimaryCategory =
+      !primaryCategory || card.primaryCategory === primaryCategory;
+    return (
+      matchesSearch &&
+      matchesTags &&
+      matchesBuildingType &&
+      matchesPrimaryCategory
+    );
   };
 
   const searchedCards = cards.filter(filter);
