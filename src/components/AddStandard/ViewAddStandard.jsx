@@ -55,8 +55,6 @@ const ViewAddStandard = ({ handleSubmit }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log(values);
-
   const {
     isOpen: isOpenSubmitModal,
     onOpen: onOpenSubmitModal,

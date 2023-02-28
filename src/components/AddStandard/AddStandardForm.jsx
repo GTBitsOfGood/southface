@@ -36,7 +36,6 @@ const AddStandardForm = () => {
   const [prevSubmitted, setPrevSubmitted] = useState();
 
   const onSubmit = async (values, form) => {
-    console.log(values, form);
     if (values.isEditing) {
       form.mutators.setValue("isEditing", false);
       return;
@@ -90,7 +89,7 @@ const AddStandardForm = () => {
             </Heading>
 
             {prevSubmitted && values.isEditing && (
-              <OpenStandardPopup prevSubmitted={prevSubmitted || {}} />
+              <OpenStandardPopup prevSubmitted={prevSubmitted} />
             )}
           </HStack>
 
