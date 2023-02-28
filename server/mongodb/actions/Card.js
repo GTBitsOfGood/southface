@@ -43,18 +43,24 @@ export async function getCardsPagination({
 }) {
   await mongoDB();
 
+  // match is being used since without it causes wierd refresh issues
+  // let query = {
+  //   $match: [{ buildingType }, { primaryCategory }],
+  // };
+
   let query = {};
 
-  if (primaryCategory) {
+  if (primaryCategory && buildingType) {
     query = {
-      ...query,
+      primaryCategory,
+      buildingType,
+    };
+  } else if (primaryCategory) {
+    query = {
       primaryCategory,
     };
-  }
-
-  if (buildingType) {
+  } else if (buildingType) {
     query = {
-      ...query,
       buildingType,
     };
   }
@@ -85,51 +91,6 @@ export async function getCardsPagination({
     .skip(pageNumber * cardsPerPage)
     .limit(cardsPerPage);
 }
-
-// export async function getCardsPagination({
-//   pageNumber,
-//   buildingType,
-//   primaryCategory,
-//   searchFilterString = null,
-//   searchFilterTags = null,
-//   cardsPerPage = 4,
-// }) {
-//   await mongoDB();
-
-//   let query = {};
-
-//   if (buildingType && primaryCategory) {
-//     query = {
-//       buildingType,
-//       primaryCategory,
-//     };
-//   } else if (buildingType) {
-//     query = { buildingType };
-//   } else if (primaryCategory) {
-//     query = { primaryCategory };
-//   } else {
-//     // Throw an error if both buildingType and primaryCategory  missing
-//     throw new Error("Error: must have either buildingType or primaryCategory");
-//   }
-
-//   if (searchFilterString || searchFilterTags) {
-//     const regex = new RegExp(searchFilterString, "i");
-
-//     query = {
-//       ...query,
-//       $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
-//     };
-
-//     if (searchFilterTags) {
-//       query.tags = { $all: searchFilterTags };
-//     }
-//   }
-
-//   return Card.find(query)
-//     .sort({ _id: -1 })
-//     .skip(pageNumber * cardsPerPage)
-//     .limit(cardsPerPage);
-// }
 
 export async function getCardsCount({
   buildingType,
