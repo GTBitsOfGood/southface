@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   Heading,
+  Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -29,8 +30,14 @@ import ConfirmActionsModal from "./ConfirmActionModal";
 const CardModalFormContent = ({
   card,
   setCards,
+  isOpenCardModal,
   onCloseCardModal,
   setValue,
+  reset,
+  handleSubmit,
+  registerField,
+  handleDeleteStandard,
+  ...rest
 }) => {
   const {
     isOpen: isOpenImagePreviewModal,
@@ -42,6 +49,12 @@ const CardModalFormContent = ({
     isOpen: isDiscardChangesOpen,
     onOpen: onDiscardChangesOpen,
     onClose: onDiscardChangesClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isDiscardChangesExitModelOpen,
+    onOpen: onDiscardChangesExitModalOpen,
+    onClose: onDiscardChangesExitModalClose,
   } = useDisclosure();
 
   const {
@@ -70,19 +83,21 @@ const CardModalFormContent = ({
   };
 
   const discardChanges = () => {
+    reset();
     setEditing(false);
     onDiscardChangesClose();
   };
 
   const saveChanges = () => {
-    console.log(form.dirtyFields, form.initialValues, form.dirty);
     setEditing(false);
+    handleSubmit();
     onSaveChangesClose();
     onCloseCardModal();
   };
 
   const deleteStandard = () => {
     setEditing(false);
+    handleDeleteStandard();
     onDeleteStandardClose();
     onCloseCardModal();
   };
@@ -94,15 +109,40 @@ const CardModalFormContent = ({
   };
 
   const form = useFormState();
+  registerField("tags", () => {}, {
+    // ...other subscription items
+    touched: true,
+  });
+
+  let discardChangesAndExit = () => {
+    reset();
+    setEditing(false);
+    onDiscardChangesExitModalClose();
+    onCloseCardModal();
+  };
+
   return (
-    <>
+    <Modal
+      {...rest}
+      isOpen={isOpenCardModal}
+      onClose={() => {
+        reset();
+        if (editing && form.dirty) {
+          onDiscardChangesExitModalOpen();
+        } else {
+          setEditing(false);
+          onCloseCardModal();
+        }
+      }}
+      size={{ base: "xs", md: "2xl", lg: "4xl" }}
+    >
       <ModalOverlay />
       <ModalContent rounded={14}>
         <ModalCloseButton right={2} top={0} m={4} />
         <ModalHeader mt={10} mx={6}>
           <Flex justifyContent="space-between">
             <Heading mb={2}>{card.title}</Heading>
-            {user.isAdmin ? (
+            {user?.isAdmin ? (
               !editing ? (
                 <Button
                   bgColor="black"
@@ -203,43 +243,47 @@ const CardModalFormContent = ({
             >
               <Flex flexDirection="column" gap="1rem" width="full">
                 <Wrap overflowY="hidden" overflowX="hidden">
-                  {card.tags.map((tag, index) => (
-                    <Box key={index} position="relative">
-                      <Tag
-                        bgColor="#c4d600"
-                        borderRadius="30px"
-                        minWidth="fill"
-                        mt={editing ? "0.6rem" : "0rem"}
-                        fontSize="1rem"
-                        px="1rem"
-                      >
-                        {tag}
-                      </Tag>
-                      {editing ? (
-                        <Button
-                          position="absolute"
-                          top="0.2rem"
-                          right="-0.5rem"
-                          backgroundColor="#FFFFFF"
-                          color="#6D6E70"
-                          boxShadow="0 0 0.5rem #b3b3b3"
-                          size="xl"
-                          height="max"
-                          rounded="full"
-                          p="0.3rem"
-                          onClick={() => {
-                            const existingTags = card.tags;
-                            existingTags.splice(index, 1);
-                            setValue("newTags", existingTags);
-                          }}
-                        >
-                          <CloseIcon h={1.5} w={1.5} />
-                        </Button>
-                      ) : (
-                        <></>
-                      )}
-                    </Box>
-                  ))}
+                  {form.values?.tags
+                    ? form.values.tags.map((tag, index) => (
+                        <Box key={index} position="relative">
+                          <Tag
+                            bgColor="#c4d600"
+                            borderRadius="30px"
+                            minWidth="fill"
+                            mt={editing ? "0.6rem" : "0rem"}
+                            fontSize="1rem"
+                            px="1rem"
+                          >
+                            {tag}
+                          </Tag>
+                          {editing ? (
+                            <Button
+                              position="absolute"
+                              top="0.2rem"
+                              right="-0.5rem"
+                              backgroundColor="#FFFFFF"
+                              color="#6D6E70"
+                              boxShadow="0 0 0.5rem #b3b3b3"
+                              size="xl"
+                              height="max"
+                              rounded="full"
+                              p="0.3rem"
+                              onClick={() => {
+                                const existingTags = JSON.parse(
+                                  JSON.stringify(form.values.tags)
+                                );
+                                existingTags.splice(index, 1);
+                                setValue("tags", existingTags);
+                              }}
+                            >
+                              <CloseIcon h={1.5} w={1.5} />
+                            </Button>
+                          ) : (
+                            <></>
+                          )}
+                        </Box>
+                      ))
+                    : ""}
                 </Wrap>
                 {editing ? (
                   <Flex
@@ -259,10 +303,14 @@ const CardModalFormContent = ({
                       onKeyDown={(e) => {
                         if (e.code == "Enter") {
                           if (form.values.newTag?.length > 0) {
-                            const existingTags = card.tags ? card.tags : [];
+                            const existingTags = JSON.parse(
+                              JSON.stringify(form.values.tags)
+                            )
+                              ? JSON.parse(JSON.stringify(form.values.tags))
+                              : [];
                             existingTags.push(form.values.newTag.trim());
                             setValue("newTag", "");
-                            setValue("newTags", existingTags);
+                            setValue("tags", existingTags);
                           }
                         }
                       }}
@@ -279,10 +327,14 @@ const CardModalFormContent = ({
                       border="solid 2px black"
                       _hover={{ bgColor: "#f0f0f0" }}
                       onClick={() => {
-                        const existingTags = card.tags ? card.tags : [];
-                        existingTags.push(form.values.newTag);
+                        const existingTags = JSON.parse(
+                          JSON.stringify(form.values.tags)
+                        )
+                          ? JSON.parse(JSON.stringify(form.values.tags))
+                          : [];
+                        existingTags.push(form.values.newTag.trim());
                         setValue("newTag", "");
-                        setValue("newTags", existingTags);
+                        setValue("tags", existingTags);
                       }}
                     >
                       <ArrowUpIcon h={4} w={4} color="black" />
@@ -354,6 +406,17 @@ const CardModalFormContent = ({
         abandonActionText="No, return to edit"
       />
       <ConfirmActionsModal
+        isOpen={isDiscardChangesExitModelOpen}
+        onClose={onDiscardChangesExitModalClose}
+        handleAction={() => {
+          discardChangesAndExit();
+        }}
+        prompt="Are you sure you want to discard all changes?"
+        subcontent="All progress will be lost."
+        confirmActionText="Yes, discard changes"
+        abandonActionText="No, return to edit"
+      />
+      <ConfirmActionsModal
         isOpen={isSaveChangesOpen}
         onClose={onSaveChangesClose}
         handleAction={saveChanges}
@@ -371,7 +434,7 @@ const CardModalFormContent = ({
         abandonActionText="No, return to edit"
         colorScheme="red"
       />
-    </>
+    </Modal>
   );
 };
 

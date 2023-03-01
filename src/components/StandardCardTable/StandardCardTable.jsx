@@ -60,7 +60,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
       >
         {cards.map((card, index) => (
           <GridItem w="100%" key={index}>
-            <StandardCard card={card} setCards={setCards} />
+            <StandardCard card={card} setCards={setCards} cards={cards} />
           </GridItem>
         ))}
       </Grid>

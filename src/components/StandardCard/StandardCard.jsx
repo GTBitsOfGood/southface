@@ -16,7 +16,7 @@ import { updateRecentStandardsRequest } from "../../actions/User";
 import useUser from "../../lib/hooks/useUser";
 import CardModal from "../Modals/CardModal";
 
-const StandardCard = ({ card, setCards, ...props }) => {
+const StandardCard = ({ card, cards, setCards, ...props }) => {
   const { user } = useUser();
   const {
     isOpen: isOpenCardModal,
@@ -119,6 +119,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}
           card={card}
+          cards={cards}
           setCards={setCards}
         />
       </Flex>
