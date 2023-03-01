@@ -4,7 +4,16 @@ import Image from "next/image";
 import { MdExpand } from "react-icons/md";
 import ConfirmActionsModal from "../CardModal/ConfirmActionModal";
 
-const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
+const ModalImage = ({
+  image,
+  openImagePreviewCallback,
+  editing,
+  handleDeleteImage,
+  isImageDeleteOpen,
+  onImageDeleteClose,
+  onImageDeleteOpen,
+  ...props
+}) => {
   const imagePath = new URL(image).pathname.split("/");
   const filename = imagePath[imagePath.length - 1];
 
@@ -34,7 +43,7 @@ const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
         >
           Enlarge Image
         </Button>
-        {props.editing ? (
+        {editing ? (
           <Button
             position="absolute"
             top="0.25rem"
@@ -46,7 +55,7 @@ const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
             height="max"
             rounded="full"
             p="0.6rem"
-            onClick={props.onImageDeleteOpen}
+            onClick={onImageDeleteOpen}
           >
             <CloseIcon h={3} w={3} />
           </Button>
@@ -55,10 +64,10 @@ const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
         )}
       </Box>
       <ConfirmActionsModal
-        isOpen={props.isImageDeleteOpen}
-        onClose={props.onImageDeleteClose}
+        isOpen={isImageDeleteOpen}
+        onClose={onImageDeleteClose}
         handleAction={() => {
-          props.handleDeleteImage(image);
+          handleDeleteImage(image);
         }}
         prompt="Are you sure you want to delete this image?"
         subcontent={

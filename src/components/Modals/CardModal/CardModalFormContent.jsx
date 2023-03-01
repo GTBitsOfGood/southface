@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   Flex,
+  FormControl,
+  FormErrorMessage,
   Heading,
   Modal,
   ModalBody,
@@ -15,7 +17,7 @@ import {
   useDisclosure,
   Wrap,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-final-form";
 import useUser from "../../../lib/hooks/useUser";
 import ArrowIcon from "../../Carousel/ArrowIcon";
@@ -82,6 +84,17 @@ const CardModalFormContent = ({
     onOpenImagePreviewModal();
   };
 
+  useEffect(() => {
+    registerField("tags", () => {}, {
+      // ...other subscription items
+      touched: true,
+    });
+    registerField("images", () => {}, {
+      // ...other subscription items
+      touched: true,
+    });
+  }, [registerField]);
+
   const discardChanges = () => {
     reset();
     setEditing(false);
@@ -104,15 +117,13 @@ const CardModalFormContent = ({
 
   const handleDeleteImage = (image) => {
     const index = card.images.indexOf(image);
-    card.images.splice(index, 1);
+    const newCardImages = JSON.parse(JSON.stringify(card.images));
+    newCardImages.splice(index, 1);
+    setValue("images", newCardImages);
     onImageDeleteClose();
   };
 
   const form = useFormState();
-  registerField("tags", () => {}, {
-    // ...other subscription items
-    touched: true,
-  });
 
   let discardChangesAndExit = () => {
     reset();
@@ -126,7 +137,6 @@ const CardModalFormContent = ({
       {...rest}
       isOpen={isOpenCardModal}
       onClose={() => {
-        reset();
         if (editing && form.dirty) {
           onDiscardChangesExitModalOpen();
         } else {
@@ -194,37 +204,57 @@ const CardModalFormContent = ({
 
         <ModalBody mx={6}>
           <Flex flexDirection="column">
-            <Carousel
-              cols={3}
-              rows={1}
-              gap={10}
-              containerStyle={{
-                marginBottom: "1.5rem",
-              }}
-              arrowLeft={<ArrowIcon orientation="left" />}
-              arrowRight={<ArrowIcon orientation="right" />}
+            <FormControl
+              isInvalid={() => form?.values?.images.length == 0}
+              marginBottom="1.5rem"
             >
-              {card.images.map(({ imageUrl: image }, index) => (
-                <Carousel.Item key={index}>
-                  <ModalImage
-                    editing={editing}
-                    image={image}
-                    openImagePreviewCallback={openImagePreviewCallback}
-                    onImageDeleteOpen={onImageDeleteOpen}
-                    isImageDeleteOpen={isImageDeleteOpen}
-                    onImageDeleteClose={onImageDeleteClose}
-                    handleDeleteImage={handleDeleteImage}
-                  />
-                </Carousel.Item>
-              ))}
-              {editing ? (
-                <Carousel.Item>
-                  <AddImageModal />
-                </Carousel.Item>
+              {form?.values?.images?.length == 0 ? (
+                <FormErrorMessage marginLeft="8px">
+                  {form?.errors?.images}
+                </FormErrorMessage>
               ) : (
                 <></>
               )}
-            </Carousel>
+              <Carousel
+                cols={3}
+                rows={1}
+                gap={10}
+                containerStyle={{
+                  border: `${
+                    form?.values?.images?.length == 0 ? "2px solid #E53E3E" : ""
+                  }`,
+                  padding: "0.3rem",
+                  "border-radius": "1rem",
+                }}
+                arrowLeft={<ArrowIcon orientation="left" />}
+                arrowRight={<ArrowIcon orientation="right" />}
+              >
+                {form.values?.images?.map(({ imageUrl: image }, index) => (
+                  <Carousel.Item key={index}>
+                    <ModalImage
+                      editing={editing}
+                      image={image}
+                      openImagePreviewCallback={openImagePreviewCallback}
+                      onImageDeleteOpen={onImageDeleteOpen}
+                      isImageDeleteOpen={isImageDeleteOpen}
+                      onImageDeleteClose={onImageDeleteClose}
+                      handleDeleteImage={handleDeleteImage}
+                    />
+                  </Carousel.Item>
+                ))}
+                {editing ? (
+                  <Carousel.Item>
+                    <AddImageModal
+                      setValue={setValue}
+                      form={form}
+                      cardId={card._id}
+                    />
+                  </Carousel.Item>
+                ) : (
+                  <></>
+                )}
+              </Carousel>
+            </FormControl>
             {editing ? (
               <TextareaControl name="criteria" resize="none"></TextareaControl>
             ) : (
