@@ -1,5 +1,4 @@
 import {
-  Box,
   Card,
   CardBody,
   CardHeader,
@@ -8,15 +7,9 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import Image from "next/image";
+import Image from "src/components/Image";
 
 const StandardCard = ({ title, images, criteria }) => {
-  const ChakraNextImage = ({ src, alt, ...rest }) => (
-    <Box position="relative" {...rest}>
-      <Image layout="fill" src={src} alt={alt} />
-    </Box>
-  );
-
   const imageSize = useBreakpointValue({ base: "8rem", "2xl": "10rem" });
 
   return (
@@ -27,7 +20,7 @@ const StandardCard = ({ title, images, criteria }) => {
       <CardBody marginLeft="3" marginRight="3">
         <Flex gap={2} position="relative">
           {images.slice(0, 2).map(({ imageUrl: image }, index) => (
-            <ChakraNextImage
+            <Image
               src={image}
               alt="Shopping Cart Image"
               height={imageSize}

@@ -5,10 +5,11 @@ import NavBar from "src/components/NavBar/NavBar";
 import { SWRConfig } from "swr";
 
 import fetchJson from "src/lib/utils/fetchJson";
+import { southfaceTheme } from "src/styles/theme";
 
 import "focus-visible/dist/focus-visible.min.js";
 import "normalize.css";
-import "public/static/styles/App.css";
+import "@fontsource/inter/400.css";
 
 import { ChakraProvider } from "@chakra-ui/react";
 
@@ -22,7 +23,7 @@ const MyApp = ({ Component, pageProps }) => (
     <Head>
       <title>EarthCraft</title>
     </Head>
-    <ChakraProvider>
+    <ChakraProvider theme={southfaceTheme}>
       <NavBar />
       <Component {...pageProps} />
     </ChakraProvider>

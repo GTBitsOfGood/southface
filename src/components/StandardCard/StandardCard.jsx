@@ -37,7 +37,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
   useEffect(() => {
     if (
       isOpenCardModal &&
-      user.id &&
+      user?.id &&
       !isMutating &&
       !updateRecentStandardsTriggered
     ) {
@@ -71,7 +71,6 @@ const StandardCard = ({ card, setCards, ...props }) => {
       {...props}
       flexDirection="column"
       boxShadow="base"
-      bgColor="white"
       rounded="23.3173px"
       overflow="hidden"
       height="19rem"
@@ -105,7 +104,13 @@ const StandardCard = ({ card, setCards, ...props }) => {
         <HStack mt="auto" position="relative" mb="0.5">
           {card.tags.slice(0, 3).map((tag, index) => {
             return (
-              <Tag key={index} bgColor="#C4D600" rounded="14.7877px" px="2">
+              <Tag
+                key={index}
+                textTransform="capitalize"
+                bgColor="#C4D600"
+                rounded="14.7877px"
+                px="2"
+              >
                 {tag}
               </Tag>
             );
@@ -114,12 +119,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
             position="absolute"
             right="1"
             bottom="0"
-            size="sm"
-            p="2"
-            variant="outline"
-            color="#00ACC8"
-            border="1px solid #00ACC8"
-            onClick={addToReportHandler}
+            variant="Blue-outlined"
           >
             Add To Report
           </Button>

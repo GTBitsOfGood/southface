@@ -95,27 +95,13 @@ const CardModal = ({
                 </HStack>
                 <Flex gap={2} justifyContent="right">
                   <Button
-                    bgColor="white"
                     size="lg"
-                    rounded={16}
-                    color="#6d6e70"
-                    border="solid 1px #6d6e70"
-                    fontSize="22px"
-                    width="auto"
+                    variant="Grey-outlined"
                     onClick={openImagePreviewCallback}
                   >
                     View Notes
                   </Button>
-                  <Button
-                    bgColor="#00ACC8"
-                    size="lg"
-                    rounded={16}
-                    color="white"
-                    fontSize="22px"
-                    width="auto"
-                    _hover={{ bgColor: "#0690a7" }}
-                    _active={{ bgColor: "#057b8f" }}
-                  >
+                  <Button variant="Blue" size="lg">
                     Add to Report
                   </Button>
                 </Flex>
