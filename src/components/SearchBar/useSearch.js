@@ -7,7 +7,7 @@ export default function useSearch(
   setCurrentPage,
   setCards,
   buildingType,
-  primaryCategory
+  primaryCategory = null
 ) {
   const [criteria, setSearch] = useState({
     searchString: "",
@@ -15,6 +15,7 @@ export default function useSearch(
   });
 
   useEffect(() => {
+    console.log("useSearch useEffect triggered");
     const searchFilter = {
       searchString: criteria.searchString,
       tags: criteria.tags,
@@ -22,11 +23,16 @@ export default function useSearch(
       primaryCategory: primaryCategory,
     };
 
+    console.log("searchFilter: ", searchFilter);
+
     getCardsPagination(1, searchFilter).then(({ cards, cardsCount }) => {
+      console.log("getCardsPagination response received");
       let numPages = Math.floor(cardsCount / 4);
       if (cardsCount % 4 > 0) {
         numPages += 1;
       }
+      console.log("numPages: ", numPages);
+
       if (setNumPages) {
         setNumPages(numPages);
         setCurrentPage(1);

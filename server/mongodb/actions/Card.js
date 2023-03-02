@@ -41,12 +41,9 @@ export async function getCardsPagination({
   searchFilterTags = null,
   cardsPerPage = 4,
 }) {
+  console.log("Entering getCardsPagination...");
   await mongoDB();
-
-  // match is being used since without it causes wierd refresh issues
-  // let query = {
-  //   $match: [{ buildingType }, { primaryCategory }],
-  // };
+  console.log("Connected to database...");
 
   let query = {};
 
@@ -55,14 +52,12 @@ export async function getCardsPagination({
       primaryCategory,
       buildingType,
     };
-  } else if (primaryCategory) {
-    query = {
-      primaryCategory,
-    };
+    console.log(buildingType, primaryCategory);
   } else if (buildingType) {
     query = {
       buildingType,
     };
+    console.log(buildingType);
   }
 
   if (searchFilterString && searchFilterTags) {
@@ -86,10 +81,14 @@ export async function getCardsPagination({
     };
   }
 
-  return Card.find(query)
+  console.log("Query: ", query);
+  const result = await Card.find(query)
     .sort({ _id: -1 })
     .skip(pageNumber * cardsPerPage)
     .limit(cardsPerPage);
+
+  console.log("Exiting getCardsPagination...");
+  return result;
 }
 
 export async function getCardsCount({

@@ -10,7 +10,7 @@ import { buildingTypeNames } from "src/lib/utils/constants";
 function CategoriesPage({ buildingType }) {
   const router = useRouter();
   const [cards, setCards] = useState([]);
-  const [setNumPages] = useState([]);
+  const [setNumPages] = useState(1);
   const [setCurrentPage] = useState(1);
 
   const { handleSearch } = useSearch(
@@ -33,7 +33,7 @@ function CategoriesPage({ buildingType }) {
           <Link href="/library">Digital Library</Link>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <Text>{buildingTypeNames[buildingType]}</Text>
+          <Text>{buildingType}</Text>
         </BreadcrumbItem>
       </Breadcrumb>
       <SearchBar handleSearch={handleSearch} />
@@ -46,16 +46,16 @@ function CategoriesPage({ buildingType }) {
 
 export async function getStaticProps({ params }) {
   const pageNumber = 0;
-  const { buildingType, primaryCategory } = params;
+  const { buildingType } = params;
+  console.log("Calling getCardsPagination");
   const cards = await getCardsPagination({
     pageNumber,
     buildingType: params.buildingType,
-    primaryCategory: params.primaryCategory,
+    // buildingType: { buildingType },
   });
 
   const cardsCount = await getCardsCount({
     buildingType,
-    primaryCategory,
   });
   let numPages = Math.floor(cardsCount / 4);
 
@@ -74,13 +74,30 @@ export async function getStaticProps({ params }) {
   };
 }
 
+// export async function getStaticPaths() {
+//   return {
+//     paths: Object.keys(buildingTypeNames).map((buildingType) => {
+//       return {
+//         params: { buildingType },
+//       };
+//     }),
+//     fallback: false,
+//   };
+// }
+
 export async function getStaticPaths() {
-  return {
-    paths: Object.keys(buildingTypeNames).map((buildingType) => {
+  const paths = Object.keys(buildingTypeNames)
+    .map((buildingType) => {
       return {
-        params: { buildingType },
+        params: {
+          buildingType: buildingType,
+        },
       };
-    }),
+    })
+    .flat();
+
+  return {
+    paths,
     fallback: false,
   };
 }
