@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { TagSchema } from "./Tag";
+import { TagSchema } from "server/mongodb/models/Tag";
 
 const { Schema } = mongoose;
 
