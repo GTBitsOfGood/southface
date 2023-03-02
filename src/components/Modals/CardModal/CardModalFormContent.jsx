@@ -338,9 +338,11 @@ const CardModalFormContent = ({
                             )
                               ? JSON.parse(JSON.stringify(form.values.tags))
                               : [];
-                            existingTags.push(form.values.newTag.trim());
-                            setValue("newTag", "");
-                            setValue("tags", existingTags);
+                            if (form.values?.newTag?.trim().length > 0) {
+                              existingTags.push(form.values.newTag.trim());
+                              setValue("newTag", "");
+                              setValue("tags", existingTags);
+                            }
                           }
                         }
                       }}
@@ -362,9 +364,11 @@ const CardModalFormContent = ({
                         )
                           ? JSON.parse(JSON.stringify(form.values.tags))
                           : [];
-                        existingTags.push(form.values.newTag.trim());
-                        setValue("newTag", "");
-                        setValue("tags", existingTags);
+                        if (form.values?.newTag?.trim().length > 0) {
+                          existingTags.push(form.values.newTag.trim());
+                          setValue("newTag", "");
+                          setValue("tags", existingTags);
+                        }
                       }}
                     >
                       <ArrowUpIcon h={4} w={4} color="black" />
