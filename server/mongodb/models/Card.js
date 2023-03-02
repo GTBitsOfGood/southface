@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { TagSchema } from "./Tag";
 
 const { Schema } = mongoose;
 
@@ -60,12 +61,7 @@ const CardSchema = new Schema({
     type: String,
     required: true,
   },
-  tags: [
-    {
-      type: String,
-      default: [],
-    },
-  ],
+  tags: [TagSchema],
   buildingType: {
     type: String,
     required: true,

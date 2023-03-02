@@ -3,13 +3,13 @@ import { useState } from "react";
 
 const TagSelect = (props) => {
   const [isChecked, setIsChecked] = useState(false);
-  const handleInputChange = (e) => {
+  const handleInputChange = () => {
     setIsChecked(!isChecked);
-    if (!isChecked) {
-      props.selectTag(e.target.id);
-    } else {
-      props.deselectTag(e.target.id);
-    }
+    // if (!isChecked) {
+    //   props.selectTag(e.target.id);
+    // } else {
+    //   props.deselectTag(e.target.id);
+    // }
   };
   return (
     <>

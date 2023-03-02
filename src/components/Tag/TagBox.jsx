@@ -15,8 +15,8 @@ const TagBox = (props) => {
                 key={item._id}
                 id={item._id}
                 name={item.name}
-                selectTag={props.selectTag}
-                deselectTag={props.deselectTag}
+                // selectTag={props.selectTag}
+                // deselectTag={props.deselectTag}
               />
             );
           })}

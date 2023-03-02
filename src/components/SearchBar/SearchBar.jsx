@@ -138,9 +138,9 @@ const SearchBar = (props) => {
             <PopoverTrigger>
               <Button variant="Grey-outlined">Filter</Button>
             </PopoverTrigger>
-            <PopoverContent width="80em">
+            <PopoverContent width={{ base: "75em", "2xl": "80em" }}>
               <PopoverArrow />
-              <Tag width="80em" height="55em" />
+              <Tag width={{ base: "75em", "2xl": "80em" }} height="55em" />
             </PopoverContent>
           </Popover>
           {allowTemplates && (
