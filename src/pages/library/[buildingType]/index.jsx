@@ -5,6 +5,7 @@ import { useState } from "react";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import CategoryCards from "src/components/CategoryCards";
 import SearchBar, { useSearch } from "src/components/SearchBar";
+import StandardCardTable from "src/components/StandardCardTable";
 import { buildingTypeNames } from "src/lib/utils/constants";
 
 function CategoriesPage({ buildingType }) {
@@ -39,9 +40,13 @@ function CategoriesPage({ buildingType }) {
         </BreadcrumbItem>
       </Breadcrumb>
       <SearchBar handleSearch={handleSearch} />
-      <Flex flexWrap="wrap" gap="4rem">
-        <CategoryCards routerQuery={router.query} />
-      </Flex>
+      {cards.length > 0 ? (
+        <StandardCardTable cards={cards} setCards={setCards} />
+      ) : (
+        <Flex flexWrap="wrap" gap="4rem">
+          <CategoryCards routerQuery={router.query} />
+        </Flex>
+      )}
     </Flex>
   );
 }
@@ -74,17 +79,6 @@ export async function getStaticProps({ params }) {
     },
   };
 }
-
-// export async function getStaticPaths() {
-//   return {
-//     paths: Object.keys(buildingTypeNames).map((buildingType) => {
-//       return {
-//         params: { buildingType },
-//       };
-//     }),
-//     fallback: false,
-//   };
-// }
 
 export async function getStaticPaths() {
   const paths = Object.keys(buildingTypeNames)

@@ -49,6 +49,8 @@ export const getCardsPagination = async (pageNumber, searchFilter) => {
 
   if (searchFilter) {
     const tagsArray = Object.keys(searchFilter.tags);
+    console.log("buildingType:", searchFilter.buildingType);
+    console.log("primaryCategory:", searchFilter.primaryCategory);
     url +=
       "&searchFilterString=" +
       searchFilter.searchString +
@@ -59,6 +61,7 @@ export const getCardsPagination = async (pageNumber, searchFilter) => {
       "&primaryCategory=" +
       searchFilter.primaryCategory;
   }
+  console.log("fetch url:", url);
 
   return fetch(url, {
     method: "GET",
