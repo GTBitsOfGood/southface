@@ -23,10 +23,10 @@ const validate = (values) => {
     errors.uploadImages = "*Upload at least one image.";
   }
   if (!values.buildingType || values.buildingType.length < 1) {
-    errors.buildingType = "*Choose at least one category.";
+    errors.buildingType = "*Choose at least one building type.";
   }
   if (!values.primaryCategory || values.primaryCategory.length < 1) {
-    errors.primaryCategory = "*Choose at least one subcategory.";
+    errors.primaryCategory = "*Choose at least one primary category.";
   }
 
   return errors;
@@ -81,10 +81,11 @@ const AddStandardForm = () => {
       initialValues={{
         isEditing: true,
       }}
-      render={({ handleSubmit, values }) => (
+    >
+      {({ handleSubmit, values }) => (
         <Box p={14} pb={14} w="full" as="form" onSubmit={handleSubmit}>
           <HStack>
-            <Heading as="h1" size="lg" color="Grey" textAlign="left" my={2}>
+            <Heading as="h1" size="xl" color="Grey" textAlign="left" my={2}>
               Add a New Standard
             </Heading>
 
@@ -100,7 +101,7 @@ const AddStandardForm = () => {
           )}
         </Box>
       )}
-    />
+    </Form>
   );
 };
 

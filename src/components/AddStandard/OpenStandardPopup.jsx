@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import {
   buildingTypeNames,
-  primaryCategoryNames,
-} from "../../../server/mongodb/models/Card";
+  primaryCategoryRoutes,
+} from "../../lib/utils/constants";
 
 const OpenStandardPopup = ({ prevSubmitted }) => {
   const [display, setDisplay] = useState(true);
@@ -20,8 +20,8 @@ const OpenStandardPopup = ({ prevSubmitted }) => {
     const buildingTypeKey = Object.keys(buildingTypeNames).find(
       (key) => buildingTypeNames[key] === prevSubmitted.buildingType[0]
     );
-    const primaryCategoryKey = Object.keys(primaryCategoryNames).find(
-      (key) => primaryCategoryNames[key] === prevSubmitted.primaryCategory[0]
+    const primaryCategoryKey = Object.keys(primaryCategoryRoutes).find(
+      (key) => primaryCategoryRoutes[key] === prevSubmitted.primaryCategory[0]
     );
 
     const newRoute = "/library/" + buildingTypeKey + "/" + primaryCategoryKey;

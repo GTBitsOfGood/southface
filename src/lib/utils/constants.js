@@ -15,3 +15,15 @@ export const buildingTypeNames = {
   multifamily: "Multifamily",
   "single-family": "Single Family",
 };
+
+export const primaryCategoryRoutes = {
+  "site-planning": "Site Reporting",
+  "resource-efficiency": "Resource Efficiency",
+  "durability-moisture-and-management": "Durability and Moisture Management",
+  "high-performance-building-envelope": "High Performance Building Envelope",
+  "energy-efficient-hvac-systems": "Energy Efficient HVAC Systems",
+  "indoor-air-quality": "Indoor Air Quality",
+  "plumbing-and-irrigation": "Plumbing and Irrigation",
+  "efficient-lighting-and-applications": "Efficient Lighting and Applications",
+  "education-and-operations": "Education and Operations",
+};

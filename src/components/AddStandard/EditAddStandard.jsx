@@ -1,29 +1,33 @@
 import { Box, Button, Flex, FormLabel } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { useFormState } from "react-final-form";
+import {
+  buildingTypeNames,
+  primaryCategoryNames,
+} from "../../lib/utils/constants";
 import InputControl from "../FormComponents/InputControl";
 import Multiselect from "../FormComponents/Multiselect";
 import TextareaControl from "../FormComponents/TextareaControl";
 import CreateTag from "./CreateTag";
 import ImageUpload from "./ImageUpload";
 
-const buildingTypes = ["Multifamily", "Single Family", "Commercial"];
-const primaryCategories = [
-  "Site Planning",
-  "Resource Efficiency",
-  "Durability and Moisture Management",
-  "High Performance Building Envelope",
-  "Energy Efficient HVAC Systems",
-  "Indoor Air Quality",
-  "Plumbing and Irrigation",
-  "Efficient Lighting and Appliances",
-  "Education and Operations",
-];
+const ReviewAddButton = ({ handleSubmit }) => {
+  const { hasValidationErrors, submitFailed } = useFormState({
+    subscription: { hasValidationErrors: true, submitFailed: true },
+  });
 
-const ReviewAddButton = ({ handleSubmit }) => (
-  <Button variant="Blue" mr="15%" fontSize="md" onClick={handleSubmit}>
-    Review and Add
-  </Button>
-);
+  return (
+    <Button
+      variant="Blue"
+      mr="15%"
+      fontSize="md"
+      onClick={handleSubmit}
+      border={submitFailed && hasValidationErrors ? "2px solid red" : "none"}
+    >
+      Review and Add
+    </Button>
+  );
+};
 
 const EditAddStandard = ({ handleSubmit }) => {
   useEffect(() => {
@@ -52,13 +56,13 @@ const EditAddStandard = ({ handleSubmit }) => {
         <Multiselect
           name="buildingType"
           label="Building Type"
-          entries={buildingTypes}
+          entries={Object.values(buildingTypeNames)}
         />
 
         <Multiselect
           name="primaryCategory"
           label="Primary Category"
-          entries={primaryCategories}
+          entries={Object.values(primaryCategoryNames)}
         />
       </Box>
 

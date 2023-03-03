@@ -130,7 +130,6 @@ const ViewAddStandard = ({ handleSubmit }) => {
           confirmButtonText="Yes, add standard"
           cancelButtonText="No, return to edit"
           handleAction={handleSubmit}
-          isDanger={false}
         />
       </Flex>
     </Box>
