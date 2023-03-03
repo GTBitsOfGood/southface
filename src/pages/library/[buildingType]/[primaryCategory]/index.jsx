@@ -25,7 +25,10 @@ const LibraryCategoryPage = (props) => {
     cardsFromDatabase,
     setNumPages,
     setCurrentPage,
-    setCards
+    setCards,
+    //need to pass in these two props into useSearch
+    props.buildingType,
+    props.primaryCategory
   );
 
   // This is needed for editing the card (otherwise modal opens with inconsistent cards)
@@ -50,11 +53,8 @@ const LibraryCategoryPage = (props) => {
           <Text>{props.primaryCategory}</Text>
         </BreadcrumbItem>
       </Breadcrumb>
-
       <SearchBar handleSearch={handleSearch} />
-
       <StandardCardTable cards={cards} setCards={setCards} />
-
       <PaginationTab
         numPages={numPages}
         alignSelf="center"

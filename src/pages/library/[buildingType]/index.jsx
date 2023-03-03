@@ -10,8 +10,10 @@ import { buildingTypeNames } from "src/lib/utils/constants";
 function CategoriesPage({ buildingType }) {
   const router = useRouter();
   const [cards, setCards] = useState([]);
-  const [setNumPages] = useState(1);
-  const [setCurrentPage] = useState(1);
+  // eslint-disable-next-line no-unused-vars
+  const [numPages, setNumPages] = useState(1);
+  // eslint-disable-next-line no-unused-vars
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { handleSearch } = useSearch(
     cards,
@@ -51,7 +53,6 @@ export async function getStaticProps({ params }) {
   const cards = await getCardsPagination({
     pageNumber,
     buildingType: params.buildingType,
-    // buildingType: { buildingType },
   });
 
   const cardsCount = await getCardsCount({

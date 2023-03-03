@@ -66,16 +66,20 @@ const CardSchema = new Schema({
       default: [],
     },
   ],
-  buildingType: {
-    type: String,
-    required: true,
-    enum: Object.keys(buildingTypeNames),
-  },
-  primaryCategory: {
-    type: String,
-    required: true,
-    enum: Object.keys(primaryCategoryNames),
-  },
+  buildingType: [
+    {
+      type: String,
+      required: true,
+      enum: Object.keys(buildingTypeNames),
+    },
+  ],
+  primaryCategory: [
+    {
+      type: String,
+      required: true,
+      enum: Object.keys(primaryCategoryNames),
+    },
+  ],
 });
 
 export { CardSchema };

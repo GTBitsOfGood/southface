@@ -6,7 +6,7 @@ export default function useSearch(
   setCurrentPage,
   setCards,
   buildingType,
-  primaryCategory = null
+  primaryCategory
 ) {
   const handleSearch = (input) => {
     console.log("handleSearch triggered");

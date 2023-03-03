@@ -46,10 +46,10 @@ export async function getCardsPagination({
   console.log("Connected to database...");
 
   let query = {};
-  // let query = { primaryCategory, buildingType };
 
   if (primaryCategory && buildingType) {
     query = {
+      // 
       $and: [
         { primaryCategory: primaryCategory },
         { buildingType: buildingType },
