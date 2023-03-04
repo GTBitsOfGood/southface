@@ -6,16 +6,7 @@ import TagBox from "./TagBox";
 
 const Tag = (props) => {
   const { data } = useSWR(urls.api.tag.get);
-  const tags = data?.payload;
-  const alphabetGroups = {};
-
-  tags?.forEach((item) => {
-    const firstLetter = item.name.charAt(0).toUpperCase();
-    if (!alphabetGroups[firstLetter]) {
-      alphabetGroups[firstLetter] = [];
-    }
-    alphabetGroups[firstLetter].push(item);
-  });
+  const tags = data?.payload[0];
 
   // const [tagName, setTagName] = useState("");
   // const [selectedTag, setSelectedTag] = useState([]);
@@ -51,12 +42,12 @@ const Tag = (props) => {
       <VStack gap="1em" width="max">
         <Flex {...props} direction="column" wrap="wrap">
           {tags &&
-            Object.keys(alphabetGroups).map((letter) => {
+            Object.keys(tags).map((letter) => {
               return (
                 <TagBox
                   key={letter}
                   letter={letter}
-                  list={alphabetGroups[letter]}
+                  list={tags[letter]}
                   // selectTag={selectTag}
                   // deselectTag={deselectTag}
                 />

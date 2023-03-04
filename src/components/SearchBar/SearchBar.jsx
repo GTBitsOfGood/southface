@@ -140,7 +140,10 @@ const SearchBar = (props) => {
             </PopoverTrigger>
             <PopoverContent width={{ base: "75em", "2xl": "80em" }}>
               <PopoverArrow />
-              <Tag width={{ base: "75em", "2xl": "80em" }} height="55em" />
+              <Tag
+                width={{ base: "60em", "2xl": "80em" }}
+                height={{ base: "45em", "2xl": "49em" }}
+              />
             </PopoverContent>
           </Popover>
           {allowTemplates && (

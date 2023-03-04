@@ -21,7 +21,12 @@ const TagSelect = (props) => {
           onChange={handleInputChange}
           checked={isChecked}
         >
-          <Box>{props.name}</Box>
+          <Box
+            textTransform="capitalize"
+            fontSize={{ base: "0.8em", "2xl": "1em" }}
+          >
+            {props.name}
+          </Box>
         </Checkbox>
       </FormControl>
     </>

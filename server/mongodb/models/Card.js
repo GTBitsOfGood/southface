@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { TagSchema } from "server/mongodb/models/Tag";
 
 const { Schema } = mongoose;
 
@@ -61,7 +60,12 @@ const CardSchema = new Schema({
     type: String,
     required: true,
   },
-  tags: [TagSchema],
+  tags: [
+    {
+      type: String,
+      default: [],
+    },
+  ],
   buildingType: {
     type: String,
     required: true,
