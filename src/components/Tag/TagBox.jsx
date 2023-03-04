@@ -6,9 +6,7 @@ const TagBox = (props) => {
     <>
       <HStack
         w={{ base: "15em", "2xl": "20em" }}
-        pl={7}
-        pr={7}
-        pt={7}
+        p={7}
         gap={5}
         alignItems="flex-start"
         maxHeight="full"

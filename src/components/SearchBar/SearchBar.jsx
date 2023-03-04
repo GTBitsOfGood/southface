@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   BiCategory as CategoryIcon,
   BiFilter as FilterIcon,
@@ -36,6 +36,8 @@ const SearchBar = (props) => {
   const { setSearch, criteria } = handleSearch;
   const textInput = useRef();
   const tagInput = useRef();
+
+  const [tagWidth, setTagWidth] = useState(null);
 
   const AddFilterTag = () => {
     if (tagInput.current.value === "") {
@@ -138,11 +140,12 @@ const SearchBar = (props) => {
             <PopoverTrigger>
               <Button variant="Grey-outlined">Filter</Button>
             </PopoverTrigger>
-            <PopoverContent width={{ base: "75em", "2xl": "80em" }}>
+            <PopoverContent width={tagWidth}>
               <PopoverArrow />
               <Tag
-                width={{ base: "60em", "2xl": "80em" }}
-                height={{ base: "45em", "2xl": "49em" }}
+                width={{ base: "75em", "2xl": "80em" }}
+                height={{ base: "45em", "2xl": "55em" }}
+                setwidth={setTagWidth}
               />
             </PopoverContent>
           </Popover>

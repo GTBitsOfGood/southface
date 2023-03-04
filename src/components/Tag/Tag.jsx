@@ -1,12 +1,22 @@
-import { Flex, VStack } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import urls from "lib/utils/urls";
-// import { createTag } from "src/actions/Tag";
+import { useEffect, useRef } from "react";
 import useSWR from "swr";
 import TagBox from "./TagBox";
 
 const Tag = (props) => {
-  const { data } = useSWR(urls.api.tag.get);
+  const { data } = useSWR(urls.api.tag.getObject);
   const tags = data?.payload[0];
+
+  const tagRef = useRef();
+  useEffect(() => {
+    if (tagRef.current) {
+      const childWidth = tagRef.current.offsetWidth;
+      if (childWidth > 0) {
+        props.setwidth(childWidth);
+      }
+    }
+  }, [props, tagRef]);
 
   // const [tagName, setTagName] = useState("");
   // const [selectedTag, setSelectedTag] = useState([]);
@@ -28,22 +38,23 @@ const Tag = (props) => {
   //     createTag(tagName)
   //       .catch((error) => window.alert(error.message))
   //       .then((data) => {
-  //         const firstLetter = data.name.charAt(0).toUpperCase();
-  //         if (!alphabetGroups[firstLetter]) {
-  //           alphabetGroups[firstLetter] = [];
+  //         const firstLetter = data.name.charAt(0);
+  //         if (!tags[firstLetter]) {
+  //           tags[firstLetter] = [];
   //         }
-  //         alphabetGroups[firstLetter].push(data);
+  //         tags[firstLetter].push(data);
   //         setTagName("");
   //       });
   // };
 
   return (
     <>
-      <VStack gap="1em" width="max">
-        <Flex {...props} direction="column" wrap="wrap">
-          {tags &&
-            Object.keys(tags).map((letter) => {
-              return (
+      {/* <VStack gap="1em" width="max"> */}
+      <Flex {...props} direction="column" wrap="wrap" ref={tagRef}>
+        {tags &&
+          Object.keys(tags).map((letter) => {
+            return (
+              <Box key={letter}>
                 <TagBox
                   key={letter}
                   letter={letter}
@@ -51,10 +62,11 @@ const Tag = (props) => {
                   // selectTag={selectTag}
                   // deselectTag={deselectTag}
                 />
-              );
-            })}
-        </Flex>
-        {/* <Box>
+              </Box>
+            );
+          })}
+      </Flex>
+      {/* <Box>
           <FormControl height="4em">
             <FormLabel>Create Tag</FormLabel>
             <Input
@@ -76,7 +88,7 @@ const Tag = (props) => {
             Create
           </Button>
         </Box> */}
-      </VStack>
+      {/* </VStack> */}
     </>
   );
 };

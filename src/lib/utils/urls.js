@@ -41,7 +41,12 @@ export default {
     },
     tag: {
       create: "/api/tag/create",
-      get: "/api/tag/get",
+      getTags: "/api/tag/get",
+      //This is to get all the tags sorted based on first alphabet of each character in the form of a object
+      getObject: "/api/tag/get/tagObject",
+      delete: "api/tag/delete",
+      update: "api/tag/update",
+      getTag: "/api/tag/get/tag",
     },
   },
 };
