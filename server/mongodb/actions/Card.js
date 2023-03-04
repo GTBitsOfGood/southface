@@ -31,6 +31,8 @@ export async function updateCardById(id, updatedCard) {
         $set: {
           "images.$": updatedCard.images.find((image) => image._id === imageId),
         },
+        isThumbsUp,
+        isThumbsDown,
         ...cardUpdate,
       },
       {

@@ -86,8 +86,17 @@ export const createCard = async (card) => {
     });
 };
 
-export const updateCardById = async (id, card, isOnlyComments) => {
-  return fetch(urls.api.card.update, {
+export const updateCardById = async (id, card) => {
+  const { thumbsUp, thumbsDown, imageId, ...updatedCard } = card;
+  const updatedImage = card.images.find((image) => image._id === imageId);
+
+  updatedImage.thumbsUp = thumbsUp;
+  updatedImage.thumbsDown = thumbsDown;
+  const updatedImages = card.images.map((image) =>
+    image._id === imageId ? updatedImage : image
+  );
+  updatedCard.images = updatedImages;
+  const response = await fetch(urls.api.card.update, {
     method: "PUT",
     mode: "same-origin",
     credentials: "include",
@@ -96,20 +105,17 @@ export const updateCardById = async (id, card, isOnlyComments) => {
     },
     body: JSON.stringify({
       id,
-      card,
-      isOnlyComments,
+      card: updatedCard,
     }),
-  })
-    .then((response) => response.json())
-    .then((json) => {
-      if (json == null) {
-        throw new Error("Could not connect to API!");
-      } else if (!json.success) {
-        throw new Error(json.message);
-      }
+  });
+  const json = await response.json();
+  if (json == null) {
+    throw new Error("Could not connect to API!");
+  } else if (!json.success) {
+    throw new Error(json.message);
+  }
 
-      return json.payload;
-    });
+  return json.payload;
 };
 
 export const deleteCardById = async (id) => {

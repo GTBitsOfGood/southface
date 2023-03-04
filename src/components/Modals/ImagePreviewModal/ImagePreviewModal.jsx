@@ -24,6 +24,7 @@ const ImagePreviewModal = ({
   cardImages,
   cardComments,
   cardId,
+  setCards
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const [showBackArrow, setShowBackArrow] = React.useState(false);
@@ -33,29 +34,50 @@ const ImagePreviewModal = ({
   const handleClick = async (button) => {
     try {
       let updatedCard;
+      const imageId = cardImages[currentImageIndex]._id;
+
       if (selectedButton === button) {
         // unselect
         setSelectedButton(null);
+
+        // if it was previously disliked and now un-disliked
+        if (button === "down") {
+          const currThumbsDownCounter =
+            cardImages[currentImageIndex].thumbsDown;
+          updatedCard = await updateCardById(cardId, {
+            imageId,
+            thumbsDown: currThumbsDownCounter - 1,
+          });
+        }
+        // if it was previously liked and now unliked
+        else if (button === "up") {
+          const currThumbsUpCounter = cardImages[currentImageIndex].thumbsUp;
+          updatedCard = await updateCardById(cardId, {
+            imageId,
+            thumbsUp: currThumbsUpCounter - 1,
+          });
+        }
       } else {
         setSelectedButton(button);
         const thumbsUp = button === "up" ? 1 : 0;
         const thumbsDown = button === "down" ? 1 : 0;
-        const imageId = cardImages[currentImageIndex]._id;
-
         // update card
         updatedCard = await updateCardById(cardId, {
           thumbsUp,
           thumbsDown,
           imageId,
         });
+        console.log(
+          `Updating card with thumbsUp=${thumbsUp}, thumbsDown=${thumbsDown}, imageId=${imageId}`
+        );
       }
 
       console.log(updatedCard);
 
-      // // update the card in the cards list (this is not working rn since updatedCard is being returned as null!!)
-      // setCards((cards) =>
-      //   cards.map((card) => (card._id === updatedCard._id ? updatedCard : card))
-      // );
+      // update the card in the cards list
+        setCards((cards) =>
+          cards.map((card) => (card._id === updatedCard._id ? updatedCard : card))
+        );
     } catch (error) {
       console.log(error);
     }
