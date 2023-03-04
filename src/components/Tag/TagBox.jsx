@@ -19,15 +19,7 @@ const TagBox = (props) => {
         </Heading>
         <VStack w="100%">
           {props.list.map((item) => {
-            return (
-              <TagSelect
-                key={item._id}
-                id={item._id}
-                name={item.name}
-                // selectTag={props.selectTag}
-                // deselectTag={props.deselectTag}
-              />
-            );
+            return <TagSelect key={item._id} id={item._id} name={item.name} />;
           })}
         </VStack>
       </HStack>

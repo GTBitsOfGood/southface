@@ -3,24 +3,12 @@ import urls from "lib/utils/urls";
 import useSWR from "swr";
 import TagBox from "./TagBox";
 
-const Tag = () => {
+const Tag = (props) => {
   const { data } = useSWR(urls.api.tag.getObject);
   const tags = data?.payload[0];
 
   // const [tagName, setTagName] = useState("");
   // const [selectedTag, setSelectedTag] = useState([]);
-
-  // const selectTag = (id) => {
-  //   const copy = [...selectedTag];
-  //   copy.push(id);
-  //   setSelectedTag(copy);
-  // };
-
-  // const deselectTag = (id) => {
-  //   const copy = [...selectedTag];
-  //   copy.splice(copy.indexOf(id), 1);
-  //   setSelectedTag(copy);
-  // };
 
   // const handleSubmit = () => {
   //   tagName &&
@@ -39,22 +27,12 @@ const Tag = () => {
   return (
     <>
       {/* <VStack gap="1em" width="max"> */}
-      <Flex
-        height={{ base: "45em", "2xl": "55em" }}
-        direction="column"
-        wrap="wrap"
-      >
+      <Flex {...props} direction="column" wrap="wrap">
         {tags &&
           Object.keys(tags).map((letter) => {
             return (
               <Box key={letter}>
-                <TagBox
-                  key={letter}
-                  letter={letter}
-                  list={tags[letter]}
-                  // selectTag={selectTag}
-                  // deselectTag={deselectTag}
-                />
+                <TagBox key={letter} letter={letter} list={tags[letter]} />
               </Box>
             );
           })}

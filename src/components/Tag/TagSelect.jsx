@@ -5,11 +5,6 @@ const TagSelect = (props) => {
   const [isChecked, setIsChecked] = useState(false);
   const handleInputChange = () => {
     setIsChecked(!isChecked);
-    // if (!isChecked) {
-    //   props.selectTag(e.target.id);
-    // } else {
-    //   props.deselectTag(e.target.id);
-    // }
   };
   return (
     <>
