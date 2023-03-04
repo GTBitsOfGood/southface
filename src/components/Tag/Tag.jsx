@@ -1,22 +1,11 @@
 import { Box, Flex } from "@chakra-ui/react";
 import urls from "lib/utils/urls";
-import { useEffect, useRef } from "react";
 import useSWR from "swr";
 import TagBox from "./TagBox";
 
-const Tag = (props) => {
+const Tag = () => {
   const { data } = useSWR(urls.api.tag.getObject);
   const tags = data?.payload[0];
-
-  const tagRef = useRef();
-  useEffect(() => {
-    if (tagRef.current) {
-      const childWidth = tagRef.current.offsetWidth;
-      if (childWidth > 0) {
-        props.setwidth(childWidth);
-      }
-    }
-  }, [props, tagRef]);
 
   // const [tagName, setTagName] = useState("");
   // const [selectedTag, setSelectedTag] = useState([]);
@@ -50,7 +39,11 @@ const Tag = (props) => {
   return (
     <>
       {/* <VStack gap="1em" width="max"> */}
-      <Flex {...props} direction="column" wrap="wrap" ref={tagRef}>
+      <Flex
+        height={{ base: "45em", "2xl": "55em" }}
+        direction="column"
+        wrap="wrap"
+      >
         {tags &&
           Object.keys(tags).map((letter) => {
             return (
