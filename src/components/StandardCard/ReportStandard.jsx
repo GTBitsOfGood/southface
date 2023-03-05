@@ -28,7 +28,7 @@ const ReportStandard = ({ card, selState, ...props }) => {
   return (
     <Box {...props}>
       <HStack justify="space-between">
-        <Heading>{card.title}</Heading>
+        <Heading mb={5}>{card.title}</Heading>
         <Box>
           {(!globalEditing || editing) && (
             <Button onClick={editHandler}>

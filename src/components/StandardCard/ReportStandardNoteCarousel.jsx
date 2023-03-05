@@ -1,5 +1,10 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Box } from "@chakra-ui/react";
+import {
+  AddIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CloseIcon,
+} from "@chakra-ui/icons";
+import { Box, Circle } from "@chakra-ui/react";
 import Carousel from "react-grid-carousel";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import Note from "../Notes/Note";
@@ -46,7 +51,7 @@ const ReportStandardNoteCarousel = ({ notes, ...rest }) => {
       return Array(notes.length).fill(false);
     }
   })();
-  const { editing } = {...rest}
+  const { editing } = { ...rest };
   const noteToggleHandler = (index) => () => {
     if (selState && editing) {
       noteArr[index] = !noteArr[index];
@@ -55,6 +60,35 @@ const ReportStandardNoteCarousel = ({ notes, ...rest }) => {
       changeInReport(newSel);
       console.log(selState.noteSelections);
     }
+  };
+
+  const ConditionalNote = ({ note, index }) => {
+    const selected = selState?.noteSelections[index];
+    const noteComp = <Note note={note} />;
+    const iconStyles = {
+      position: "absolute",
+      right: "-7px",
+      top: "-7px",
+      color: "white",
+      backgroundColor: "gray",
+      fontSize: "small",
+      padding: "5px",
+    };
+    return editing ? (
+      <Box
+        onClick={noteToggleHandler(index)}
+        opacity={selected ? "100%" : "70%"}
+        position="relative"
+        mt="5"
+      >
+        <Circle style={iconStyles}>
+          {selected ? <CloseIcon /> : <AddIcon />}
+        </Circle>
+        <Box>{noteComp}</Box>
+      </Box>
+    ) : (
+      <Box>{noteComp}</Box>
+    );
   };
 
   return (
@@ -74,14 +108,11 @@ const ReportStandardNoteCarousel = ({ notes, ...rest }) => {
     >
       {notes.map((note, index) => {
         return (
-          <Carousel.Item key={index}>
-            <Note
-              borderWidth={selState?.noteSelections[index] ? "10px" : "0px"}
-              borderColor={selState?.noteSelections[index] ? "red.500" : "none"}
-              onClick={noteToggleHandler(index)}
-              note={note}
-            />
-          </Carousel.Item>
+          (selState?.noteSelections[index] || editing) && (
+            <Carousel.Item key={index}>
+              <ConditionalNote index={index} note={note} />
+            </Carousel.Item>
+          )
         );
       })}
     </Carousel>

@@ -1,5 +1,10 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, Image } from "@chakra-ui/react";
+import {
+  AddIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CloseIcon,
+} from "@chakra-ui/icons";
+import { Box, Circle, Image } from "@chakra-ui/react";
 import Carousel from "react-grid-carousel";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 
@@ -34,7 +39,7 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
     ></Box>
   );
 
-  const {cols = 5, rows = 1, gap = 10} = {...rest};
+  const { cols = 5, rows = 1, gap = 10 } = { ...rest };
 
   const { selState } = { ...rest };
   const { changeInReport } = useActiveReport();
@@ -45,7 +50,7 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       return Array(cardImages.length).fill(false);
     }
   })();
-  const { editing } = {...rest};
+  const { editing } = { ...rest };
 
   const imgToggleHandler = (index) => () => {
     if (selState && editing) {
@@ -54,6 +59,41 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       newSel.imgSelections = imgArr;
       changeInReport(newSel);
     }
+  };
+
+  const ConditionalImage = ({ image, index }) => {
+    const selected = selState?.imgSelections[index];
+    const img = (
+      <Image
+        fit="contain"
+        width="100%"
+        src={image}
+        alt="construction image"
+      />
+    );
+    const iconStyles= {
+      position: "absolute",
+      right: "2px",
+      top: "2px",
+      color: "white",
+      backgroundColor: "gray",
+      fontSize: "small",
+      padding: "5px",
+    }
+    return editing ? (
+      <Box
+        onClick={imgToggleHandler(index)}
+        opacity={selected ? "100%" : "70%"}
+        position="relative"
+      >
+        <Circle style={iconStyles}>
+          {selected ? <CloseIcon /> : <AddIcon />}
+        </Circle>
+        {img}
+      </Box>
+    ) : (
+      <Box>{img}</Box>
+    );
   };
 
   return (
@@ -73,20 +113,11 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
     >
       {cardImages.map(({ imageUrl: image }, index) => {
         return (
-          <Carousel.Item key={index}>
-            <Box
-              borderWidth={selState?.imgSelections[index] ? "10px" : "0px"}
-              borderColor={selState?.imgSelections[index] ? "red.500" : "none"}
-            >
-              <Image
-                onClick={imgToggleHandler(index)}
-                fit="contain"
-                width="100%"
-                src={image}
-                alt="construction image"
-              />
-            </Box>
-          </Carousel.Item>
+          (selState.imgSelections[index] || editing) && (
+            <Carousel.Item key={index}>
+              <ConditionalImage image={image} index={index} />
+            </Carousel.Item>
+          )
         );
       })}
     </Carousel>

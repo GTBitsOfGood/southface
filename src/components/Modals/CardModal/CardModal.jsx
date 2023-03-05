@@ -1,5 +1,8 @@
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
+  Box,
   Button,
+  Circle,
   Flex,
   GridItem,
   Heading,
@@ -15,6 +18,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import useActiveReport from "../../../lib/hooks/useActiveReport";
 import ArrowIcon from "../../Carousel/ArrowIcon";
 import Carousel from "../../Carousel/Carousel";
@@ -35,36 +39,55 @@ const CardModal = ({
   } = useDisclosure();
 
   const openImagePreviewCallback = () => {
-    onCloseCardModal();
+    modalCloseHandler();
     onOpenImagePreviewModal();
   };
 
-  const { changeInReport } = useActiveReport();
+  const { changeInReport, addToReport } = useActiveReport();
   const { selState } = { ...rest };
-  const imgArr = function(){
+  const imgArr = (function () {
     if (selState && selState.imgSelections.length === card.images.length) {
       return selState.imgSelections;
     } else {
       return Array(card.images.length).fill(false);
     }
-  }()
+  })();
 
+  const { selected = false } = { ...rest };
+  const reportAddHandler = () => {
+    if (!selected) {
+      addToReport(card);
+    } else {
+      setEditing((prev) => !prev);
+    }
+  };
+  const [editing, setEditing] = useState(false);
+  useEffect(() => {
+    if (!selected) {
+      setEditing(false);
+    }
+  }, [editing]);
   const imgToggleHandler = (index) => () => {
-    if (selState) {
+    if (selState && editing) {
       imgArr[index] = !imgArr[index];
       const newSel = { ...selState };
       newSel.imgSelections = imgArr;
       changeInReport(newSel);
     }
-  }
-  const { selected = false, reportAddHandler = () => {} } = { ...rest };
+  };
+  const modalCloseHandler = () => {
+    setEditing(() => {
+      onCloseCardModal();
+      return false;
+    });
+  };
 
   return (
     <>
       <Modal
         {...rest}
         isOpen={isOpenCardModal}
-        onClose={onCloseCardModal}
+        onClose={modalCloseHandler}
         size={{ base: "xs", md: "2xl", lg: "4xl" }}
       >
         <ModalOverlay />
@@ -90,13 +113,38 @@ const CardModal = ({
               >
                 {card.images.map(({ imageUrl: image }, index) => (
                   <Carousel.Item key={index}>
-                    <ModalImage
-                      onClick={imgToggleHandler(index)}
-                      borderWidth={selState?.imgSelections[index] ? "10px" : "0px"}
-                      borderColor={selState?.imgSelections[index] ? "red.500" : "none"}
-                      image={image}
-                      openImagePreviewCallback={openImagePreviewCallback}
-                    />
+                    <Box position="relative">
+                      {editing && <Circle
+                        position="absolute"
+                        bottom="10px"
+                        bgColor="blue.500"
+                        color="white"
+                        right="10px"
+                        zIndex={5}
+                        padding={2}
+                      >
+                        {selState?.imgSelections[index] ? (
+                          <CloseIcon />
+                        ) : (
+                          <AddIcon />
+                        )}
+                      </Circle>}
+                      <ModalImage
+                        onClick={imgToggleHandler(index)}
+                        borderWidth={
+                          selState?.imgSelections[index] && editing
+                            ? "5px"
+                            : "0px"
+                        }
+                        borderColor={
+                          selState?.imgSelections[index] && editing
+                            ? "blue.500"
+                            : "none"
+                        }
+                        image={image}
+                        openImagePreviewCallback={openImagePreviewCallback}
+                      />
+                    </Box>
                   </Carousel.Item>
                 ))}
               </Carousel>
@@ -105,9 +153,7 @@ const CardModal = ({
                 {card.criteria}
               </Text>
 
-              <Text>
-                Bruh: 
-              </Text>
+              <Text>Bruh:</Text>
 
               <SimpleGrid mt={3} mb={15} columns={5}>
                 <HStack as={GridItem} colSpan={2} gap={1} overflowX="auto">
@@ -131,7 +177,11 @@ const CardModal = ({
                     View Notes
                   </Button>
                   <Button onClick={reportAddHandler} variant="Blue" size="lg">
-                    {!selected ? "Add to Report" : "Added to Report"}
+                    {!selected
+                      ? "Add to Report"
+                      : editing
+                      ? "Save changes"
+                      : "Edit"}
                   </Button>
                 </Flex>
               </SimpleGrid>

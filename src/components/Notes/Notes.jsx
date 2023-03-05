@@ -1,4 +1,14 @@
-import { Box, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Circle,
+  Flex,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import { updateCardById } from "../../actions/Card";
@@ -64,9 +74,17 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
       return Array(notes.length).fill(false);
     }
   })();
+  const { editing, setEditing } = { ...rest };
+  const editHandler = () => {
+    if (!selState) {
+      setEditing(false);
+    } else {
+      setEditing((prev) => !prev);
+    }
+  };
 
   const noteToggleHandler = (index) => () => {
-    if (selState) {
+    if (selState && editing) {
       noteArr[index] = !noteArr[index];
       const newSel = { ...selState };
       newSel.noteSelections = noteArr;
@@ -106,29 +124,58 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
               return;
             }
             return (
-              <Note
-                onClick={noteToggleHandler(index)}
-                borderWidth={selState?.noteSelections[index] ? "10px" : "0px"}
-                borderColor={
-                  selState?.noteSelections[index] ? "red.500" : "none"
-                }
-                key={index}
-                currNoteIdx={index}
-                note={note}
-                notes={currentNotes}
-                handleSaveEdit={handleSaveEdit}
-              />
+              <Box key={index} position="relative">
+                <Note
+                  onClick={noteToggleHandler(index)}
+                  borderWidth={
+                    selState?.noteSelections[index] && editing ? "5px" : "0px"
+                  }
+                  borderColor={
+                    selState?.noteSelections[index] && editing
+                      ? "blue.500"
+                      : "none"
+                  }
+                  currNoteIdx={index}
+                  note={note}
+                  notes={currentNotes}
+                  handleSaveEdit={handleSaveEdit}
+                />
+                {editing && (
+                  <Circle
+                    position="absolute"
+                    bottom="10px"
+                    bgColor="blue.500"
+                    color="white"
+                    right="10px"
+                    zIndex={5}
+                    padding={2}
+                  >
+                    {selState?.noteSelections[index] ? (
+                      <CloseIcon />
+                    ) : (
+                      <AddIcon />
+                    )}
+                  </Circle>
+                )}
+              </Box>
             );
           })}
         </Box>
       </VStack>
 
       <Flex alignItems="end">
-        <VStack alignItems="left">
+        <VStack alignItems="left" w="80%">
           <Text>Was this image helpful?</Text>
-          <HStack>
-            <SentimentButton type="like" />
-            <SentimentButton type="dislike" />
+          <HStack justify="space-between">
+            <HStack>
+              <SentimentButton type="like" />
+              <SentimentButton type="dislike" />
+            </HStack>
+            {selState && (
+              <Button onClick={editHandler}>
+                {editing ? "Save Changes" : "Add notes"}
+              </Button>
+            )}
           </HStack>
         </VStack>
       </Flex>
