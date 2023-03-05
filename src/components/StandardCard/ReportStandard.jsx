@@ -1,4 +1,5 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading, HStack } from "@chakra-ui/react";
+import { useState } from "react";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import ReportStandardNoteCarousel from "./ReportStandardNoteCarousel";
 import StandardCardImageCarousel from "./StandardCardImageCarousel";
@@ -11,15 +12,43 @@ const ReportStandard = ({ card, selState, ...props }) => {
   // editEnable,
   // useEffect on editEnable: make API call after deselecting
   const { removeFromReport } = useActiveReport();
-  const handler = () => {
+  const { useGlobalEditing: [globalEditing, setGlobalEditing] = [] } = {
+    ...props,
+  };
+  const [editing, setEditing] = useState(false);
+  const removeHandler = () => {
     removeFromReport(card);
+  };
+  const editHandler = () => {
+    setGlobalEditing((prev) => {
+      setEditing((prev) => !prev);
+      return !prev;
+    });
   };
   return (
     <Box {...props}>
-      <Heading>{card.title}</Heading>
-      <StandardCardImageCarousel cardImages={card.images} selState={selState} />
-      <ReportStandardNoteCarousel notes={card.notes} selState={selState} />
-      <Button onClick={handler}>Remove from plan</Button>
+      <HStack justify="space-between">
+        <Heading>{card.title}</Heading>
+        <Box>
+          {(!globalEditing || editing) && (
+            <Button onClick={editHandler}>
+              {!editing ? "Edit" : "Save changes"}
+            </Button>
+          )}
+          {!globalEditing && <Button onClick={removeHandler}>Remove</Button>}
+        </Box>
+      </HStack>
+      <StandardCardImageCarousel
+        cardImages={card.images}
+        selState={selState}
+        editing={editing}
+      />
+      <ReportStandardNoteCarousel
+        cols={3}
+        notes={card.notes}
+        selState={selState}
+        editing={editing}
+      />
     </Box>
   );
 };

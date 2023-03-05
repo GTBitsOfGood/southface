@@ -6,6 +6,7 @@ import {
   addToActiveReport,
   removeFromActiveReport,
 } from "src/actions/User/ActiveReport";
+import { useState } from "react";
 
 // hook to get and update active plan for user, using SWR
 // NOTE: user must be logged in
@@ -21,16 +22,21 @@ export default function useActiveReport() {
     isValidating,
   } = useSWR(url, getActiveReport);
   // there is no payload extraction needed here, since we're using a f-e handler
-  const report = data ?? {name: "empty plan", cards: []};
+  const report = data ?? { name: "empty plan", cards: [] };
+
+  const [isWaiting, setIsWaiting] = useState(false);
   const reportModifier = (localData, apiCall) => {
+    setIsWaiting(true);
     mutateReport(localData, false);
-    apiCall.then((res) => {
+    return apiCall.then((res) => {
       mutateReport(res);
+      setIsWaiting(false);
     });
   };
 
   const updateReport = (report) =>
     reportModifier(report, updateActiveReport(report));
+
   const changeInReport = (card) =>
     reportModifier(
       (function () {
@@ -46,15 +52,27 @@ export default function useActiveReport() {
       })(),
       changeInActiveReport(card)
     );
+
   const addToReport = (card) =>
     reportModifier(
       (function () {
         const newReport = { ...report };
-        newReport.cards.push(card);
+        const cards = newReport.cards;
+        for (let i = 0; i < cards.length; i++) {
+          if (cards[i].card._id.toString() === card._id.toString()) {
+            return newReport
+          }
+        }
+        newReport.cards.push({
+          card: card,
+          imgSelections: [],
+          noteSelections: [],
+        });
         return newReport;
       })(),
       addToActiveReport(card)
     );
+
   const removeFromReport = (card) =>
     reportModifier(
       (function () {
@@ -70,6 +88,7 @@ export default function useActiveReport() {
       })(),
       removeFromActiveReport(card)
     );
+
   return {
     report,
     mutateReport,
@@ -79,5 +98,6 @@ export default function useActiveReport() {
     removeFromReport,
     key: url,
     isValidating,
+    isWaiting,
   };
 }

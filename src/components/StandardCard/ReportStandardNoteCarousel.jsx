@@ -46,9 +46,9 @@ const ReportStandardNoteCarousel = ({ notes, ...rest }) => {
       return Array(notes.length).fill(false);
     }
   })();
-
+  const { editing } = {...rest}
   const noteToggleHandler = (index) => () => {
-    if (selState) {
+    if (selState && editing) {
       noteArr[index] = !noteArr[index];
       const newSel = { ...selState };
       newSel.noteSelections = noteArr;

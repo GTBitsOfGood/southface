@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  GridItem,
   Heading,
   HStack,
   Modal,
@@ -56,6 +57,7 @@ const CardModal = ({
       changeInReport(newSel);
     }
   }
+  const { selected = false, reportAddHandler = () => {} } = { ...rest };
 
   return (
     <>
@@ -107,8 +109,8 @@ const CardModal = ({
                 Bruh: 
               </Text>
 
-              <SimpleGrid mt={3} mb={15} columns={2}>
-                <HStack gap={1} overflowX="auto">
+              <SimpleGrid mt={3} mb={15} columns={5}>
+                <HStack as={GridItem} colSpan={2} gap={1} overflowX="auto">
                   {card.tags.map((tag, index) => (
                     <Tag
                       bgColor="#c4d600"
@@ -120,7 +122,7 @@ const CardModal = ({
                     </Tag>
                   ))}
                 </HStack>
-                <Flex gap={2} justifyContent="right">
+                <Flex as={GridItem} colSpan={3} gap={2} justifyContent="right">
                   <Button
                     size="lg"
                     variant="Grey-outlined"
@@ -128,8 +130,8 @@ const CardModal = ({
                   >
                     View Notes
                   </Button>
-                  <Button variant="Blue" size="lg">
-                    Add to Report
+                  <Button onClick={reportAddHandler} variant="Blue" size="lg">
+                    {!selected ? "Add to Report" : "Added to Report"}
                   </Button>
                 </Flex>
               </SimpleGrid>

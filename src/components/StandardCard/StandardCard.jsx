@@ -68,14 +68,25 @@ const StandardCard = ({ card, setCards, ...props }) => {
   const { selState } = {...props};
   const selected = (!selState) ? false : true;
   // const imgArr = selected ? 
-  const { addToReport, removeFromReport } = useActiveReport();
-  const reportToggleHandler = () => {
+  const { addToReport } = useActiveReport();
+  const reportAddHandler = () => {
     if (!selected) {
       addToReport(card);
-    } else {
-      removeFromReport(card);
     }
   }
+
+  const ReportButton = ({...props}) => (
+    <Button
+      position="absolute"
+      right="1"
+      bottom="0"
+      variant="Blue-outlined"
+      onClick={reportAddHandler}
+      {...props}
+    >
+      {!selected ? "Add To Report" : "Added to Report"}
+    </Button>
+  );
 
   return (
     <Flex
@@ -126,23 +137,16 @@ const StandardCard = ({ card, setCards, ...props }) => {
               </Tag>
             );
           })}
-          <Button
-            position="absolute"
-            right="1"
-            bottom="0"
-            variant="Blue-outlined"
-            onClick={reportToggleHandler}
-          >
-            Add To Report
-          </Button>
+          <ReportButton />
         </HStack>
         <CardModal
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}
           card={card}
           setCards={setCards}
-          selected={false}
+          selected={selected}
           selState={selState}
+          reportAddHandler={reportAddHandler}
         />
       </Flex>
     </Flex>

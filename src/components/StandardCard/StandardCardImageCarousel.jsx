@@ -45,14 +45,14 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       return Array(cardImages.length).fill(false);
     }
   })();
+  const { editing } = {...rest};
 
   const imgToggleHandler = (index) => () => {
-    if (selState) {
+    if (selState && editing) {
       imgArr[index] = !imgArr[index];
       const newSel = { ...selState };
       newSel.imgSelections = imgArr;
       changeInReport(newSel);
-      console.log(selState.imgSelections);
     }
   };
 

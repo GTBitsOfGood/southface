@@ -10,9 +10,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
-import RecentStandardsView from "../components/RecentStandardsView";
-import { ReportStandard } from "../components/StandardCard";
-import useActiveReport from "../lib/hooks/useActiveReport";
+import RecentStandardsView from "src/components/RecentStandardsView";
+import { ReportStandard } from "src/components/StandardCard";
+import useActiveReport from "src/lib/hooks/useActiveReport";
 
 const ReportBuilder = () => {
   // For PDF exporting
@@ -22,19 +22,13 @@ const ReportBuilder = () => {
   const nameRef = useRef();
 
   const { report, isValidating } = useActiveReport();
-  const [sels, setSels] = useState([])
+  const [sels, setSels] = useState([]);
   useEffect(() => {
-    if (report && !isValidating) {
-      setSels(
-      report.cards.map((cardWrapper, index) => (
-        <CardBody key={index}>
-          <ReportStandard card={cardWrapper.card} selState={cardWrapper} />
-        </CardBody>
-      )))
+    if (report && !isValidating) { // this useEffect wrapper prevents jittering
+      setSels(report.cards);
     }
-            
-  }, [isValidating])
-
+  }, [isValidating]);
+  const useGlobalEditing = useState(false);
   return (
     <>
       <HStack pt={5} alignItems="flex-start" spacing={3}>
@@ -71,7 +65,11 @@ const ReportBuilder = () => {
               </Button>
             </Flex>
           </CardBody>
-          {sels}
+          {sels.map((cardWrapper, index) => (
+            <CardBody key={index}>
+              <ReportStandard card={cardWrapper.card} selState={cardWrapper} useGlobalEditing={useGlobalEditing} />
+            </CardBody>
+          ))}
         </VStack>
         <VStack maxW="35%" flex={1}>
           <VStack
