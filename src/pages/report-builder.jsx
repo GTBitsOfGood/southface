@@ -38,7 +38,7 @@ const ReportBuilder = () => {
           alignItems="flex-start"
           p={6}
           spacing={5}
-          divider={<StackDivider />}
+          divider={<StackDivider bg="gray.300" />}
         >
           <CardBody m={-3} w="100%">
             <Flex mb={3} width="100%" flexFlow="row nowrap">
@@ -58,10 +58,10 @@ const ReportBuilder = () => {
                     ref={nameRef}
                   />
                 )}
-                <Button>Rename</Button>
+                <Button pl="15px" pr="15px" variant="Grey-rounded">Rename</Button>
               </HStack>
-              <Button bg="gold" color="white">
-                End Project Plan
+              <Button minW="20%" variant="Blue-rounded">
+                Complete Report
               </Button>
             </Flex>
           </CardBody>

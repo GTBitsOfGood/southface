@@ -80,7 +80,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
       position="absolute"
       right="1"
       bottom="0"
-      variant="Blue-outlined"
+      variant={selected ? "Grey" : "Blue-outlined"}
       onClick={reportAddHandler}
       {...props}
     >

@@ -31,11 +31,11 @@ const ReportStandard = ({ card, selState, ...props }) => {
         <Heading mb={5}>{card.title}</Heading>
         <Box>
           {(!globalEditing || editing) && (
-            <Button onClick={editHandler}>
+            <Button variant="Grey-rounded" mr={3} onClick={editHandler}>
               {!editing ? "Edit" : "Save changes"}
             </Button>
           )}
-          {!globalEditing && <Button onClick={removeHandler}>Remove</Button>}
+          {!globalEditing && <Button variant="Red-rounded" onClick={removeHandler}>Remove</Button>}
         </Box>
       </HStack>
       <StandardCardImageCarousel

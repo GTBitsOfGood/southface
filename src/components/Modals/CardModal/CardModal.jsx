@@ -171,12 +171,12 @@ const CardModal = ({
                 <Flex as={GridItem} colSpan={3} gap={2} justifyContent="right">
                   <Button
                     size="lg"
-                    variant="Grey-outlined"
+                    variant="Grey-outlined-rounded"
                     onClick={openImagePreviewCallback}
                   >
                     View Notes
                   </Button>
-                  <Button onClick={reportAddHandler} variant="Blue" size="lg">
+                  <Button onClick={reportAddHandler} variant="Blue-rounded" size="lg">
                     {!selected
                       ? "Add to Report"
                       : editing

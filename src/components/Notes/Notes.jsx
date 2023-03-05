@@ -124,7 +124,11 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
               return;
             }
             return (
-              <Box key={index} position="relative">
+              <Box
+                key={index}
+                handleSaveEdit={handleSaveEdit}
+                position="relative"
+              >
                 <Note
                   onClick={noteToggleHandler(index)}
                   borderWidth={
@@ -138,7 +142,6 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
                   currNoteIdx={index}
                   note={note}
                   notes={currentNotes}
-                  handleSaveEdit={handleSaveEdit}
                 />
                 {editing && (
                   <Circle
@@ -172,7 +175,7 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
               <SentimentButton type="dislike" />
             </HStack>
             {selState && (
-              <Button onClick={editHandler}>
+              <Button variant="Blue-rounded" onClick={editHandler}>
                 {editing ? "Save Changes" : "Add notes"}
               </Button>
             )}
