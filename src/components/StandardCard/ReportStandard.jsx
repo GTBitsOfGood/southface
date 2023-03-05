@@ -1,21 +1,24 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import useActiveReport from "../../lib/hooks/useActiveReport";
+import ReportStandardNoteCarousel from "./ReportStandardNoteCarousel";
 import StandardCardImageCarousel from "./StandardCardImageCarousel";
 
-const ReportStandard = ({ card, setCards, ...props }) => {
-  const { plan, updatePlan } = useActiveReport();
+const ReportStandard = ({ card, selState, ...props }) => {
+  // Active report code
+  // get report state
+  // if state is undefined, selected = false
+  // conditionally render note, images selection UI
+  // editEnable,
+  // useEffect on editEnable: make API call after deselecting
+  const { removeFromReport } = useActiveReport();
   const handler = () => {
-    const arr = plan.cards;
-    const newPlan = { ...plan };
-    newPlan.cards = arr.filter((c) => c._id !== card._id);
-    updatePlan(newPlan);
+    removeFromReport(card);
   };
   return (
     <Box {...props}>
       <Heading>{card.title}</Heading>
-      <StandardCardImageCarousel
-        cardImages={card.images}
-      />
+      <StandardCardImageCarousel cardImages={card.images} selState={selState} />
+      <ReportStandardNoteCarousel notes={card.notes} selState={selState} />
       <Button onClick={handler}>Remove from plan</Button>
     </Box>
   );

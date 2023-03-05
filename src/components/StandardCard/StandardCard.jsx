@@ -13,7 +13,6 @@ import React, { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
 import useSWRMutation from "swr/mutation";
 import { updateRecentStandardsRequest } from "../../actions/User";
-import { addToActiveReport } from "../../actions/User/ActiveReport";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import CardModal from "../Modals/CardModal";
@@ -60,11 +59,23 @@ const StandardCard = ({ card, setCards, ...props }) => {
     }
   }, [data]);
 
-  // Active report
-  const {report, mutateReport, isValidating} = useActiveReport();
-  const addToReportHandler = () => {
-    addToActiveReport(card);
-  };
+  // Active report code
+  // get report state
+  // if state is undefined, selected = false
+  // conditionally render note, images selection UI
+  // editEnable, 
+  // useEffect on editEnable: make API call after deselecting
+  const { selState } = {...props};
+  const selected = (!selState) ? false : true;
+  // const imgArr = selected ? 
+  const { addToReport, removeFromReport } = useActiveReport();
+  const reportToggleHandler = () => {
+    if (!selected) {
+      addToReport(card);
+    } else {
+      removeFromReport(card);
+    }
+  }
 
   return (
     <Flex
@@ -95,7 +106,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
       </Box>
 
       <Flex p={3} flexDirection="column" flex={1} mx="2">
-        <Heading size="md">{card.title}</Heading>
+        <Heading size="md">{card.title + (selState ? " (selected)" : "")}</Heading>
 
         <Text fontSize="sm" lineHeight="1.2rem" maxHeight="5rem" noOfLines="3">
           {card.criteria}
@@ -120,6 +131,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
             right="1"
             bottom="0"
             variant="Blue-outlined"
+            onClick={reportToggleHandler}
           >
             Add To Report
           </Button>
@@ -130,6 +142,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
           card={card}
           setCards={setCards}
           selected={false}
+          selState={selState}
         />
       </Flex>
     </Flex>

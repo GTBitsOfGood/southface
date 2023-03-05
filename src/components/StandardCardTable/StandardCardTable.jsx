@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
+import useActiveReport from "../../lib/hooks/useActiveReport";
 
 import ReportDocumentPDF from "../ReportDocumentPDF/ReportDocumentPDF";
 import StandardCard from "../StandardCard/StandardCard";
@@ -13,6 +14,25 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
   useEffect(() => {
     setClientSide(true);
   }, []);
+
+  const { report, isValidating } = useActiveReport();
+  const [selArr, setSelArr] = useState([]); // array of ar objects or undefined objects, updated when report changes
+  // useEffect on report:
+    // cards.map(card => card.id in report.cardIds ? report.cardWrapper : undefined)
+  useEffect(() => {
+    if (report && !isValidating) {
+      const reportIds = report.cards.map((c) => c.card._id);
+      const newArr = cards.map((card) => {
+        const i = reportIds.indexOf(card._id);
+        if (i < 0) {
+          return undefined;
+        } else {
+          return report.cards[i];
+        }
+      });
+      setSelArr(newArr);
+    }
+  }, [isValidating])
 
   return (
     <Box {...props}>
@@ -43,7 +63,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
       >
         {cards.map((card, index) => (
           <GridItem w="100%" key={index}>
-            <StandardCard card={card} setCards={setCards} />
+            <StandardCard card={card} setCards={setCards} selState={selArr[index]}/>
           </GridItem>
         ))}
       </Grid>

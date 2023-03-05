@@ -14,6 +14,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import useActiveReport from "../../../lib/hooks/useActiveReport";
 import ArrowIcon from "../../Carousel/ArrowIcon";
 import Carousel from "../../Carousel/Carousel";
 import ImagePreviewModal from "../ImagePreviewModal";
@@ -36,6 +37,25 @@ const CardModal = ({
     onCloseCardModal();
     onOpenImagePreviewModal();
   };
+
+  const { changeInReport } = useActiveReport();
+  const { selState } = { ...rest };
+  const imgArr = function(){
+    if (selState && selState.imgSelections.length === card.images.length) {
+      return selState.imgSelections;
+    } else {
+      return Array(card.images.length).fill(false);
+    }
+  }()
+
+  const imgToggleHandler = (index) => () => {
+    if (selState) {
+      imgArr[index] = !imgArr[index];
+      const newSel = { ...selState };
+      newSel.imgSelections = imgArr;
+      changeInReport(newSel);
+    }
+  }
 
   return (
     <>
@@ -69,6 +89,9 @@ const CardModal = ({
                 {card.images.map(({ imageUrl: image }, index) => (
                   <Carousel.Item key={index}>
                     <ModalImage
+                      onClick={imgToggleHandler(index)}
+                      borderWidth={selState?.imgSelections[index] ? "10px" : "0px"}
+                      borderColor={selState?.imgSelections[index] ? "red.500" : "none"}
                       image={image}
                       openImagePreviewCallback={openImagePreviewCallback}
                     />
@@ -78,6 +101,10 @@ const CardModal = ({
 
               <Text lineHeight="normal" fontSize="18px">
                 {card.criteria}
+              </Text>
+
+              <Text>
+                Bruh: 
               </Text>
 
               <SimpleGrid mt={3} mb={15} columns={2}>
@@ -115,6 +142,7 @@ const CardModal = ({
         onClose={onCloseImagePreviewModal}
         card={card}
         setCards={setCards}
+        selState={selState}
       />
     </>
   );

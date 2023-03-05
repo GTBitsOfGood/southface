@@ -1,9 +1,10 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, Image } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Carousel from "react-grid-carousel";
 import useActiveReport from "../../lib/hooks/useActiveReport";
+import Note from "../Notes/Note";
 
-const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
+const ReportStandardNoteCarousel = ({ notes, ...rest }) => {
   const ChevronIcon = (props) => {
     const styles = {
       pos: "absolute",
@@ -34,25 +35,25 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
     ></Box>
   );
 
-  const {cols = 5, rows = 1, gap = 10} = {...rest};
+  const { cols = 5, rows = 1, gap = 10 } = { ...rest };
 
   const { selState } = { ...rest };
   const { changeInReport } = useActiveReport();
-  const imgArr = (function () {
-    if (selState && selState.imgSelections.length === cardImages.length) {
-      return selState.imgSelections;
+  const noteArr = (function () {
+    if (selState && selState.noteSelections.length === notes.length) {
+      return selState.noteSelections;
     } else {
-      return Array(cardImages.length).fill(false);
+      return Array(notes.length).fill(false);
     }
   })();
 
-  const imgToggleHandler = (index) => () => {
+  const noteToggleHandler = (index) => () => {
     if (selState) {
-      imgArr[index] = !imgArr[index];
+      noteArr[index] = !noteArr[index];
       const newSel = { ...selState };
-      newSel.imgSelections = imgArr;
+      newSel.noteSelections = noteArr;
       changeInReport(newSel);
-      console.log(selState.imgSelections);
+      console.log(selState.noteSelections);
     }
   };
 
@@ -71,21 +72,15 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       arrowLeft={<ChevronIcon orientation="left" />}
       arrowRight={<ChevronIcon orientation="right" />}
     >
-      {cardImages.map(({ imageUrl: image }, index) => {
+      {notes.map((note, index) => {
         return (
           <Carousel.Item key={index}>
-            <Box
-              borderWidth={selState?.imgSelections[index] ? "10px" : "0px"}
-              borderColor={selState?.imgSelections[index] ? "red.500" : "none"}
-            >
-              <Image
-                onClick={imgToggleHandler(index)}
-                fit="contain"
-                width="100%"
-                src={image}
-                alt="construction image"
-              />
-            </Box>
+            <Note
+              borderWidth={selState?.noteSelections[index] ? "10px" : "0px"}
+              borderColor={selState?.noteSelections[index] ? "red.500" : "none"}
+              onClick={noteToggleHandler(index)}
+              note={note}
+            />
           </Carousel.Item>
         );
       })}
@@ -93,4 +88,4 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
   );
 };
 
-export default StandardCardImageCarousel;
+export default ReportStandardNoteCarousel;

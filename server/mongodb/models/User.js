@@ -28,9 +28,26 @@ const UserSchema = new Schema({
     },
   ],
   activeReport: {
-    type: [ReportSchema],
     required: false,
-  }
+    type: {
+      cards: [{
+        card: {
+          type: Schema.Types.ObjectId,
+          ref: "Card",
+        },
+        imgSelections: {
+          type: [Boolean],
+        },
+        noteSelections: {
+          type: [Boolean],
+        },
+      }],
+      name: {
+        type: String,
+        required: true,
+      },
+    },
+  },
 });
 
 export default mongoose.models?.User ?? mongoose.model("User", UserSchema);

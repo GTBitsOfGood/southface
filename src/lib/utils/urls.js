@@ -29,6 +29,7 @@ export default {
       },
       activeReport: {
         get: "/api/user/active-report/get",
+        getUnpopulated: "/api/user/active-report/get-unpopulated",
         add: "/api/user/active-report/add",
         remove: "/api/user/active-report/remove",
         update: "/api/user/active-report/update",

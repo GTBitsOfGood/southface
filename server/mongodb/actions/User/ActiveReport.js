@@ -1,9 +1,24 @@
 import mongoDB from "../../index";
 import User from "../../models/User";
 
+const populateString = "activeReport.cards.card";
+
 export const getActiveReport = async (userId) => {
-  await mongoDB();
   try {
+    await mongoDB();
+    const user = await User.findById(userId).populate({path: populateString});
+    if (user == null) {
+      throw new Error();
+    }
+    return user.activeReport;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getUnpopulatedActiveReport = async (userId) => {
+  try {
+    await mongoDB();
     const user = await User.findById(userId);
     if (user == null) {
       throw new Error();
@@ -15,15 +30,20 @@ export const getActiveReport = async (userId) => {
 };
 
 export const addToActiveReport = async (userId, card) => {
-  await mongoDB();
   try {
+    await mongoDB();
+    const newWrappedCard = [{
+      card: card._id,
+      imgSelections: [],
+      noteSelections: [],
+    }];
     const user = await User.findByIdAndUpdate(
       userId,
       {
-        $addToSet: { "activeReport.cards": card },
+        $addToSet: { "activeReport.cards": newWrappedCard },
       },
       { upsert: true }
-    );
+    ).populate(populateString);
     if (user == null) {
       throw new Error();
     }
@@ -34,11 +54,11 @@ export const addToActiveReport = async (userId, card) => {
 };
 
 export const removeFromActiveReport = async (userId, card) => {
-  await mongoDB();
   try {
+    await mongoDB();
     const user = await User.findByIdAndUpdate(userId, {
-      $pull: { "activeReport.cards": { _id: card._id } },
-    });
+      $pull: { "activeReport.cards": { "card": card._id } },
+    }).populate(populateString);
     if (user == null) {
       throw new Error();
     }
@@ -48,29 +68,33 @@ export const removeFromActiveReport = async (userId, card) => {
   }
 };
 
-export const changeInActiveReport = async (userId, card) => {
-  await mongoDB();
+export const changeInActiveReport = async (userId, wrappedCard) => {
   try {
-    const user = await User.updateOne(
-      { _id: userId },
-      { $set: { "activeReport.cards.$[_id]": card } },
-      { arrayFilters: [{ _id: card._id }] }
-    );
+    await mongoDB();
+    const newWrappedCard = [{
+      card: wrappedCard.card._id,
+      imgSelections: wrappedCard.imgSelections,
+      noteSelections: wrappedCard.noteSelections,
+    }];
+    const user = await User.findOneAndUpdate(
+      { _id: userId, "activeReport.cards.card": wrappedCard.card._id },
+      { $set: { "activeReport.cards.$": newWrappedCard } }
+    ).populate(populateString);
     if (user == null) {
       throw new Error();
     }
-    return user;
+    return user.activeReport;
   } catch (e) {
     console.log(e);
   }
 };
 
 export const updateActiveReport = async (userId, plan) => {
-  await mongoDB();
   try {
+    await mongoDB();
     const user = await User.findByIdAndUpdate(userId, {
       $set: { activeReport: plan },
-    });
+    }).populate(populateString);
     if (user == null) {
       throw new Error();
     }

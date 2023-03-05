@@ -31,7 +31,10 @@ const ProjectPlanBuilder = () => {
   //     });
   //   }
   // }, [user]);
-  const { plan, isValidating } = useActiveReport();
+
+  const { report, mutatePlan, isValidating } = useActiveReport();
+  // need the populated report
+  // map all of the cards in report with reportState data (nothing should be undefined) 
 
   // For PDF exporting
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -85,7 +88,8 @@ const ProjectPlanBuilder = () => {
               <Button>Broken PDF</Button>
             </HStack>
           </CardBody>
-          {!isValidating && plan.cards.map(standardMapper)}
+          {/* {!isValidating && plan.cards.map(standardMapper)} */}
+          {/*  */}
         </VStack>
         <VStack flex={1}>
           <Card w="100%">
@@ -108,6 +112,6 @@ const ProjectPlanBuilder = () => {
       />
     </>
   );
-};
+};;
 
 export default ProjectPlanBuilder;

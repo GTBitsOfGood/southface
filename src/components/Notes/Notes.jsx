@@ -2,12 +2,13 @@ import { Box, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import { updateCardById } from "../../actions/Card";
+import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import AddNewNote from "./AddNewNote";
 import Note from "./Note";
 import SentimentButton from "./SentimentButton";
 
-const Notes = ({ cardId, notes, setCards }) => {
+const Notes = ({ cardId, notes, setCards, ...rest }) => {
   const [currentNotes, setCurrentNotes] = useState(
     notes.map((n) => n).reverse()
   );
@@ -54,6 +55,25 @@ const Notes = ({ cardId, notes, setCards }) => {
     });
   };
 
+  const { changeInReport } = useActiveReport();
+  const { selState } = { ...rest };
+  const noteArr = (function () {
+    if (selState && selState.noteSelections.length === notes.length) {
+      return selState.noteSelections;
+    } else {
+      return Array(notes.length).fill(false);
+    }
+  })();
+
+  const noteToggleHandler = (index) => () => {
+    if (selState) {
+      noteArr[index] = !noteArr[index];
+      const newSel = { ...selState };
+      newSel.noteSelections = noteArr;
+      changeInReport(newSel);
+    }
+  };
+
   if (!user?.isLoggedIn) {
     return (
       <Box>
@@ -87,6 +107,11 @@ const Notes = ({ cardId, notes, setCards }) => {
             }
             return (
               <Note
+                onClick={noteToggleHandler(index)}
+                borderWidth={selState?.noteSelections[index] ? "10px" : "0px"}
+                borderColor={
+                  selState?.noteSelections[index] ? "red.500" : "none"
+                }
                 key={index}
                 currNoteIdx={index}
                 note={note}
