@@ -1,4 +1,4 @@
-import { Icon, SearchIcon } from "@chakra-ui/icons";
+import { CloseIcon, Icon, SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -8,17 +8,50 @@ import {
   InputLeftAddon,
   Select,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
 const SearchBar = (props) => {
   const { handleSearch, ...rest } = props;
-  const textInputRef = useRef();
+  const [isClickedSearch, setIsClickedSearch] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
-  const handleButtonClick = () => {
-    const searchString = textInputRef.current.value;
-    handleSearch(searchString);
+  useEffect(() => {
+    if (searchInput === "") {
+      setIsClickedSearch(false);
+    }
+  }, [searchInput]);
+
+  const handleSearchButtonClick = () => {
+    setIsClickedSearch(true);
+    handleSearch({ searchString: searchInput });
   };
+
+  const handleExitSearchButtonClick = () => {
+    handleSearch({});
+    setSearchInput("");
+    setIsClickedSearch(false);
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const SearchButton = () =>
+    isClickedSearch ? (
+      <Button
+        variant="Blue"
+        size="lg"
+        mr="3"
+        onClick={handleExitSearchButtonClick}
+      >
+        <CloseIcon boxSize="12px" />
+      </Button>
+    ) : (
+      <Button variant="Blue" size="lg" mr="3" onClick={handleSearchButtonClick}>
+        <FaLongArrowAltRight />
+      </Button>
+    );
 
   return (
     <Flex {...rest} justifyContent="flex-end">
@@ -28,7 +61,11 @@ const SearchBar = (props) => {
           <InputLeftAddon bg="transparent" borderRight="none">
             <Icon as={SearchIcon} />
           </InputLeftAddon>
-          <Input ref={textInputRef} placeholder="Search specs" />
+          <Input
+            value={searchInput}
+            onChange={handleSearchInputChange}
+            placeholder="Search Cards"
+          />
         </InputGroup>
       </Box>
 
@@ -39,10 +76,7 @@ const SearchBar = (props) => {
           <option value="option3">Option 3</option>
         </Select>
       </Box>
-
-      <Button variant="Blue" size="lg" mr="3" onClick={handleButtonClick}>
-        <FaLongArrowAltRight />
-      </Button>
+      <SearchButton />
     </Flex>
   );
 };

@@ -36,31 +36,19 @@ export async function getCards() {
 export async function getCardsPagination({
   pageNumber,
   buildingType,
-  primaryCategory,
+  primaryCategory = null,
   searchFilterString = null,
   searchFilterTags = null,
   cardsPerPage = 4,
 }) {
-  console.log("Entering getCardsPagination...");
+
   await mongoDB();
-  console.log("Connected to database...");
 
-  let query = {};
-  if (primaryCategory && buildingType) {
-    query = {
-      $or: [
-        { primaryCategory: primaryCategory, buildingType: buildingType },
-        { primaryCategory: null, buildingType: buildingType },
-      ],
-    };
-    console.log(buildingType, primaryCategory);
-  } else if (buildingType) {
-    query = {
-      $in: [buildingType],
-    };
-    console.log(buildingType, primaryCategory);
-  }
-
+  let query = {buildingType,
+    ...primaryCategory && {primaryCategory}
+  };
+ 
+  
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
 
@@ -82,13 +70,11 @@ export async function getCardsPagination({
     };
   }
 
-  console.log("Query: ", query);
   const result = await Card.find(query)
     .sort({ _id: -1 })
     .skip(pageNumber * cardsPerPage)
     .limit(cardsPerPage);
 
-  console.log("Exiting getCardsPagination...");
   return result;
 }
 

@@ -16,12 +16,11 @@ function CategoriesPage({ buildingType }) {
   // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { handleSearch } = useSearch(
-    cards,
+  const { handleSearch } = useSearch({
     setNumPages,
     setCurrentPage,
     setCards,
-    buildingType
+  }
   );
 
   return (
