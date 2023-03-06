@@ -8,6 +8,8 @@ import { getCardsCount } from "../../../../server/mongodb/actions/Card";
 const handler = async (req, res) => {
   try {
     const pageNumber = req.query.page - 1;
+    const buildingType = req.query.buildingType;
+    const primaryCategory = req.query.primaryCategory;
     const searchFilterString = req.query.searchFilterString
       ? req.query.searchFilterString
       : null;
@@ -19,6 +21,8 @@ const handler = async (req, res) => {
       pageNumber,
       searchFilterString,
       searchFilterTags,
+      buildingType,
+      primaryCategory,
     });
     const cardsCount = await getCardsCount({
       searchFilterString,
