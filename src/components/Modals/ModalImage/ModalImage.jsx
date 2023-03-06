@@ -24,7 +24,7 @@ const ModalImage = ({ image, openImagePreviewCallback, ...props }) => {
         right="1rem"
         height={7}
         backgroundColor="#FFFFFF"
-        color="#6D6E70"
+        color="Grey"
         boxShadow="xl"
         onClick={openImagePreviewCallback}
       >

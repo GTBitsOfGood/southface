@@ -1,24 +1,10 @@
 import mongoose from "mongoose";
+import {
+  buildingTypeNames,
+  primaryCategoryRoutes,
+} from "../../../src/lib/utils/constants";
 
 const { Schema } = mongoose;
-
-const primaryCategoryNames = {
-  "site-planning": "Site Reportning",
-  "resource-efficiency": "Resource Efficiency",
-  "durability-moisture-and-management": "Durability and Moisture Management",
-  "high-performance-building-envelope": "High Performance Building Envelope",
-  "energy-efficient-hvac-systems": "Energy Efficient HVAC Systems",
-  "indoor-air-quality": "Indoor Air Quality",
-  "plumbing-and-irrigation": "Plumbing and Irrigation",
-  "efficient-lighting-and-applications": "Efficient Lighting and Applications",
-  "education-and-operations": "Education and Operations",
-};
-
-const buildingTypeNames = {
-  commercial: "Commercial",
-  multifamily: "Multifamily",
-  "single-family": "Single Family",
-};
 
 const CardSchema = new Schema({
   images: {
@@ -77,7 +63,7 @@ const CardSchema = new Schema({
     {
       type: String,
       required: true,
-      enum: Object.keys(primaryCategoryNames),
+      enum: Object.keys(primaryCategoryRoutes),
     },
   ],
 });

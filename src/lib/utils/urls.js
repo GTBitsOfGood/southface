@@ -4,6 +4,7 @@ export default {
     login: "/login",
     library: "/library",
     reportbuilder: "/report-builder",
+    addstandard: "/add-standard",
   },
   api: {
     example: "/api/example",

@@ -1,4 +1,4 @@
-import { Flex, Box, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import Router from "next/router";
 import { logout } from "src/actions/User";
 import Image from "src/components/Image";
@@ -36,6 +36,9 @@ const NavBar = () => {
       />
       <NavLink name="Digital Library" href={urls.pages.library} />
       <NavLink name="Report Builder" href={urls.pages.reportbuilder} />
+      {user && user.isAdmin && (
+        <NavLink name="Add a New Standard" href={urls.pages.addstandard} />
+      )}
       <NavLink name="Shopping Cart" onClick={onOpen} />
       <Box ml="auto" />{" "}
       {/*This is an empty div to right-align the last nav link */}
