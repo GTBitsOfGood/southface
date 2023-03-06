@@ -1,11 +1,26 @@
 import { Breadcrumb, BreadcrumbItem, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import CategoryCards from "src/components/CategoryCards";
+import SearchBar, { useSearch } from "src/components/SearchBar";
+import StandardCardTable from "src/components/StandardCardTable";
 import { buildingTypeNames } from "src/lib/utils/constants";
 
 function CategoriesPage({ buildingType }) {
   const router = useRouter();
+  const [cards, setCards] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [numPages, setNumPages] = useState(1);
+  // eslint-disable-next-line no-unused-vars
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { handleSearch } = useSearch({
+    setNumPages,
+    setCurrentPage,
+    setCards,
+  });
 
   return (
     <Flex
@@ -19,31 +34,63 @@ function CategoriesPage({ buildingType }) {
           <Link href="/library">Digital Library</Link>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <Text>{buildingTypeNames[buildingType]}</Text>
+          <Text>{buildingType}</Text>
         </BreadcrumbItem>
       </Breadcrumb>
-      <Flex flexWrap="wrap" gap="4rem">
-        <CategoryCards routerQuery={router.query} />
-      </Flex>
+      <SearchBar handleSearch={handleSearch} />
+      {cards.length > 0 ? (
+        <StandardCardTable cards={cards} setCards={setCards} />
+      ) : (
+        <Flex flexWrap="wrap" gap="4rem">
+          <CategoryCards routerQuery={router.query} />
+        </Flex>
+      )}
     </Flex>
   );
 }
 
 export async function getStaticProps({ params }) {
+  const pageNumber = 0;
+  const { buildingType } = params;
+  console.log("Calling getCardsPagination");
+  const cards = await getCardsPagination({
+    pageNumber,
+    buildingType: params.buildingType,
+  });
+
+  const cardsCount = await getCardsCount({
+    buildingType,
+  });
+  let numPages = Math.floor(cardsCount / 4);
+
+  if (cardsCount % 4 > 0) {
+    numPages += 1;
+  }
+
   return {
     props: {
-      buildingType: params.buildingType,
+      cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
+      numPages,
+      pageNumber: pageNumber + 1,
+      buildingType: buildingTypeNames[params.buildingType],
+      params,
     },
   };
 }
 
 export async function getStaticPaths() {
-  return {
-    paths: Object.keys(buildingTypeNames).map((buildingType) => {
+  const paths = Object.keys(buildingTypeNames)
+    .map((buildingType) => {
       return {
-        params: { buildingType },
+        params: {
+          buildingType: buildingType,
+        },
       };
-    }),
+    })
+    .flat();
+
+  return {
+    paths,
     fallback: false,
   };
 }

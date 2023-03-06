@@ -36,17 +36,14 @@ export async function getCards() {
 export async function getCardsPagination({
   pageNumber,
   buildingType,
-  primaryCategory,
+  primaryCategory = null,
   searchFilterString = null,
   searchFilterTags = null,
   cardsPerPage = 4,
 }) {
   await mongoDB();
 
-  // match is being used since without it causes wierd refresh issues
-  let query = {
-    $match: [{ buildingType }, { primaryCategory }],
-  };
+  let query = { buildingType, ...(primaryCategory && { primaryCategory }) };
 
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
@@ -69,10 +66,12 @@ export async function getCardsPagination({
     };
   }
 
-  return Card.find(query)
+  const result = await Card.find(query)
     .sort({ _id: -1 })
     .skip(pageNumber * cardsPerPage)
     .limit(cardsPerPage);
+
+  return result;
 }
 
 export async function getCardsCount({
@@ -86,7 +85,6 @@ export async function getCardsCount({
   let query = {
     $match: [{ buildingType }, { primaryCategory }],
   };
-
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
 
