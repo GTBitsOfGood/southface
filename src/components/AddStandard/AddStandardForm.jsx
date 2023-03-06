@@ -7,6 +7,10 @@ import { Box, Heading, HStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Form } from "react-final-form";
 import { createCard } from "../../actions/Card";
+import {
+  buildingTypeNames,
+  primaryCategoryRoutes,
+} from "../../lib/utils/constants";
 import EditAddStandard from "./EditAddStandard";
 import OpenStandardPopup from "./OpenStandardPopup";
 import ViewAddStandard from "./ViewAddStandard";
@@ -49,13 +53,25 @@ const AddStandardForm = () => {
       };
     });
 
+    const buildingTypeKeys = values.buildingType.map((val) =>
+      Object.keys(buildingTypeNames).find(
+        (key) => buildingTypeNames[key] === val
+      )
+    );
+
+    const primaryCategoryKeys = values.primaryCategory.map((val) =>
+      Object.keys(primaryCategoryRoutes).find(
+        (key) => primaryCategoryRoutes[key] === val
+      )
+    );
+
     const card = {
       images: images,
       title: values.title,
       criteria: values.standardCriteria,
       tags: values.tagArray || [],
-      buildingType: values.buildingType,
-      primaryCategory: values.primaryCategory,
+      buildingType: buildingTypeKeys,
+      primaryCategory: primaryCategoryKeys,
       notes: [],
     };
 

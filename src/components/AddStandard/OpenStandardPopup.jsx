@@ -2,10 +2,6 @@ import { BellIcon, CloseIcon } from "@chakra-ui/icons";
 import { Box, Button, IconButton, Spinner, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import {
-  buildingTypeNames,
-  primaryCategoryRoutes,
-} from "../../lib/utils/constants";
 
 const OpenStandardPopup = ({ prevSubmitted }) => {
   const [display, setDisplay] = useState(true);
@@ -17,14 +13,11 @@ const OpenStandardPopup = ({ prevSubmitted }) => {
     setIsLoading(true);
 
     // buildingType and primaryCategory are arrays, so we take the first entry
-    const buildingTypeKey = Object.keys(buildingTypeNames).find(
-      (key) => buildingTypeNames[key] === prevSubmitted.buildingType[0]
-    );
-    const primaryCategoryKey = Object.keys(primaryCategoryRoutes).find(
-      (key) => primaryCategoryRoutes[key] === prevSubmitted.primaryCategory[0]
-    );
-
-    const newRoute = "/library/" + buildingTypeKey + "/" + primaryCategoryKey;
+    const newRoute =
+      "/library/" +
+      prevSubmitted.buildingType[0] +
+      "/" +
+      prevSubmitted.primaryCategory[0];
 
     router.push(newRoute);
   };

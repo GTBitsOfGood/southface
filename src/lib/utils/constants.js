@@ -17,9 +17,9 @@ export const buildingTypeNames = {
 };
 
 export const primaryCategoryRoutes = {
-  "site-planning": "Site Reporting",
+  "site-planning": "Site Planning",
   "resource-efficiency": "Resource Efficiency",
-  "durability-moisture-and-management": "Durability and Moisture Management",
+  "durability-and-moisture-management": "Durability and Moisture Management",
   "high-performance-building-envelope": "High Performance Building Envelope",
   "energy-efficient-hvac-systems": "Energy Efficient HVAC Systems",
   "indoor-air-quality": "Indoor Air Quality",
