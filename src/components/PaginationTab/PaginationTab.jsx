@@ -16,21 +16,23 @@ const PaginationTab = ({
     setCurrentPage,
     setCards,
   });
-  
-  return numPages > 0 && (
-    <Flex rounded={6} {...props} p={2} bgColor="#004b4b">
-      {numPagesArray.map((pageNumber, index) => (
-        <Button
-          key={index}
-          variant="link"
-          color="white"
-          isDisabled={currentPage === pageNumber ? true : false}
-          onClick={() => onPageChange({pageNumber})}
-        >
-          {pageNumber}
-        </Button>
-      ))}
-    </Flex>
+
+  return (
+    numPages > 0 && (
+      <Flex rounded={6} {...props} p={2} bgColor="#004b4b">
+        {numPagesArray.map((pageNumber, index) => (
+          <Button
+            key={index}
+            variant="link"
+            color="white"
+            isDisabled={currentPage === pageNumber ? true : false}
+            onClick={() => onPageChange({ pageNumber })}
+          >
+            {pageNumber}
+          </Button>
+        ))}
+      </Flex>
+    )
   );
 };
 

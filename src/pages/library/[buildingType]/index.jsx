@@ -20,8 +20,7 @@ function CategoriesPage({ buildingType }) {
     setNumPages,
     setCurrentPage,
     setCards,
-  }
-  );
+  });
 
   return (
     <Flex

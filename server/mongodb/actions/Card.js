@@ -41,14 +41,10 @@ export async function getCardsPagination({
   searchFilterTags = null,
   cardsPerPage = 4,
 }) {
-
   await mongoDB();
 
-  let query = {buildingType,
-    ...primaryCategory && {primaryCategory}
-  };
- 
-  
+  let query = { buildingType, ...(primaryCategory && { primaryCategory }) };
+
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
 
