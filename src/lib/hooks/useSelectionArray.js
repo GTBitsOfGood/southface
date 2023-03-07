@@ -8,7 +8,6 @@ export default function useSelectionArray(cards) {
     // useEffect on report:
     // cards.map(card => card.id in report.cardIds ? report.cardWrapper : undefined)
     if (report && !isValidating) {
-
       const reportIds = report.cards.map((c) => c.card._id);
       const newArr = cards.map((card) => {
         const i = reportIds.indexOf(card._id);
