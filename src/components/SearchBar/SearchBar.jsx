@@ -6,6 +6,10 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
+  Popover,
+  PopoverArrow,
+  PopoverContent,
+  PopoverTrigger,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
@@ -14,6 +18,7 @@ import {
   BiFilter as FilterIcon,
 } from "react-icons/bi";
 import ChooseTemplateModal from "../../components/Modals/ChooseTemplateModal";
+import Tag from "../Tag";
 
 const SearchBar = (props) => {
   const {
@@ -129,6 +134,15 @@ const SearchBar = (props) => {
           <Button variant="Red" {...buttonStyles} onClick={ClearFilterTags}>
             Clear filters
           </Button>
+          <Popover placement="bottom-end">
+            <PopoverTrigger>
+              <Button variant="Grey-outlined">Filter</Button>
+            </PopoverTrigger>
+            <PopoverContent width={{ base: "75em", "2xl": "80em" }}>
+              <PopoverArrow />
+              <Tag height={{ base: "45em", "2xl": "55em" }} />
+            </PopoverContent>
+          </Popover>
           {allowTemplates && (
             <Button {...buttonStyles} onClick={onOpen} bgColor="green.200">
               View Templates <Icon as={CategoryIcon} fontSize="xl" ml="1.5" />
