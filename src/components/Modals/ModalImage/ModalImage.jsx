@@ -16,6 +16,7 @@ const ModalImage = ({
 }) => {
   const imagePath = new URL(image).pathname.split("/");
   const filename = imagePath[imagePath.length - 1];
+  const { showEnlarge = true } = { ...props };
 
   return (
     <>
@@ -29,20 +30,6 @@ const ModalImage = ({
             alt={"card image"}
           />
         </Box>
-        <Button
-          leftIcon={<MdExpand />}
-          position="absolute"
-          bottom="1rem"
-          borderRadius="1rem"
-          right="1rem"
-          height={7}
-          backgroundColor="#FFFFFF"
-          color="#6D6E70"
-          boxShadow="xl"
-          onClick={openImagePreviewCallback}
-        >
-          Enlarge Image
-        </Button>
         {editing ? (
           <Button
             position="absolute"
@@ -63,20 +50,22 @@ const ModalImage = ({
           <></>
         )}
       </Box>
-      <Button
-        leftIcon={<MdExpand />}
-        position="absolute"
-        bottom="1rem"
-        borderRadius="1rem"
-        right="1rem"
-        height={7}
-        backgroundColor="#FFFFFF"
-        color="Grey"
-        boxShadow="xl"
-        onClick={openImagePreviewCallback}
-      >
-        Enlarge Image
-      </Button>
+      {showEnlarge && (
+        <Button
+          leftIcon={<MdExpand />}
+          position="absolute"
+          bottom="1rem"
+          borderRadius="1rem"
+          right="1rem"
+          height={7}
+          backgroundColor="#FFFFFF"
+          color="Grey"
+          boxShadow="xl"
+          onClick={openImagePreviewCallback}
+        >
+          Enlarge Image
+        </Button>
+      )}
       <ConfirmActionsModal
         isOpen={isImageDeleteOpen}
         onClose={onImageDeleteClose}

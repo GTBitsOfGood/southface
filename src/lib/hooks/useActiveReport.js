@@ -65,8 +65,8 @@ export default function useActiveReport() {
         }
         newReport.cards.push({
           card: card,
-          imgSelections: [],
-          noteSelections: [],
+          imgSelections: Array(card.images.length).fill(true),
+          noteSelections: Array(card.notes.length).fill(true),
         });
         return newReport;
       })(),

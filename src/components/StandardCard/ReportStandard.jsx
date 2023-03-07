@@ -48,6 +48,7 @@ const ReportStandard = ({ card, selState, ...props }) => {
         selState={selState}
         editing={editing}
       />
+      <Box mb={5}>{card.criteria}</Box>
       <ReportStandardNoteCarousel
         cols={3}
         notes={card.notes}

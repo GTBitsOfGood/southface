@@ -76,11 +76,6 @@ const CardModal = ({
   const [editing, setEditing] = useState(false);
   const { user } = useUser();
 
-  const openImagePreviewCallback = () => {
-    modalCloseHandler();
-    onOpenImagePreviewModal();
-  };
-
   // Start of report selection code
   const { changeInReport, addToReport } = useActiveReport();
   const { selState } = { ...rest };
@@ -106,6 +101,15 @@ const CardModal = ({
       setEditingReport(false);
     }
   }, [editingReport]);
+
+  const openImagePreviewCallback = () => {
+    setEditingReport(false);
+    onOpenImagePreviewModal();
+    // if (isOpenCardModal) {
+    //   onCloseCardModal();
+    // }
+  };
+
   const imgToggleHandler = (index) => () => {
     if (selState && editingReport) {
       imgArr[index] = !imgArr[index];
@@ -115,14 +119,13 @@ const CardModal = ({
     }
   };
 
-  // End of report selection code
+  useEffect(() => {
+    if (editing) {
+      setEditingReport(false);
+    }
+  }, [editing]);
 
-  const modalCloseHandler = () => {
-    setEditingReport(() => {
-      onCloseCardModal();
-      return false;
-    });
-  };
+  // End of report selection code
 
   useEffect(() => {
     registerField("tags", () => {}, {
@@ -309,6 +312,7 @@ const CardModal = ({
                         }
                         image={image}
                         openImagePreviewCallback={openImagePreviewCallback}
+                        showEnlarge={!editingReport}
                       />
                     </Box>
                   </Carousel.Item>
@@ -342,7 +346,7 @@ const CardModal = ({
               alignItems="end"
               width="full"
             >
-              <Flex flexDirection="column" gap="1rem" width="full">
+              <Flex flex={1} flexDirection="column" gap="1rem" width="full">
                 <Wrap overflowY="hidden" overflowX="hidden">
                   {form.values?.tags
                     ? form.values.tags.map((tag, index) => (
@@ -449,17 +453,11 @@ const CardModal = ({
                   <></>
                 )}
               </Flex>
-              <Flex gap={2} justifyContent="right" width="max">
+              <Flex flex={1} gap={2} justifyContent="right" width="max">
                 {editing ? (
                   <Button
-                    bgColor="#B90000"
-                    rounded="3xl"
-                    size="sm"
-                    color="#FFFFFF"
-                    border="solid 2px #FFFFFF"
-                    width="auto"
-                    _hover={{ border: "solid 2px #B90000" }}
-                    _active={{ bgColor: "#B90000" }}
+                    variant="Red"
+                    size="lg"
                     onClick={onDeleteStandardOpen}
                   >
                     Delete Standard
@@ -467,12 +465,8 @@ const CardModal = ({
                 ) : (
                   <>
                     <Button
-                      bgColor="white"
-                      rounded="3xl"
-                      size="sm"
-                      color="#6d6e70"
-                      border="solid 1px #6d6e70"
-                      width="auto"
+                      variant="Grey-outlined-rounded"
+                      size="lg"
                       onClick={openImagePreviewCallback}
                     >
                       View Notes
