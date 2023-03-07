@@ -15,9 +15,9 @@ import useSWRMutation from "swr/mutation";
 import { updateRecentStandardsRequest } from "../../actions/User";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
-import CardModal from "../Modals/CardModal";
+import CardModalWithForm from "../Modals/CardModal";
 
-const StandardCard = ({ card, setCards, ...props }) => {
+const StandardCard = ({ card, cards, setCards, ...props }) => {
   const { user } = useUser();
   const {
     isOpen: isOpenCardModal,
@@ -144,10 +144,11 @@ const StandardCard = ({ card, setCards, ...props }) => {
           })}
           <ReportButton />
         </HStack>
-        <CardModal
+        <CardModalWithForm
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}
           card={card}
+          cards={cards}
           setCards={setCards}
           selected={selected}
           selState={selState}

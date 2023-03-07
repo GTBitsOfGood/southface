@@ -12,16 +12,15 @@ const AdaptedTextarea = ({ input, meta, ...rest }) => (
     color="Grey"
   />
 );
-
-const TextareaControl = ({ name, label }) => (
-  <Control name={name} my={4}>
+const TextareaControl = ({ name, label, ...props }) => (
+  <Control name={name}>
     <HStack>
       <FormLabel htmlFor={name} m={0} color="Grey">
         {label}
       </FormLabel>
       <Error name={name} />
     </HStack>
-    <Field name={name} component={AdaptedTextarea} id={name} />
+    <Field name={name} component={AdaptedTextarea} id={name} {...props} />
   </Control>
 );
 

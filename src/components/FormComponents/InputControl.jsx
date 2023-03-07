@@ -3,7 +3,7 @@ import { useField } from "react-final-form";
 import Control from "./Control";
 import Error from "./Error";
 
-const InputControl = ({ name, label, type }) => {
+const InputControl = ({ name, label, type, ...props }) => {
   const { input, meta } = useField(name);
   return (
     <Control name={name}>
@@ -14,6 +14,7 @@ const InputControl = ({ name, label, type }) => {
         <Error name={name} />
       </HStack>
       <Input
+        {...props}
         {...input}
         color="Grey"
         isInvalid={meta.error && meta.touched}
