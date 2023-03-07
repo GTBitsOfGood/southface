@@ -19,12 +19,12 @@ const ImagePreviewModal = ({ isOpen, onClose, card, setCards, ...rest }) => {
       setEditing(false);
     }
   }, [selState]);
-const modalCloseHandler = () => {
-  setEditing(() => {
-    onClose();
-    return false;
-  })
-}
+  const modalCloseHandler = () => {
+    setEditing(() => {
+      onClose();
+      return false;
+    });
+  };
 
   return (
     <Modal size="4xl" isOpen={isOpen} onClose={modalCloseHandler}>

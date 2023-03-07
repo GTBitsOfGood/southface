@@ -63,19 +63,19 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   // get report state
   // if state is undefined, selected = false
   // conditionally render note, images selection UI
-  // editEnable, 
+  // editEnable,
   // useEffect on editEnable: make API call after deselecting
-  const { selState } = {...props};
-  const selected = (!selState) ? false : true;
-  // const imgArr = selected ? 
+  const { selState } = { ...props };
+  const selected = !selState ? false : true;
+  // const imgArr = selected ?
   const { addToReport } = useActiveReport();
   const reportAddHandler = () => {
     if (!selected) {
       addToReport(card);
     }
-  }
+  };
 
-  const ReportButton = ({...props}) => (
+  const ReportButton = ({ ...props }) => (
     <Button
       position="absolute"
       right="1"

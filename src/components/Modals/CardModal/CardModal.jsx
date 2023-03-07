@@ -1,4 +1,4 @@
-import { ArrowUpIcon, CloseIcon , AddIcon} from "@chakra-ui/icons";
+import { ArrowUpIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -6,7 +6,6 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
-  GridItem,
   Heading,
   Modal,
   ModalBody,
@@ -74,12 +73,6 @@ const CardModal = ({
     onClose: onDeleteStandardClose,
   } = useDisclosure();
 
-  const {
-    isOpen: isImageDeleteOpen,
-    onOpen: onImageDeleteOpen,
-    onClose: onImageDeleteClose,
-  } = useDisclosure();
-
   const [editing, setEditing] = useState(false);
   const { user } = useUser();
 
@@ -87,7 +80,7 @@ const CardModal = ({
     modalCloseHandler();
     onOpenImagePreviewModal();
   };
-  
+
   // Start of report selection code
   const { changeInReport, addToReport } = useActiveReport();
   const { selState } = { ...rest };
@@ -162,13 +155,19 @@ const CardModal = ({
     onCloseCardModal();
   };
 
-  const handleDeleteImage = (image) => {
-    const index = card.images.indexOf(image);
-    const newCardImages = JSON.parse(JSON.stringify(card.images));
-    newCardImages.splice(index, 1);
-    setValue("images", newCardImages);
-    onImageDeleteClose();
-  };
+  // const {
+  //   isOpen: isImageDeleteOpen,
+  //   onOpen: onImageDeleteOpen,
+  //   onClose: onImageDeleteClose,
+  // } = useDisclosure();
+
+  // const handleDeleteImage = (image) => {
+  //   const index = card.images.indexOf(image);
+  //   const newCardImages = JSON.parse(JSON.stringify(card.images));
+  //   newCardImages.splice(index, 1);
+  //   setValue("images", newCardImages);
+  //   onImageDeleteClose();
+  // };
 
   const form = useFormState();
 
@@ -279,21 +278,23 @@ const CardModal = ({
                 {form.values?.images?.map(({ imageUrl: image }, index) => (
                   <Carousel.Item key={index}>
                     <Box position="relative">
-                      {editingReport && <Circle
-                        position="absolute"
-                        bottom="10px"
-                        bgColor="blue.500"
-                        color="white"
-                        right="10px"
-                        zIndex={5}
-                        padding={2}
-                      >
-                        {selState?.imgSelections[index] ? (
-                          <CloseIcon />
-                        ) : (
-                          <AddIcon />
-                        )}
-                      </Circle>}
+                      {editingReport && (
+                        <Circle
+                          position="absolute"
+                          bottom="10px"
+                          bgColor="blue.500"
+                          color="white"
+                          right="10px"
+                          zIndex={5}
+                          padding={2}
+                        >
+                          {selState?.imgSelections[index] ? (
+                            <CloseIcon />
+                          ) : (
+                            <AddIcon />
+                          )}
+                        </Circle>
+                      )}
                       <ModalImage
                         onClick={imgToggleHandler(index)}
                         borderWidth={
@@ -476,13 +477,17 @@ const CardModal = ({
                     >
                       View Notes
                     </Button>
-                  <Button onClick={reportAddHandler} variant="Blue-rounded" size="lg">
-                    {!selected
-                      ? "Add to Report"
-                      : editingReport
-                      ? "Save changes"
-                      : "Edit"}
-                  </Button>
+                    <Button
+                      onClick={reportAddHandler}
+                      variant="Blue-rounded"
+                      size="lg"
+                    >
+                      {!selected
+                        ? "Add to Report"
+                        : editingReport
+                        ? "Save changes"
+                        : "Edit"}
+                    </Button>
                   </>
                 )}
               </Flex>

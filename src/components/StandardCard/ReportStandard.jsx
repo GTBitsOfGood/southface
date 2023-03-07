@@ -15,6 +15,7 @@ const ReportStandard = ({ card, selState, ...props }) => {
   const { useGlobalEditing: [globalEditing, setGlobalEditing] = [] } = {
     ...props,
   };
+
   const [editing, setEditing] = useState(false);
   const removeHandler = () => {
     removeFromReport(card);
@@ -35,7 +36,11 @@ const ReportStandard = ({ card, selState, ...props }) => {
               {!editing ? "Edit" : "Save changes"}
             </Button>
           )}
-          {!globalEditing && <Button variant="Red-rounded" onClick={removeHandler}>Remove</Button>}
+          {!globalEditing && (
+            <Button variant="Red-rounded" onClick={removeHandler}>
+              Remove
+            </Button>
+          )}
         </Box>
       </HStack>
       <StandardCardImageCarousel

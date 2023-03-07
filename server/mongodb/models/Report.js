@@ -4,8 +4,12 @@ const { Schema } = mongoose;
 
 const ReportSchema = new Schema({
   cards: {
-    type: [{ 
-      type: Schema.Types.ObjectId, ref: "Card" }],
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Card",
+      },
+    ],
     required: true,
   },
   name: {

@@ -64,14 +64,9 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
   const ConditionalImage = ({ image, index }) => {
     const selected = selState?.imgSelections[index];
     const img = (
-      <Image
-        fit="contain"
-        width="100%"
-        src={image}
-        alt="construction image"
-      />
+      <Image fit="contain" width="100%" src={image} alt="construction image" />
     );
-    const iconStyles= {
+    const iconStyles = {
       position: "absolute",
       right: "2px",
       top: "2px",
@@ -79,7 +74,7 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       backgroundColor: "gray",
       fontSize: "small",
       padding: "5px",
-    }
+    };
     return editing ? (
       <Box
         onClick={imgToggleHandler(index)}

@@ -1,7 +1,6 @@
 // Alternate version of StandardCardImageCarousel that has a stateful image array
-// This file is not necessary unless we want to implement a way to discard 
+// This file is not necessary unless we want to implement a way to discard
 // changes to image/note selections
-
 
 // import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 // import { Box, Image } from "@chakra-ui/react";
