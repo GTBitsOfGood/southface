@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import RecentStandardsView from "src/components/RecentStandardsView";
 import { ReportStandard } from "src/components/StandardCard";
 import useActiveReport from "src/lib/hooks/useActiveReport";
+import ArchivedReportView from "src/components/ArchivedReportView"
 
 const ReportBuilder = () => {
   // For PDF exporting
@@ -58,7 +59,9 @@ const ReportBuilder = () => {
                     ref={nameRef}
                   />
                 )}
-                <Button pl="15px" pr="15px" variant="Grey-rounded">Rename</Button>
+                <Button pl="15px" pr="15px" variant="Grey-rounded">
+                  Rename
+                </Button>
               </HStack>
               <Button minW="20%" variant="Blue-rounded">
                 Complete Report
@@ -67,22 +70,18 @@ const ReportBuilder = () => {
           </CardBody>
           {sels.map((cardWrapper, index) => (
             <CardBody key={index}>
-              <ReportStandard card={cardWrapper.card} selState={cardWrapper} useGlobalEditing={useGlobalEditing} />
+              <ReportStandard
+                card={cardWrapper.card}
+                selState={cardWrapper}
+                useGlobalEditing={useGlobalEditing}
+              />
             </CardBody>
           ))}
         </VStack>
         <VStack maxW="35%" flex={1}>
-          <VStack
-            w="100%"
-            flex={2}
-            as={Card}
-            alignItems="flex-start"
-            p={6}
-            spacing={5}
-            divider={<StackDivider />}
-          >
-            <CardBody>Archived reports go here</CardBody>
-          </VStack>
+          <Card w="100%" p={4} gap={3}>
+            <ArchivedReportView />
+          </Card>
           <Card p={5} w="100%">
             <RecentStandardsView maxCards={3} />
           </Card>

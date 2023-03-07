@@ -1,3 +1,4 @@
+import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
 import useSWRMutation from "swr/mutation";
@@ -59,7 +60,8 @@ function LoadedStandards(props) {
   const {selectionArray} = useSelectionArray(cards);
   return (
     <>
-      {props.standardsData ? (
+      <HStack height="21rem">
+        {props.standardsData ? (
         cards.map((card, index) => {
           {
             return (
@@ -76,6 +78,7 @@ function LoadedStandards(props) {
       ) : (
         <></>
       )}
+      </HStack>
     </>
   );
 }
