@@ -15,6 +15,7 @@ const ReportStandard = ({ card, selState, ...props }) => {
   const { useGlobalEditing: [globalEditing, setGlobalEditing] = [] } = {
     ...props,
   };
+
   const [editing, setEditing] = useState(false);
   const removeHandler = () => {
     removeFromReport(card);

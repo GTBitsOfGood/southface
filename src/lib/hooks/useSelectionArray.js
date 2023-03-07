@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useActiveReport from "./useActiveReport";
 
 export default function useSelectionArray(cards) {
+  
   const { report, isValidating } = useActiveReport();
   const [selArr, setSelArr] = useState([]); // array of ar objects or undefined objects, updated when report changes
   useEffect(() => {

@@ -20,10 +20,13 @@ const ReportBuilder = () => {
   const [editingTitle, setEditingTitle] = useState(false);
   useEffect(() => setEditingTitle(true), []);
 
+
+
   const nameRef = useRef();
 
   const { report, isValidating } = useActiveReport();
   const [sels, setSels] = useState([]);
+
   useEffect(() => {
     if (report && !isValidating) { // this useEffect wrapper prevents jittering
       setSels(report.cards);
