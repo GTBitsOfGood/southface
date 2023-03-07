@@ -155,7 +155,6 @@ const CardModal = ({
                 {card.criteria}
               </Text>
 
-              <Text>Bruh:</Text>
 
               <SimpleGrid mt={3} mb={15} columns={5}>
                 <HStack as={GridItem} colSpan={2} gap={1} overflowX="auto">
