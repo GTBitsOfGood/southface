@@ -1,84 +1,92 @@
-import { Box, Button, Flex, Heading, HStack, Input } from "@chakra-ui/react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import Link from "next/link";
+import {
+  Button,
+  Card,
+  CardBody,
+  Flex,
+  Heading,
+  HStack,
+  Input,
+  StackDivider,
+  VStack,
+} from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
-import useUser from "src/lib/hooks/useUser";
-import RecentStandardsView from "../components/RecentStandardsView";
+import RecentStandardsView from "src/components/RecentStandardsView";
+import { ReportStandard } from "src/components/StandardCard";
+import useActiveReport from "src/lib/hooks/useActiveReport";
+import ArchivedReportView from "src/components/ArchivedReportView"
 
 const ReportBuilder = () => {
   // For PDF exporting
-  const [hasLoaded, setHasLoaded] = useState(false);
-  useEffect(() => setHasLoaded(true), []);
-  const { user } = useUser();
+  const [editingTitle, setEditingTitle] = useState(false);
+  useEffect(() => setEditingTitle(true), []);
 
   const nameRef = useRef();
 
+  const { report, isValidating } = useActiveReport();
+  const [sels, setSels] = useState([]);
+  useEffect(() => {
+    if (report && !isValidating) { // this useEffect wrapper prevents jittering
+      setSels(report.cards);
+    }
+  }, [isValidating]);
+  const useGlobalEditing = useState(false);
   return (
     <>
-      <Flex flexFlow="row nowrap" mb="10">
-        <Heading flex="1" gridArea="stack" textAlign="center">
-          Report Builder
-        </Heading>
-        {user?.isLoggedIn && (
-          <Link href="/archived-reports">
-            <Button href="/" variant="Blue">
-              View Archived Reports
-            </Button>
-          </Link>
-        )}
-      </Flex>
-      <Flex
-        p={5}
-        borderRadius={15}
-        flexDirection="column"
-        flexWrap="none"
-        bgColor="#DADADA"
-        alignItems="flex-start"
-        minH="lg"
-        overflowX="scroll"
-        mb="10"
-      >
-        <Flex
-          flex="1"
-          flexFlow="row nowrap"
-          justifyContent="space-between"
-          width="100%"
+      <HStack pt={5} alignItems="flex-start" spacing={3}>
+        <VStack
+          flex={2}
+          as={Card}
           alignItems="flex-start"
+          p={6}
+          spacing={5}
+          divider={<StackDivider bg="gray.300" />}
         >
-          <Box minWidth="40%" as="span">
-            <Input
-              type="text"
-              placeholder="Name your report"
-              fontSize="3xl"
-              variant="flushed"
-              mt="3"
-              pb="3"
-              borderBottomWidth="3px"
-              borderColor="darkgray"
-              ref={nameRef}
-            />
-          </Box>
-          <HStack>
-            {hasLoaded && (
-              <PDFDownloadLink fileName="report.pdf">
-                {({ loading }) => (
-                  <Button>{loading ? "Loading document..." : "PDF"}</Button>
+          <CardBody m={-3} w="100%">
+            <Flex mb={3} width="100%" flexFlow="row nowrap">
+              <HStack w="100%" alignItems="flex-start">
+                {editingTitle ? ( // temp placeholder condition
+                  <Heading maxW="80%" mr={3}>
+                    Title of Current Project Plan
+                  </Heading>
+                ) : (
+                  <Input
+                    size="lg"
+                    maxW="50%"
+                    fontSize="3xl"
+                    variant="flushed"
+                    mr={3}
+                    placeholder="Title of Current Project Plan"
+                    ref={nameRef}
+                  />
                 )}
-              </PDFDownloadLink>
-            )}
-            {/* <Button onClick={onOpen} bg="gold" color="white">
-              End Report
-            </Button> */}
-          </HStack>
-        </Flex>
-      </Flex>
-      {/* <ReportConfirmationModal
-        isOpen={isOpen}
-        onClose={onClose}
-        handleSave={SaveReportHandler}
-        handleDiscard={DiscardReportHandler}
-      /> */}
-      <RecentStandardsView maxCards={3}></RecentStandardsView>
+                <Button pl="15px" pr="15px" variant="Grey-rounded">
+                  Rename
+                </Button>
+              </HStack>
+              <Button minW="20%" variant="Blue-rounded">
+                Complete Report
+              </Button>
+            </Flex>
+          </CardBody>
+          {sels.map((cardWrapper, index) => (
+            <CardBody key={index}>
+              <ReportStandard
+                card={cardWrapper.card}
+                selState={cardWrapper}
+                useGlobalEditing={useGlobalEditing}
+              />
+            </CardBody>
+          ))}
+        </VStack>
+        <VStack maxW="35%" flex={1}>
+          <Card w="100%" p={4} gap={3}>
+            <ArchivedReportView />
+          </Card>
+          <Card p={5} w="100%">
+            <RecentStandardsView maxCards={3} />
+          </Card>
+        </VStack>
+      </HStack>
     </>
   );
 };

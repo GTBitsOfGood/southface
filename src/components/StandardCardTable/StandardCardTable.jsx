@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
+import useSelectionArray from "../../lib/hooks/useSelectionArray";
 
 import ReportDocumentPDF from "../ReportDocumentPDF/ReportDocumentPDF";
 import StandardCard from "../StandardCard/StandardCard";
@@ -14,6 +15,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
     setClientSide(true);
   }, []);
 
+  const { selectionArray: selArr } = useSelectionArray(cards)
   return (
     <Box {...props}>
       {isClientSide && (
@@ -43,7 +45,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
       >
         {cards.map((card, index) => (
           <GridItem w="100%" key={index}>
-            <StandardCard card={card} setCards={setCards} />
+            <StandardCard card={card} setCards={setCards} selState={selArr[index]}/>
           </GridItem>
         ))}
       </Grid>

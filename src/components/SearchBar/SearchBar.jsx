@@ -6,10 +6,14 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
-  Select,
+  Popover,
+  PopoverArrow,
+  PopoverContent,
+  PopoverTrigger,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import Tag from "../Tag/Tag";
 
 const SearchBar = (props) => {
   const { handleSearch, ...rest } = props;
@@ -68,13 +72,16 @@ const SearchBar = (props) => {
           />
         </InputGroup>
       </Box>
-
       <Box mr="3">
-        <Select placeholder="Filter" size="lg" borderRadius="lg">
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
-        </Select>
+      <Popover placement="bottom-end">
+        <PopoverTrigger>
+          <Button variant="Grey-outlined" size="lg">Filter</Button>
+        </PopoverTrigger>
+        <PopoverContent width={{ base: "75em", "2xl": "80em" }}>
+          <PopoverArrow />
+          <Tag height={{ base: "45em", "2xl": "55em" }} />
+        </PopoverContent>
+      </Popover>
       </Box>
       <SearchButton />
     </Flex>

@@ -1,7 +1,9 @@
+import { HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
 import useSWRMutation from "swr/mutation";
 import { getCardsByIdsRequest } from "../../actions/Card";
+import useSelectionArray from "../../lib/hooks/useSelectionArray";
 import StandardCard from "../StandardCard";
 
 function LoadedStandards(props) {
@@ -55,10 +57,11 @@ function LoadedStandards(props) {
       });
     }
   }, [props.maxCards, props.standardsData, trigger, data]);
-
+  const {selectionArray} = useSelectionArray(cards);
   return (
     <>
-      {props.standardsData ? (
+      <HStack height="21rem">
+        {props.standardsData ? (
         cards.map((card, index) => {
           {
             return (
@@ -66,7 +69,8 @@ function LoadedStandards(props) {
                 key={index}
                 card={card}
                 height="3rem"
-                width="4rem"
+                minW="300px"
+                selState={selectionArray[index]}
               ></StandardCard>
             );
           }
@@ -74,6 +78,7 @@ function LoadedStandards(props) {
       ) : (
         <></>
       )}
+      </HStack>
     </>
   );
 }

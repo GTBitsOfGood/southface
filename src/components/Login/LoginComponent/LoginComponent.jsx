@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
-import React from "react";
+import { useState } from "react";
 import { login } from "src/actions/User";
 import useUser from "src/lib/hooks/useUser";
 import urls from "src/lib/utils/urls";
@@ -11,8 +11,8 @@ const LoginComponent = () => {
     redirectTo: urls.pages.library,
   });
 
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -21,7 +21,7 @@ const MyApp = ({ Component, pageProps }) => (
     }}
   >
     <Head>
-      <title>Next.js-Starter</title>
+      <title>EarthCraft</title>
     </Head>
     <ChakraProvider theme={southfaceTheme}>
       <NavBar />

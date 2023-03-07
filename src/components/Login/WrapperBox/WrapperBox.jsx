@@ -2,7 +2,7 @@ import { Center, Flex } from "@chakra-ui/layout";
 
 const WrapperBox = ({ children }) => {
   return (
-    <Flex width="100%" height="75%" align="center" justify="center">
+    <Flex width="100%" height="100%" align="center" justify="center">
       <Center
         rounded="md"
         boxShadow="dark-lg"

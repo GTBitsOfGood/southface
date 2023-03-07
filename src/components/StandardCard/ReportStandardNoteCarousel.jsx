@@ -4,11 +4,12 @@ import {
   ChevronRightIcon,
   CloseIcon,
 } from "@chakra-ui/icons";
-import { Box, Circle, Image } from "@chakra-ui/react";
+import { Box, Circle } from "@chakra-ui/react";
 import Carousel from "react-grid-carousel";
 import useActiveReport from "../../lib/hooks/useActiveReport";
+import Note from "../Notes/Note";
 
-const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
+const ReportStandardNoteCarousel = ({ notes, ...rest }) => {
   const ChevronIcon = (props) => {
     const styles = {
       pos: "absolute",
@@ -43,56 +44,50 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
 
   const { selState } = { ...rest };
   const { changeInReport } = useActiveReport();
-  const imgArr = (function () {
-    if (selState && selState.imgSelections.length === cardImages.length) {
-      return selState.imgSelections;
+  const noteArr = (function () {
+    if (selState && selState.noteSelections.length === notes.length) {
+      return selState.noteSelections;
     } else {
-      return Array(cardImages.length).fill(false);
+      return Array(notes.length).fill(false);
     }
   })();
   const { editing } = { ...rest };
-
-  const imgToggleHandler = (index) => () => {
+  const noteToggleHandler = (index) => () => {
     if (selState && editing) {
-      imgArr[index] = !imgArr[index];
+      noteArr[index] = !noteArr[index];
       const newSel = { ...selState };
-      newSel.imgSelections = imgArr;
+      newSel.noteSelections = noteArr;
       changeInReport(newSel);
+      console.log(selState.noteSelections);
     }
   };
 
-  const ConditionalImage = ({ image, index }) => {
-    const selected = selState?.imgSelections[index];
-    const img = (
-      <Image
-        fit="contain"
-        width="100%"
-        src={image}
-        alt="construction image"
-      />
-    );
-    const iconStyles= {
+  const ConditionalNote = ({ note, index }) => {
+    const selected = selState?.noteSelections[index];
+    const noteComp = <Note note={note} />;
+    const iconStyles = {
       position: "absolute",
-      right: "2px",
-      top: "2px",
+      right: "-7px",
+      top: "-7px",
       color: "white",
       backgroundColor: "gray",
       fontSize: "small",
       padding: "5px",
-    }
+    };
     return editing ? (
       <Box
-        onClick={imgToggleHandler(index)}
+        onClick={noteToggleHandler(index)}
         opacity={selected ? "100%" : "70%"}
         position="relative"
+        mt="5"
       >
         <Circle style={iconStyles}>
           {selected ? <CloseIcon /> : <AddIcon />}
         </Circle>
-        {img}
+        <Box>{noteComp}</Box>
       </Box>
     ) : (
-      <Box>{img}</Box>
+      <Box>{noteComp}</Box>
     );
   };
 
@@ -111,11 +106,11 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       arrowLeft={<ChevronIcon orientation="left" />}
       arrowRight={<ChevronIcon orientation="right" />}
     >
-      {cardImages.map(({ imageUrl: image }, index) => {
+      {notes.map((note, index) => {
         return (
-          (selState.imgSelections[index] || editing) && (
+          (selState?.noteSelections[index] || editing) && (
             <Carousel.Item key={index}>
-              <ConditionalImage image={image} index={index} />
+              <ConditionalNote index={index} note={note} />
             </Carousel.Item>
           )
         );
@@ -124,4 +119,4 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
   );
 };
 
-export default StandardCardImageCarousel;
+export default ReportStandardNoteCarousel;

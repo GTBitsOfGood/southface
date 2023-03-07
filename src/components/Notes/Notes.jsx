@@ -1,13 +1,24 @@
-import { Box, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Circle,
+  Flex,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import { updateCardById } from "../../actions/Card";
+import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import AddNewNote from "./AddNewNote";
 import Note from "./Note";
 import SentimentButton from "./SentimentButton";
 
-const Notes = ({ cardId, notes, setCards }) => {
+const Notes = ({ cardId, notes, setCards, ...rest }) => {
   const [currentNotes, setCurrentNotes] = useState(
     notes.map((n) => n).reverse()
   );
@@ -54,6 +65,33 @@ const Notes = ({ cardId, notes, setCards }) => {
     });
   };
 
+  const { changeInReport } = useActiveReport();
+  const { selState } = { ...rest };
+  const noteArr = (function () {
+    if (selState && selState.noteSelections.length === notes.length) {
+      return selState.noteSelections;
+    } else {
+      return Array(notes.length).fill(false);
+    }
+  })();
+  const { editing, setEditing } = { ...rest };
+  const editHandler = () => {
+    if (!selState) {
+      setEditing(false);
+    } else {
+      setEditing((prev) => !prev);
+    }
+  };
+
+  const noteToggleHandler = (index) => () => {
+    if (selState && editing) {
+      noteArr[index] = !noteArr[index];
+      const newSel = { ...selState };
+      newSel.noteSelections = noteArr;
+      changeInReport(newSel);
+    }
+  };
+
   if (!user?.isLoggedIn) {
     return (
       <Box>
@@ -86,24 +124,61 @@ const Notes = ({ cardId, notes, setCards }) => {
               return;
             }
             return (
-              <Note
+              <Box
                 key={index}
-                currNoteIdx={index}
-                note={note}
-                notes={currentNotes}
                 handleSaveEdit={handleSaveEdit}
-              />
+                position="relative"
+              >
+                <Note
+                  onClick={noteToggleHandler(index)}
+                  borderWidth={
+                    selState?.noteSelections[index] && editing ? "5px" : "0px"
+                  }
+                  borderColor={
+                    selState?.noteSelections[index] && editing
+                      ? "blue.500"
+                      : "none"
+                  }
+                  currNoteIdx={index}
+                  note={note}
+                  notes={currentNotes}
+                />
+                {editing && (
+                  <Circle
+                    position="absolute"
+                    bottom="10px"
+                    bgColor="blue.500"
+                    color="white"
+                    right="10px"
+                    zIndex={5}
+                    padding={2}
+                  >
+                    {selState?.noteSelections[index] ? (
+                      <CloseIcon />
+                    ) : (
+                      <AddIcon />
+                    )}
+                  </Circle>
+                )}
+              </Box>
             );
           })}
         </Box>
       </VStack>
 
       <Flex alignItems="end">
-        <VStack alignItems="left">
+        <VStack alignItems="left" w="80%">
           <Text>Was this image helpful?</Text>
-          <HStack>
-            <SentimentButton type="like" />
-            <SentimentButton type="dislike" />
+          <HStack justify="space-between">
+            <HStack>
+              <SentimentButton type="like" />
+              <SentimentButton type="dislike" />
+            </HStack>
+            {selState && (
+              <Button variant="Blue-rounded" onClick={editHandler}>
+                {editing ? "Save Changes" : "Add notes"}
+              </Button>
+            )}
           </HStack>
         </VStack>
       </Flex>

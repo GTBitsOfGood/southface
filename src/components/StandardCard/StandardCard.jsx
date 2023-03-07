@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
 import useSWRMutation from "swr/mutation";
 import { updateRecentStandardsRequest } from "../../actions/User";
+import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import CardModal from "../Modals/CardModal";
 
@@ -58,6 +59,35 @@ const StandardCard = ({ card, setCards, ...props }) => {
     }
   }, [data]);
 
+  // Active report code
+  // get report state
+  // if state is undefined, selected = false
+  // conditionally render note, images selection UI
+  // editEnable, 
+  // useEffect on editEnable: make API call after deselecting
+  const { selState } = {...props};
+  const selected = (!selState) ? false : true;
+  // const imgArr = selected ? 
+  const { addToReport } = useActiveReport();
+  const reportAddHandler = () => {
+    if (!selected) {
+      addToReport(card);
+    }
+  }
+
+  const ReportButton = ({...props}) => (
+    <Button
+      position="absolute"
+      right="1"
+      bottom="0"
+      variant={selected ? "Grey" : "Blue-outlined"}
+      onClick={reportAddHandler}
+      {...props}
+    >
+      {!selected ? "Add To Report" : "Added to Report"}
+    </Button>
+  );
+
   return (
     <Flex
       {...props}
@@ -78,7 +108,7 @@ const StandardCard = ({ card, setCards, ...props }) => {
       <Box height="47%" position="relative">
         <Image
           height="100%"
-          width="full"
+          width="100%"
           fit="cover"
           src={card.images[0].imageUrl}
           alt="construction image"
@@ -87,9 +117,14 @@ const StandardCard = ({ card, setCards, ...props }) => {
       </Box>
 
       <Flex p={3} flexDirection="column" flex={1} mx="2">
-        <Heading size="md">{card.title}</Heading>
+        <Heading fontSize="1rem">{card.title}</Heading>
 
-        <Text fontSize="sm" lineHeight="1.2rem" maxHeight="5rem" noOfLines="3">
+        <Text
+          fontSize=".92rem"
+          lineHeight="1.2rem"
+          maxHeight="4rem"
+          noOfLines="3"
+        >
           {card.criteria}
         </Text>
 
@@ -107,20 +142,15 @@ const StandardCard = ({ card, setCards, ...props }) => {
               </Tag>
             );
           })}
-          <Button
-            position="absolute"
-            right="1"
-            bottom="0"
-            variant="Blue-outlined"
-          >
-            Add To Report
-          </Button>
+          <ReportButton />
         </HStack>
         <CardModal
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}
           card={card}
           setCards={setCards}
+          selected={selected}
+          selState={selState}
         />
       </Flex>
     </Flex>

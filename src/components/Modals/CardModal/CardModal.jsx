@@ -1,6 +1,10 @@
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
+  Box,
   Button,
+  Circle,
   Flex,
+  GridItem,
   Heading,
   HStack,
   Modal,
@@ -14,6 +18,8 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import useActiveReport from "../../../lib/hooks/useActiveReport";
 import ArrowIcon from "../../Carousel/ArrowIcon";
 import Carousel from "../../Carousel/Carousel";
 import ImagePreviewModal from "../ImagePreviewModal";
@@ -33,8 +39,47 @@ const CardModal = ({
   } = useDisclosure();
 
   const openImagePreviewCallback = () => {
-    onCloseCardModal();
+    modalCloseHandler();
     onOpenImagePreviewModal();
+  };
+
+  const { changeInReport, addToReport } = useActiveReport();
+  const { selState } = { ...rest };
+  const imgArr = (function () {
+    if (selState && selState.imgSelections.length === card.images.length) {
+      return selState.imgSelections;
+    } else {
+      return Array(card.images.length).fill(false);
+    }
+  })();
+
+  const { selected = false } = { ...rest };
+  const reportAddHandler = () => {
+    if (!selected) {
+      addToReport(card);
+    } else {
+      setEditing((prev) => !prev);
+    }
+  };
+  const [editing, setEditing] = useState(false);
+  useEffect(() => {
+    if (!selected) {
+      setEditing(false);
+    }
+  }, [editing]);
+  const imgToggleHandler = (index) => () => {
+    if (selState && editing) {
+      imgArr[index] = !imgArr[index];
+      const newSel = { ...selState };
+      newSel.imgSelections = imgArr;
+      changeInReport(newSel);
+    }
+  };
+  const modalCloseHandler = () => {
+    setEditing(() => {
+      onCloseCardModal();
+      return false;
+    });
   };
 
   return (
@@ -42,7 +87,7 @@ const CardModal = ({
       <Modal
         {...rest}
         isOpen={isOpenCardModal}
-        onClose={onCloseCardModal}
+        onClose={modalCloseHandler}
         size={{ base: "xs", md: "2xl", lg: "4xl" }}
       >
         <ModalOverlay />
@@ -68,10 +113,38 @@ const CardModal = ({
               >
                 {card.images.map(({ imageUrl: image }, index) => (
                   <Carousel.Item key={index}>
-                    <ModalImage
-                      image={image}
-                      openImagePreviewCallback={openImagePreviewCallback}
-                    />
+                    <Box position="relative">
+                      {editing && <Circle
+                        position="absolute"
+                        bottom="10px"
+                        bgColor="blue.500"
+                        color="white"
+                        right="10px"
+                        zIndex={5}
+                        padding={2}
+                      >
+                        {selState?.imgSelections[index] ? (
+                          <CloseIcon />
+                        ) : (
+                          <AddIcon />
+                        )}
+                      </Circle>}
+                      <ModalImage
+                        onClick={imgToggleHandler(index)}
+                        borderWidth={
+                          selState?.imgSelections[index] && editing
+                            ? "5px"
+                            : "0px"
+                        }
+                        borderColor={
+                          selState?.imgSelections[index] && editing
+                            ? "blue.500"
+                            : "none"
+                        }
+                        image={image}
+                        openImagePreviewCallback={openImagePreviewCallback}
+                      />
+                    </Box>
                   </Carousel.Item>
                 ))}
               </Carousel>
@@ -80,8 +153,10 @@ const CardModal = ({
                 {card.criteria}
               </Text>
 
-              <SimpleGrid mt={3} mb={15} columns={2}>
-                <HStack gap={1} overflowX="auto">
+              <Text>Bruh:</Text>
+
+              <SimpleGrid mt={3} mb={15} columns={5}>
+                <HStack as={GridItem} colSpan={2} gap={1} overflowX="auto">
                   {card.tags.map((tag, index) => (
                     <Tag
                       bgColor="#c4d600"
@@ -93,16 +168,20 @@ const CardModal = ({
                     </Tag>
                   ))}
                 </HStack>
-                <Flex gap={2} justifyContent="right">
+                <Flex as={GridItem} colSpan={3} gap={2} justifyContent="right">
                   <Button
                     size="lg"
-                    variant="Grey-outlined"
+                    variant="Grey-outlined-rounded"
                     onClick={openImagePreviewCallback}
                   >
                     View Notes
                   </Button>
-                  <Button variant="Blue" size="lg">
-                    Add to Report
+                  <Button onClick={reportAddHandler} variant="Blue-rounded" size="lg">
+                    {!selected
+                      ? "Add to Report"
+                      : editing
+                      ? "Save changes"
+                      : "Edit"}
                   </Button>
                 </Flex>
               </SimpleGrid>
@@ -115,6 +194,7 @@ const CardModal = ({
         onClose={onCloseImagePreviewModal}
         card={card}
         setCards={setCards}
+        selState={selState}
       />
     </>
   );
