@@ -46,7 +46,7 @@ const AddNewNote = ({ newNote, setNewNote, createNewNote }) => {
     <Box border="1px solid #cccccc" p={3} mb={2} rounded={14}>
       <Editable
         placeholder="Add a new note..."
-        color="#6d6e70"
+        color="Grey"
         value={newNote.body}
         fontSize="sm"
         onChange={(val) => handleChange(val)}

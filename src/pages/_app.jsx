@@ -9,7 +9,7 @@ import { southfaceTheme } from "src/styles/theme";
 
 import "focus-visible/dist/focus-visible.min.js";
 import "normalize.css";
-import "@fontsource/inter/400.css";
+// import "@fontsource/inter/400.css";
 
 import { ChakraProvider } from "@chakra-ui/react";
 

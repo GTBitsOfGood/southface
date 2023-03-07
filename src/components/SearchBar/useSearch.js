@@ -1,51 +1,64 @@
-import { useEffect, useState } from "react";
+import { useToast } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { getCardsPagination } from "../../actions/Card";
 
-export default function useSearch(
-  cards,
-  setNumPages,
-  setCurrentPage,
-  setCards
-) {
-  const [criteria, setSearch] = useState({
-    searchString: "",
-    tags: {},
-  });
+export default function useSearch({ setNumPages, setCurrentPage, setCards }) {
+  const router = useRouter();
+  const noSearchResultsToast = useToast();
+  const { buildingType, primaryCategory } = router.query;
 
-  useEffect(() => {
-    getCardsPagination(1, criteria).then(({ cards, cardsCount }) => {
+  const calculateNumPagesToDisplay = (cardsCount) => {
+    if (setNumPages) {
       let numPages = Math.floor(cardsCount / 4);
       if (cardsCount % 4 > 0) {
         numPages += 1;
       }
-      if (setNumPages) {
-        setNumPages(numPages);
-        setCurrentPage(1);
-        setCards(cards);
-      }
+
+      setNumPages(numPages);
+    }
+  };
+
+  const displayNoSearchResultToast = () => {
+    noSearchResultsToast({
+      title: "No Search Results!",
+      description: "Your search did not match any cards.",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
     });
-  }, [criteria, setNumPages, setCurrentPage, setCards]);
-
-  const filter = (card) => {
-    const matchesSearch = card.title
-      ?.toLowerCase()
-      .includes(criteria.searchString.toLowerCase());
-    const matchesTags =
-      card.tags
-        .map((tag) => tag.toLowerCase())
-        .every((tag) =>
-          Object.keys(criteria.tags)
-            .map((tag) => tag.toLowerCase())
-            .includes(tag)
-        ) || Object.keys(criteria.tags).length === 0;
-    return matchesSearch && matchesTags;
   };
 
-  const searchedCards = cards.filter(filter);
-  const nonSearchedCards = cards.filter((card) => !filter(card));
-  const handleSearch = {
-    setSearch: setSearch,
-    criteria: criteria,
+  const handleSearch = async ({
+    searchString = "",
+    tags = {},
+    pageNumber = 1,
+  }) => {
+    const searchFilter = {
+      searchString,
+      tags,
+      buildingType,
+      primaryCategory: primaryCategory || null,
+    };
+
+    // accounts for click button on primary category page with empty string
+    if (searchString === "" && primaryCategory === undefined) {
+      setCards([]);
+    } else {
+      const { cards, cardsCount } = await getCardsPagination(
+        pageNumber,
+        searchFilter
+      );
+
+      calculateNumPagesToDisplay(cardsCount);
+      setCurrentPage(pageNumber);
+      setCards(cards);
+
+      // shows toast on primary category page if search result not found
+      if (cards.length === 0 && primaryCategory == undefined) {
+        displayNoSearchResultToast();
+      }
+    }
   };
-  return { searchedCards, handleSearch, nonSearchedCards };
+
+  return { handleSearch };
 }

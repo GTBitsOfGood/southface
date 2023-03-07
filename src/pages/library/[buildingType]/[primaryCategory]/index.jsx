@@ -1,6 +1,12 @@
-import { Breadcrumb, BreadcrumbItem, Flex, Text } from "@chakra-ui/react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Flex,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import PaginationTab from "src/components/PaginationTab";
 import SearchBar, { useSearch } from "src/components/SearchBar";
@@ -18,25 +24,13 @@ const LibraryCategoryPage = (props) => {
   const cardsFromDatabase = props.cardsFromDatabase;
   const numPagesInitial = props.numPages;
   const [cards, setCards] = useState(cardsFromDatabase);
-  const [isRefresehing, setIsRefreshing] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(numPagesInitial);
-  const { handleSearch } = useSearch(
-    cardsFromDatabase,
-    setNumPages,
-    setCurrentPage,
-    setCards
-  );
 
-  // This is needed for editing the card (otherwise modal opens with inconsistent cards)
-  useEffect(() => {
-    setIsRefreshing(false);
-  }, [cards]);
+  const { handleSearch } = useSearch({ setNumPages, setCurrentPage, setCards });
 
-
-  return isRefresehing ? (
-    ""
-  ) : (
+  return (
     <Flex alignItems="stretch" flexDirection="column" p="2rem">
       <Breadcrumb separator=">" fontWeight="semibold" pb="5">
         <BreadcrumbItem>
@@ -51,20 +45,23 @@ const LibraryCategoryPage = (props) => {
           <Text>{props.primaryCategory}</Text>
         </BreadcrumbItem>
       </Breadcrumb>
-
       <SearchBar handleSearch={handleSearch} />
 
-      <StandardCardTable cards={cards} setCards={setCards} />
-
-      <PaginationTab
-        numPages={numPages}
-        alignSelf="center"
-        border="1px solid black"
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        setCards={setCards}
-        setIsRefreshing={setIsRefreshing}
-      />
+      {numPages > 0 ? (
+        <>
+          <StandardCardTable cards={cards} setCards={setCards} />
+          <PaginationTab
+            numPages={numPages}
+            alignSelf="center"
+            border="1px solid black"
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setCards={setCards}
+          />
+        </>
+      ) : (
+        <Heading>No Cards Found</Heading>
+      )}
     </Flex>
   );
 };

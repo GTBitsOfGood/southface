@@ -71,8 +71,8 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes, ...props }) => {
           bgColor="white"
           size="xs"
           rounded={16}
-          color="#6d6e70"
-          border="solid 1px #6d6e70"
+          color="Grey"
+          border="solid 1px Grey"
           fontSize="sm"
           width="auto"
           {...getCancelButtonProps()}
@@ -97,7 +97,7 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes, ...props }) => {
     ) : (
       <SimpleGrid columns={2}>
         <Flex alignItems="center">
-          <Text as="span" color="#6d6e70" fontSize="sm">
+          <Text as="span" color="Grey" fontSize="sm">
             {formatNoteDateString(note.date)}
           </Text>
         </Flex>

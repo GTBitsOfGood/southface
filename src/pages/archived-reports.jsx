@@ -22,7 +22,7 @@ const ArchivedReports = () => {
 
         <Button
           as="a"
-          background="#6D6E70"
+          background="Grey"
           borderRadius="3xl"
           color="white"
           marginBottom="20"
