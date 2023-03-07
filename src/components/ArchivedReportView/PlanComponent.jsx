@@ -6,7 +6,9 @@ const PlanComponent = ({ report }) => {
       <VStack alignItems="flex-start">
         <Heading fontSize=".75em">Recent Report</Heading>
         <HStack>
-          <Text fontSize=".75em">{report.cards.length} standards</Text>
+          <Text fontSize=".75em">
+            {report.cards.length} standard{report.cards.length !== 1 && "s"}
+          </Text>
           <Box
             width="0.2rem"
             height="0.2rem"
