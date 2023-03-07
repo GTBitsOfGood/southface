@@ -1,7 +1,7 @@
 import { Heading, HStack, VStack } from "@chakra-ui/react";
 import TagSelect from "./TagSelect";
 
-const TagBox = (props) => {
+const TagBox = ({ letter, list }) => {
   return (
     <>
       <HStack
@@ -15,11 +15,11 @@ const TagBox = (props) => {
           w={{ base: "1%", "2xl": "5%" }}
           fontSize={{ base: "xl", "2xl": "2xl" }}
         >
-          {props.letter}
+          {letter}
         </Heading>
         <VStack w="100%">
-          {props.list.map((item) => {
-            return <TagSelect key={item._id} id={item._id} name={item.name} />;
+          {list.map((tag) => {
+            return <TagSelect key={tag._id} tag={tag} />;
           })}
         </VStack>
       </HStack>

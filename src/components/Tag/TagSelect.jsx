@@ -1,7 +1,7 @@
 import { Box, Checkbox } from "@chakra-ui/react";
 import { useState } from "react";
 
-const TagSelect = (props) => {
+const TagSelect = ({ tag }) => {
   const [isChecked, setIsChecked] = useState(false);
   const handleInputChange = () => {
     setIsChecked(!isChecked);
@@ -9,7 +9,7 @@ const TagSelect = (props) => {
   return (
     <>
       <Checkbox
-        id={props.id}
+        id={tag.id}
         color="Grey"
         w="100%"
         onChange={handleInputChange}
@@ -19,7 +19,7 @@ const TagSelect = (props) => {
           textTransform="capitalize"
           fontSize={{ base: "0.8em", "2xl": "1em" }}
         >
-          {props.name}
+          {tag.name}
         </Box>
       </Checkbox>
     </>

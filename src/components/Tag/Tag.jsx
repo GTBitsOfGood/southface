@@ -7,26 +7,8 @@ const Tag = (props) => {
   const { data } = useSWR(urls.api.tag.getObject);
   const tags = data?.payload[0];
 
-  // const [tagName, setTagName] = useState("");
-  // const [selectedTag, setSelectedTag] = useState([]);
-
-  // const handleSubmit = () => {
-  //   tagName &&
-  //     createTag(tagName)
-  //       .catch((error) => window.alert(error.message))
-  //       .then((data) => {
-  //         const firstLetter = data.name.charAt(0);
-  //         if (!tags[firstLetter]) {
-  //           tags[firstLetter] = [];
-  //         }
-  //         tags[firstLetter].push(data);
-  //         setTagName("");
-  //       });
-  // };
-
   return (
     <>
-      {/* <VStack gap="1em" width="max"> */}
       <Flex {...props} direction="column" wrap="wrap">
         {tags &&
           Object.keys(tags).map((letter) => {
@@ -37,29 +19,6 @@ const Tag = (props) => {
             );
           })}
       </Flex>
-      {/* <Box>
-          <FormControl height="4em">
-            <FormLabel>Create Tag</FormLabel>
-            <Input
-              onChange={(event) => {
-                setTagName(event.target.value);
-              }}
-              borderColor="black"
-              value={tagName}
-            />
-          </FormControl>
-          <Button
-            width="100%"
-            height="2.3em"
-            colorScheme="green"
-            onClick={handleSubmit}
-            marginTop="1em"
-            marginBottom="1em"
-          >
-            Create
-          </Button>
-        </Box> */}
-      {/* </VStack> */}
     </>
   );
 };
