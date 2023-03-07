@@ -14,7 +14,7 @@ import urls from "src/lib/utils/urls";
 import useSWRMutation from "swr/mutation";
 import { updateRecentStandardsRequest } from "../../actions/User";
 import useUser from "../../lib/hooks/useUser";
-import CardModal from "../Modals/CardModal";
+import CardModalWithForm from "../Modals/CardModal";
 
 const StandardCard = ({ card, cards, setCards, ...props }) => {
   const { user } = useUser();
@@ -115,7 +115,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             Add To Report
           </Button>
         </HStack>
-        <CardModal
+        <CardModalWithForm
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}
           card={card}
