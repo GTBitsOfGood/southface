@@ -113,7 +113,6 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
           src={card.images[0].imageUrl}
           alt="construction image"
         />
-        {/* <StandardCardImageCarousel cardImages={card.images} /> */}
       </Box>
 
       <Flex p={3} flexDirection="column" flex={1} mx="2">

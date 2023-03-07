@@ -25,7 +25,6 @@ const AddImageModal = ({ setValue, form, cardId, ...props }) => {
     for (let image of images) {
       let imagesSucceeded = 0;
       uploadFile(image.name, image, metadata, tags).then((res) => {
-        console.log(res);
         if (!(res instanceof Error) && isValidBlobUrl(res)) {
           imagesSucceeded++;
           existingImages.push(res);

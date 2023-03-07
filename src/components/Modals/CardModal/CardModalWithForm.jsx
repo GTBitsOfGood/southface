@@ -21,7 +21,7 @@ const CardModalWithForm = ({
       return obj;
     }, {});
     let newCard = await updateCardById(card._id, dirtyValues);
-    let newCards = JSON.parse(JSON.stringify(cards));
+    let newCards = [...cards]; // JSON.parse(JSON.stringify(cards));
     for (let oldCardIndex in newCards) {
       if (newCards[oldCardIndex]._id === card._id) {
         newCards[oldCardIndex] = newCard;
@@ -45,6 +45,8 @@ const CardModalWithForm = ({
   useEffect(() => {
     setInitialCard(JSON.parse(JSON.stringify(card)));
   }, [card]);
+
+  const { selState, selected } = { ...rest };
 
   return (
     <>
@@ -81,6 +83,8 @@ const CardModalWithForm = ({
               isOpenCardModal={isOpenCardModal}
               rest={rest}
               handleDeleteStandard={handleDeleteStandard}
+              selState={selState}
+              selected={selected}
             />
           );
         }}
