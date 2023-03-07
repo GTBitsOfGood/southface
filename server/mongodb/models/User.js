@@ -30,18 +30,20 @@ const UserSchema = new Schema({
   activeReport: {
     required: false,
     type: {
-      cards: [{
-        card: {
-          type: Schema.Types.ObjectId,
-          ref: "Card",
+      cards: [
+        {
+          card: {
+            type: Schema.Types.ObjectId,
+            ref: "Card",
+          },
+          imgSelections: {
+            type: [Boolean],
+          },
+          noteSelections: {
+            type: [Boolean],
+          },
         },
-        imgSelections: {
-          type: [Boolean],
-        },
-        noteSelections: {
-          type: [Boolean],
-        },
-      }],
+      ],
       name: {
         type: String,
         required: true,

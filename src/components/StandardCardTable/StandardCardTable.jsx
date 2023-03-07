@@ -15,7 +15,8 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
     setClientSide(true);
   }, []);
 
-  const { selectionArray: selArr } = useSelectionArray(cards)
+  const { selectionArray: selArr } = useSelectionArray(cards);
+
   return (
     <Box {...props}>
       {isClientSide && (
@@ -45,7 +46,11 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
       >
         {cards.map((card, index) => (
           <GridItem w="100%" key={index}>
-            <StandardCard card={card} setCards={setCards} selState={selArr[index]}/>
+            <StandardCard
+              card={card}
+              setCards={setCards}
+              selState={selArr[index]}
+            />
           </GridItem>
         ))}
       </Grid>

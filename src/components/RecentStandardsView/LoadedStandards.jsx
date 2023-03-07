@@ -57,27 +57,27 @@ function LoadedStandards(props) {
       });
     }
   }, [props.maxCards, props.standardsData, trigger, data]);
-  const {selectionArray} = useSelectionArray(cards);
+  const { selectionArray } = useSelectionArray(cards);
   return (
     <>
       <HStack height="21rem">
         {props.standardsData ? (
-        cards.map((card, index) => {
-          {
-            return (
-              <StandardCard
-                key={index}
-                card={card}
-                height="3rem"
-                minW="300px"
-                selState={selectionArray[index]}
-              ></StandardCard>
-            );
-          }
-        })
-      ) : (
-        <></>
-      )}
+          cards.map((card, index) => {
+            {
+              return (
+                <StandardCard
+                  key={index}
+                  card={card}
+                  height="3rem"
+                  minW="300px"
+                  selState={selectionArray[index]}
+                ></StandardCard>
+              );
+            }
+          })
+        ) : (
+          <></>
+        )}
       </HStack>
     </>
   );

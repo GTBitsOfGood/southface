@@ -114,21 +114,23 @@ const CardModal = ({
                 {card.images.map(({ imageUrl: image }, index) => (
                   <Carousel.Item key={index}>
                     <Box position="relative">
-                      {editing && <Circle
-                        position="absolute"
-                        bottom="10px"
-                        bgColor="blue.500"
-                        color="white"
-                        right="10px"
-                        zIndex={5}
-                        padding={2}
-                      >
-                        {selState?.imgSelections[index] ? (
-                          <CloseIcon />
-                        ) : (
-                          <AddIcon />
-                        )}
-                      </Circle>}
+                      {editing && (
+                        <Circle
+                          position="absolute"
+                          bottom="10px"
+                          bgColor="blue.500"
+                          color="white"
+                          right="10px"
+                          zIndex={5}
+                          padding={2}
+                        >
+                          {selState?.imgSelections[index] ? (
+                            <CloseIcon />
+                          ) : (
+                            <AddIcon />
+                          )}
+                        </Circle>
+                      )}
                       <ModalImage
                         onClick={imgToggleHandler(index)}
                         borderWidth={
@@ -176,7 +178,11 @@ const CardModal = ({
                   >
                     View Notes
                   </Button>
-                  <Button onClick={reportAddHandler} variant="Blue-rounded" size="lg">
+                  <Button
+                    onClick={reportAddHandler}
+                    variant="Blue-rounded"
+                    size="lg"
+                  >
                     {!selected
                       ? "Add to Report"
                       : editing

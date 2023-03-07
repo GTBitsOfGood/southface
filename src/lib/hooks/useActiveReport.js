@@ -60,7 +60,7 @@ export default function useActiveReport() {
         const cards = newReport.cards;
         for (let i = 0; i < cards.length; i++) {
           if (cards[i].card._id.toString() === card._id.toString()) {
-            return newReport
+            return newReport;
           }
         }
         newReport.cards.push({

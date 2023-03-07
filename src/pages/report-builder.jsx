@@ -13,14 +13,12 @@ import { useEffect, useRef, useState } from "react";
 import RecentStandardsView from "src/components/RecentStandardsView";
 import { ReportStandard } from "src/components/StandardCard";
 import useActiveReport from "src/lib/hooks/useActiveReport";
-import ArchivedReportView from "src/components/ArchivedReportView"
+import ArchivedReportView from "src/components/ArchivedReportView";
 
 const ReportBuilder = () => {
   // For PDF exporting
   const [editingTitle, setEditingTitle] = useState(false);
   useEffect(() => setEditingTitle(true), []);
-
-
 
   const nameRef = useRef();
 
@@ -28,7 +26,8 @@ const ReportBuilder = () => {
   const [sels, setSels] = useState([]);
 
   useEffect(() => {
-    if (report && !isValidating) { // this useEffect wrapper prevents jittering
+    if (report && !isValidating) {
+      // this useEffect wrapper prevents jittering
       setSels(report.cards);
     }
   }, [isValidating]);
