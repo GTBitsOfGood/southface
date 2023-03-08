@@ -71,6 +71,8 @@ function LoadedStandards(props) {
                   height="3rem"
                   minW="300px"
                   selState={selectionArray[index]}
+                  cards={cards}
+                  setCards={setCards}
                 ></StandardCard>
               );
             }

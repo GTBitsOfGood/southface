@@ -10,22 +10,26 @@ const getBlobClient = () => {
 };
 
 const uploadFile = async (blobName, content, metadata, tags) => {
-  const containerClient = getBlobClient();
+  try {
+    const containerClient = getBlobClient();
 
-  const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-  const options = {
-    blobHTTPHeaders: {
-      blobContentType: content.type,
-    },
-    metadata: metadata,
-    tags: tags,
-  };
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    const options = {
+      blobHTTPHeaders: {
+        blobContentType: content.type,
+      },
+      metadata: metadata,
+      tags: tags,
+    };
 
-  const uploadBlobResponse = await blockBlobClient.uploadBrowserData(
-    content,
-    options
-  );
-  return uploadBlobResponse;
+    const uploadBlobResponse = await blockBlobClient.uploadData(
+      content,
+      options
+    );
+    return uploadBlobResponse;
+  } catch (e) {
+    return e;
+  }
 };
 
 const listBlobs = async () => {
@@ -39,4 +43,15 @@ const listBlobs = async () => {
   return blobs;
 };
 
-export { uploadFile, listBlobs };
+function isValidBlobUrl(url) {
+  try {
+    var urlObject = new URL(url);
+    var isAzure = urlObject.host.endsWith(".blob.core.windows.net");
+    // urlObject.protocol === "blob:" &&
+    return isAzure;
+  } catch (e) {
+    return false;
+  }
+}
+
+export { uploadFile, listBlobs, isValidBlobUrl };

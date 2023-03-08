@@ -3,7 +3,7 @@ import Link from "next/link";
 import useUser from "../../lib/hooks/useUser";
 import LoadedStandards from "./LoadedStandards";
 
-function RecentStandardsView(props) {
+function RecentStandardsView({ maxCards }) {
   const { user } = useUser();
 
   return (
@@ -17,7 +17,7 @@ function RecentStandardsView(props) {
       <Flex gap="2rem" overflowX="auto" p={2}>
         <LoadedStandards
           standardsData={user?.recentStandards}
-          maxCards={props.maxCards}
+          maxCards={maxCards}
         />
       </Flex>
     </Flex>
