@@ -4,8 +4,8 @@ import { logout } from "src/actions/User";
 import Image from "src/components/Image";
 import useUser from "src/lib/hooks/useUser";
 import urls from "src/lib/utils/urls";
+import LogoutModal from "../Modals/LogoutModal";
 import ShoppingCartView from "../ShoppingCartView";
-import LogoutModal from "./LogoutModal";
 import NavLink from "./NavLink";
 
 const NavBar = () => {

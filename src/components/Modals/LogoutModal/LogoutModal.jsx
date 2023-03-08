@@ -13,14 +13,14 @@ const LogoutModal = ({ isOpen, onClose, onLogout }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalBody textAlign="center">
+        <ModalBody textAlign="center" px={10} paddingTop={28}>
           Are you sure you want to log out?
         </ModalBody>
-        <ModalFooter>
-          <Button variant="Grey" onClick={onClose}>
+        <ModalFooter display="flex" justifyContent="center" paddingBottom={20}>
+          <Button variant="Grey-rounded" onClick={onClose} mr={3}>
             No, return to digital library
           </Button>
-          <Button variant="Red" onClick={onLogout} ml={3}>
+          <Button variant="Red-outlined-rounded" onClick={onLogout}>
             Yes, log out
           </Button>
         </ModalFooter>
