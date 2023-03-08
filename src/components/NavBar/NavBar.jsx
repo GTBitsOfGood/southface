@@ -1,5 +1,6 @@
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
+
 import { logout } from "src/actions/User";
 import Image from "src/components/Image";
 import useUser from "src/lib/hooks/useUser";
@@ -9,6 +10,9 @@ import ShoppingCartView from "../ShoppingCartView";
 import NavLink from "./NavLink";
 
 const NavBar = () => {
+  const router = useRouter();
+  const currPage = router.pathname;
+
   const {
     isOpen: isCartOpen,
     onOpen: onCartOpen,
@@ -59,6 +63,7 @@ const NavBar = () => {
         isOpen={isLogoutOpen}
         onClose={onLogoutClose}
         onLogout={logoutHandler}
+        currPage={currPage}
       />
     </Flex>
   );
