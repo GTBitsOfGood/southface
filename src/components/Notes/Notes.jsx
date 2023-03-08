@@ -132,12 +132,12 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
                 <Note
                   onClick={noteToggleHandler(index)}
                   borderWidth={
-                    selState?.noteSelections[index] && editing ? "5px" : "0px"
+                    selState?.noteSelections[index] && editing ? "5px" : "1px"
                   }
                   borderColor={
                     selState?.noteSelections[index] && editing
                       ? "blue.500"
-                      : "none"
+                      : "#ccccc"
                   }
                   currNoteIdx={index}
                   note={note}
