@@ -15,9 +15,9 @@ import useSWRMutation from "swr/mutation";
 import { updateRecentStandardsRequest } from "../../actions/User";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
-import CardModal from "../Modals/CardModal";
+import CardModalWithForm from "../Modals/CardModal";
 
-const StandardCard = ({ card, setCards, ...props }) => {
+const StandardCard = ({ card, cards, setCards, ...props }) => {
   const { user } = useUser();
   const {
     isOpen: isOpenCardModal,
@@ -69,7 +69,8 @@ const StandardCard = ({ card, setCards, ...props }) => {
   const selected = !selState ? false : true;
   // const imgArr = selected ?
   const { addToReport } = useActiveReport();
-  const reportAddHandler = () => {
+  const reportAddHandler = (e) => {
+    e.stopPropagation(); // stops modal from opening
     if (!selected) {
       addToReport(card);
     }
@@ -113,7 +114,6 @@ const StandardCard = ({ card, setCards, ...props }) => {
           src={card.images[0].imageUrl}
           alt="construction image"
         />
-        {/* <StandardCardImageCarousel cardImages={card.images} /> */}
       </Box>
 
       <Flex p={3} flexDirection="column" flex={1} mx="2">
@@ -144,10 +144,11 @@ const StandardCard = ({ card, setCards, ...props }) => {
           })}
           <ReportButton />
         </HStack>
-        <CardModal
+        <CardModalWithForm
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}
           card={card}
+          cards={cards}
           setCards={setCards}
           selected={selected}
           selState={selState}

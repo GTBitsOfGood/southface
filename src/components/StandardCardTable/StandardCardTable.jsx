@@ -48,6 +48,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
           <GridItem w="100%" key={index}>
             <StandardCard
               card={card}
+              cards={cards}
               setCards={setCards}
               selState={selArr[index]}
             />

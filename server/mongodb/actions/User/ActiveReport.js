@@ -35,8 +35,8 @@ export const addToActiveReport = async (userId, card) => {
     const newWrappedCard = [
       {
         card: card._id,
-        imgSelections: [],
-        noteSelections: [],
+        imgSelections: Array(card.images.length).fill(true),
+        noteSelections: Array(card.notes.length).fill(true),
       },
     ];
     const user = await User.findByIdAndUpdate(

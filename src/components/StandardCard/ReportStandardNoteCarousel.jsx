@@ -58,7 +58,6 @@ const ReportStandardNoteCarousel = ({ notes, ...rest }) => {
       const newSel = { ...selState };
       newSel.noteSelections = noteArr;
       changeInReport(newSel);
-      console.log(selState.noteSelections);
     }
   };
 

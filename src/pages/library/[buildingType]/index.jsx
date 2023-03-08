@@ -52,7 +52,6 @@ function CategoriesPage({ buildingType }) {
 export async function getStaticProps({ params }) {
   const pageNumber = 0;
   const { buildingType } = params;
-  console.log("Calling getCardsPagination");
   const cards = await getCardsPagination({
     pageNumber,
     buildingType: params.buildingType,
