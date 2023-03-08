@@ -5,10 +5,21 @@ import Image from "src/components/Image";
 import useUser from "src/lib/hooks/useUser";
 import urls from "src/lib/utils/urls";
 import ShoppingCartView from "../ShoppingCartView";
+import LogoutModal from "./LogoutModal";
 import NavLink from "./NavLink";
 
 const NavBar = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isCartOpen,
+    onOpen: onCartOpen,
+    onClose: onCartClose,
+  } = useDisclosure();
+  const {
+    isOpen: isLogoutOpen,
+    onOpen: onLogoutOpen,
+    onClose: onLogoutClose,
+  } = useDisclosure();
+
   const { user } = useUser();
 
   const logoutHandler = () => {
@@ -21,7 +32,7 @@ const NavBar = () => {
     if (!user?.isLoggedIn) {
       return <NavLink name="Login" href={urls.pages.login} {...props} />;
     } else {
-      return <NavLink name="Logout" onClick={logoutHandler} {...props} />;
+      return <NavLink name="Logout" onClick={onLogoutOpen} {...props} />;
     }
   };
 
@@ -39,11 +50,16 @@ const NavBar = () => {
       {user && user.isAdmin && (
         <NavLink name="Add a New Standard" href={urls.pages.addstandard} />
       )}
-      <NavLink name="Shopping Cart" onClick={onOpen} />
+      <NavLink name="Shopping Cart" onClick={onCartOpen} />
       <Box ml="auto" />{" "}
       {/*This is an empty div to right-align the last nav link */}
       <NavLinkAuth />
-      <ShoppingCartView isOpen={isOpen} onClose={onClose} />
+      <ShoppingCartView isOpen={isCartOpen} onClose={onCartClose} />
+      <LogoutModal
+        isOpen={isLogoutOpen}
+        onClose={onLogoutClose}
+        onLogout={logoutHandler}
+      />
     </Flex>
   );
 };
