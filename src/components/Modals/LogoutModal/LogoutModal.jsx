@@ -16,10 +16,10 @@ const LogoutModal = ({ isOpen, onClose, onLogout, currPage }) => {
 
   switch (currPage) {
     case "/add-standard":
-      confirmMessage = "You have unsaved changes in Add a Standard";
+      confirmMessage = "add a standard";
       break;
     case "/report-builder":
-      confirmMessage = "You have unsaved changes in the report builder";
+      confirmMessage = "report builder";
       break;
     default:
       confirmMessage = "";
@@ -34,11 +34,11 @@ const LogoutModal = ({ isOpen, onClose, onLogout, currPage }) => {
         </Flex>
         <ModalBody textAlign="center" px={10} paddingTop={10} paddingBottom={5}>
           <Box>Are you sure you want to log out?</Box>
-          <Box>{confirmMessage}</Box>
+          <Box fontSize={14}>You have unsaved changes in {confirmMessage}</Box>
         </ModalBody>
         <ModalFooter display="flex" justifyContent="center" paddingBottom={5}>
           <Button variant="Grey-rounded" onClick={onClose} mr={3}>
-            No, return to digital library
+            No, return to {confirmMessage}
           </Button>
           <Button variant="Red-outlined-rounded" onClick={onLogout}>
             Yes, log out

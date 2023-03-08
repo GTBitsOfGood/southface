@@ -78,9 +78,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
 
   const ReportButton = ({ ...props }) => (
     <Button
-      position="absolute"
-      right="1"
-      bottom="0"
+      justifyContent="flex-end"
       variant={selected ? "Grey" : "Blue-outlined"}
       onClick={reportAddHandler}
       {...props}
