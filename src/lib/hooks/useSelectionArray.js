@@ -20,6 +20,6 @@ export default function useSelectionArray(cards) {
       setSelArr(newArr);
       console.log("Report", report);
     }
-  }, [isValidating]);
+  }, [isValidating, cards]);
   return { selectionArray: selArr, setSelectionArray: setSelArr };
 }
