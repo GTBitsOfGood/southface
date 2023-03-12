@@ -25,6 +25,17 @@ const ImagePreviewModal = ({ isOpen, onClose, card, setCards, ...rest }) => {
       return false;
     });
   };
+  const updateCard = (updatedCard) => {
+    setCards((cards) => {
+      return cards.map((c) => {
+        if (card._id === c._id) {
+          return updatedCard;
+        } else {
+          return c;
+        }
+      });
+    });
+  }
 
   return (
     <Modal size="4xl" isOpen={isOpen} onClose={modalCloseHandler}>
@@ -38,7 +49,7 @@ const ImagePreviewModal = ({ isOpen, onClose, card, setCards, ...rest }) => {
               selState={selState}
               cardId={card._id}
               notes={card.notes}
-              setCards={setCards}
+              updateCard={updateCard}
               editing={editing}
               setEditing={setEditing}
             />

@@ -1,7 +1,7 @@
 import { Box, Button, Heading, HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import useActiveReport from "../../lib/hooks/useActiveReport";
-import ReportStandardNoteCarousel from "./ReportStandardNoteCarousel";
+import ReportStandardNotes from "./ReportStandardNoteCarousel";
 import StandardCardImageCarousel from "./StandardCardImageCarousel";
 
 const ReportStandard = ({ card, selState, ...props }) => {
@@ -49,10 +49,11 @@ const ReportStandard = ({ card, selState, ...props }) => {
         editing={editing}
       />
       <Box mb={5}>{card.criteria}</Box>
-      <ReportStandardNoteCarousel
+      <ReportStandardNotes
         cols={3}
         notes={card.notes}
         selState={selState}
+        card={card}
         editing={editing}
       />
     </Box>

@@ -1,5 +1,4 @@
 import {
-  AddIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   CloseIcon,
@@ -61,10 +60,17 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
     }
   };
 
+  // Extracted image component that shows inside carousel
   const ConditionalImage = ({ image, index }) => {
     const selected = selState?.imgSelections[index];
     const img = (
-      <Image fit="contain" width="100%" src={image} alt="construction image" />
+      <Image
+        opacity={selected ? "100%" : "50%"}
+        fit="contain"
+        width="100%"
+        src={image}
+        alt="construction image"
+      />
     );
     const iconStyles = {
       position: "absolute",
@@ -76,14 +82,8 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       padding: "5px",
     };
     return editing ? (
-      <Box
-        onClick={imgToggleHandler(index)}
-        opacity={selected ? "100%" : "70%"}
-        position="relative"
-      >
-        <Circle style={iconStyles}>
-          {selected ? <CloseIcon /> : <AddIcon />}
-        </Circle>
+      <Box onClick={imgToggleHandler(index)} position="relative">
+        <Circle style={iconStyles}>{selected ? <CloseIcon /> : "Add"}</Circle>
         {img}
       </Box>
     ) : (
