@@ -109,6 +109,7 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes, ...props }) => {
               bg="none"
               w="1.5rem"
               h="1.5rem"
+              color="black"
               minWidth="auto"
               minH="auto"
               {...getEditButtonProps()}
@@ -119,6 +120,7 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes, ...props }) => {
               bg="none"
               w="1.5rem"
               h="1.5rem"
+              color="black"
               minWidth="auto"
               minH="auto"
               onClick={onDeleteOpen}
@@ -130,7 +132,7 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes, ...props }) => {
   };
 
   return (
-    <Box border="1px solid #cccccc" p={3} mb={2} rounded={14} {...props}>
+    <Box p={3} mb={2} rounded={14} {...props}>
       <Editable
         placeholder="This note is empty!"
         value={currNote}

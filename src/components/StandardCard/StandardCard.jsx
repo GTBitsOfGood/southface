@@ -69,7 +69,8 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   const selected = !selState ? false : true;
   // const imgArr = selected ?
   const { addToReport } = useActiveReport();
-  const reportAddHandler = () => {
+  const reportAddHandler = (e) => {
+    e.stopPropagation(); // stops modal from opening
     if (!selected) {
       addToReport(card);
     }
