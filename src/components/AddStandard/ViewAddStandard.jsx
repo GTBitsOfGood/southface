@@ -116,7 +116,7 @@ const ViewAddStandard = ({ handleSubmit }) => {
         <SubText key={idx} text={p} />
       ))}
 
-      {values.tagArray && (
+      {values.tagArray && values.tagArray.length > 0 && (
         <Box>
           <SectionHeading text="Tags" />
 

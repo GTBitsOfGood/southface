@@ -12,10 +12,12 @@ const CreateTag = () => {
 
   const { mutate } = useSWRConfig();
 
-  const updateTags = () => {
-    createTag(values.tag);
-
+  const putTagInDatabase = async () => {
+    await createTag(values.tag);
     mutate(urls.api.tag.getObject);
+  };
+  const updateTags = async () => {
+    putTagInDatabase();
 
     const currArray = values.tagArray || [];
     currArray.push(values.tag);
