@@ -1,7 +1,7 @@
-import { Checkbox } from "@chakra-ui/react";
+import { Checkbox, FormLabel } from "@chakra-ui/react";
 import { useField } from "react-final-form";
 
-const CheckboxArrayControl = ({ name, value, children }) => {
+const CheckboxArrayControl = ({ name, value, children, style }) => {
   const {
     input: { checked, ...input },
     meta: { error, touched },
@@ -15,8 +15,11 @@ const CheckboxArrayControl = ({ name, value, children }) => {
       isChecked={checked}
       isInvalid={error && touched}
       color="Grey"
+      style={style}
     >
-      {children}
+      <FormLabel htmlFor={name} m={0} fontSize={style?.fontSize || "md"}>
+        {children}
+      </FormLabel>
     </Checkbox>
   );
 };

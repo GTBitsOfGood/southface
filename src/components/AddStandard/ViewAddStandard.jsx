@@ -25,7 +25,12 @@ const SubHeading = ({ text }) => (
   </Heading>
 );
 
-const SubText = ({ text }) => <Text color="Grey"> {text} </Text>;
+const SubText = ({ text, styles }) => (
+  <Text color="Grey" {...styles}>
+    {" "}
+    {text}{" "}
+  </Text>
+);
 
 const SubmitButton = ({ onOpen }) => (
   <Button variant="Blue" size="sm" fontSize="md" width="auto" onClick={onOpen}>
@@ -115,8 +120,12 @@ const ViewAddStandard = ({ handleSubmit }) => {
         <Box>
           <SectionHeading text="Tags" />
 
-          {values.tagArray.map((tag, idx) => (
-            <SubText key={idx} text={tag} />
+          {values.tagArray.sort().map((tag, idx) => (
+            <SubText
+              key={idx}
+              text={tag}
+              styles={{ textTransform: "capitalize" }}
+            />
           ))}
         </Box>
       )}
