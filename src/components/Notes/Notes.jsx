@@ -1,4 +1,4 @@
-import { AddIcon, CloseIcon } from "@chakra-ui/icons";
+import { AddIcon, CloseIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -6,6 +6,7 @@ import {
   Flex,
   Heading,
   HStack,
+  IconButton,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -15,6 +16,7 @@ import { updateCardById } from "../../actions/Card";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import AddNewNote from "./AddNewNote";
+import InformationPreview from "./InformationPreview";
 import Note from "./Note";
 import SentimentButton from "./SentimentButton";
 
@@ -25,6 +27,32 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
   const [newNote, setNewNote] = useState({ body: "", userId: "", date: "" });
 
   const { user } = useUser();
+
+  const [liked, setLiked] = useState(false);
+  const [disliked, setDisliked] = useState(false);
+  const [preview, setPreview] = useState(false);
+
+  const handleLikeClick = () => {
+    if (disliked && !liked) {
+      setDisliked(!disliked);
+      setLiked(!liked);
+    } else {
+      setLiked(!liked);
+    }
+  };
+
+  const handleDislikeClick = () => {
+    if (liked && !disliked) {
+      setLiked(!liked);
+      setDisliked(!disliked);
+    } else {
+      setDisliked(!disliked);
+    }
+  };
+
+  const handlePreviewClick = () => {
+    setPreview(!preview);
+  };
 
   useEffect(() => {
     setCurrentNotes(notes.map((c) => c).reverse());
@@ -104,7 +132,13 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
   }
 
   return (
-    <VStack h="80vh" w="35%" p="5% 2% 5% 2%" alignItems="left">
+    <VStack
+      h="80vh"
+      w="35%"
+      p="5% 2% 2% 2%"
+      alignItems="left"
+      justifyContent="space-between"
+    >
       <VStack alignItems="left" w="100%" pb={10}>
         <Heading size="lg" mt={3} mb={2}>
           Notes
@@ -166,22 +200,46 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
         </Box>
       </VStack>
 
-      <Flex alignItems="end">
-        <VStack alignItems="left" w="80%">
-          <Text>Was this image helpful?</Text>
-          <HStack justify="space-between">
+      {preview ? (
+        <InformationPreview onClick={handlePreviewClick} />
+      ) : (
+        <Flex alignItems="end">
+          <VStack alignItems="left" w="80%">
             <HStack>
-              <SentimentButton type="like" />
-              <SentimentButton type="dislike" />
+              <Text fontSize="sm">Was this image helpful?</Text>
+              {user?.isAdmin ? (
+                <IconButton
+                  bg="none"
+                  _hover={{ bg: "none" }}
+                  icon={<InfoOutlineIcon color="Grey" />}
+                  onClick={handlePreviewClick}
+                />
+              ) : (
+                <></>
+              )}
             </HStack>
-            {selState && (
-              <Button variant="Blue-rounded" onClick={editHandler}>
-                {editing ? "Save Changes" : "Add notes"}
-              </Button>
-            )}
-          </HStack>
-        </VStack>
-      </Flex>
+            <HStack justify="space-between">
+              <HStack>
+                <SentimentButton
+                  type="like"
+                  status={liked}
+                  onClick={handleLikeClick}
+                />
+                <SentimentButton
+                  type="dislike"
+                  status={disliked}
+                  onClick={handleDislikeClick}
+                />
+              </HStack>
+              {selState && (
+                <Button variant="Blue-rounded" onClick={editHandler}>
+                  {editing ? "Save Changes" : "Add notes"}
+                </Button>
+              )}
+            </HStack>
+          </VStack>
+        </Flex>
+      )}
     </VStack>
   );
 };

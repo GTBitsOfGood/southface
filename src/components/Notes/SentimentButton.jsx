@@ -1,5 +1,10 @@
 import { IconButton } from "@chakra-ui/react";
-import { MdOutlineThumbDownAlt, MdOutlineThumbUpAlt } from "react-icons/md";
+import {
+  MdOutlineThumbDown,
+  MdOutlineThumbUp,
+  MdThumbDown,
+  MdThumbUp,
+} from "react-icons/md";
 
 const SentimentButton = (props) => {
   const styles = {
@@ -7,21 +12,25 @@ const SentimentButton = (props) => {
     _hover: { bg: "none" },
     w: "1.5rem",
     h: "1.5rem",
-    minWidth: "auto",
-    minH: "auto",
   };
-  if (props.type == "like") {
-    return (
-      <IconButton icon={<MdOutlineThumbUpAlt color="#03acc8" />} {...styles} />
-    );
-  } else if (props.type == "dislike") {
-    return (
-      <IconButton
-        icon={<MdOutlineThumbDownAlt color="#03acc8" />}
-        {...styles}
-      />
-    );
-  }
+  const iconStyles = {
+    color: "#03acc8",
+    size: "1.5em",
+  };
+  const Icon = props.status
+    ? props.type === "like"
+      ? MdThumbUp
+      : MdThumbDown
+    : props.type === "like"
+    ? MdOutlineThumbUp
+    : MdOutlineThumbDown;
+  return (
+    <IconButton
+      icon={<Icon {...iconStyles} />}
+      {...styles}
+      onClick={props.onClick}
+    />
+  );
 };
 
 export default SentimentButton;
