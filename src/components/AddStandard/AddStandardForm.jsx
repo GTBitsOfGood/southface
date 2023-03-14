@@ -6,17 +6,23 @@
 import { Box, Heading, HStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Form } from "react-final-form";
-import { createCard } from "../../actions/Card";
+import { createCard, createManyCards } from "../../actions/Card";
 import {
   buildingTypeNames,
   primaryCategoryRoutes,
 } from "../../lib/utils/constants";
 import EditAddStandard from "./EditAddStandard";
 import OpenStandardPopup from "./OpenStandardPopup";
+import ViewAddManyStandards from "./ViewAddManyStandards";
 import ViewAddStandard from "./ViewAddStandard";
 
 const validate = (values) => {
   const errors = {};
+
+  if (values.massUpload) {
+    return;
+  }
+
   if (!values.title) {
     errors.title = "*This is a required field.";
   }
@@ -44,6 +50,22 @@ const AddStandardForm = () => {
       form.mutators.setValue("isEditing", false);
       return;
     }
+
+    if (values.massUpload) {
+      const cards = values.massUpload;
+      const newCards = await createManyCards(cards);
+
+      setPrevSubmitted({
+        title: newCards[0].title,
+        buildingType: newCards[0].buildingType,
+        primaryCategory: newCards[0].primaryCategory,
+      });
+
+      form.reset();
+
+      return;
+    }
+
     const images = values.uploadImages.map(() => {
       return {
         imageUrl:
@@ -112,6 +134,8 @@ const AddStandardForm = () => {
 
           {values.isEditing ? (
             <EditAddStandard handleSubmit={handleSubmit} />
+          ) : values.massUpload ? (
+            <ViewAddManyStandards handleSubmit={handleSubmit} />
           ) : (
             <ViewAddStandard handleSubmit={handleSubmit} />
           )}

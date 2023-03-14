@@ -44,7 +44,6 @@ const CardSchema = new Schema({
   },
   criteria: {
     type: String,
-    required: true,
   },
   tags: [
     {
