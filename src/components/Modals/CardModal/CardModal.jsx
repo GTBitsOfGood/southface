@@ -1,4 +1,4 @@
-import { ArrowUpIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
+import { AddIcon, ArrowUpIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -20,8 +20,8 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-final-form";
-import useUser from "../../../lib/hooks/useUser";
 import useActiveReport from "../../../lib/hooks/useActiveReport";
+import useUser from "../../../lib/hooks/useUser";
 import ArrowIcon from "../../Carousel/ArrowIcon";
 import Carousel from "../../Carousel/Carousel";
 import InputControl from "../../FormComponents/InputControl";
@@ -75,6 +75,8 @@ const CardModal = ({
 
   const [editing, setEditing] = useState(false);
   const { user } = useUser();
+
+  const [selectedImage, setSelectedImage] = useState(0);
 
   // Start of report selection code
   const { changeInReport, addToReport } = useActiveReport();
@@ -313,6 +315,8 @@ const CardModal = ({
                         image={image}
                         openImagePreviewCallback={openImagePreviewCallback}
                         showEnlarge={!editingReport}
+                        setCurrentImage={setSelectedImage}
+                        index={index}
                       />
                     </Box>
                   </Carousel.Item>
@@ -467,7 +471,10 @@ const CardModal = ({
                     <Button
                       variant="Grey-outlined-rounded"
                       size="lg"
-                      onClick={openImagePreviewCallback}
+                      onClick={() => {
+                        setSelectedImage(0);
+                        openImagePreviewCallback();
+                      }}
                     >
                       View Notes
                     </Button>
@@ -495,6 +502,8 @@ const CardModal = ({
         card={card}
         setCards={setCards}
         selState={selState}
+        currentImageIndex={selectedImage}
+        setSelectedImage={setSelectedImage}
       />
       <ConfirmActionsModal
         isOpen={isDiscardChangesOpen}

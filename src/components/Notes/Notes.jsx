@@ -20,7 +20,14 @@ import InformationPreview from "./InformationPreview";
 import Note from "./Note";
 import SentimentButton from "./SentimentButton";
 
-const Notes = ({ cardId, notes, setCards, ...rest }) => {
+const Notes = ({
+  cardId,
+  notes,
+  setCards,
+  cardImages,
+  currentImage,
+  ...rest
+}) => {
   const [currentNotes, setCurrentNotes] = useState(
     notes.map((n) => n).reverse()
   );
@@ -28,8 +35,17 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
 
   const { user } = useUser();
 
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
+  const [liked, setLiked] = useState();
+  const [disliked, setDisliked] = useState();
+  useEffect(() => {
+    setLiked(() => {
+      return cardImages[currentImage]?.thumbsUp.includes(user.id);
+    });
+    setDisliked(() => {
+      return cardImages[currentImage]?.thumbsDown.includes(user.id);
+    });
+  }, [currentImage]);
+
   const [preview, setPreview] = useState(false);
 
   const handleLikeClick = () => {
@@ -133,18 +149,23 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
 
   return (
     <VStack
-      h="80vh"
+      h="100%"
       w="35%"
       p="5% 2% 2% 2%"
       alignItems="left"
       justifyContent="space-between"
     >
-      <VStack alignItems="left" w="100%" pb={10}>
+      <VStack
+        alignItems="left"
+        w="100%"
+        pb={10}
+        maxH={{ xl: "82%", "2xl": "85%" }}
+      >
         <Heading size="lg" mt={3} mb={2}>
           Notes
         </Heading>
 
-        <Box h="50vh" overflowY="scroll">
+        <Box h="50vh" overflowY="auto">
           {user?.isLoggedIn && (
             <AddNewNote
               newNote={newNote}
@@ -152,7 +173,6 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
               createNewNote={createNewNote}
             />
           )}
-
           {currentNotes.map((note, index) => {
             if (!user?.isAdmin && note.userId !== user?.id) {
               return;
@@ -198,10 +218,19 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
             );
           })}
         </Box>
+        {selState && (
+          <Button variant="Blue-rounded" onClick={editHandler}>
+            {editing ? "Save Changes" : "Add notes"}
+          </Button>
+        )}
       </VStack>
 
       {preview ? (
-        <InformationPreview onClick={handlePreviewClick} />
+        <InformationPreview
+          onClick={handlePreviewClick}
+          images={cardImages}
+          currentImage={currentImage}
+        />
       ) : (
         <Flex alignItems="end">
           <VStack alignItems="left" w="80%">
@@ -231,11 +260,6 @@ const Notes = ({ cardId, notes, setCards, ...rest }) => {
                   onClick={handleDislikeClick}
                 />
               </HStack>
-              {selState && (
-                <Button variant="Blue-rounded" onClick={editHandler}>
-                  {editing ? "Save Changes" : "Add notes"}
-                </Button>
-              )}
             </HStack>
           </VStack>
         </Flex>

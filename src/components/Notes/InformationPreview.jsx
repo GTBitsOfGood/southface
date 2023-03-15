@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { MdThumbDown, MdThumbUp } from "react-icons/md";
 
-const InformationPreview = (props) => {
+const InformationPreview = ({ onClick, images, currentImage }) => {
   return (
     <VStack alignItems="flex-end">
       <CloseButton
@@ -16,7 +16,7 @@ const InformationPreview = (props) => {
         bg="Grey"
         borderRadius="2em"
         _hover={{ bg: "Grey" }}
-        onClick={props.onClick}
+        onClick={onClick}
         color="white"
         right="0.7em"
         h="2em"
@@ -33,11 +33,11 @@ const InformationPreview = (props) => {
       >
         <HStack>
           <HStack>
-            <Text>700</Text>
+            <Text>{images[currentImage].thumbsUp.length}</Text>
             <Icon as={MdThumbUp} color="Blue" />
           </HStack>
           <HStack>
-            <Text>700</Text>
+            <Text>{images[currentImage].thumbsDown.length}</Text>
             <Icon as={MdThumbDown} color="Blue" />
           </HStack>
         </HStack>

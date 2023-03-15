@@ -13,11 +13,13 @@ const Carousel = ({
   showDots = false,
   dotColorActive = "#795548",
   dotColorInactive = "#ccc",
+  currentImage = 0,
+  setCurrentImage = null,
   dot,
   containerStyle,
   children,
 }) => {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(currentImage);
   const railWrapperRef = useRef(null);
 
   const itemList = useMemo(
@@ -54,6 +56,9 @@ const Carousel = ({
   const handlePrev = useCallback(() => {
     setCurrentPage((p) => {
       const prevPage = p - 1;
+      if (setCurrentImage) {
+        setCurrentImage(prevPage);
+      }
       return prevPage;
     });
   }, []);
@@ -61,9 +66,13 @@ const Carousel = ({
   const handleNext = useCallback(() => {
     setCurrentPage((p) => {
       const nextPage = p + 1;
-      if (nextPage >= page) {
-        return p;
+      if (setCurrentImage) {
+        setCurrentImage(nextPage);
       }
+
+      // if (nextPage >= page) {
+      //   return p;
+      // }
 
       return nextPage;
     });
