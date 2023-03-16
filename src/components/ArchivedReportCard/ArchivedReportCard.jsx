@@ -15,6 +15,9 @@ import StandardCard from "./StandardCard";
 const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const [hasReportCard, setHasReportCard] = useState(true);
 
+  // Date place holder
+  const date = new Date();
+
   const handleRemove = () => {
     setHasReportCard(false);
   };
@@ -47,7 +50,14 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                 </Button>
               </Box>
             </Box>
-            <Box>Completed on October 31, 2022</Box>
+            <Box>
+              Completed on{" "}
+              {new Date(date).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </Box>
           </CardHeader>
           <CardBody>
             <Flex justifyContent="space-between" marginRight="15em">
