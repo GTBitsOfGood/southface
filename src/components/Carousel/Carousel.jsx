@@ -61,7 +61,7 @@ const Carousel = ({
       }
       return prevPage;
     });
-  }, []);
+  }, [setCurrentImage]);
 
   const handleNext = useCallback(() => {
     setCurrentPage((p) => {
@@ -76,7 +76,7 @@ const Carousel = ({
 
       return nextPage;
     });
-  }, [page]);
+  }, [setCurrentImage]);
 
   const turnToPage = useCallback((page) => {
     setCurrentPage(page);

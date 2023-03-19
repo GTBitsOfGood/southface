@@ -12,6 +12,8 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
+import urls from "lib/utils/urls";
+import useSWR from "swr";
 import { updateCardById } from "../../actions/Card";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
@@ -20,14 +22,10 @@ import InformationPreview from "./InformationPreview";
 import Note from "./Note";
 import SentimentButton from "./SentimentButton";
 
-const Notes = ({
-  cardId,
-  notes,
-  setCards,
-  cardImages,
-  currentImage,
-  ...rest
-}) => {
+const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
+  const { data } = useSWR(urls.api.card.get + cardId);
+  const card = data?.payload;
+
   const [currentNotes, setCurrentNotes] = useState(
     notes.map((n) => n).reverse()
   );
@@ -39,12 +37,12 @@ const Notes = ({
   const [disliked, setDisliked] = useState();
   useEffect(() => {
     setLiked(() => {
-      return cardImages[currentImage]?.thumbsUp.includes(user.id);
+      return card?.images[currentImage].thumbsUp.includes(user.id);
     });
     setDisliked(() => {
-      return cardImages[currentImage]?.thumbsDown.includes(user.id);
+      return card?.images[currentImage].thumbsDown.includes(user.id);
     });
-  }, [currentImage]);
+  }, [currentImage, card?.images, user.id]);
 
   const [preview, setPreview] = useState(false);
 
@@ -228,7 +226,7 @@ const Notes = ({
       {preview ? (
         <InformationPreview
           onClick={handlePreviewClick}
-          images={cardImages}
+          images={card?.images}
           currentImage={currentImage}
         />
       ) : (

@@ -22,12 +22,6 @@ const ImagePreviewModal = ({
 }) => {
   const { selState } = { ...rest };
   const [editing, setEditing] = useState(false);
-  // const [currentImage, setCurrentImage] = useState(0);
-
-  // useEffect(() => {
-  //   setCurrentImage(currentImageIndex);
-  //   console.log("This is the index in image preview " + currentImageIndex);
-  // }, [currentImageIndex]);
 
   useEffect(() => {
     if (!selState) {
@@ -60,7 +54,6 @@ const ImagePreviewModal = ({
               setCards={setCards}
               editing={editing}
               setEditing={setEditing}
-              cardImages={card.images}
               currentImage={currentImageIndex}
             />
           </HStack>

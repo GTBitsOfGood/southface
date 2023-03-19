@@ -102,7 +102,7 @@ const CardModal = ({
     if (!selected) {
       setEditingReport(false);
     }
-  }, [editingReport]);
+  }, [editingReport, selected]);
 
   const openImagePreviewCallback = () => {
     setEditingReport(false);
