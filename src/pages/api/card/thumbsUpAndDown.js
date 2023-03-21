@@ -1,16 +1,16 @@
-import { thumbsUp } from "server/mongodb/actions/Card";
+import { thumbsUpAndDown } from "server/mongodb/actions/Card";
 import { withSessionRoute } from "src/lib/utils/session";
 
-// @route   PUT api/card/thumbsUp
-// @desc    Update Card ThumbsUp Array
+// @route   PUT api/card/thumbsUpAndDown
+// @desc    Update Card ThumbsUp Array and ThumbsDown Array
 // @access  Public
 const handler = async (req, res) => {
   try {
-    const updatedCard = await thumbsUp(
+    const updatedCard = await thumbsUpAndDown(
       req.body.cardId,
       req.body.userId,
       req.body.index,
-      req.body.shouldPush
+      req.body.currentlyLiked
     );
 
     return res.status(200).json({

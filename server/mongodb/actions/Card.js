@@ -163,3 +163,19 @@ export async function thumbsDown(cardId, userId, index, shouldPush) {
     { new: true }
   );
 }
+
+export async function thumbsUpAndDown(cardId, userId, index, currentlyLiked) {
+  await mongoDB();
+
+  const operationOne = currentlyLiked ? "$pull" : "$push";
+  const operationTwo = currentlyLiked ? "$push" : "$pull";
+
+  return Card.findOneAndUpdate(
+    { _id: cardId },
+    {
+      [`${operationOne}`]: { [`images.${index}.thumbsUp`]: userId },
+      [`${operationTwo}`]: { [`images.${index}.thumbsDown`]: userId },
+    },
+    { new: true }
+  );
+}

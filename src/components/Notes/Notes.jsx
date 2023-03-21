@@ -13,8 +13,13 @@ import {
 import React, { useEffect, useState } from "react";
 
 import urls from "lib/utils/urls";
-import useSWR from "swr";
-import { updateCardById } from "../../actions/Card";
+import useSWR, { mutate } from "swr";
+import {
+  thumbsDown,
+  thumbsUp,
+  thumbsUpAndDown,
+  updateCardById,
+} from "../../actions/Card";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import AddNewNote from "./AddNewNote";
@@ -24,7 +29,7 @@ import SentimentButton from "./SentimentButton";
 
 const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
   const { data } = useSWR(urls.api.card.get + cardId);
-  const card = data?.payload;
+  const [card, setCard] = useState(data?.payload);
 
   const [currentNotes, setCurrentNotes] = useState(
     notes.map((n) => n).reverse()
@@ -35,6 +40,7 @@ const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
 
   const [liked, setLiked] = useState();
   const [disliked, setDisliked] = useState();
+
   useEffect(() => {
     setLiked(() => {
       return card?.images[currentImage].thumbsUp.includes(user.id);
@@ -46,22 +52,30 @@ const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
 
   const [preview, setPreview] = useState(false);
 
-  const handleLikeClick = () => {
+  const handleLikeClick = async () => {
     if (disliked && !liked) {
-      setDisliked(!disliked);
-      setLiked(!liked);
+      setCard(await thumbsUpAndDown(cardId, user.id, currentImage, false));
     } else {
-      setLiked(!liked);
+      if (liked) {
+        setCard(await thumbsUp(cardId, user.id, currentImage, false));
+      } else {
+        setCard(await thumbsUp(cardId, user.id, currentImage, true));
+      }
     }
+    mutate(urls.api.card.get + cardId);
   };
 
-  const handleDislikeClick = () => {
+  const handleDislikeClick = async () => {
     if (liked && !disliked) {
-      setLiked(!liked);
-      setDisliked(!disliked);
+      setCard(await thumbsUpAndDown(cardId, user.id, currentImage, true));
     } else {
-      setDisliked(!disliked);
+      if (disliked) {
+        setCard(await thumbsDown(cardId, user.id, currentImage, false));
+      } else {
+        setCard(await thumbsDown(cardId, user.id, currentImage, true));
+      }
     }
+    mutate(urls.api.card.get + cardId);
   };
 
   const handlePreviewClick = () => {

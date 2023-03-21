@@ -1,8 +1,8 @@
 import { thumbsDown } from "server/mongodb/actions/Card";
 import { withSessionRoute } from "src/lib/utils/session";
 
-// @route   PUT api/card/update
-// @desc    Update Card Request
+// @route   PUT api/card/thumbsDown
+// @desc    Update Card Thumbs Down Array
 // @access  Public
 const handler = async (req, res) => {
   try {
