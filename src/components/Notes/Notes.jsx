@@ -29,7 +29,7 @@ import SentimentButton from "./SentimentButton";
 
 const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
   const { data } = useSWR(urls.api.card.get + cardId);
-  const [card, setCard] = useState(data?.payload);
+  const [card, setCard] = useState();
 
   const [currentNotes, setCurrentNotes] = useState(
     notes.map((n) => n).reverse()
@@ -58,12 +58,12 @@ const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
 
   const handleLikeClick = async () => {
     if (disliked && !liked) {
-      setCard(await thumbsUpAndDown(cardId, user.id, currentImage, false));
+      await thumbsUpAndDown(cardId, user.id, currentImage, false);
     } else {
       if (liked) {
-        setCard(await thumbsUp(cardId, user.id, currentImage, false));
+        await thumbsUp(cardId, user.id, currentImage, false);
       } else {
-        setCard(await thumbsUp(cardId, user.id, currentImage, true));
+        await thumbsUp(cardId, user.id, currentImage, true);
       }
     }
     mutate(urls.api.card.get + cardId);
@@ -71,12 +71,12 @@ const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
 
   const handleDislikeClick = async () => {
     if (liked && !disliked) {
-      setCard(await thumbsUpAndDown(cardId, user.id, currentImage, true));
+      await thumbsUpAndDown(cardId, user.id, currentImage, true);
     } else {
       if (disliked) {
-        setCard(await thumbsDown(cardId, user.id, currentImage, false));
+        await thumbsDown(cardId, user.id, currentImage, false);
       } else {
-        setCard(await thumbsDown(cardId, user.id, currentImage, true));
+        await thumbsDown(cardId, user.id, currentImage, true);
       }
     }
     mutate(urls.api.card.get + cardId);
