@@ -42,6 +42,10 @@ const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
   const [disliked, setDisliked] = useState();
 
   useEffect(() => {
+    setCard(data?.payload);
+  }, [data]);
+
+  useEffect(() => {
     setLiked(() => {
       return card?.images[currentImage].thumbsUp.includes(user.id);
     });
