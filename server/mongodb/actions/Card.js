@@ -139,3 +139,43 @@ export async function deleteAllCards() {
   await mongoDB();
   return Card.deleteMany({});
 }
+
+export async function thumbsUp(cardId, userId, index, shouldPush) {
+  await mongoDB();
+
+  const operation = shouldPush ? "$push" : "$pull";
+
+  return Card.findOneAndUpdate(
+    { _id: cardId },
+    { [`${operation}`]: { [`images.${index}.thumbsUp`]: userId } },
+    { new: true }
+  );
+}
+
+export async function thumbsDown(cardId, userId, index, shouldPush) {
+  await mongoDB();
+
+  const operation = shouldPush ? "$push" : "$pull";
+
+  return Card.findOneAndUpdate(
+    { _id: cardId },
+    { [`${operation}`]: { [`images.${index}.thumbsDown`]: userId } },
+    { new: true }
+  );
+}
+
+export async function thumbsUpAndDown(cardId, userId, index, currentlyLiked) {
+  await mongoDB();
+
+  const operationOne = currentlyLiked ? "$pull" : "$push";
+  const operationTwo = currentlyLiked ? "$push" : "$pull";
+
+  return Card.findOneAndUpdate(
+    { _id: cardId },
+    {
+      [`${operationOne}`]: { [`images.${index}.thumbsUp`]: userId },
+      [`${operationTwo}`]: { [`images.${index}.thumbsDown`]: userId },
+    },
+    { new: true }
+  );
+}
