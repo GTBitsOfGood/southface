@@ -1,4 +1,9 @@
+import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
   Box,
   Heading,
   VStack,
@@ -12,31 +17,69 @@ export default function ReportNotes({
   handleSaveEdit,
 }) {
   const { user } = useUser();
+  const firstThree = currentNotes.slice(0, 3);
+  const remaining = currentNotes.slice(3);
+  const notesMapper = (note, index) => {
+    if (!user?.isAdmin && note.userId !== user?.id) {
+      return;
+    }
+    return (
+      <Note
+        key={index}
+        onClick={noteToggleHandler(index)}
+        borderColor="transparent"
+        currNoteIdx={index}
+        note={note}
+        notes={currentNotes}
+        handleSaveEdit={handleSaveEdit}
+      />
+    );
+  };
+  const accordionHeader = (isExpanded) =>
+    isExpanded ? (
+      <>
+        View less notes <ChevronUpIcon />
+      </>
+    ) : (
+      <>
+        View {remaining.length} more note{remaining.length !== 1 && "s"}{" "}
+        <ChevronDownIcon />
+      </>
+    );
+
   return (
     <VStack alignItems="left">
       <VStack alignItems="left" w="100%" pb={10}>
         <Heading size="lg" mt={3} mb={2}>
           Notes
         </Heading>
-
-        <Box>
-          {currentNotes.map((note, index) => {
-            if (!user?.isAdmin && note.userId !== user?.id) {
-              return;
-            }
-            return (
-              <Note
-                key={index}
-                onClick={noteToggleHandler(index)}
-                borderColor="transparent"
-                currNoteIdx={index}
-                note={note}
-                notes={currentNotes}
-                handleSaveEdit={handleSaveEdit}
-              />
-            );
-          })}
-        </Box>
+        {currentNotes.length === 0 ? (
+          <Box fontStyle="italic" color="Gray">
+            No notes added to report
+          </Box>
+        ) : (
+          <Box>
+            {firstThree.map(notesMapper)}
+            {remaining.length !== 0 && (
+              <Accordion allowToggle allowMultiple>
+                <AccordionItem border="none">
+                  {({ isExpanded }) => {
+                    return (
+                      <>
+                        <AccordionButton color="Blue">
+                          {accordionHeader(isExpanded)}
+                        </AccordionButton>
+                        <AccordionPanel>
+                          {remaining.map(notesMapper)}
+                        </AccordionPanel>
+                      </>
+                    );
+                  }}
+                </AccordionItem>
+              </Accordion>
+            )}
+          </Box>
+        )}
       </VStack>
     </VStack>
   );
