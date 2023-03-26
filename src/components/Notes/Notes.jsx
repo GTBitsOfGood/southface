@@ -62,11 +62,14 @@ const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
 
   const handleLikeClick = async () => {
     if (disliked && !liked) {
+      // disliked image previously and about to like
       await thumbsUpAndDown(cardId, user.id, currentImage, false);
     } else {
       if (liked) {
+        // unlike the image
         await thumbsUp(cardId, user.id, currentImage, false);
       } else {
+        // like image
         await thumbsUp(cardId, user.id, currentImage, true);
       }
     }
@@ -75,6 +78,7 @@ const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
 
   const handleDislikeClick = async () => {
     if (liked && !disliked) {
+      // liked image previous and about to dislike
       await thumbsUpAndDown(cardId, user.id, currentImage, true);
     } else {
       if (disliked) {
