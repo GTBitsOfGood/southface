@@ -47,12 +47,16 @@ const Notes = ({ cardId, notes, setCards, currentImage, ...rest }) => {
 
   useEffect(() => {
     setLiked(() => {
-      return card?.images[currentImage].thumbsUp.includes(user.id);
+      return user?.isLoggedIn
+        ? card?.images[currentImage].thumbsUp.includes(user.id)
+        : false;
     });
     setDisliked(() => {
-      return card?.images[currentImage].thumbsDown.includes(user.id);
+      return user?.isLoggedIn
+        ? card?.images[currentImage].thumbsDown.includes(user.id)
+        : false;
     });
-  }, [currentImage, card?.images, user.id]);
+  }, [user, currentImage, card]);
 
   const [preview, setPreview] = useState(false);
 
