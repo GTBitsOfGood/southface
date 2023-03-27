@@ -5,13 +5,25 @@ import { logout } from "src/actions/User";
 import Image from "src/components/Image";
 import useUser from "src/lib/hooks/useUser";
 import urls from "src/lib/utils/urls";
-import LogoutModal from "../Modals/LogoutModal";
+import ConfirmActionModal from "../Modals/ConfirmActionModal/ConfirmActionModal";
 import ShoppingCartView from "../ShoppingCartView";
 import NavLink from "./NavLink";
 
 const NavBar = () => {
   const router = useRouter();
   const currPage = router.pathname;
+  let confirmMessage;
+
+  switch (currPage) {
+    case "/add-standard":
+      confirmMessage = "add a standard";
+      break;
+    case "/report-builder":
+      confirmMessage = "report builder";
+      break;
+    default:
+      confirmMessage = "digital library";
+  }
 
   const {
     isOpen: isCartOpen,
@@ -59,11 +71,21 @@ const NavBar = () => {
       {/*This is an empty div to right-align the last nav link */}
       <NavLinkAuth />
       <ShoppingCartView isOpen={isCartOpen} onClose={onCartClose} />
-      <LogoutModal
+      {/* <LogoutModal
         isOpen={isLogoutOpen}
         onClose={onLogoutClose}
         onLogout={logoutHandler}
         currPage={currPage}
+      /> */}
+      <ConfirmActionModal
+        isOpen={isLogoutOpen}
+        onClose={onLogoutClose}
+        mainText="Are you sure you want to log out?"
+        subText={`You have unsaved changes in ${confirmMessage}`}
+        confirmButtonText={`Yes, log out ${confirmMessage}`}
+        cancelButtonText={`No, return ${confirmMessage}`}
+        onLogout={logoutHandler}
+        isDanger={true}
       />
     </Flex>
   );
