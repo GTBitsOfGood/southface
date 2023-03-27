@@ -135,18 +135,18 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
           display="flex"
           justifyContent="space-between"
         >
-          <Flex overflowX="hidden">
+          <Flex overflowX="scroll" flex={1}>
             {card.tags.map((tag, index) => {
               if (index < 3) {
                 return (
                   <Tag
                     key={index}
                     textTransform="capitalize"
-                    bgColor="#C4D600"
+                    bgolor="#C4D600"
                     rounded="14.7877px"
                     marginLeft={0.5}
+                    flexShrink={0}
                     display="flex"
-                    overflowX="scroll"
                   >
                     {tag}
                   </Tag>

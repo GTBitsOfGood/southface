@@ -50,7 +50,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                 </Button>
               </Box>
             </Box>
-            <Box>
+            <Box textColor="gray">
               Completed on{" "}
               {new Date(date).toLocaleDateString("en-US", {
                 month: "short",
