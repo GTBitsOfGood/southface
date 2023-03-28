@@ -36,7 +36,7 @@ const PDFWrapper = (props) => {
 const PrintToPDFButton = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [instance, updateInstance] = usePDF({
+  const [instance] = usePDF({
     document: <ReportDocumentPDF selectedReport={props.report} />,
   });
 
