@@ -30,7 +30,7 @@ const ReportPDFViewer = ({ report }) => {
           width={"100%"}
           height={"100%"}
         >
-          <ReportDocumentPDF selectedReportCards={report.cards} />
+          <ReportDocumentPDF selectedReport={report} />
         </PDFViewer>
       )}
     </VStack>

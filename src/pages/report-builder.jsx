@@ -10,10 +10,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
+import ArchivedReportView from "src/components/ArchivedReportView";
 import RecentStandardsView from "src/components/RecentStandardsView";
 import { ReportStandard } from "src/components/StandardCard";
 import useActiveReport from "src/lib/hooks/useActiveReport";
-import ArchivedReportView from "src/components/ArchivedReportView";
+import PrintToPDFButton from "../components/PrintToPDFButton";
 
 const ReportBuilder = () => {
   // For PDF exporting
@@ -69,6 +70,7 @@ const ReportBuilder = () => {
                 Complete Report
               </Button>
             </Flex>
+            <PrintToPDFButton report={report} />
           </CardBody>
           {sels.map((cardWrapper, index) => (
             <CardBody key={index}>
