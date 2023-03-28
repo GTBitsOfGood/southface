@@ -341,7 +341,6 @@ const CardModal = ({
                 {card.criteria}
               </Text>
             )}
-
             <Flex
               mt={3}
               mb={15}
