@@ -142,7 +142,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                   <Tag
                     key={index}
                     textTransform="capitalize"
-                    bgolor="#C4D600"
+                    bgColor="#C4D600"
                     rounded="14.7877px"
                     marginLeft={0.5}
                     flexShrink={0}

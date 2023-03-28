@@ -71,20 +71,18 @@ const NavBar = () => {
       {/*This is an empty div to right-align the last nav link */}
       <NavLinkAuth />
       <ShoppingCartView isOpen={isCartOpen} onClose={onCartClose} />
-      {/* <LogoutModal
-        isOpen={isLogoutOpen}
-        onClose={onLogoutClose}
-        onLogout={logoutHandler}
-        currPage={currPage}
-      /> */}
       <ConfirmActionModal
         isOpen={isLogoutOpen}
         onClose={onLogoutClose}
         mainText="Are you sure you want to log out?"
-        subText={`You have unsaved changes in ${confirmMessage}`}
-        confirmButtonText={`Yes, log out ${confirmMessage}`}
+        subText={
+          currPage === "/add-standard"
+            ? `You have unsaved changes in ${confirmMessage}`
+            : null
+        }
+        confirmButtonText={`Yes, log out`}
         cancelButtonText={`No, return ${confirmMessage}`}
-        onLogout={logoutHandler}
+        handleAction={logoutHandler}
         isDanger={true}
       />
     </Flex>
