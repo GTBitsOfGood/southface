@@ -48,7 +48,7 @@ const PrintToPDFButton = (props) => {
       }}
     >
       Print to PDF
-      <Modal isOpen={isOpen} onClose={onClose} size="3xl">
+      <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>PDF Preview</ModalHeader>

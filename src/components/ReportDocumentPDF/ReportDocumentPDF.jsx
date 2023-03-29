@@ -10,7 +10,7 @@ import React from "react";
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "#FFFFFF",
     padding: 40,
   },
   hr: {
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
+    border: "1px solid black",
   },
   name: {
     fontWeight: "ultrabold",
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   title: {
-    fontWeight: "ultrabold",
+    fontWeight: "bold",
     color: "#666666",
     fontSize: 18,
   },
