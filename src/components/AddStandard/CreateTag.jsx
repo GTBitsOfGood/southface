@@ -17,11 +17,12 @@ const CreateTag = () => {
     mutate(urls.api.tag.getObject);
   };
   const updateTags = async () => {
-    putTagInDatabase();
+    await putTagInDatabase();
 
     const currArray = values.tagArray || [];
     currArray.push(values.tag);
 
+    mutators.setValue(values.tag, true);
     mutators.setValue("tagArray", currArray);
     mutators.setValue("tag", null);
   };
