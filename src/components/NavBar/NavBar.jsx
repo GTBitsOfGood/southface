@@ -1,4 +1,4 @@
-import { Box, Flex, useDisclosure } from "@chakra-ui/react";
+import { Box, Divider, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import Router, { useRouter } from "next/router";
 
 import { logout } from "src/actions/User";
@@ -48,7 +48,13 @@ const NavBar = () => {
     if (!user?.isLoggedIn) {
       return <NavLink name="Login" href={urls.pages.login} {...props} />;
     } else {
-      return <NavLink name="Logout" onClick={onLogoutOpen} {...props} />;
+      return (
+        <Flex align="center">
+          <Text mr={2}>{`Logged in as ${user.username}`}</Text>
+          <Divider orientation="vertical" h={6} borderColor="Grey" />
+          <NavLink name="Logout" onClick={onLogoutOpen} {...props} />
+        </Flex>
+      );
     }
   };
 
