@@ -15,6 +15,9 @@ export default {
       getPagination: "/api/card/getPagination?page=",
       update: "/api/card/update/",
       delete: "/api/card/delete/",
+      thumbsUp: "/api/card/thumbsUp",
+      thumbsDown: "/api/card/thumbsDown",
+      thumbsUpAndDown: "/api/card/thumbsUpAndDown",
     },
     user: {
       signUp: "/api/user/sign-up",

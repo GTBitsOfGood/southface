@@ -14,7 +14,12 @@ const Tag = (props) => {
           Object.keys(tags).map((letter) => {
             return (
               <Box key={letter}>
-                <TagBox key={letter} letter={letter} list={tags[letter]} />
+                <TagBox
+                  key={letter}
+                  letter={letter}
+                  list={tags[letter]}
+                  isTruncated
+                />
               </Box>
             );
           })}

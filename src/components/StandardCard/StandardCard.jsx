@@ -78,11 +78,10 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
 
   const ReportButton = ({ ...props }) => (
     <Button
-      position="absolute"
-      right="1"
-      bottom="0"
       variant={selected ? "Grey" : "Blue-outlined"}
       onClick={reportAddHandler}
+      flexGrow={0}
+      flexShrink={0}
       {...props}
     >
       {!selected ? "Add To Report" : "Added to Report"}
@@ -117,7 +116,9 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
       </Box>
 
       <Flex p={3} flexDirection="column" flex={1} mx="2">
-        <Heading fontSize="1rem">{card.title}</Heading>
+        <Heading fontSize="1rem" isTruncated>
+          {card.title}
+        </Heading>
 
         <Text
           fontSize=".92rem"
@@ -128,22 +129,37 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
           {card.criteria}
         </Text>
 
-        <HStack mt="auto" position="relative" mb="0.5">
-          {card.tags.slice(0, 3).map((tag, index) => {
-            return (
-              <Tag
-                key={index}
-                textTransform="capitalize"
-                bgColor="#C4D600"
-                rounded="14.7877px"
-                px="2"
-              >
-                {tag}
-              </Tag>
-            );
-          })}
+        <HStack
+          mt="auto"
+          mb="0.5"
+          display="flex"
+          justifyContent="space-between"
+        >
+          <Flex overflowX="scroll" flex={1}>
+            {card.tags.map((tag, index) => {
+              if (index < 3) {
+                return (
+                  <Tag
+                    key={index}
+                    textTransform="capitalize"
+                    bgColor="#C4D600"
+                    rounded="14.7877px"
+                    marginLeft={0.5}
+                    flexShrink={0}
+                    display="flex"
+                  >
+                    {tag}
+                  </Tag>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </Flex>
+
           <ReportButton />
         </HStack>
+
         <CardModalWithForm
           isOpenCardModal={isOpenCardModal}
           onCloseCardModal={onCloseCardModal}

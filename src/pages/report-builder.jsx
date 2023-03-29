@@ -29,9 +29,23 @@ const ReportBuilder = () => {
   useEffect(() => {
     if (report && !isValidating) {
       // this useEffect wrapper prevents jittering
-      setSels(report.cards);
+      setSels(
+        report.cards.map((cardWrapper) => ({
+          ...cardWrapper,
+          completedDate: null, // add initial completedDate property
+        }))
+      );
     }
   }, [isValidating]);
+
+  const handleCompleteReport = () => {
+    const updatedSels = sels.map((sel) => ({
+      ...sel,
+      completedDate: sel.completedDate || new Date(), // update completedDate if not already set
+    }));
+    setSels(updatedSels);
+  };
+
   const useGlobalEditing = useState(false);
   return (
     <>
@@ -66,7 +80,11 @@ const ReportBuilder = () => {
                   Rename
                 </Button>
               </HStack>
-              <Button minW="20%" variant="Blue-rounded">
+              <Button
+                minW="20%"
+                variant="Blue-rounded"
+                onClick={handleCompleteReport}
+              >
                 Complete Report
               </Button>
             </Flex>

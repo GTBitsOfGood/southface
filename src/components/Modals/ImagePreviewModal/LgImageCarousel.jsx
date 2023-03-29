@@ -4,7 +4,7 @@ import Carousel from "../../Carousel/Carousel";
 
 import Image from "next/image";
 
-const LgImageCarousel = ({ cardImages }) => {
+const LgImageCarousel = ({ cardImages, currentImage, setCurrentImage }) => {
   return (
     <Box
       w="65%"
@@ -15,7 +15,14 @@ const LgImageCarousel = ({ cardImages }) => {
       justifyContent="center"
       overflow="hidden"
     >
-      <Carousel cols={1} rows={1} gap={10} showDots={true}>
+      <Carousel
+        cols={1}
+        rows={1}
+        gap={10}
+        showDots={true}
+        currentImage={currentImage}
+        setCurrentImage={setCurrentImage}
+      >
         {cardImages.map(({ imageUrl: image }, index) => {
           return (
             <Carousel.Item key={index}>

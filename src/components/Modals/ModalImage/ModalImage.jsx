@@ -6,12 +6,14 @@ import ConfirmActionsModal from "../CardModal/ConfirmActionModal";
 
 const ModalImage = ({
   image,
+  index = 0,
   openImagePreviewCallback,
   editing,
   handleDeleteImage,
   isImageDeleteOpen,
   onImageDeleteClose,
   onImageDeleteOpen,
+  setCurrentImage = null,
   ...props
 }) => {
   const imagePath = new URL(image).pathname.split("/");
@@ -61,7 +63,12 @@ const ModalImage = ({
           backgroundColor="#FFFFFF"
           color="Grey"
           boxShadow="xl"
-          onClick={openImagePreviewCallback}
+          onClick={() => {
+            if (setCurrentImage) {
+              setCurrentImage(index);
+            }
+            openImagePreviewCallback();
+          }}
         >
           Enlarge Image
         </Button>
