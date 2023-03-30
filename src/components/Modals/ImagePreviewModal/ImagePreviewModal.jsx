@@ -44,7 +44,7 @@ const ImagePreviewModal = ({
         }
       });
     });
-  }
+  };
 
   return (
     <Modal size="4xl" isOpen={isOpen} onClose={modalCloseHandler}>

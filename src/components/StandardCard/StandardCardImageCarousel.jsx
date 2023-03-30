@@ -1,8 +1,4 @@
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CloseIcon,
-} from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@chakra-ui/icons";
 import { Box, Circle, Image } from "@chakra-ui/react";
 import Carousel from "react-grid-carousel";
 import useActiveReport from "../../lib/hooks/useActiveReport";

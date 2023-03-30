@@ -83,7 +83,8 @@ const ReportStandardNotes = ({ notes, card, selState, ...rest }) => {
 
   const { user } = useUser();
   const notesFilter = (note, index) =>
-    selState?.noteSelections[index] && (user.isAdmin || note.userId === user.id);
+    selState?.noteSelections[index] &&
+    (user.isAdmin || note.userId === user.id);
   console.log(user);
   return (
     <Notes

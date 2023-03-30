@@ -8,7 +8,7 @@ import {
   HStack,
   IconButton,
   Text,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import urls from "lib/utils/urls";
 import React, { useEffect, useState } from "react";
