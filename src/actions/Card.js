@@ -48,7 +48,9 @@ export const getCardsPagination = async (pageNumber, searchFilter) => {
   let url = urls.api.card.getPagination + pageNumber;
 
   if (searchFilter) {
-    const tagsArray = searchFilter.tags.map((t) => t.toLowerCase());
+    const tagsArray = searchFilter.tags.map((t) =>
+      t.toLowerCase().replaceAll(",", "-;-")
+    );
 
     url +=
       "&searchFilterString=" +
