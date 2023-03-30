@@ -1,14 +1,8 @@
-import {
-  Box,
-  Button,
-  Flex,
-  FormLabel,
-  Heading,
-  Text,
-  useDisclosure,
-  Wrap,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, FormLabel, useDisclosure } from "@chakra-ui/react";
 import { useForm, useFormState } from "react-final-form";
+import { useSWRConfig } from "swr";
+import { createTag } from "../../actions/Tag";
+import urls from "../../lib/utils/urls";
 import InputControl from "../FormComponents/InputControl";
 import ConfirmActionModal from "../Modals/ConfirmActionModal";
 
@@ -16,10 +10,19 @@ const CreateTag = () => {
   const { values } = useFormState();
   const { mutators } = useForm();
 
-  const updateTags = () => {
+  const { mutate } = useSWRConfig();
+
+  const putTagInDatabase = async () => {
+    await createTag(values.tag);
+    mutate(urls.api.tag.getObject);
+  };
+  const updateTags = async () => {
+    await putTagInDatabase();
+
     const currArray = values.tagArray || [];
     currArray.push(values.tag);
 
+    mutators.setValue(values.tag, true);
     mutators.setValue("tagArray", currArray);
     mutators.setValue("tag", null);
   };
@@ -67,17 +70,6 @@ const CreateTag = () => {
           isDanger={false}
         />
       </Flex>
-      <Heading color="#8C8C8C" fontSize="16px" my={2}>
-        Tags
-      </Heading>
-      <Wrap>
-        {values.tagArray &&
-          values.tagArray.map((tag, idx) => (
-            <Text key={idx} color="Grey" w="auto">
-              {tag} &nbsp;
-            </Text>
-          ))}
-      </Wrap>
     </Box>
   );
 };

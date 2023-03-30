@@ -1,21 +1,28 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
-import { updateCardById } from "../../actions/Card";
+import {
+  updateCardById,
+} from "../../actions/Card";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import ModalNotes from "./ModalNotes";
 import ReportNotes from "./ReportNotes";
 
+
+
 // note on updateCard: this should be a function that takes in a card object
 // and updates that card in the parent "cards" state
 const Notes = ({ cardId, notes, ...rest }) => {
+  
+
   const [currentNotes, setCurrentNotes] = useState(
     notes.map((n) => n).reverse()
   );
   const [newNote, setNewNote] = useState({ body: "", userId: "", date: "" });
 
   const { user } = useUser();
+
 
   useEffect(() => {
     setCurrentNotes(notes.map((c) => c).reverse());
@@ -95,7 +102,7 @@ const Notes = ({ cardId, notes, ...rest }) => {
   const { notesVariant = "modal" } = { ...rest };
 
   return notesVariant === "modal" ? (
-    <ModalNotes {...childProps} {...rest} />
+    <ModalNotes cardId={cardId} {...childProps} {...rest} />
   ) : (
     <ReportNotes {...childProps} />
   );

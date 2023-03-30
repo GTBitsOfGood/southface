@@ -8,6 +8,12 @@ export async function createTag({ name }) {
   return tag;
 }
 
+export async function insertManyTags(tags) {
+  await mongoDB();
+
+  return Tag.insertMany(tags);
+}
+
 export async function getTags() {
   await mongoDB();
   const tag = await Tag.find({}).sort({ name: 1 });

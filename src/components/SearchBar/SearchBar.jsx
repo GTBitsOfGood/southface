@@ -12,8 +12,9 @@ import {
   PopoverTrigger,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { Form } from "react-final-form";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import Tag from "../Tag/Tag";
+import Tag from "../Tag";
 
 const SearchBar = (props) => {
   const { handleSearch, ...rest } = props;
@@ -81,7 +82,9 @@ const SearchBar = (props) => {
           </PopoverTrigger>
           <PopoverContent width={{ base: "75em", "2xl": "80em" }}>
             <PopoverArrow />
-            <Tag height={{ base: "45em", "2xl": "55em" }} />
+            <Form onSubmit={() => console.log("submitting")}>
+              {() => <Tag height={{ base: "45em", "2xl": "55em" }} />}
+            </Form>
           </PopoverContent>
         </Popover>
       </Box>
