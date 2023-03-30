@@ -1,15 +1,17 @@
 import {
+  Box,
   Breadcrumb,
   BreadcrumbItem,
   Flex,
   Heading,
+  HStack,
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState } from "react";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import PaginationTab from "src/components/PaginationTab";
-import SearchBar, { useSearch } from "src/components/SearchBar";
+import SearchBar from "src/components/SearchBar";
 import StandardCardTable from "src/components/StandardCardTable";
 import {
   buildingTypeNames,
@@ -19,6 +21,8 @@ import {
   capitalizeAndRemoveDash,
   uncapitalizeAndAddDash,
 } from "src/lib/utils/utilFunctions";
+import CurrentSearchInfo from "src/components/SearchBar/CurrentSearchInfo";
+import useSearch from "src/lib/hooks/useSearch";
 
 const LibraryCategoryPage = (props) => {
   const cardsFromDatabase = props.cardsFromDatabase;
@@ -28,24 +32,61 @@ const LibraryCategoryPage = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(numPagesInitial);
 
-  const { handleSearch } = useSearch({ setNumPages, setCurrentPage, setCards });
+  const {
+    handleSearch,
+    searchString,
+    tags,
+    resetSearch,
+    setResetSearch,
+    tagToClear,
+    setTagToClear,
+  } = useSearch({
+    setNumPages,
+    setCurrentPage,
+    setCards,
+  });
 
   return (
     <Flex alignItems="stretch" flexDirection="column" p="2rem">
-      <Breadcrumb separator=">" fontWeight="semibold" pb="5">
-        <BreadcrumbItem>
-          <Link href="/library">Digital Library</Link>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <Link href={`/library/${props.params.buildingType}`}>
-            {props.buildingType}
-          </Link>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <Text>{props.primaryCategory}</Text>
-        </BreadcrumbItem>
-      </Breadcrumb>
-      <SearchBar handleSearch={handleSearch} />
+      <HStack w="full" position="relative">
+        <Breadcrumb
+          separator=">"
+          fontWeight="semibold"
+          position="absolute"
+          top={2}
+        >
+          <BreadcrumbItem>
+            <Link href="/library">Digital Library</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <Link href={`/library/${props.params.buildingType}`}>
+              {props.buildingType}
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <Text>{props.primaryCategory}</Text>
+          </BreadcrumbItem>
+        </Breadcrumb>
+
+        <Box flex="1"></Box>
+
+        <SearchBar
+          handleSearch={handleSearch}
+          resetSearch={resetSearch}
+          tagToClear={tagToClear}
+          setTagToClear={setTagToClear}
+          setResetSearch={setResetSearch}
+        />
+      </HStack>
+
+      <CurrentSearchInfo
+        handleSearch={handleSearch}
+        searchString={searchString}
+        location={props.primaryCategory}
+        tags={tags}
+        setResetSearch={setResetSearch}
+        setTagToClear={setTagToClear}
+      />
 
       {numPages > 0 ? (
         <>
@@ -60,7 +101,7 @@ const LibraryCategoryPage = (props) => {
           />
         </>
       ) : (
-        <Heading>No Cards Found</Heading>
+        <Heading my={10}>No Cards Found</Heading>
       )}
     </Flex>
   );

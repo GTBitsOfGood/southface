@@ -1,5 +1,5 @@
 import { Button, Flex } from "@chakra-ui/react";
-import useSearch from "../SearchBar/useSearch";
+import useSearch from "src/lib/hooks/useSearch";
 
 const PaginationTab = ({
   numPages,
