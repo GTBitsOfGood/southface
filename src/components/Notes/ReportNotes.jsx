@@ -32,6 +32,7 @@ export default function ReportNotes({
         note={note}
         notes={currentNotes}
         handleSaveEdit={handleSaveEdit}
+        isReportNote={true}
       />
     );
   };
@@ -49,8 +50,8 @@ export default function ReportNotes({
 
   return (
     <VStack alignItems="left">
-      <VStack alignItems="left" w="100%" pb={10}>
-        <Heading size="lg" mt={3} mb={2}>
+      <VStack alignItems="left" w="100%">
+        <Heading textColor="#3F3F3F" size="md" mt={3} mb={-2}>
           Notes ({currentNotes.length})
         </Heading>
         {currentNotes.length === 0 ? (
@@ -61,7 +62,7 @@ export default function ReportNotes({
           <Box>
             {firstTwo.map(notesMapper)}
             {remaining.length !== 0 && (
-              <Accordion allowToggle allowMultiple>
+              <Accordion allowToggle allowMultiple >
                 <AccordionItem border="none">
                   {({ isExpanded }) => {
                     return (
@@ -69,7 +70,7 @@ export default function ReportNotes({
                         <AccordionPanel p={0}>
                           {remaining.map(notesMapper)}
                         </AccordionPanel>
-                        <AccordionButton pl={2.5} color="Blue">
+                        <AccordionButton pl={0} color="Blue">
                           {accordionHeader(isExpanded)}
                         </AccordionButton>
                       </>

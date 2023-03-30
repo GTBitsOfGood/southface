@@ -27,9 +27,9 @@ const ReportStandard = ({ card, selState, ...props }) => {
     });
   };
   return (
-    <Box {...props}>
+    <Box {...props} p={0}>
       <HStack justify="space-between">
-        <Heading mb={5}>{card.title}</Heading>
+        <Heading size="lg" mb={5}>{card.title}</Heading>
         <Box>
           {(!globalEditing || editing) && (
             <Button variant="Grey-rounded" mr={3} onClick={editHandler}>
@@ -48,6 +48,7 @@ const ReportStandard = ({ card, selState, ...props }) => {
         selState={selState}
         editing={editing}
       />
+      <Heading textColor="#3F3F3F" size="md">Criteria</Heading>
       <Box mb={5}>{card.criteria}</Box>
       <ReportStandardNotes
         cols={3}

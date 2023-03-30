@@ -111,7 +111,7 @@ export default function ModalNotes({
           Notes
         </Heading>
 
-        <Box overflowY="scroll" height="100%" border="1px solid black">
+        <Box overflowY="scroll" height="100%">
           {user?.isLoggedIn && (
             <AddNewNote
               newNote={newNote}

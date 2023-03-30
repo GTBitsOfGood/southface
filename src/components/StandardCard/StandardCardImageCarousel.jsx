@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@chakra-ui/icons";
 import { Box, Circle, Image } from "@chakra-ui/react";
-import Carousel from "react-grid-carousel";
+import Carousel from "src/components/Carousel/Carousel";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 
 const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
@@ -63,6 +63,8 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       <Image
         opacity={selected ? "100%" : "50%"}
         fit="contain"
+        border="1px solid"
+        borderColor="gray.200"
         width="100%"
         src={image}
         alt="construction image"
@@ -98,9 +100,12 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
         width: "100%",
         height: "47%",
         position: "relative",
+        marginBottom: "20px"
+
       }}
       arrowLeft={<ChevronIcon orientation="left" />}
       arrowRight={<ChevronIcon orientation="right" />}
+      isReportCarousel={true}
     >
       {cardImages.map(({ imageUrl: image }, index) => {
         return (

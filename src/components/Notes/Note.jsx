@@ -18,7 +18,7 @@ import { MdEdit } from "react-icons/md";
 import DeleteNoteModal from "./DeleteNoteModal";
 import { formatNoteDateString } from "./utils";
 
-const Note = ({ currNoteIdx, handleSaveEdit, note, notes, ...props }) => {
+const Note = ({ currNoteIdx, handleSaveEdit, note, notes, isReportNote = false, ...props }) => {
   const [currNote, setCurrNote] = useState(note.body);
 
   const noteRef = useRef();
@@ -132,7 +132,7 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes, ...props }) => {
   };
 
   return (
-    <Box p={3} mb={2} rounded={14} {...props}>
+    <Box p={isReportNote? 0 : 3} mb={2} rounded={14} {...props}>
       <Editable
         placeholder="This note is empty!"
         value={currNote}
@@ -142,7 +142,7 @@ const Note = ({ currNoteIdx, handleSaveEdit, note, notes, ...props }) => {
         submitOnBlur={false}
         onSubmit={handleEdit}
       >
-        <EditablePreview mb={1} maxW="100%" />
+        <EditablePreview  maxW="100%" />
         <EditableInput mb={1} pl={1} pr={1} ref={noteRef} />
         <Toolbar />
       </Editable>
