@@ -45,17 +45,17 @@ const styles = StyleSheet.create({
     border: "1px solid black",
   },
   name: {
-    fontWeight: "ultrabold",
+    fontFamily: "Helvetica-Bold",
     color: "#666666",
     fontSize: 15,
   },
   title: {
-    fontWeight: "bold",
+    fontFamily: "Helvetica-Bold",
     color: "#666666",
     fontSize: 18,
   },
   category: {
-    fontWeight: "ultrabold",
+    fontFamily: "Helvetica-Bold",
     color: "#8C8C8C",
     fontSize: 13,
     marginVertical: 2,
