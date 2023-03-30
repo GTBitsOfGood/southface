@@ -66,12 +66,12 @@ export default function ReportNotes({
                   {({ isExpanded }) => {
                     return (
                       <>
-                        <AccordionButton color="Blue">
-                          {accordionHeader(isExpanded)}
-                        </AccordionButton>
-                        <AccordionPanel>
+                        <AccordionPanel p={0}>
                           {remaining.map(notesMapper)}
                         </AccordionPanel>
+                        <AccordionButton pl={2.5} color="Blue">
+                          {accordionHeader(isExpanded)}
+                        </AccordionButton>
                       </>
                     );
                   }}
