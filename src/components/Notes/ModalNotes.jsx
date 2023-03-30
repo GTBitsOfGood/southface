@@ -100,18 +100,18 @@ export default function ModalNotes({
       p="5% 2% 2% 2%"
       alignItems="left"
       justifyContent="space-between"
+    
     >
       <VStack
         alignItems="left"
         w="100%"
-        pb={10}
-        maxH={{ xl: "82%", "2xl": "85%" }}
+        maxH={{ xl: "86%", "2xl": "89%" }}
       >
         <Heading size="lg" mt={3} mb={2}>
           Notes
         </Heading>
 
-        <Box h="50vh" overflowY="scroll">
+        <Box overflowY="scroll" height="100%" border="1px solid black">
           {user?.isLoggedIn && (
             <AddNewNote
               newNote={newNote}
@@ -167,8 +167,8 @@ export default function ModalNotes({
           })}
         </Box>
         {selState && (
-          <Button variant="Blue-rounded" onClick={editHandler}>
-            {editing ? "Save Changes" : "Add notes"}
+          <Button variant="Blue-rounded" p={1} onClick={editHandler}>
+            {editing ? "Save Changes" : "Add notes To Report"}
           </Button>
         )}
       </VStack>
@@ -208,11 +208,6 @@ export default function ModalNotes({
                   onClick={handleDislikeClick}
                 />
               </HStack>
-              {selState && (
-                <Button variant="Blue-rounded" onClick={editHandler}>
-                  {editing ? "Save Changes" : "Add notes"}
-                </Button>
-              )}
             </HStack>
           </VStack>
         </Flex>
