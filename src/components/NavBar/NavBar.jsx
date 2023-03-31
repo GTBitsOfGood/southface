@@ -62,7 +62,7 @@ const NavBar = () => {
         right={5}
       />
       <NavLink name="Digital Library" href={urls.pages.library} />
-      <NavLink name="Report Builder" href={urls.pages.reportbuilder} />
+      {user && <NavLink name="Report Builder" href={urls.pages.reportbuilder} />}
       {user && user.isAdmin && (
         <NavLink name="Add a New Standard" href={urls.pages.addstandard} />
       )}

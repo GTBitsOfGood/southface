@@ -14,11 +14,15 @@ import ArchivedReportView from "src/components/ArchivedReportView";
 import RecentStandardsView from "src/components/RecentStandardsView";
 import { ReportStandard } from "src/components/StandardCard";
 import useActiveReport from "src/lib/hooks/useActiveReport";
+import useUser from "../lib/hooks/useUser";
 
 const ReportBuilder = () => {
   // For PDF exporting
   const [editingTitle, setEditingTitle] = useState(false);
   useEffect(() => setEditingTitle(true), []);
+
+  const { user } = useUser({redirectTo: "/login"});
+  console.log(user);
 
   const nameRef = useRef();
 
@@ -46,23 +50,34 @@ const ReportBuilder = () => {
   };
 
   const useGlobalEditing = useState(false);
+
+  if (!user) return;
+  
   return (
     <>
-      <HStack pt={5} alignItems="flex-start" spacing={3}>
+      <HStack py={10} alignItems="flex-start" spacing={3} px={8}>
         <VStack
           flex={2}
           as={Card}
           alignItems="flex-start"
           p={6}
           spacing={5}
-          divider={<StackDivider bg="gray.300" />}
+          divider={<StackDivider color="gray.300" />}
+          rounded={16}
+          border="1px solid"
+          borderColor="gray.300"
         >
           <CardBody m={-3} w="100%">
-            <Flex mb={3} width="100%" flexFlow="row nowrap">
-              <HStack w="100%" alignItems="flex-start">
+            <Flex
+              mb={3}
+              width="100%"
+              flexFlow="row nowrap"
+              justifyContent="space-between"
+            >
+              <HStack w="100%">
                 {editingTitle ? ( // temp placeholder condition
                   <Heading maxW="80%" mr={3}>
-                    Title of Current Project Plan
+                    Untitiled Report
                   </Heading>
                 ) : (
                   <Input
@@ -75,12 +90,14 @@ const ReportBuilder = () => {
                     ref={nameRef}
                   />
                 )}
-                <Button pl="15px" pr="15px" variant="Grey-rounded">
+                <Button minW="10%" variant="Grey-outlined-rounded">
                   Rename
                 </Button>
               </HStack>
               <Button
                 minW="20%"
+                position="absolute"
+                right="12"
                 variant="Blue-rounded"
                 onClick={handleCompleteReport}
               >
@@ -89,7 +106,7 @@ const ReportBuilder = () => {
             </Flex>
           </CardBody>
           {sels.map((cardWrapper, index) => (
-            <CardBody key={index}>
+            <CardBody pl={3} py={0} key={index}>
               <ReportStandard
                 card={cardWrapper.card}
                 selState={cardWrapper}
@@ -98,11 +115,29 @@ const ReportBuilder = () => {
             </CardBody>
           ))}
         </VStack>
-        <VStack maxW="35%" flex={1}>
-          <Card w="100%" p={4} gap={3}>
-            <ArchivedReportView />
-          </Card>
-          <Card p={5} w="100%">
+        <VStack maxW="35%" flex={1} alignItems="end">
+          {user?.isLoggedIn && user?.archivedReports.length > 0 && (
+            <Card
+              boxShadow="none"
+              w="90%"
+              p={4}
+              gap={3}
+              border="1px solid"
+              borderColor="gray.300"
+              rounded={16}
+            >
+              <ArchivedReportView />
+            </Card>
+          )}
+
+          <Card
+            boxShadow="none"
+            p={5}
+            w="90%"
+            border="1px solid"
+            borderColor="gray.300"
+            rounded={16}
+          >
             <RecentStandardsView maxCards={3} />
           </Card>
         </VStack>
