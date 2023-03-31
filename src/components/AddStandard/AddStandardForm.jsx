@@ -48,8 +48,8 @@ const AddStandardForm = () => {
       return {
         imageUrl:
           "https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png",
-        thumbsUp: 0,
-        thumbsDown: 0,
+        thumbsUp: [],
+        thumbsDown: [],
       };
     });
 

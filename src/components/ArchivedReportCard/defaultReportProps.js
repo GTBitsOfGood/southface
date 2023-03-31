@@ -6,29 +6,13 @@ const StandardCardDefaultProps = {
       images: [
         {
           imageUrl: "/static/ShoppingCartImg.png",
-          thumbsUp: 0,
-          thumbsDown: 0,
+          thumbsUp: [],
+          thumbsDown: [],
         },
         {
           imageUrl: "/static/ShoppingCartImg.png",
-          thumbsUp: 0,
-          thumbsDown: 0,
-        },
-      ],
-      criteria:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    },
-    {
-      images: [
-        {
-          imageUrl: "/static/ShoppingCartImg.png",
-          thumbsUp: 0,
-          thumbsDown: 0,
-        },
-        {
-          imageUrl: "/static/ShoppingCartImg.png",
-          thumbsUp: 0,
-          thumbsDown: 0,
+          thumbsUp: [],
+          thumbsDown: [],
         },
       ],
       criteria:
@@ -38,13 +22,29 @@ const StandardCardDefaultProps = {
       images: [
         {
           imageUrl: "/static/ShoppingCartImg.png",
-          thumbsUp: 0,
-          thumbsDown: 0,
+          thumbsUp: [],
+          thumbsDown: [],
         },
         {
           imageUrl: "/static/ShoppingCartImg.png",
-          thumbsUp: 0,
-          thumbsDown: 0,
+          thumbsUp: [],
+          thumbsDown: [],
+        },
+      ],
+      criteria:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      images: [
+        {
+          imageUrl: "/static/ShoppingCartImg.png",
+          thumbsUp: [],
+          thumbsDown: [],
+        },
+        {
+          imageUrl: "/static/ShoppingCartImg.png",
+          thumbsUp: [],
+          thumbsDown: [],
         },
       ],
       criteria:

@@ -39,9 +39,13 @@ export async function getCardsPagination({
   primaryCategory = null,
   searchFilterString = null,
   searchFilterTags = null,
-  cardsPerPage = 4,
+  cardsPerPage = 6,
 }) {
   await mongoDB();
+
+  searchFilterTags = searchFilterTags
+    ? searchFilterTags.split(",").map((tag) => tag.replaceAll("-;-", ","))
+    : null;
 
   let query = { buildingType, ...(primaryCategory && { primaryCategory }) };
 
@@ -50,8 +54,15 @@ export async function getCardsPagination({
 
     query = {
       ...query,
-      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
-      tags: { $all: searchFilterTags },
+      $or: [
+        {
+          $and: [
+            { title: { $regex: regex } },
+            { "notes.body": { $regex: regex } },
+          ],
+        },
+        { tags: { $all: searchFilterTags } },
+      ],
     };
   } else if (searchFilterString) {
     const regex = new RegExp(searchFilterString, "i");
@@ -82,6 +93,10 @@ export async function getCardsCount({
 }) {
   await mongoDB();
 
+  searchFilterTags = searchFilterTags
+    ? searchFilterTags.split(",").map((tag) => tag.replaceAll("-;-", ","))
+    : null;
+
   let query = {
     $match: [{ buildingType }, { primaryCategory }],
   };
@@ -90,8 +105,15 @@ export async function getCardsCount({
 
     query = {
       ...query,
-      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
-      tags: { $all: searchFilterTags },
+      $or: [
+        {
+          $and: [
+            { title: { $regex: regex } },
+            { "notes.body": { $regex: regex } },
+          ],
+        },
+        { tags: { $all: searchFilterTags } },
+      ],
     };
   } else if (searchFilterString) {
     const regex = new RegExp(searchFilterString, "i");

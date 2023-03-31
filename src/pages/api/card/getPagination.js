@@ -10,12 +10,8 @@ const handler = async (req, res) => {
     const pageNumber = req.query.page - 1;
     const buildingType = req.query.buildingType;
     const primaryCategory = req.query.primaryCategory;
-    const searchFilterString = req.query.searchFilterString
-      ? req.query.searchFilterString
-      : null;
-    const searchFilterTags = req.query.searchFilterTags
-      ? req.query.searchFilterTags.split(",")
-      : null;
+    const searchFilterString = req.query.searchFilterString || null;
+    const searchFilterTags = req.query.searchFilterTags || null;
 
     const cards = await getCardsPagination({
       pageNumber,
