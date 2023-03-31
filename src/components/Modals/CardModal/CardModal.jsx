@@ -312,6 +312,7 @@ const CardModal = ({
                             ? "blue.500"
                             : "none"
                         }
+                        cursor={editingReport ? "pointer" : "default"}
                         image={image}
                         openImagePreviewCallback={openImagePreviewCallback}
                         showEnlarge={!editingReport}
@@ -481,12 +482,13 @@ const CardModal = ({
                       onClick={reportAddHandler}
                       variant="Blue-rounded"
                       size="lg"
+                      isDisabled={user?.isLoggedIn ? false : true}
                     >
                       {!selected
                         ? "Add to Report"
                         : editingReport
                         ? "Save changes"
-                        : "Edit"}
+                        : "Edit In Report"}
                     </Button>
                   </>
                 )}

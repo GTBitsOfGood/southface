@@ -16,6 +16,13 @@ const generateButtonStyles = (color, hoverColor, activeColor) => {
       transition: "0.1s ease-in-out",
       _hover: hoverState,
       _active: activeState,
+      _disabled: {
+        _hover: {
+          color: color,
+          bg: color,
+          cursor: "not-allowed",
+        },
+      },
     },
 
     [`${color}-outlined`]: {
@@ -25,6 +32,12 @@ const generateButtonStyles = (color, hoverColor, activeColor) => {
       borderColor: color,
       transition: "0.1s ease-in-out",
       _hover: { ...hoverState, bgColor: color },
+      _disabled: {
+        _hover: {
+          color: color,
+          cursor: "not-allowed",
+        },
+      },
       _active: activeState,
     },
 
@@ -33,6 +46,13 @@ const generateButtonStyles = (color, hoverColor, activeColor) => {
       rounded: "3xl",
       _hover: hoverState,
       _active: activeState,
+      _disabled: {
+        _hover: {
+          cursor: "not-allowed",
+          bg: color,
+          color: color,
+        },
+      },
     },
 
     [`${color}-outlined-rounded`]: {
@@ -43,6 +63,12 @@ const generateButtonStyles = (color, hoverColor, activeColor) => {
       rounded: "3xl",
       _hover: { ...hoverState, bgColor: color },
       _active: activeState,
+      _disabled: {
+        _hover: {
+          color: color,
+          cursor: "not-allowed",
+        },
+      },
     },
   };
 };

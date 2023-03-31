@@ -2,7 +2,6 @@ import useUser from "../../lib/hooks/useUser";
 import Notes from "../Notes/Notes";
 
 const ReportStandardNotes = ({ notes, card, selState, ...rest }) => {
-
   const { user } = useUser();
   const notesFilter = (note, index) =>
     selState?.noteSelections[index] &&

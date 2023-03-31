@@ -100,8 +100,7 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
         width: "100%",
         height: "47%",
         position: "relative",
-        marginBottom: "20px"
-
+        marginBottom: "20px",
       }}
       arrowLeft={<ChevronIcon orientation="left" />}
       arrowRight={<ChevronIcon orientation="right" />}

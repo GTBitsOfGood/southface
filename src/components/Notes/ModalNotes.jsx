@@ -100,13 +100,8 @@ export default function ModalNotes({
       p="5% 2% 2% 2%"
       alignItems="left"
       justifyContent="space-between"
-    
     >
-      <VStack
-        alignItems="left"
-        w="100%"
-        maxH={{ xl: "86%", "2xl": "89%" }}
-      >
+      <VStack alignItems="left" w="100%" maxH={{ xl: "86%", "2xl": "89%" }}>
         <Heading size="lg" mt={3} mb={2}>
           Notes
         </Heading>

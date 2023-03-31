@@ -14,6 +14,7 @@ import ArchivedReportView from "src/components/ArchivedReportView";
 import RecentStandardsView from "src/components/RecentStandardsView";
 import { ReportStandard } from "src/components/StandardCard";
 import useActiveReport from "src/lib/hooks/useActiveReport";
+import PrintToPDFButton from "../components/PrintToPDFButton";
 import useUser from "../lib/hooks/useUser";
 
 const ReportBuilder = () => {
@@ -21,8 +22,7 @@ const ReportBuilder = () => {
   const [editingTitle, setEditingTitle] = useState(false);
   useEffect(() => setEditingTitle(true), []);
 
-  const { user } = useUser({redirectTo: "/login"});
-  console.log(user);
+  const { user } = useUser({ redirectTo: "/login" });
 
   const nameRef = useRef();
 
@@ -52,7 +52,7 @@ const ReportBuilder = () => {
   const useGlobalEditing = useState(false);
 
   if (!user) return;
-  
+
   return (
     <>
       <HStack py={10} alignItems="flex-start" spacing={3} px={8}>
@@ -104,6 +104,7 @@ const ReportBuilder = () => {
                 Complete Report
               </Button>
             </Flex>
+            <PrintToPDFButton report={report} />
           </CardBody>
           {sels.map((cardWrapper, index) => (
             <CardBody pl={3} py={0} key={index}>
