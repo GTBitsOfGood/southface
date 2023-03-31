@@ -62,7 +62,7 @@ export default function ReportNotes({
           <Box>
             {firstTwo.map(notesMapper)}
             {remaining.length !== 0 && (
-              <Accordion allowToggle allowMultiple >
+              <Accordion allowToggle allowMultiple>
                 <AccordionItem border="none">
                   {({ isExpanded }) => {
                     return (

@@ -22,8 +22,7 @@ const ReportBuilder = () => {
   const [editingTitle, setEditingTitle] = useState(false);
   useEffect(() => setEditingTitle(true), []);
 
-  const { user } = useUser({redirectTo: "/login"});
-
+  const { user } = useUser({ redirectTo: "/login" });
 
   const nameRef = useRef();
 
@@ -53,7 +52,7 @@ const ReportBuilder = () => {
   const useGlobalEditing = useState(false);
 
   if (!user) return;
-  
+
   return (
     <>
       <HStack py={10} alignItems="flex-start" spacing={3} px={8}>
