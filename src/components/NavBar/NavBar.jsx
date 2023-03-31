@@ -50,8 +50,19 @@ const NavBar = () => {
     } else {
       return (
         <Flex align="center">
-          <Text mr={2}>{`Logged in as ${user.username}`}</Text>
-          <Divider orientation="vertical" h={6} borderColor="Grey" />
+          <Box>
+            <Flex marginRight={8}>
+              <Text
+                fontWeight="light"
+                fontStyle="italic"
+              >{`Logged in as `}</Text>
+              <Text fontWeight="medium" fontStyle="italic" marginLeft={1}>
+                {user.username}
+              </Text>
+            </Flex>
+          </Box>
+
+          <Divider orientation="vertical" h={6} borderColor="Grey" mr={0} />
           <NavLink name="Logout" onClick={onLogoutOpen} {...props} />
         </Flex>
       );
