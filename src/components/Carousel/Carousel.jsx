@@ -17,6 +17,7 @@ const Carousel = ({
   setCurrentImage = null,
   dot,
   containerStyle,
+  isReportCarousel = false,
   children,
 }) => {
   const [currentPage, setCurrentPage] = useState(currentImage);
@@ -103,6 +104,8 @@ const Carousel = ({
         _hover={{ background: "none" }}
         zIndex="10"
         cursor="pointer"
+        display={isReportCarousel ? "none" : "block"}
+
       />
       <Box overflow="hidden" margin="0" w="100%" h="100%" ref={railWrapperRef}>
         <Box
@@ -167,6 +170,7 @@ const Carousel = ({
         _hover={{ background: "none" }}
         zIndex="10"
         cursor="pointer"
+        display={isReportCarousel ? "none": "block"}
       />
     </Box>
   );
