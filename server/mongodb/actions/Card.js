@@ -56,7 +56,7 @@ export async function getCardsPagination({
       ...query,
       $or: [
         {
-          $or: [
+          $and: [
             { title: { $regex: regex } },
             { "notes.body": { $regex: regex } },
           ],
@@ -107,7 +107,7 @@ export async function getCardsCount({
       ...query,
       $or: [
         {
-          $or: [
+          $and: [
             { title: { $regex: regex } },
             { "notes.body": { $regex: regex } },
           ],
