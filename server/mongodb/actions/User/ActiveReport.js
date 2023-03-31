@@ -96,12 +96,17 @@ export const changeInActiveReport = async (userId, wrappedCard) => {
 export const updateActiveReport = async (userId, plan) => {
   try {
     await mongoDB();
-    const user = await User.findByIdAndUpdate(userId, {
-      $set: { activeReport: plan },
-    }).populate(populateString);
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: { activeReport: plan },
+      },
+      { upsert: true }
+    ).populate(populateString);
     if (user == null) {
       throw new Error();
     }
+    // console.log(user.activeReport);
     return user.activeReport;
   } catch (e) {
     console.log(e);
