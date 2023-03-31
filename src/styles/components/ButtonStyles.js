@@ -49,8 +49,8 @@ const generateButtonStyles = (color, hoverColor, activeColor) => {
       _disabled: {
         _hover: {
           cursor: "not-allowed",
-          bg:color,
-          color: color, 
+          bg: color,
+          color: color,
         },
       },
     },
