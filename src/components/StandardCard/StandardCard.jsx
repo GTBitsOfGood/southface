@@ -83,6 +83,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
       flexGrow={0}
       flexShrink={0}
       {...props}
+      isDisabled={user?.isLoggedIn ? false : true}
     >
       {!selected ? "Add To Report" : "Added to Report"}
     </Button>
