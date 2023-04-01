@@ -98,7 +98,8 @@ export async function getCardsCount({
     : null;
 
   let query = {
-    $match: [{ buildingType }, { primaryCategory }],
+    buildingType,
+    primaryCategory,
   };
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");

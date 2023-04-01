@@ -94,9 +94,9 @@ export async function getStaticProps({ params }) {
   const cardsCount = await getCardsCount({
     buildingType,
   });
-  let numPages = Math.floor(cardsCount / 4);
+  let numPages = Math.floor(cardsCount / 6);
 
-  if (cardsCount % 4 > 0) {
+  if (cardsCount % 6 > 0) {
     numPages += 1;
   }
 
