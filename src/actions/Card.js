@@ -97,7 +97,7 @@ export const revalidate = (path) => {
       }
       return json.payload;
     });
-}
+};
 
 export const getCardById = async (id) => {
   return fetch(urls.api.card.get + id, {

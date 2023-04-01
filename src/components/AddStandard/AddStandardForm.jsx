@@ -84,9 +84,10 @@ const AddStandardForm = () => {
       primaryCategory: newCard.primaryCategory,
     });
 
-    const revalidationPaths = JSON.stringify(parseNestedPaths("library", newCard.buildingType, newCard.primaryCategory));
+    const revalidationPaths = JSON.stringify(
+      parseNestedPaths("library", newCard.buildingType, newCard.primaryCategory)
+    );
     revalidate(revalidationPaths);
-
 
     form.reset();
   };
