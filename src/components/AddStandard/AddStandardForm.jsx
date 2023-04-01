@@ -6,11 +6,12 @@
 import { Box, Heading, HStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Form } from "react-final-form";
-import { createCard } from "../../actions/Card";
+import { createCard, revalidate } from "../../actions/Card";
 import {
   buildingTypeNames,
   primaryCategoryRoutes,
 } from "../../lib/utils/constants";
+import { parseNestedPaths } from "../../lib/utils/utilFunctions";
 import EditAddStandard from "./EditAddStandard";
 import OpenStandardPopup from "./OpenStandardPopup";
 import ViewAddStandard from "./ViewAddStandard";
@@ -82,6 +83,12 @@ const AddStandardForm = () => {
       buildingType: newCard.buildingType,
       primaryCategory: newCard.primaryCategory,
     });
+
+    const revalidationPaths = JSON.stringify(
+      parseNestedPaths("library", newCard.buildingType, newCard.primaryCategory)
+    );
+    revalidate(revalidationPaths);
+
     form.reset();
   };
 

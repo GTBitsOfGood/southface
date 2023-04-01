@@ -39,11 +39,6 @@ export default {
         update: "/api/user/active-report/update",
         change: "/api/user/active-report/change",
       },
-      comment: {
-        create: "/api/comment/create",
-        update: "/api/comment/update",
-        delete: "/api/comment/delete",
-      },
       report: {
         create: "/api/report/create",
         get: "/api/report/get",
@@ -60,5 +55,6 @@ export default {
       update: "api/tag/update",
       getTag: "/api/tag/get/tag",
     },
+    revalidate: "/api/revalidate?pathToRevalidate=",
   },
 };

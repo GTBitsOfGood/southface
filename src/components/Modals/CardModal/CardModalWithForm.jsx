@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-final-form";
-import { deleteCardById, updateCardById } from "../../../actions/Card";
+import {
+  deleteCardById,
+  revalidate,
+  updateCardById,
+} from "../../../actions/Card";
 import cardEditValidator from "./cardEditValidator";
 import CardModal from "./CardModal";
+import { useRouter } from "next/router";
 
 const CardModalWithForm = ({
   card,
@@ -12,6 +17,8 @@ const CardModalWithForm = ({
   setCards,
   ...rest
 }) => {
+  const router = useRouter();
+
   const editSubmit = async (values) => {
     const dirtyFields = Object.keys(values).filter((key) => {
       return values[key] !== initialCard[key] && key !== "newTag";
@@ -21,13 +28,19 @@ const CardModalWithForm = ({
       return obj;
     }, {});
     let newCard = await updateCardById(card._id, dirtyValues);
-    let newCards = [...cards]; // JSON.parse(JSON.stringify(cards));
-    for (let oldCardIndex in newCards) {
-      if (newCards[oldCardIndex]._id === card._id) {
-        newCards[oldCardIndex] = newCard;
-      }
-    }
-    setCards(newCards);
+
+    setCards((cards) => {
+      return cards.map((card) => {
+        if (newCard._id === card._id) {
+          return newCard;
+        } else {
+          return card;
+        }
+      });
+    });
+
+    console.log(router.asPath);
+    revalidate(JSON.stringify([router.asPath]));
   };
 
   const handleDeleteStandard = async () => {

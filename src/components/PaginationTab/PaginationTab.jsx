@@ -1,13 +1,7 @@
 import { Button, Flex } from "@chakra-ui/react";
 import useSearch from "src/lib/hooks/useSearch";
 
-const PaginationTab = ({
-  numPages,
-  currentPage,
-  setCurrentPage,
-  setCards,
-  ...props
-}) => {
+const PaginationTab = ({ numPages, currentPage, setCurrentPage, setCards }) => {
   const numPagesArray = [...new Array(numPages).keys()].map(
     (element) => ++element
   );
@@ -18,8 +12,8 @@ const PaginationTab = ({
   });
 
   return (
-    numPages > 0 && (
-      <Flex rounded={6} {...props} p={2} bgColor="#004b4b">
+    numPages > 1 && (
+      <Flex rounded={6} alignSelf="center" p={2} bgColor="Blue">
         {numPagesArray.map((pageNumber, index) => (
           <Button
             key={index}

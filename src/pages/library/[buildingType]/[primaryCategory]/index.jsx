@@ -88,7 +88,7 @@ const LibraryCategoryPage = (props) => {
         setTagToClear={setTagToClear}
       />
 
-      {numPages > 0 ? (
+      {numPages > 1 ? (
         <>
           <StandardCardTable cards={cards} setCards={setCards} />
           <PaginationTab
@@ -120,9 +120,10 @@ export async function getStaticProps({ params }) {
     buildingType,
     primaryCategory,
   });
-  let numPages = Math.floor(cardsCount / 4);
 
-  if (cardsCount % 4 > 0) {
+  let numPages = Math.floor(cardsCount / 6);
+
+  if (cardsCount % 6 > 0) {
     numPages += 1;
   }
 

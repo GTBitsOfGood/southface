@@ -17,8 +17,8 @@ export default function useSearch({ setNumPages, setCurrentPage, setCards }) {
 
   const calculateNumPagesToDisplay = (cardsCount) => {
     if (setNumPages) {
-      let numPages = Math.floor(cardsCount / 4);
-      if (cardsCount % 4 > 0) {
+      let numPages = Math.floor(cardsCount / 6);
+      if (cardsCount % 6 > 0) {
         numPages += 1;
       }
 
