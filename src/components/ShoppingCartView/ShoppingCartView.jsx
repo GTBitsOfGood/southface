@@ -8,17 +8,20 @@ import {
   DrawerOverlay,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
+import useActiveReport from "../../lib/hooks/useActiveReport";
 import ShoppingCartItem from "./ShoppingCartItem";
 
 const ShoppingCartView = ({ isOpen, onClose }) => {
-  const shoppingCartItems = [
-    { reportName: "Ladder T-walls", imageNum: 2, commentNum: 8 },
-    { reportName: "Ladder T-walls", imageNum: 3, commentNum: 6 },
-    { reportName: "Ladder T-walls", imageNum: 1, commentNum: 2 },
-    { reportName: "Ladder T-walls", imageNum: 4, commentNum: 5 },
-    { reportName: "Ladder T-walls", imageNum: 6, commentNum: 7 },
-  ];
+  const { report, isValidating } = useActiveReport();
+  const [sels, setSels] = useState([]);
+  useEffect(() => {
+    if (report && !isValidating) {
+      // this useEffect wrapper prevents jittering
+      setSels(report.cards);
+    }
+  }, [isValidating]);
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
@@ -29,14 +32,11 @@ const ShoppingCartView = ({ isOpen, onClose }) => {
             Atlanta Construction 47
           </DrawerHeader>
           <Divider orientation="horizontal" />
-          {shoppingCartItems.slice(0, 3).map((item, index) => (
+          {sels.slice(0, 3).map((selState, index) => (
             <ShoppingCartItem
               key={index}
-              reportName={item.reportName}
-              imageNum={item.imageNum}
-              commentNum={item.commentNum}
-              shoppingCartItems={item.shoppingCartItems}
-              // setShoppingCartItems={item.setShoppingCartItems}
+              selState={selState}
+              card={selState.card}
             />
           ))}
         </Box>
