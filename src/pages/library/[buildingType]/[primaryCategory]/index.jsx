@@ -2,8 +2,8 @@ import {
   Box,
   Breadcrumb,
   BreadcrumbItem,
+  Button,
   Flex,
-  Heading,
   HStack,
   Text,
 } from "@chakra-ui/react";
@@ -12,7 +12,9 @@ import { useState } from "react";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import PaginationTab from "src/components/PaginationTab";
 import SearchBar from "src/components/SearchBar";
+import CurrentSearchInfo from "src/components/SearchBar/CurrentSearchInfo";
 import StandardCardTable from "src/components/StandardCardTable";
+import useSearch from "src/lib/hooks/useSearch";
 import {
   buildingTypeNames,
   primaryCategoryNames,
@@ -21,8 +23,6 @@ import {
   capitalizeAndRemoveDash,
   uncapitalizeAndAddDash,
 } from "src/lib/utils/utilFunctions";
-import CurrentSearchInfo from "src/components/SearchBar/CurrentSearchInfo";
-import useSearch from "src/lib/hooks/useSearch";
 
 const LibraryCategoryPage = (props) => {
   const cardsFromDatabase = props.cardsFromDatabase;
@@ -101,7 +101,24 @@ const LibraryCategoryPage = (props) => {
           />
         </>
       ) : (
-        <Heading my={10}>No Cards Found</Heading>
+        <div>
+          <Flex
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Text textAlign="center">
+              <Text textAlign="center">
+                Sorry! We couldn&apos;t find any standards matching your search.
+                Try changing your spelling, removing filters, or searching for
+                something else.
+              </Text>
+            </Text>
+            <Button variant="Blue" size="md" onClick>
+              Return to Site Planning
+            </Button>
+          </Flex>
+        </div>
       )}
     </Flex>
   );
