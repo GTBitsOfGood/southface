@@ -15,7 +15,7 @@ const StandardCard = ({ title, images, criteria }) => {
   return (
     <Card boxShadow="none" flex="1">
       <CardHeader>
-        <Heading size="lg">{title}</Heading>
+        <Heading size="md">{title}</Heading>
       </CardHeader>
       <CardBody marginLeft="3" marginRight="3">
         <Flex gap={2} position="relative">

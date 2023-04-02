@@ -3,6 +3,7 @@ const withImages = require("next-images");
 module.exports = withImages({
   images: {
     domains: [
+      "southfaceblob.blob.core.windows.net",
       "southface.blob.core.windows.net",
       "picsum.photos",
       "user-images.githubusercontent.com",
