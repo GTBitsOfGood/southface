@@ -1,4 +1,4 @@
-import { Box, Button, Flex, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import ArchivedReportCard from "src/components/ArchivedReportCard";
 import useUser from "src/lib/hooks/useUser";
@@ -7,9 +7,13 @@ import useSWR from "swr";
 
 const ArchivedReports = () => {
   // this has to be refactored later on
-  const { user } = useUser({ getArchivedReports: true });
+  const { user } = useUser({ getArchivedReports: true, redirectTo: "/login" });
   const { data } = useSWR(urls.api.user.getArchivedReports);
   const archivedReports = data?.payload.archivedReports;
+  
+
+  if (user?.isLoggedIn && archivedReports?.length == 0)
+    return <Heading p={10}>Currently No ArchivedReports</Heading>;
 
   return (
     <Box>
@@ -45,9 +49,11 @@ const ArchivedReports = () => {
               return <ArchivedReportCard key={index} report={archivedReport} />;
             })}
           {/* rendering an archived report with default props (exact styling from figma) */}
-          <ArchivedReportCard />
+          {/* <ArchivedReportCard /> */}
         </Box>
       </VStack>
+
+      
     </Box>
   );
 };

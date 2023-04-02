@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
 });
 
 const ReportDocumentPDF = ({ selectedReport }) => {
+  console.log("selectedReport", selectedReport);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -82,7 +83,7 @@ const ReportDocumentPDF = ({ selectedReport }) => {
             <Text style={styles.textSmall}>Completed on ...</Text>
           </View>
           {selectedReport?.cards.map((item, index) => {
-            let card = item.card;
+            let card = item.card || item;
             return (
               <View key={index} styles={styles.card}>
                 <Text style={styles.name}>{card.title}</Text>
@@ -112,7 +113,11 @@ const ReportDocumentPDF = ({ selectedReport }) => {
                         ]}
                         key={index}
                       >
-                        <Image src={image.imageUrl} alt="" style={styles.image}></Image>
+                        <Image
+                          src={image.imageUrl}
+                          alt=""
+                          style={styles.image}
+                        ></Image>
                       </View>
                     ) : (
                       <></>
@@ -120,7 +125,9 @@ const ReportDocumentPDF = ({ selectedReport }) => {
                   })}
                 </View>
                 <View style={styles.section}>
-                  {card.notes.length > 0 && <Text style={styles.category}>Notes</Text>}
+                  {card.notes.length > 0 && (
+                    <Text style={styles.category}>Notes</Text>
+                  )}
                   <View>
                     {card.notes?.map((note, index) => {
                       return (

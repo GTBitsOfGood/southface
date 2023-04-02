@@ -123,7 +123,6 @@ export async function getStaticProps({ params }) {
     primaryCategory,
   });
 
-
   let numPages = Math.floor(cardsCount / 6);
 
   if (cardsCount % 6 > 0) {

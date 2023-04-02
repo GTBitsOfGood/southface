@@ -7,19 +7,27 @@ import {
   Divider,
   Flex,
   Heading,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import PrintToPDFButton from "src/components/PrintToPDFButton";
 import defaultReportProps from "./defaultReportProps";
 import StandardCard from "./StandardCard";
+import { removeArchivedReport } from "../../actions/User/ArchivedReport";
+import ConfirmActionModal from "../Modals/ConfirmActionModal";
 
 const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const [hasReportCard, setHasReportCard] = useState(true);
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Date place holder
   const date = new Date();
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
+    
+    await removeArchivedReport(report._id);
     setHasReportCard(false);
+    
   };
 
   return (
@@ -36,18 +44,25 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
           <CardHeader>
             <Box display="flex" justifyContent="space-between">
               <Box display="flex" alignItems="center">
-                <Heading size="xl">Recent Report</Heading>
-                <Button as="a" variant="Grey-rounded" marginLeft="15">
-                  Download
-                </Button>
-                <Button as="a" variant="Red-rounded" marginLeft="15">
-                  Print to PDF
-                </Button>
+                <Heading size="xl" mr={6}>
+                  Recent Report
+                </Heading>
+                <PrintToPDFButton report={report} />
               </Box>
               <Box>
-                <Button onClick={handleRemove} variant="Red-rounded">
+                <Button onClick={onOpen} variant="Red-rounded">
                   Remove from Reports
                 </Button>
+                <ConfirmActionModal
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  mainText="Are you sure you want to remove this report"
+                  confirmButtonText="Yes, remove report"
+                  cancelButtonText="No, cancel"
+                  handleAction={handleRemove}
+                  isDanger={false}
+              
+                />
               </Box>
             </Box>
             <Box textColor="gray">
@@ -60,7 +75,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
             </Box>
           </CardHeader>
           <CardBody>
-            <Flex justifyContent="space-between" marginRight="15em">
+            <Flex marginRight="15em">
               {report.cards.map((card, index) => (
                 <Flex key={index}>
                   <StandardCard

@@ -39,6 +39,10 @@ export default {
         update: "/api/user/active-report/update",
         change: "/api/user/active-report/change",
       },
+      archivedReport: {
+        add: "/api/user/archived-report/add",
+        delete: "/api/user/archived-report/delete"
+      },
       report: {
         create: "/api/report/create",
         get: "/api/report/get",
