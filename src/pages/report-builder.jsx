@@ -42,7 +42,7 @@ const ReportBuilder = () => {
         }))
       );
     }
-  }, [isValidating, report]);
+  }, [isValidating]);
 
   const handleCompleteReport = () => {
     const updatedSels = sels.map((sel) => ({
