@@ -7,7 +7,7 @@ function RecentStandardsView({ maxCards }) {
   const { user } = useUser();
 
   return (
-    <Flex flexDirection={"column"} gap="16px">
+    <Flex flexDirection="column" gap="16px">
       <Heading fontSize="1.5em">Recent Standards</Heading>
       <Link href="/library">
         <Button width="max" variant="Grey-outlined">
