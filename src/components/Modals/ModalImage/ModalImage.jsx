@@ -16,11 +16,7 @@ const ModalImage = ({
   setCurrentImage = null,
   ...props
 }) => {
-
-  
-  
   const { showEnlarge = true } = { ...props };
-
 
   return (
     <>
@@ -85,7 +81,6 @@ const ModalImage = ({
         prompt="Are you sure you want to delete this image?"
         subcontent={
           <Box>
-      
             <Image
               src={image}
               width="100px"

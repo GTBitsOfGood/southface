@@ -66,16 +66,13 @@ const ImageUpload = ({ name }) => {
   const { mutators } = useForm();
 
   const handleUploadImages = (files) => {
- 
     const newFiles = Array.prototype.slice.call(files);
-    
+
     const images = values.uploadImages || [];
 
     newFiles.some((img) => {
       images.push(img);
     });
-
-
 
     mutators.setValue("uploadImages", images);
   };

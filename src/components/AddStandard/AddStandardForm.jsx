@@ -47,21 +47,18 @@ const AddStandardForm = () => {
       return;
     }
     const images = values.uploadImages.map(async (image) => {
-      const blob = await uploadFile(image.name, image)
+      const blob = await uploadFile(image.name, image);
       const imageUrl = blob._response.request.url;
-  
+
       // use for testing (placeholder)
       // const imageUrl =
       //   "https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png";
       return {
-        imageUrl:
-          imageUrl,
+        imageUrl: imageUrl,
         thumbsUp: [],
         thumbsDown: [],
       };
     });
-
-    
 
     const buildingTypeKeys = values.buildingType.map((val) =>
       Object.keys(buildingTypeNames).find(

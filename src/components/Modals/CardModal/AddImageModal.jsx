@@ -17,12 +17,10 @@ const AddImageModal = ({ setValue, form, ...props }) => {
       icon: <Spinner />,
     });
     const existingImages = JSON.parse(JSON.stringify(form.values.images));
-    
 
     for (let image of images) {
       let imagesSucceeded = 0;
       uploadFile(image.name, image).then((res) => {
-        
         if (!(res instanceof Error)) {
           imagesSucceeded++;
 

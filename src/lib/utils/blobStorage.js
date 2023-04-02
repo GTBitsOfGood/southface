@@ -36,14 +36,14 @@ const deleteFile = async (blobUrl) => {
     const containerClient = getBlobClient();
 
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-   
+
     const deleteBlobResponse = await blockBlobClient.deleteIfExists();
 
     return deleteBlobResponse;
   } catch (e) {
     return e;
   }
-}
+};
 
 const listBlobs = async () => {
   const containerClient = getBlobClient();
@@ -57,8 +57,11 @@ const listBlobs = async () => {
 };
 
 const parseUrlToBlobName = (blobUrl) => {
-  return blobUrl.substring(blobUrl.indexOf("standards") + 10, blobUrl.indexOf("?"))
-}
+  return blobUrl.substring(
+    blobUrl.indexOf("standards") + 10,
+    blobUrl.indexOf("?")
+  );
+};
 
 function isValidBlobUrl(url) {
   try {
@@ -70,7 +73,5 @@ function isValidBlobUrl(url) {
     return false;
   }
 }
-
-
 
 export { getBlobClient, uploadFile, deleteFile, listBlobs, isValidBlobUrl };

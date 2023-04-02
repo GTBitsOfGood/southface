@@ -84,7 +84,6 @@ const CardModal = ({
   const { user } = useUser();
 
   const [selectedImage, setSelectedImage] = useState(0);
-  
 
   // Start of report selection code
   const { changeInReport, addToReport } = useActiveReport();
@@ -168,15 +167,12 @@ const CardModal = ({
     onCloseCardModal();
   };
 
-
-
   const handleDeleteImage = (image) => {
-
     const newCardImages = card.images.filter((imageFromArray) => {
       if (image != imageFromArray.imageUrl) {
         return image;
       }
-    })
+    });
 
     // newCardImages.splice(index, 1);
     setValue("images", newCardImages);
@@ -185,8 +181,6 @@ const CardModal = ({
   };
 
   const form = useFormState();
-
- 
 
   let discardChangesAndExit = () => {
     reset();
@@ -345,10 +339,7 @@ const CardModal = ({
                 ))}
                 {editing ? (
                   <Carousel.Item>
-                    <AddImageModal
-                      setValue={setValue}
-                      form={form}
-                    />
+                    <AddImageModal setValue={setValue} form={form} />
                   </Carousel.Item>
                 ) : (
                   <></>

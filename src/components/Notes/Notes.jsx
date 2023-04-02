@@ -27,7 +27,7 @@ const Notes = ({ cardId, notes, ...rest }) => {
     const updatedCard = await updateCardById(cardId, {
       notes: newNotes.map((n) => n).reverse(),
     });
-    
+
     updateCard(updatedCard);
   };
 

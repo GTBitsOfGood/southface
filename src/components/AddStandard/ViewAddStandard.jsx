@@ -85,7 +85,6 @@ const ViewAddStandard = ({ handleSubmit }) => {
       {values.uploadImages && values.uploadImages.length > 0 && (
         <Wrap mt={6} mb={4} spacing={4}>
           {Array.from(values.uploadImages).map((img, idx) => {
-
             const imageUrl = URL.createObjectURL(img);
             // use for testing (placeholder)
             // const imageUrl =

@@ -6,7 +6,7 @@ import {
   updateCardById,
 } from "../../../actions/Card";
 
-import {deleteFile} from "src/lib/utils/blobStorage";
+import { deleteFile } from "src/lib/utils/blobStorage";
 import cardEditValidator from "./cardEditValidator";
 import CardModal from "./CardModal";
 import { useRouter } from "next/router";
@@ -35,7 +35,6 @@ const CardModalWithForm = ({
       await deleteFile(imagesToDelete[i]);
     }
 
-
     let newCard = await updateCardById(card._id, dirtyValues);
 
     setCards((cards) => {
@@ -47,7 +46,6 @@ const CardModalWithForm = ({
         }
       });
     });
-
 
     setImagesToDelete([]);
     revalidate(JSON.stringify([router.asPath]));

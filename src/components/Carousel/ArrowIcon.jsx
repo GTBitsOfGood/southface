@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
-const ArrowIcon = ({orientation, ...rest}) => {
+const ArrowIcon = ({ orientation, ...rest }) => {
   const styles = {
     pos: "absolute",
     top: "0",
