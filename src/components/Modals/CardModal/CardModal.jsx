@@ -41,6 +41,7 @@ const CardModal = ({
   handleSubmit,
   registerField,
   handleDeleteStandard,
+  setImagesToDelete,
   ...rest
 }) => {
   const {
@@ -73,10 +74,17 @@ const CardModal = ({
     onClose: onDeleteStandardClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isDeleteImageOpen,
+    onOpen: onDeleteImageOpen,
+    onClose: onDeleteImageClose,
+  } = useDisclosure();
+
   const [editing, setEditing] = useState(false);
   const { user } = useUser();
 
   const [selectedImage, setSelectedImage] = useState(0);
+  
 
   // Start of report selection code
   const { changeInReport, addToReport } = useActiveReport();
@@ -160,26 +168,31 @@ const CardModal = ({
     onCloseCardModal();
   };
 
-  // const {
-  //   isOpen: isImageDeleteOpen,
-  //   onOpen: onImageDeleteOpen,
-  //   onClose: onImageDeleteClose,
-  // } = useDisclosure();
 
-  // const handleDeleteImage = (image) => {
-  //   const index = card.images.indexOf(image);
-  //   const newCardImages = JSON.parse(JSON.stringify(card.images));
-  //   newCardImages.splice(index, 1);
-  //   setValue("images", newCardImages);
-  //   onImageDeleteClose();
-  // };
+
+  const handleDeleteImage = (image) => {
+
+    const newCardImages = card.images.filter((imageFromArray) => {
+      if (image != imageFromArray.imageUrl) {
+        return image;
+      }
+    })
+
+    // newCardImages.splice(index, 1);
+    setValue("images", newCardImages);
+    setImagesToDelete((imagesToDelete) => [...imagesToDelete, image]);
+    onDeleteImageClose();
+  };
 
   const form = useFormState();
+
+ 
 
   let discardChangesAndExit = () => {
     reset();
     setEditing(false);
     onDiscardChangesExitModalClose();
+    setImagesToDelete([]);
     onCloseCardModal();
   };
 
@@ -228,6 +241,7 @@ const CardModal = ({
                     size="sm"
                     color="#6d6e70"
                     border="solid 1px #6d6e70"
+                    whiteSpace="nowrap"
                     width="auto"
                     onClick={onDiscardChangesOpen}
                   >
@@ -238,10 +252,12 @@ const CardModal = ({
                     rounded="3xl"
                     size="sm"
                     color="white"
+                    whiteSpace="nowrap"
                     width="auto"
                     _hover={{ bgColor: "#0690a7" }}
                     _active={{ bgColor: "#057b8f" }}
                     onClick={onSaveChangesOpen}
+                    isDisabled={form.hasValidationErrors}
                   >
                     Save Changes
                   </Button>
@@ -318,6 +334,11 @@ const CardModal = ({
                         showEnlarge={!editingReport}
                         setCurrentImage={setSelectedImage}
                         index={index}
+                        editing={editing}
+                        isDeleteImageOpen={isDeleteImageOpen}
+                        onDeleteImageClose={onDeleteImageClose}
+                        onDeleteImageOpen={onDeleteImageOpen}
+                        handleDeleteImage={handleDeleteImage}
                       />
                     </Box>
                   </Carousel.Item>
@@ -327,7 +348,6 @@ const CardModal = ({
                     <AddImageModal
                       setValue={setValue}
                       form={form}
-                      cardId={card._id}
                     />
                   </Carousel.Item>
                 ) : (

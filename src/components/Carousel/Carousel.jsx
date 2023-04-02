@@ -99,7 +99,7 @@ const Carousel = ({
         icon={<ArrowIcon orientation="left" />}
         onClick={handlePrev}
         position="absolute"
-        left="1rem"
+        left="-1rem"
         background="none"
         _hover={{ background: "none" }}
         zIndex="10"

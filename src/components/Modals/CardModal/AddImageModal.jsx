@@ -1,9 +1,9 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Button, Input, Spinner, useToast } from "@chakra-ui/react";
 import { useRef } from "react";
-import { isValidBlobUrl, uploadFile } from "src/lib/utils/blobStorage";
+import { uploadFile } from "src/lib/utils/blobStorage";
 
-const AddImageModal = ({ setValue, form, cardId, ...props }) => {
+const AddImageModal = ({ setValue, form, ...props }) => {
   const fileRef = useRef();
   const toastRef = useRef();
   const uploadingToast = useToast();
@@ -17,17 +17,22 @@ const AddImageModal = ({ setValue, form, cardId, ...props }) => {
       icon: <Spinner />,
     });
     const existingImages = JSON.parse(JSON.stringify(form.values.images));
-    const metadata = {};
-    const tags = {
-      cardId: cardId,
-    };
+    
 
     for (let image of images) {
       let imagesSucceeded = 0;
-      uploadFile(image.name, image, metadata, tags).then((res) => {
-        if (!(res instanceof Error) && isValidBlobUrl(res)) {
+      uploadFile(image.name, image).then((res) => {
+        
+        if (!(res instanceof Error)) {
           imagesSucceeded++;
-          existingImages.push(res);
+
+          const imageObject = {
+            imageUrl: res._response.request.url,
+            thumbsUp: [],
+            thumbsDown: [],
+          };
+
+          existingImages.push(imageObject);
           if (imagesSucceeded == images.length) {
             if (toastRef.current) {
               uploadingToast.update(toastRef.current, {

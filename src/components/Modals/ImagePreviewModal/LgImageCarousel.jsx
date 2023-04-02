@@ -18,7 +18,7 @@ const LgImageCarousel = ({ cardImages, currentImage, setCurrentImage }) => {
       <Carousel
         cols={1}
         rows={1}
-        gap={10}
+        gap={2}
         showDots={true}
         currentImage={currentImage}
         setCurrentImage={setCurrentImage}
