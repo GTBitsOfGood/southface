@@ -1,4 +1,4 @@
-import { Box, Flex, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, useDisclosure } from "@chakra-ui/react";
 import Router, { useRouter } from "next/router";
 
 import { logout } from "src/actions/User";
@@ -8,6 +8,7 @@ import urls from "src/lib/utils/urls";
 import ConfirmActionModal from "../Modals/ConfirmActionModal/ConfirmActionModal";
 import ShoppingCartView from "../ShoppingCartView";
 import NavLink from "./NavLink";
+import { FiChevronsUp } from "react-icons/fi";
 
 const NavBar = () => {
   const router = useRouter();
@@ -25,11 +26,6 @@ const NavBar = () => {
       confirmMessage = "digital library";
   }
 
-  const {
-    isOpen: isCartOpen,
-    onOpen: onCartOpen,
-    onClose: onCartClose,
-  } = useDisclosure();
   const {
     isOpen: isLogoutOpen,
     onOpen: onLogoutOpen,
@@ -52,6 +48,31 @@ const NavBar = () => {
     }
   };
 
+  const {
+    isOpen: isCartOpen,
+    onOpen: onCartOpen,
+    onClose: onCartClose,
+  } = useDisclosure();
+  
+  const [buttonW, borderR] = ["200px", "10px"];
+
+  const shoppingCartButtonStyle = {
+    transform: "rotate(-90deg)",
+    transformOrigin: "bottom right",
+    backgroundColor: "white",
+    color: "#3f3f3f",
+    border: "1px solid #3f3f3f",
+    borderBottom: "none",
+    // right: "-" + buttonW,
+    right: "0",
+    height: "50px",
+    top: "20vh",
+    width: buttonW,
+    position: "fixed",
+    zIndex: "100",
+    borderRadius: borderR + " " + borderR + " 0 0",
+  };
+
   return (
     <Flex boxShadow="base" py="2">
       <Image
@@ -68,11 +89,21 @@ const NavBar = () => {
       {user?.isAdmin && (
         <NavLink name="Add a New Standard" href={urls.pages.addstandard} />
       )}
-      <NavLink name="Shopping Cart" onClick={onCartOpen} />
       <Box ml="auto" />{" "}
       {/*This is an empty div to right-align the last nav link */}
       <NavLinkAuth />
-      <ShoppingCartView isOpen={isCartOpen} onClose={onCartClose} />
+      <ShoppingCartView
+        buttonStyles={shoppingCartButtonStyle}
+        isOpen={isCartOpen}
+        onClose={onCartClose}
+      />
+      <Button
+        fontSize="lg"
+        onClick={onCartOpen}
+        style={shoppingCartButtonStyle}
+      >
+        {<Icon as={FiChevronsUp} mr="1" fontSize="xl" />} Report Preview
+      </Button>
       <ConfirmActionModal
         isOpen={isLogoutOpen}
         onClose={onLogoutClose}
