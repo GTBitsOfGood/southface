@@ -7,18 +7,15 @@ const handler = async (req, res) => {
     const userId = req.session.user.id;
 
     if (req.body.cards) {
-       const formattedArchivedReport = req.body.cards.map((cardObject) => {
-         return cardObject.card;
-       });
+      const formattedArchivedReport = req.body.cards.map((cardObject) => {
+        return cardObject.card;
+      });
 
-       await addToArchivedReport(
-         userId,
-         formattedArchivedReport
-       );
+      await addToArchivedReport(userId, formattedArchivedReport);
     }
-   
+
     await updateActiveReport(userId, []);
-    
+
     return res.status(200).json({
       success: true,
     });

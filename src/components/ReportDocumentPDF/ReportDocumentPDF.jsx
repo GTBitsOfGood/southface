@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
 });
 
 const ReportDocumentPDF = ({ selectedReport }) => {
-  console.log("selectedReport", selectedReport);
   return (
     <Document>
       <Page size="A4" style={styles.page}>

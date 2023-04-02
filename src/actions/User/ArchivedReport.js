@@ -22,7 +22,6 @@ export const addToArchivedReport = (report) => {
     });
 };
 
-
 export const removeArchivedReport = (reportId) => {
   return fetch(urls.api.user.archivedReport.delete, {
     method: "PUT",

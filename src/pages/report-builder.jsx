@@ -47,7 +47,7 @@ const ReportBuilder = () => {
     }
   }, [isValidating]);
 
-  const handleCompleteReport = async ({noSave = false}) => {
+  const handleCompleteReport = async ({ noSave = false }) => {
     const updatedSels = sels.map((sel) => ({
       ...sel,
       completedDate: sel.completedDate || new Date(), // update completedDate if not already set
@@ -59,13 +59,9 @@ const ReportBuilder = () => {
     } else {
       await addToArchivedReport(report);
     }
-    
-    router.reload();  
+
+    router.reload();
   };
-
- 
-
-
 
   const useGlobalEditing = useState(false);
 
@@ -129,7 +125,9 @@ const ReportBuilder = () => {
                 confirmButtonText="Yes, complete and save report"
                 cancelButtonText="No, complete without saving report"
                 handleAction={handleCompleteReport}
-                handleCancelAction={() => handleCompleteReport({noSave: true})}
+                handleCancelAction={() =>
+                  handleCompleteReport({ noSave: true })
+                }
                 isDanger={false}
                 size="2xl"
               />

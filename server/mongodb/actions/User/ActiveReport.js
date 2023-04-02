@@ -112,4 +112,3 @@ export const updateActiveReport = async (userId, plan) => {
     console.log(e);
   }
 };
-

@@ -18,16 +18,14 @@ import ConfirmActionModal from "../Modals/ConfirmActionModal";
 
 const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const [hasReportCard, setHasReportCard] = useState(true);
-    const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Date place holder
   const date = new Date();
 
   const handleRemove = async () => {
-    
     await removeArchivedReport(report._id);
     setHasReportCard(false);
-    
   };
 
   return (
@@ -61,7 +59,6 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                   cancelButtonText="No, cancel"
                   handleAction={handleRemove}
                   isDanger={false}
-              
                 />
               </Box>
             </Box>

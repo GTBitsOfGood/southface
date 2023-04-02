@@ -15,7 +15,7 @@ import { PDFViewer, usePDF } from "@react-pdf/renderer";
 import ReportDocumentPDF from "../ReportDocumentPDF/ReportDocumentPDF";
 
 const PDFWrapper = (props) => {
-  const { report, error} = props;
+  const { report, error } = props;
 
   if (!report) {
     return <>Loading...</>;

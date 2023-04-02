@@ -4,16 +4,15 @@ import User from "../../models/User";
 export const addToArchivedReport = async (userId, cards) => {
   try {
     await mongoDB();
-    
+
     const user = await User.findByIdAndUpdate(
       userId,
       {
-        $addToSet: { "archivedReports": {cards: cards, name: "Default"} },
+        $addToSet: { archivedReports: { cards: cards, name: "Default" } },
       },
       { upsert: true }
-    )
+    );
 
-    console.log(user);
 
     if (user == null) {
       throw new Error();
@@ -32,12 +31,12 @@ export const deleteArchivedReport = async (userId, reportId) => {
     const user = await User.findByIdAndUpdate(
       userId,
       {
-        $pull: { archivedReports: {_id: reportId} },
+        $pull: { archivedReports: { _id: reportId } },
       },
       { upsert: true }
     );
 
-    console.log(user);
+
 
     if (user == null) {
       throw new Error();
@@ -48,4 +47,3 @@ export const deleteArchivedReport = async (userId, reportId) => {
     console.log(e);
   }
 };
-

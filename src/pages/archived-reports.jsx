@@ -10,7 +10,6 @@ const ArchivedReports = () => {
   const { user } = useUser({ getArchivedReports: true, redirectTo: "/login" });
   const { data } = useSWR(urls.api.user.getArchivedReports);
   const archivedReports = data?.payload.archivedReports;
-  
 
   if (user?.isLoggedIn && archivedReports?.length == 0)
     return <Heading p={10}>Currently No ArchivedReports</Heading>;
@@ -52,8 +51,6 @@ const ArchivedReports = () => {
           {/* <ArchivedReportCard /> */}
         </Box>
       </VStack>
-
-      
     </Box>
   );
 };

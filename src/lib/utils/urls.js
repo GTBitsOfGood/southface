@@ -41,7 +41,7 @@ export default {
       },
       archivedReport: {
         add: "/api/user/archived-report/add",
-        delete: "/api/user/archived-report/delete"
+        delete: "/api/user/archived-report/delete",
       },
       report: {
         create: "/api/report/create",

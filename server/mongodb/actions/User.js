@@ -75,13 +75,13 @@ export const getUserFromId = async (id) => {
 export const getUserArchivedReports = async (id) => {
   await mongoDB();
   try {
-    const user = await User.findOne({ _id: id })
-      .populate("archivedReports.cards")
+    const user = await User.findOne({ _id: id }).populate(
+      "archivedReports.cards"
+    );
 
     if (user == null) {
       throw new Error();
     }
-  
 
     return user.archivedReports.reverse();
   } catch (e) {

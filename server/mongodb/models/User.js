@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {CardSchema } from "./Card";
+import { CardSchema } from "./Card";
 
 const { Schema } = mongoose;
 
@@ -19,10 +19,12 @@ const UserSchema = new Schema({
     required: true,
   },
   archivedReports: {
-    type: [{
-      cards: [CardSchema],
-      name: String
-    }], // this is embedded
+    type: [
+      {
+        cards: [CardSchema],
+        name: String,
+      },
+    ], // this is embedded
   },
   recentStandards: [
     {
