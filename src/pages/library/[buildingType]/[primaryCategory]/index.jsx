@@ -116,7 +116,6 @@ export async function getStaticProps({ params }) {
     primaryCategory: params.primaryCategory,
   });
 
-
   const cardsCount = await getCardsCount({
     buildingType,
     primaryCategory,

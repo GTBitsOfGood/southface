@@ -13,7 +13,6 @@ export const addToArchivedReport = async (userId, cards) => {
       { upsert: true }
     );
 
-
     if (user == null) {
       throw new Error();
     }
@@ -35,8 +34,6 @@ export const deleteArchivedReport = async (userId, reportId) => {
       },
       { upsert: true }
     );
-
-
 
     if (user == null) {
       throw new Error();

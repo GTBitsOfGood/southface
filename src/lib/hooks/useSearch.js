@@ -48,7 +48,6 @@ export default function useSearch({ setNumPages, setCurrentPage, setCards }) {
       primaryCategory: primaryCategory || null,
     };
 
-
     // accounts for click button on primary category page with empty string
     if (
       searchString === "" &&
