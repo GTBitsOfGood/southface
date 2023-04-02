@@ -92,8 +92,6 @@ const ReportDocumentPDF = ({ selectedReport }) => {
                 </View>
                 <View style={styles.imageSetContainer}>
                   {card?.images.map((image, index) => {
-                    let url = new URL(image.imageUrl);
-                    url = url.origin + url.pathname;
                     return image ? (
                       <View
                         style={[
@@ -114,7 +112,7 @@ const ReportDocumentPDF = ({ selectedReport }) => {
                         ]}
                         key={index}
                       >
-                        <Image src={url} alt="" style={styles.image}></Image>
+                        <Image src={image.imageUrl} alt="" style={styles.image}></Image>
                       </View>
                     ) : (
                       <></>
@@ -122,7 +120,7 @@ const ReportDocumentPDF = ({ selectedReport }) => {
                   })}
                 </View>
                 <View style={styles.section}>
-                  <Text style={styles.category}>Notes</Text>
+                  {card.notes.length > 0 && <Text style={styles.category}>Notes</Text>}
                   <View>
                     {card.notes?.map((note, index) => {
                       return (

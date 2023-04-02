@@ -34,7 +34,7 @@ const ModalImage = ({
         {editing ? (
           <Button
             position="absolute"
-            top="0.25rem"
+            top="-0.25rem"
             right="0rem"
             backgroundColor="#FFFFFF"
             color="#6D6E70"
