@@ -1,5 +1,6 @@
 import { Box, Button, Divider, Image, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { DEFAULT_IMAGE } from "src/lib/utils/constants";
 
 const ShoppingCartItem = ({
   reportName,
@@ -24,7 +25,7 @@ const ShoppingCartItem = ({
           <Box flex="1" paddingLeft="2.5">
             <Image
               src="../../../public/static/ShoppingCartImg.png"
-              fallbackSrc="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
+              fallbackSrc={DEFAULT_IMAGE}
               alt="Shopping Cart Image"
             />
           </Box>

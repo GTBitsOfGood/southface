@@ -1,5 +1,8 @@
+import urls from "lib/utils/urls";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Form } from "react-final-form";
+import useSWR, { useSWRConfig } from "swr";
 import {
   deleteCardById,
   revalidate,
@@ -7,9 +10,9 @@ import {
 } from "../../../actions/Card";
 
 import { deleteFile } from "src/lib/utils/blobStorage";
-import cardEditValidator from "./cardEditValidator";
+import { createTag } from "../../../actions/Tag";
 import CardModal from "./CardModal";
-import { useRouter } from "next/router";
+import cardEditValidator from "./cardEditValidator";
 
 const CardModalWithForm = ({
   card,
@@ -22,6 +25,10 @@ const CardModalWithForm = ({
   const router = useRouter();
   const [imagesToDelete, setImagesToDelete] = useState([]);
 
+  const { data } = useSWR(urls.api.tag.getObject);
+  const dbTags = data?.payload[0];
+  const { mutate } = useSWRConfig();
+
   const editSubmit = async (values) => {
     const dirtyFields = Object.keys(values).filter((key) => {
       return values[key] !== initialCard[key] && key !== "newTag";
@@ -33,6 +40,24 @@ const CardModalWithForm = ({
 
     for (let i = 0; i < imagesToDelete.length; i++) {
       await deleteFile(imagesToDelete[i]);
+    }
+
+    const newTagsToAdd = dirtyValues.tags?.filter((tag) => {
+      const firstLetter = tag.charAt(0).toLowerCase();
+      if (dbTags[firstLetter]) {
+        const foundTag = dbTags[firstLetter].find((obj) => obj.name === tag);
+        return !foundTag;
+      } else {
+        return true;
+      }
+    });
+
+    newTagsToAdd?.forEach((tag) => {
+      createTag(tag);
+    });
+
+    if (newTagsToAdd) {
+      mutate(urls.api.tag.getObject);
     }
 
     let newCard = await updateCardById(card._id, dirtyValues);
