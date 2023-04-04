@@ -3,6 +3,13 @@ import User from "../../models/User";
 
 const populateString = "activeReport.cards.card";
 
+const removeNullCards = (report) => {
+  console.log(report.cards);
+  report.cards = report.cards.filter(card => card.card !== null);
+  console.log(report.cards);
+  return report;
+}
+
 export const getActiveReport = async (userId) => {
   try {
     await mongoDB();
@@ -10,7 +17,7 @@ export const getActiveReport = async (userId) => {
     if (user == null) {
       throw new Error();
     }
-    return user.activeReport;
+    return removeNullCards(user.activeReport);
   } catch (e) {
     console.log(e);
   }
