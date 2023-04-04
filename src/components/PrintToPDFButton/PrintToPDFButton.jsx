@@ -44,11 +44,11 @@ const PrintToPDFButton = (props) => {
   return (
     <HStack>
       <Button
-        as="a"
+        as={props.report?.cards?.length == 0 ? "" : "a"}
         px={4}
         download="UntitledReport"
         variant="Grey-rounded"
-        href={instance.url}
+        href={props.report?.cards?.length == 0 ? "" : instance.url}
         isDisabled={props.report?.cards?.length == 0}
       >
         Download

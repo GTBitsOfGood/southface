@@ -78,7 +78,9 @@ const ReportDocumentPDF = ({ selectedReport }) => {
       <Page size="A4" style={styles.page}>
         <View style={styles.outerContainer}>
           <View style={styles.sectionLarge}>
-            <Text style={styles.title}>*Add title support here</Text>
+            <Text style={styles.title}>
+              {selectedReport.name ?? "Default Report"}
+            </Text>
             <Text style={styles.textSmall}>Completed on ...</Text>
           </View>
           {selectedReport?.cards.map((item, index) => {

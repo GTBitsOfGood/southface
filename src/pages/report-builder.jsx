@@ -5,34 +5,33 @@ import {
   Flex,
   Heading,
   HStack,
-  Input,
   StackDivider,
-  VStack,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { addToArchivedReport } from "../actions/User/ArchivedReport";
 import ArchivedReportView from "src/components/ArchivedReportView";
 import RecentStandardsView from "src/components/RecentStandardsView";
 import { ReportStandard } from "src/components/StandardCard";
 import useActiveReport from "src/lib/hooks/useActiveReport";
+import { addToArchivedReport } from "../actions/User/ArchivedReport";
+import ConfirmActionModal from "../components/Modals/ConfirmActionModal";
 import PrintToPDFButton from "../components/PrintToPDFButton";
 import useUser from "../lib/hooks/useUser";
-import { useRouter } from "next/router";
-import ConfirmActionModal from "../components/Modals/ConfirmActionModal";
 
 const ReportBuilder = () => {
   // For PDF exporting
-  const [editingTitle, setEditingTitle] = useState(false);
-  useEffect(() => setEditingTitle(true), []);
+  const [renaming, setRenaming] = useState(false);
+  const renameEditableRef = useRef();
+
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { user } = useUser({ redirectTo: "/login" });
 
-  const nameRef = useRef();
+  const { report, isValidating, updateReport } = useActiveReport();
 
-  const { report, isValidating } = useActiveReport();
   const [sels, setSels] = useState([]);
 
   useEffect(() => {
@@ -64,7 +63,6 @@ const ReportBuilder = () => {
   };
 
   const useGlobalEditing = useState(false);
-
   if (!user) return;
 
   return (
@@ -87,31 +85,56 @@ const ReportBuilder = () => {
               width="100%"
               flexFlow="row nowrap"
               justifyContent="space-between"
+              gap={2}
             >
-              <HStack w="100%">
-                {editingTitle ? ( // temp placeholder condition
-                  <Heading maxW="80%" mr={3}>
-                    Untitiled Report
-                  </Heading>
+              <Flex gap={2}>
+                <Heading contentEditable={renaming} ref={renameEditableRef}>
+                  {report.name ?? "Untitled Report"}
+                </Heading>
+                {renaming ? (
+                  <Flex gap={2}>
+                    <Button
+                      minW="9rem"
+                      variant="Grey-outlined-rounded"
+                      onClick={() => {
+                        renameEditableRef.current.innerHTML =
+                          report.name ?? "Default Report";
+                        setRenaming(false);
+                      }}
+                    >
+                      Discard Changes
+                    </Button>
+                    <Button
+                      minW="9rem"
+                      variant="Grey-rounded"
+                      onClick={() => {
+                        if (renameEditableRef.current) {
+                          let content = renameEditableRef.current.innerHTML;
+                          if (!(content?.length > 0)) {
+                            content = "Default Report";
+                          }
+                          let newReport = JSON.parse(JSON.stringify(report));
+                          newReport.name = content ?? "Default Report";
+                          updateReport(newReport);
+                          setRenaming(false);
+                        }
+                      }}
+                    >
+                      Save Changes
+                    </Button>
+                  </Flex>
                 ) : (
-                  <Input
-                    size="lg"
-                    maxW="50%"
-                    fontSize="3xl"
-                    variant="flushed"
-                    mr={3}
-                    placeholder="Title of Current Project Plan"
-                    ref={nameRef}
-                  />
+                  <Button
+                    minW="6rem"
+                    variant="Grey-outlined-rounded"
+                    onClick={() => setRenaming(true)}
+                  >
+                    Rename
+                  </Button>
                 )}
-                <Button minW="10%" variant="Grey-outlined-rounded">
-                  Rename
-                </Button>
-              </HStack>
+              </Flex>
               <Button
                 minW="20%"
-                position="absolute"
-                right="12"
                 variant="Blue-rounded"
                 onClick={onOpen}
                 isDisabled={report?.cards?.length == 0}
