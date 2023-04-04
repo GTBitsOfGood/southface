@@ -106,17 +106,20 @@ const LibraryCategoryPage = (props) => {
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
+            paddingX="14rem"
+            paddingY="8rem"
+            marginX="8rem"
           >
-            <Text textAlign="center">
-              <Text textAlign="center">
-                Sorry! We couldn&apos;t find any standards matching your search.
-                Try changing your spelling, removing filters, or searching for
-                something else.
-              </Text>
+            <Text fontSize="2xl" textAlign="center" color="grey" mb={5}>
+              Sorry! We couldn&apos;t find any standards matching your search.
+              Try changing your spelling, removing filters, or searching for
+              something else.
             </Text>
-            <Button variant="Blue" size="md" onClick>
-              Return to Site Planning
-            </Button>
+            <Link href={`/library/${props.params.buildingType}`}>
+              <Button variant="Blue" size="md">
+                Return to Site Planning
+              </Button>
+            </Link>
           </Flex>
         </div>
       )}
