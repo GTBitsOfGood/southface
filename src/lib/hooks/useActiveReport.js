@@ -1,12 +1,12 @@
-import useSWR from "swr";
-import {
-  getActiveReport,
-  updateActiveReport,
-  changeInActiveReport,
-  addToActiveReport,
-  removeFromActiveReport,
-} from "src/actions/User/ActiveReport";
 import { useState } from "react";
+import {
+  addToActiveReport,
+  changeInActiveReport,
+  getActiveReport,
+  removeFromActiveReport,
+  updateActiveReport,
+} from "src/actions/User/ActiveReport";
+import useSWR from "swr";
 
 // hook to get and update active plan for user, using SWR
 // NOTE: user must be logged in
@@ -27,15 +27,16 @@ export default function useActiveReport() {
   const [isWaiting, setIsWaiting] = useState(false);
   const reportModifier = (localData, apiCall) => {
     setIsWaiting(true);
-    mutateReport(localData, false);
+    // mutateReport(localData, false);
     return apiCall.then((res) => {
       mutateReport(res);
       setIsWaiting(false);
     });
   };
 
-  const updateReport = (report) =>
-    reportModifier(report, updateActiveReport(report));
+  const updateReport = (report) => {
+    return reportModifier(report, updateActiveReport(report));
+  };
 
   const changeInReport = (card) =>
     reportModifier(

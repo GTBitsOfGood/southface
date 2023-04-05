@@ -23,6 +23,7 @@ import useUser from "../lib/hooks/useUser";
 const ReportBuilder = () => {
   // For PDF exporting
   const [renaming, setRenaming] = useState(false);
+  const [renamedData, setRenamedData] = useState();
   const renameEditableRef = useRef();
 
   const router = useRouter();
@@ -33,6 +34,10 @@ const ReportBuilder = () => {
   const { report, isValidating, updateReport } = useActiveReport();
 
   const [sels, setSels] = useState([]);
+
+  useEffect(() => {
+    console.log(report.name);
+  }, [report.name]);
 
   useEffect(() => {
     if (report && !isValidating) {
@@ -88,8 +93,15 @@ const ReportBuilder = () => {
               gap={2}
             >
               <Flex gap={2}>
-                <Heading contentEditable={renaming} ref={renameEditableRef}>
-                  {report.name ?? "Untitled Report"}
+                <Heading
+                  contentEditable={renaming}
+                  suppressContentEditableWarning
+                  ref={renameEditableRef}
+                  onInput={(e) => {
+                    setRenamedData(e.currentTarget.textContent);
+                  }}
+                >
+                  {report.name || "Default Report"}
                 </Heading>
                 {renaming ? (
                   <Flex gap={2}>
@@ -97,8 +109,7 @@ const ReportBuilder = () => {
                       minW="9rem"
                       variant="Grey-outlined-rounded"
                       onClick={() => {
-                        renameEditableRef.current.innerHTML =
-                          report.name ?? "Default Report";
+                        setRenamedData(undefined);
                         setRenaming(false);
                       }}
                     >
@@ -107,15 +118,14 @@ const ReportBuilder = () => {
                     <Button
                       minW="9rem"
                       variant="Grey-rounded"
-                      onClick={() => {
+                      onClick={async () => {
                         if (renameEditableRef.current) {
-                          let content = renameEditableRef.current.innerHTML;
-                          if (!(content?.length > 0)) {
-                            content = "Default Report";
+                          if (!(renamedData?.length > 0)) {
+                            setRenamedData("Default Report");
                           }
                           let newReport = JSON.parse(JSON.stringify(report));
-                          newReport.name = content ?? "Default Report";
-                          updateReport(newReport);
+                          newReport.name = renamedData ?? "Default Report";
+                          await updateReport(newReport);
                           setRenaming(false);
                         }
                       }}
