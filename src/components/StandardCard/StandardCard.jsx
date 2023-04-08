@@ -83,6 +83,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
       flexGrow={0}
       flexShrink={0}
       {...props}
+      w="35%"
       isDisabled={user?.isLoggedIn ? false : true}
     >
       {!selected ? "Add To Report" : "Added to Report"}
@@ -115,6 +116,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             alt="construction image"
             height="100%"
             width="100%"
+            minH="50em"
           />
         </Box>
 
@@ -138,8 +140,9 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             mb="0.5"
             display="flex"
             justifyContent="space-between"
+            width="100%"
           >
-            <Flex overflowX="auto" flexShrink={0}>
+            <Flex overflowY="auto" flexShrink={0} width="65%">
               {card.tags.map((tag, index) => {
                 if (index < 3) {
                   return (
@@ -149,7 +152,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                       bgColor="#C4D600"
                       rounded="14.7877px"
                       marginLeft={0.5}
-                      width="auto"
+                      minWidth="max-content"
                     >
                       {tag}
                     </Tag>
