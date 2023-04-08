@@ -1,5 +1,4 @@
 import {
-  Icon,
   Box,
   Button,
   Divider,
@@ -8,6 +7,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Icon,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -26,14 +26,14 @@ const ShoppingCartView = ({ isOpen, onClose, ...rest }) => {
     }
   }, [isValidating]);
 
-  const [buttonW, borderR] = ["200px", "10px"];
+  const buttonW = "200px";
 
-  const { buttonStyles } = {...rest};
+  const { buttonStyles } = { ...rest };
 
   const closeButtonStyle = {
     ...buttonStyles,
     left: "-" + buttonW,
-  }
+  };
 
   return (
     <Drawer {...rest} isOpen={isOpen} onClose={onClose}>

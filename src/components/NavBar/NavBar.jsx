@@ -1,6 +1,14 @@
-import { Box, Button, Flex, Icon, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Icon,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Router, { useRouter } from "next/router";
-
+import { FiChevronsUp } from "react-icons/fi";
 import { logout } from "src/actions/User";
 import Image from "src/components/Image";
 import useUser from "src/lib/hooks/useUser";
@@ -8,7 +16,6 @@ import urls from "src/lib/utils/urls";
 import ConfirmActionModal from "../Modals/ConfirmActionModal/ConfirmActionModal";
 import ShoppingCartView from "../ShoppingCartView";
 import NavLink from "./NavLink";
-import { FiChevronsUp } from "react-icons/fi";
 
 const NavBar = () => {
   const router = useRouter();
@@ -44,7 +51,24 @@ const NavBar = () => {
     if (!user?.isLoggedIn) {
       return <NavLink name="Login" href={urls.pages.login} {...props} />;
     } else {
-      return <NavLink name="Logout" onClick={onLogoutOpen} {...props} />;
+      return (
+        <Flex align="center">
+          <Box>
+            <Flex marginRight={8}>
+              <Text
+                fontWeight="light"
+                fontStyle="italic"
+              >{`Logged in as `}</Text>
+              <Text fontWeight="medium" fontStyle="italic" marginLeft={1}>
+                {user.username}
+              </Text>
+            </Flex>
+          </Box>
+
+          <Divider orientation="vertical" h={6} borderColor="Grey" mr={0} />
+          <NavLink name="Logout" onClick={onLogoutOpen} {...props} />
+        </Flex>
+      );
     }
   };
 
@@ -53,7 +77,7 @@ const NavBar = () => {
     onOpen: onCartOpen,
     onClose: onCartClose,
   } = useDisclosure();
-  
+
   const [buttonW, borderR] = ["200px", "10px"];
 
   const shoppingCartButtonStyle = {

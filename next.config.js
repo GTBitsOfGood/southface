@@ -6,6 +6,7 @@ module.exports = withImages({
       "southface.blob.core.windows.net",
       "picsum.photos",
       "user-images.githubusercontent.com",
+      "southfaceblob.blob.core.windows.net",
     ],
   },
   async redirects() {

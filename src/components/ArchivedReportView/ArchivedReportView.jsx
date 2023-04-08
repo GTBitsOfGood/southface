@@ -8,6 +8,7 @@ const ArchivedReportView = () => {
   const { user } = useUser({ getArchivedReports: true });
   const { data } = useSWR(urls.api.user.getArchivedReports);
   const archivedReports = data?.payload.archivedReports;
+  console.log(archivedReports);
   return (
     <>
       <Heading fontSize="1.5em">Completed Reports</Heading>
