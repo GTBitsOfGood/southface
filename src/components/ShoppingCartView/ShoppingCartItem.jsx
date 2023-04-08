@@ -7,7 +7,7 @@ const ShoppingCartItem = ({ card, selState }) => {
   const removeHandler = () => {
     removeFromReport(card);
   };
-  console.log("Card: ", card)
+  console.log("Card: ", card);
   const selectedImages = card.images.filter(
     (_, index) => selState.imgSelections[index]
   );
