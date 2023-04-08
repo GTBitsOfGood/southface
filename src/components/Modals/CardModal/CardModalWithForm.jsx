@@ -72,6 +72,8 @@ const CardModalWithForm = ({
       });
     });
 
+    mutate(urls.api.user.activeReport.get);
+
     setImagesToDelete([]);
     revalidate(JSON.stringify([router.asPath]));
   };
