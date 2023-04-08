@@ -11,10 +11,10 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import PrintToPDFButton from "src/components/PrintToPDFButton";
-import defaultReportProps from "./defaultReportProps";
-import StandardCard from "./StandardCard";
 import { removeArchivedReport } from "../../actions/User/ArchivedReport";
 import ConfirmActionModal from "../Modals/ConfirmActionModal";
+import defaultReportProps from "./defaultReportProps";
+import StandardCard from "./StandardCard";
 
 const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const [hasReportCard, setHasReportCard] = useState(true);
@@ -43,7 +43,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
             <Box display="flex" justifyContent="space-between">
               <Box display="flex" alignItems="center">
                 <Heading size="xl" mr={6}>
-                  Recent Report
+                  {report.name}
                 </Heading>
                 <PrintToPDFButton report={report} />
               </Box>
