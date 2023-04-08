@@ -33,31 +33,28 @@ export async function getCards() {
   return Card.find({}).sort({ _id: -1 });
 }
 
-export async function getCardsPagination({
-  pageNumber,
+function createSearchQuery(
   buildingType,
-  primaryCategory = null,
-  searchFilterString = null,
-  searchFilterTags = null,
-  cardsPerPage = 6,
-}) {
-  await mongoDB();
+  primaryCategory,
+  searchFilterString,
+  searchFilterTags
+) {
+  let query = { buildingType, ...(primaryCategory && { primaryCategory }) };
 
   searchFilterTags = searchFilterTags
     ? searchFilterTags.split(",").map((tag) => tag.replaceAll("-;-", ","))
     : null;
-
-  let query = { buildingType, ...(primaryCategory && { primaryCategory }) };
 
   if (searchFilterString && searchFilterTags) {
     const regex = new RegExp(searchFilterString, "i");
 
     query = {
       ...query,
-      $or: [
+      $and: [
         {
-          $and: [
+          $or: [
             { title: { $regex: regex } },
+            { criteria: { $regex: regex } },
             { "notes.body": { $regex: regex } },
           ],
         },
@@ -68,7 +65,11 @@ export async function getCardsPagination({
     const regex = new RegExp(searchFilterString, "i");
     query = {
       ...query,
-      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
+      $or: [
+        { title: { $regex: regex } },
+        { criteria: { $regex: regex } },
+        { "notes.body": { $regex: regex } },
+      ],
     };
   } else if (searchFilterTags) {
     query = {
@@ -76,6 +77,26 @@ export async function getCardsPagination({
       tags: { $all: searchFilterTags },
     };
   }
+
+  return query;
+}
+
+export async function getCardsPagination({
+  pageNumber,
+  buildingType,
+  primaryCategory = null,
+  searchFilterString = null,
+  searchFilterTags = null,
+  cardsPerPage = 6,
+}) {
+  await mongoDB();
+
+  const query = createSearchQuery(
+    buildingType,
+    primaryCategory,
+    searchFilterString,
+    searchFilterTags
+  );
 
   const result = await Card.find(query)
     .sort({ _id: -1 })
@@ -93,41 +114,12 @@ export async function getCardsCount({
 }) {
   await mongoDB();
 
-  searchFilterTags = searchFilterTags
-    ? searchFilterTags.split(",").map((tag) => tag.replaceAll("-;-", ","))
-    : null;
-
-  let query = {
+  const query = createSearchQuery(
     buildingType,
     primaryCategory,
-  };
-  if (searchFilterString && searchFilterTags) {
-    const regex = new RegExp(searchFilterString, "i");
-
-    query = {
-      ...query,
-      $or: [
-        {
-          $and: [
-            { title: { $regex: regex } },
-            { "notes.body": { $regex: regex } },
-          ],
-        },
-        { tags: { $all: searchFilterTags } },
-      ],
-    };
-  } else if (searchFilterString) {
-    const regex = new RegExp(searchFilterString, "i");
-    query = {
-      ...query,
-      $or: [{ title: { $regex: regex } }, { "notes.body": { $regex: regex } }],
-    };
-  } else if (searchFilterTags) {
-    query = {
-      ...query,
-      tags: { $all: searchFilterTags },
-    };
-  }
+    searchFilterString,
+    searchFilterTags
+  );
 
   return Card.find(query).count();
 }
