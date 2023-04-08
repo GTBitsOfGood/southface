@@ -88,7 +88,7 @@ const LibraryCategoryPage = (props) => {
         setTagToClear={setTagToClear}
       />
 
-      {numPages > 1 ? (
+      {numPages > 0 ? (
         <>
           <StandardCardTable cards={cards} setCards={setCards} />
           <PaginationTab

@@ -11,19 +11,25 @@ import {
   StackDivider,
   Text,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
+import { addToArchivedReport } from "../actions/User/ArchivedReport";
 import ArchivedReportView from "src/components/ArchivedReportView";
 import RecentStandardsView from "src/components/RecentStandardsView";
 import { ReportStandard } from "src/components/StandardCard";
 import useActiveReport from "src/lib/hooks/useActiveReport";
 import PrintToPDFButton from "../components/PrintToPDFButton";
 import useUser from "../lib/hooks/useUser";
+import { useRouter } from "next/router";
+import ConfirmActionModal from "../components/Modals/ConfirmActionModal";
 
 const ReportBuilder = () => {
   // For PDF exporting
   const [editingTitle, setEditingTitle] = useState(false);
   useEffect(() => setEditingTitle(true), []);
+  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { user } = useUser({ redirectTo: "/login" });
 
@@ -44,12 +50,20 @@ const ReportBuilder = () => {
     }
   }, [isValidating]);
 
-  const handleCompleteReport = () => {
+  const handleCompleteReport = async ({ noSave = false }) => {
     const updatedSels = sels.map((sel) => ({
       ...sel,
       completedDate: sel.completedDate || new Date(), // update completedDate if not already set
     }));
     setSels(updatedSels);
+
+    if (noSave) {
+      await addToArchivedReport();
+    } else {
+      await addToArchivedReport(report);
+    }
+
+    router.reload();
   };
 
   const useGlobalEditing = useState(false);

@@ -23,10 +23,17 @@ const ImageControl = ({ img, idx, handleDeleteImage }) => {
     onOpen: onDeleteOpen,
     onClose: onDeleteClose,
   } = useDisclosure();
+
+  const imageUrl = URL.createObjectURL(img);
+
+  // use for testing (placeholder)
+  // const imageUrl =
+  //   "https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png";
   return (
     <>
       <Image
-        src="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
+        src={imageUrl}
+        objectFit="cover"
         height={125}
         width={125}
         alt="construction image"
@@ -60,6 +67,7 @@ const ImageUpload = ({ name }) => {
 
   const handleUploadImages = (files) => {
     const newFiles = Array.prototype.slice.call(files);
+
     const images = values.uploadImages || [];
 
     newFiles.some((img) => {
@@ -97,6 +105,7 @@ const ImageUpload = ({ name }) => {
           id={name}
           ref={ref}
           type="file"
+          accept="image/png, image/gif, image/jpeg"
           display="none"
           onChange={(e) => handleUploadImages(e.target.files)}
         />

@@ -26,7 +26,7 @@ const ArchivedReportView = () => {
       <VStack alignItems="flex-start" divider={<Divider />}>
         {user?.isLoggedIn &&
           archivedReports &&
-          archivedReports.map((archivedReport, index) => {
+          archivedReports.slice(0, 3).map((archivedReport, index) => {
             return <PlanComponent key={index} report={archivedReport} />;
           })}
       </VStack>

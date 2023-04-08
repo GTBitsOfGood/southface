@@ -85,13 +85,18 @@ const ViewAddStandard = ({ handleSubmit }) => {
       {values.uploadImages && values.uploadImages.length > 0 && (
         <Wrap mt={6} mb={4} spacing={4}>
           {Array.from(values.uploadImages).map((img, idx) => {
+            const imageUrl = URL.createObjectURL(img);
+            // use for testing (placeholder)
+            // const imageUrl =
+            //   "https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png";
             return (
               <VStack key={idx}>
                 <Heading size="xs" color="Grey" fontWeight="semibold" mb={1}>
                   {img.name}
                 </Heading>
                 <Image
-                  src="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
+                  src={imageUrl}
+                  objectFit="cover"
                   height={125}
                   width={125}
                   alt="construction image"
