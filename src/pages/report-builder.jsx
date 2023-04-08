@@ -23,7 +23,6 @@ import useUser from "../lib/hooks/useUser";
 const ReportBuilder = () => {
   // For PDF exporting
   const [renaming, setRenaming] = useState(false);
-  const [renamedData, setRenamedData] = useState();
   const renameEditableRef = useRef();
 
   const router = useRouter();
@@ -33,15 +32,15 @@ const ReportBuilder = () => {
 
   const { report, isValidating, updateReport } = useActiveReport();
 
-  const [sels, setSels] = useState([]);
+  const [nameField, setNameField] = useState(report.name);
+  const [renamedData, setRenamedData] = useState();
 
-  useEffect(() => {
-    console.log(report.name);
-  }, [report.name]);
+  const [sels, setSels] = useState([]);
 
   useEffect(() => {
     if (report && !isValidating) {
       // this useEffect wrapper prevents jittering
+      setNameField(report.name);
       setSels(
         report.cards.map((cardWrapper) => ({
           ...cardWrapper,
@@ -101,7 +100,7 @@ const ReportBuilder = () => {
                     setRenamedData(e.currentTarget.textContent);
                   }}
                 >
-                  {report.name || "Default Report"}
+                  {nameField || "Default Report"}
                 </Heading>
                 {renaming ? (
                   <Flex gap={2}>

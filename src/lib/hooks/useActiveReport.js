@@ -27,7 +27,7 @@ export default function useActiveReport() {
   const [isWaiting, setIsWaiting] = useState(false);
   const reportModifier = (localData, apiCall) => {
     setIsWaiting(true);
-    // mutateReport(localData, false);
+    mutateReport(localData, false);
     return apiCall.then((res) => {
       mutateReport(res);
       setIsWaiting(false);
