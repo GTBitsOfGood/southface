@@ -8,6 +8,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Icon,
+  Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -35,6 +36,22 @@ const ShoppingCartView = ({ isOpen, onClose, ...rest }) => {
     left: "-" + buttonW,
   };
 
+  const DisplayCardsInReport = () => {
+    if (sels.length > 0) {
+      return sels
+        .slice(0, 3)
+        .map((selState, index) => (
+          <ShoppingCartItem
+            key={index}
+            selState={selState}
+            card={selState.card}
+          />
+        ));
+    } else {
+      return <Text p={4}>No cards currently added to the report.</Text>;
+    }
+  };
+
   return (
     <Drawer {...rest} isOpen={isOpen} onClose={onClose}>
       <DrawerOverlay />
@@ -44,23 +61,19 @@ const ShoppingCartView = ({ isOpen, onClose, ...rest }) => {
             {<Icon as={FiChevronsDown} mr="1" fontSize="xl" />} Report Preview
           </DrawerCloseButton>
           <DrawerHeader display="flex" justifyContent="center">
-            Atlanta Construction 47
+            {report.name || "Untitled Report"}
           </DrawerHeader>
           <Divider orientation="horizontal" />
-          {sels.slice(0, 3).map((selState, index) => (
-            <ShoppingCartItem
-              key={index}
-              selState={selState}
-              card={selState.card}
-            />
-          ))}
+          <DisplayCardsInReport />
         </Box>
         <Box display="flex" justifyContent="center">
-          <Link href={urls.pages.reportbuilder}>
-            <Button variant="Grey-rounded" size="lg" marginBottom="20">
-              View Full Report
-            </Button>
-          </Link>
+          {sels.length > 0 && (
+            <Link href={urls.pages.reportbuilder}>
+              <Button variant="Grey-rounded" size="lg" marginBottom="20">
+                View Full Report
+              </Button>
+            </Link>
+          )}
         </Box>
       </DrawerContent>
     </Drawer>
