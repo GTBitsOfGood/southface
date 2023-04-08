@@ -83,7 +83,7 @@ export const getUserArchivedReports = async (id) => {
       throw new Error();
     }
 
-    return user.archivedReports;
+    return user.archivedReports.reverse();
   } catch (e) {
     throw new Error("Invalid token!");
   }
