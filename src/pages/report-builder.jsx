@@ -59,7 +59,7 @@ const ReportBuilder = () => {
   return (
     <>
       <HStack py={10} alignItems="flex-start" spacing={3} px={8}>
-        {!(report.cards?.length > 0) ? (
+        {!(sels?.length > 0) ? (
           <VStack
             as={Card}
             alignItems="flex-start"
