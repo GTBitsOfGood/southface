@@ -68,7 +68,7 @@ function LoadedStandards(props) {
                 <StandardCard
                   key={index}
                   card={card}
-                  height="90%"
+                  height="80%"
                   selState={selectionArray[index]}
                   cards={cards}
                   setCards={setCards}
