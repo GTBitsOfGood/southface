@@ -30,10 +30,15 @@ const ReportBuilder = () => {
 
   const { user } = useUser({ redirectTo: "/login" });
 
-  const { report, isValidating, updateReport } = useActiveReport();
+  const {
+    report,
+    isValidating,
+    updateReport,
+  } = useActiveReport();
 
   const [nameField, setNameField] = useState(report.name);
-  const [renamedData, setRenamedData] = useState();
+  const [renamedData, setRenamedData] = useState(report.name);
+  const [isLoadingState, setIsLoadingState] = useState(true);
 
   const [sels, setSels] = useState([]);
 
@@ -48,7 +53,20 @@ const ReportBuilder = () => {
         }))
       );
     }
-  }, [isValidating]);
+  }, [isValidating, report]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoadingState(false), 2000);
+    console.log("Here");
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (renaming) {
+      renameEditableRef.current.focus();
+      document.execCommand("selectAll", true, null);
+    }
+  }, [renaming]);
 
   const handleCompleteReport = async ({ noSave = false }) => {
     const updatedSels = sels.map((sel) => ({
@@ -71,7 +89,13 @@ const ReportBuilder = () => {
 
   return (
     <>
-      <HStack py={10} alignItems="flex-start" spacing={3} px={8}>
+      <HStack
+        py={10}
+        display={isLoadingState ? "none" : "flex"}
+        alignItems="flex-start"
+        spacing={3}
+        px={8}
+      >
         <VStack
           flex={2}
           as={Card}
@@ -108,7 +132,8 @@ const ReportBuilder = () => {
                       minW="9rem"
                       variant="Grey-outlined-rounded"
                       onClick={() => {
-                        setRenamedData(undefined);
+                        setRenamedData(report.name);
+                        renameEditableRef.current.innerHTML = report.name;
                         setRenaming(false);
                       }}
                     >
@@ -124,6 +149,7 @@ const ReportBuilder = () => {
                           }
                           let newReport = JSON.parse(JSON.stringify(report));
                           newReport.name = renamedData ?? "Default Report";
+                          console.log("newReport", newReport);
                           await updateReport(newReport);
                           setRenaming(false);
                         }
@@ -136,7 +162,10 @@ const ReportBuilder = () => {
                   <Button
                     minW="6rem"
                     variant="Grey-outlined-rounded"
-                    onClick={() => setRenaming(true)}
+                    onClick={() => {
+                      setRenaming(true);
+                      renameEditableRef.current.focus();
+                    }}
                   >
                     Rename
                   </Button>

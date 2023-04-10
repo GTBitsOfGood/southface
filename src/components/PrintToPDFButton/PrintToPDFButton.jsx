@@ -46,7 +46,7 @@ const PrintToPDFButton = (props) => {
       <Button
         as={props.report?.cards?.length == 0 ? "" : "a"}
         px={4}
-        download="UntitledReport"
+        download={props.report?.name}
         variant="Grey-rounded"
         href={props.report?.cards?.length == 0 ? "" : instance.url}
         isDisabled={props.report?.cards?.length == 0}
