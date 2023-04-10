@@ -4,9 +4,7 @@ import User from "../../models/User";
 const populateString = "activeReport.cards.card";
 
 const removeNullCards = (report) => {
-  console.log(report.cards);
   report.cards = report.cards.filter(card => card.card !== null);
-  console.log(report.cards);
   return report;
 }
 
