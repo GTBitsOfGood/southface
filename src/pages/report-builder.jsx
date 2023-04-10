@@ -30,11 +30,7 @@ const ReportBuilder = () => {
 
   const { user } = useUser({ redirectTo: "/login" });
 
-  const {
-    report,
-    isValidating,
-    updateReport,
-  } = useActiveReport();
+  const { report, isValidating, updateReport } = useActiveReport();
 
   const [nameField, setNameField] = useState(report.name);
   const [renamedData, setRenamedData] = useState(report.name);
@@ -56,7 +52,7 @@ const ReportBuilder = () => {
   }, [isValidating, report]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoadingState(false), 2000);
+    const timer = setTimeout(() => setIsLoadingState(false), 1000);
     console.log("Here");
     return () => clearTimeout(timer);
   }, []);

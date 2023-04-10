@@ -106,7 +106,7 @@ export const updateActiveReport = async (userId, plan) => {
     if (user == null) {
       throw new Error();
     }
-  
+
     return user.activeReport;
   } catch (e) {
     console.log(e);
