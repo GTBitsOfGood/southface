@@ -116,23 +116,25 @@ const NavBar = () => {
       <Box ml="auto" />{" "}
       {/*This is an empty div to right-align the last nav link */}
       <NavLinkAuth />
-      {user?.isLoggedIn && currPage != "/report-builder" && currPage != "/add-standard" && (
-        <>
-          <ShoppingCartView
-            buttonStyles={shoppingCartButtonStyle}
-            isOpen={isCartOpen}
-            onClose={onCartClose}
-          />
+      {user?.isLoggedIn &&
+        currPage != "/report-builder" &&
+        currPage != "/add-standard" && (
+          <>
+            <ShoppingCartView
+              buttonStyles={shoppingCartButtonStyle}
+              isOpen={isCartOpen}
+              onClose={onCartClose}
+            />
 
-          <Button
-            fontSize="lg"
-            onClick={onCartOpen}
-            style={shoppingCartButtonStyle}
-          >
-            {<Icon as={FiChevronsUp} mr="1" fontSize="xl" />} Report Preview
-          </Button>
-        </>
-      )}
+            <Button
+              fontSize="lg"
+              onClick={onCartOpen}
+              style={shoppingCartButtonStyle}
+            >
+              {<Icon as={FiChevronsUp} mr="1" fontSize="xl" />} Report Preview
+            </Button>
+          </>
+        )}
       <ConfirmActionModal
         isOpen={isLogoutOpen}
         onClose={onLogoutClose}

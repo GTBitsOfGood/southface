@@ -25,7 +25,7 @@ const ShoppingCartView = ({ isOpen, onClose, ...rest }) => {
       // this useEffect wrapper prevents jittering
       setSels(report.cards);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating]);
 
   const buttonW = "200px";
