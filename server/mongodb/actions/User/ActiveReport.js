@@ -4,9 +4,9 @@ import User from "../../models/User";
 const populateString = "activeReport.cards.card";
 
 const removeNullCards = (report) => {
-  report.cards = report.cards.filter(card => card.card !== null);
+  report.cards = report.cards.filter((card) => card.card !== null);
   return report;
-}
+};
 
 export const getActiveReport = async (userId) => {
   try {
