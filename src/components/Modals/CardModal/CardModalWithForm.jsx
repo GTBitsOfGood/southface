@@ -9,10 +9,9 @@ import {
   updateCardById,
 } from "../../../actions/Card";
 
-import { deleteFile } from "src/lib/utils/blobStorage";
 import { createTag } from "../../../actions/Tag";
-import CardModal from "./CardModal";
 import cardEditValidator from "./cardEditValidator";
+import CardModal from "./CardModal";
 
 const CardModalWithForm = ({
   card,
@@ -23,6 +22,8 @@ const CardModalWithForm = ({
   ...rest
 }) => {
   const router = useRouter();
+
+  // eslint-disable-next-line no-unused-vars
   const [imagesToDelete, setImagesToDelete] = useState([]);
 
   const { data } = useSWR(urls.api.tag.getObject);
@@ -38,9 +39,10 @@ const CardModalWithForm = ({
       return obj;
     }, {});
 
-    for (let i = 0; i < imagesToDelete.length; i++) {
-      await deleteFile(imagesToDelete[i]);
-    }
+    // this deletes the image from blob (but this image could be referenced in other cards!! thus making images appear null)
+    // for (let i = 0; i < imagesToDelete.length; i++) {
+    //   await deleteFile(imagesToDelete[i]);
+    // }
 
     const newTagsToAdd = dirtyValues.tags?.filter((tag) => {
       const firstLetter = tag.charAt(0).toLowerCase();
@@ -74,12 +76,13 @@ const CardModalWithForm = ({
 
     mutate(urls.api.user.activeReport.get);
 
-    setImagesToDelete([]);
-    revalidate(JSON.stringify([router.asPath]));
+    // setImagesToDelete([]);
+    await revalidate(JSON.stringify([router.asPath]));
   };
 
   const handleDeleteStandard = async () => {
     await deleteCardById(card._id);
+    await revalidate(JSON.stringify([router.asPath]));
     let newCards = [];
     for (let oldCardIndex in cards) {
       if (cards[oldCardIndex]._id !== card._id) {

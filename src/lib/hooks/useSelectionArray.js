@@ -19,6 +19,7 @@ export default function useSelectionArray(cards) {
       });
       setSelArr(newArr);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating, cards]);
   return { selectionArray: selArr, setSelectionArray: setSelArr };
 }

@@ -116,7 +116,7 @@ const NavBar = () => {
       <Box ml="auto" />{" "}
       {/*This is an empty div to right-align the last nav link */}
       <NavLinkAuth />
-      {currPage != "/report-builder" && currPage != "/add-standard" && (
+      {user?.isLoggedIn && currPage != "/report-builder" && currPage != "/add-standard" && (
         <>
           <ShoppingCartView
             buttonStyles={shoppingCartButtonStyle}
