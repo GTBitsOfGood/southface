@@ -5,6 +5,7 @@ import {
   revalidate,
   updateCardById,
 } from "../../../actions/Card";
+
 import cardEditValidator from "./cardEditValidator";
 import CardModal from "./CardModal";
 import { useRouter } from "next/router";
@@ -19,6 +20,9 @@ const CardModalWithForm = ({
 }) => {
   const router = useRouter();
 
+  // eslint-disable-next-line no-unused-vars
+  const [imagesToDelete, setImagesToDelete] = useState([]);
+
   const editSubmit = async (values) => {
     const dirtyFields = Object.keys(values).filter((key) => {
       return values[key] !== initialCard[key] && key !== "newTag";
@@ -27,6 +31,12 @@ const CardModalWithForm = ({
       obj[key] = values[key];
       return obj;
     }, {});
+
+    // this deletes the image from blob (but this image could be referenced in other cards!! thus making images appear null)
+    // for (let i = 0; i < imagesToDelete.length; i++) {
+    //   await deleteFile(imagesToDelete[i]);
+    // }
+
     let newCard = await updateCardById(card._id, dirtyValues);
 
     setCards((cards) => {
@@ -39,12 +49,13 @@ const CardModalWithForm = ({
       });
     });
 
-    console.log(router.asPath);
-    revalidate(JSON.stringify([router.asPath]));
+    // setImagesToDelete([]);
+    await revalidate(JSON.stringify([router.asPath]));
   };
 
   const handleDeleteStandard = async () => {
     await deleteCardById(card._id);
+    await revalidate(JSON.stringify([router.asPath]));
     let newCards = [];
     for (let oldCardIndex in cards) {
       if (cards[oldCardIndex]._id !== card._id) {
@@ -98,6 +109,7 @@ const CardModalWithForm = ({
               handleDeleteStandard={handleDeleteStandard}
               selState={selState}
               selected={selected}
+              setImagesToDelete={setImagesToDelete}
             />
           );
         }}
