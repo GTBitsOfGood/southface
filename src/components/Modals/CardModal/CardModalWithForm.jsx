@@ -6,7 +6,6 @@ import {
   updateCardById,
 } from "../../../actions/Card";
 
-import { deleteFile } from "src/lib/utils/blobStorage";
 import cardEditValidator from "./cardEditValidator";
 import CardModal from "./CardModal";
 import { useRouter } from "next/router";
