@@ -8,6 +8,7 @@ module.exports = withImages({
       "picsum.photos",
       "user-images.githubusercontent.com",
       "cdn.pixabay.com",
+      "southfaceblob.blob.core.windows.net",
     ],
   },
   async redirects() {

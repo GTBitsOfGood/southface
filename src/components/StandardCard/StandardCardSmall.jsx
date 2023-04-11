@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Flex,
   Heading,
@@ -82,9 +81,9 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
       onClick={reportAddHandler}
       flexGrow={0}
       flexShrink={0}
-      whiteSpace="nowrap"
       {...props}
-      w="35%"
+      fontSize="3xs"
+      size="xs"
       isDisabled={user?.isLoggedIn ? false : true}
     >
       {!selected ? "Add To Report" : "Added to Report"}
@@ -92,92 +91,89 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   );
 
   return (
-    <Box {...props}>
-      <Flex
-        flexDirection="column"
-        boxShadow="base"
-        rounded="23.3173px"
-        overflow="hidden"
-        onClick={onOpenCardModal}
-        _hover={{
-          cursor: "pointer",
-          transition: "0.1s ease-in-out",
-          boxShadow: "xl",
-        }}
-        minWidth="24em"
-        maxHeight="20em"
-        width="auto"
-        height="100%"
-        transition="0.1s ease-in-out"
-      >
-        <Box height="50%" flexShrink={1}>
-          <Image
-            fit="cover"
-            src={card.images[0].imageUrl}
-            alt="construction image"
-            height="100%"
-            width="100%"
-          />
-        </Box>
+    <Flex
+      flexDirection="column"
+      boxShadow="base"
+      rounded="23.3173px"
+      overflow="hidden"
+      onClick={onOpenCardModal}
+      _hover={{
+        cursor: "pointer",
+        transition: "0.1s ease-in-out",
+        boxShadow: "xl",
+      }}
+      w="280px"
+      transition="0.1s ease-in-out"
+      mb={3}
+    >
+      <Image
+        objectFit="cover"
+        src={card.images[0].imageUrl}
+        alt="construction image"
+        boxSize="5em"
+        w="100%"
+      />
 
-        <Flex height="50%" p={3} flexDirection="column" flexShrink={1} mx="2">
-          <Heading fontSize="100%" isTruncated flexShrink={1}>
-            {card.title}
-          </Heading>
+      <Flex height="50%" p={3} flexDirection="column" flexShrink={1} mx="2">
+        <Heading fontSize="xs" isTruncated flexShrink={1}>
+          {card.title}
+        </Heading>
 
-          <Text
-            fontSize="90%"
-            lineHeight="1.2em"
-            maxHeight="4em"
-            noOfLines="3"
-            flexShrink={1}
-          >
-            {card.criteria}
-          </Text>
+        <Text
+          fontSize="2xs"
+          lineHeight="1.2em"
+          maxHeight="4em"
+          noOfLines="3"
+          flexShrink={1}
+        >
+          {card.criteria}
+        </Text>
 
-          <HStack
-            mt="auto"
-            mb="0.5"
-            display="flex"
-            justifyContent="space-between"
-            width="100%"
-          >
-            <Flex overflowY="auto" flexShrink={0} width="65%">
-              {card.tags.map((tag, index) => {
-                if (index < 3) {
-                  return (
-                    <Tag
-                      key={index}
-                      textTransform="capitalize"
-                      bgColor="#C4D600"
-                      rounded="14.7877px"
-                      marginLeft={0.5}
-                      minWidth="max-content"
-                    >
-                      {tag}
-                    </Tag>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-            </Flex>
+        <HStack
+          mb="0.5"
+          display="flex"
+          mt="1"
+          justifyContent="space-between"
+          width="100%"
+          alignContent="center"
+        >
+          <Flex overflowY="auto" flexShrink={0} width="65%">
+            {card.tags.map((tag, index) => {
+              if (index < 3) {
+                return (
+                  <Tag
+                    key={index}
+                    textTransform="capitalize"
+                    fontSize="3xs"
+                    bgColor="#C4D600"
+                    rounded="14.7877px"
+                    marginLeft={0.5}
+                    minWidth="max-content"
+                    size="sm"
+                  >
+                    {tag}
+                  </Tag>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </Flex>
 
-            <ReportButton />
-          </HStack>
+          <ReportButton />
+        </HStack>
 
-          <CardModalWithForm
-            isOpenCardModal={isOpenCardModal}
-            onCloseCardModal={onCloseCardModal}
-            card={card}
-            cards={cards}
-            setCards={setCards}
-            selected={selected}
-            selState={selState}
-          />
-        </Flex>
+        <CardModalWithForm
+          isOpenCardModal={isOpenCardModal}
+          onCloseCardModal={onCloseCardModal}
+          card={card}
+          cards={cards}
+          setCards={setCards}
+          selected={selected}
+          selState={selState}
+        />
       </Flex>
-    </Box>
+    </Flex>
   );
 };
 

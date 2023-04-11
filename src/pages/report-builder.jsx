@@ -8,6 +8,10 @@ import {
   StackDivider,
   useDisclosure,
   VStack,
+  Box,
+  Text,
+  Link,
+  Spinner,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -55,8 +59,7 @@ const ReportBuilder = () => {
   }, [isValidating]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoadingState(false), 1000);
-    console.log("Here");
+    const timer = setTimeout(() => setIsLoadingState(false), 500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -97,6 +100,7 @@ const ReportBuilder = () => {
       setRenaming(false);
     }
   };
+  
 
   const handleDiscardChanges = () => {
     if (renamedData == "" || report.name == "") {
@@ -107,6 +111,16 @@ const ReportBuilder = () => {
     setRenaming(false);
   };
 
+  if (isLoadingState) return (
+    <Spinner
+      size="xl"
+      position="fixed"
+      top="50%"
+      left="50%"
+      transform="translate(-50%, -50%)"
+    />
+  );
+
   return (
     <>
       <HStack
@@ -116,6 +130,33 @@ const ReportBuilder = () => {
         spacing={3}
         px={8}
       >
+        {!(sels?.length > 0) ? (
+          <VStack
+            as={Card}
+            alignItems="flex-start"
+            p={6}
+            gap={8}
+            rounded={16}
+            border="1px solid"
+            borderColor="gray.300"
+            height="43em"
+            flex={2}
+          >
+            <Box>
+              {" "}
+              <Text as="b" fontSize="2xl">
+                Current Report
+              </Text>
+              <Text fontSize="xl">
+                {"You haven’t started building a current report yet. " +
+                  "Browse the digital library to begin adding to your current report."}
+              </Text>
+            </Box>
+            <Link href="/library">
+              <Button variant="Grey-rounded">Browse Digital Library</Button>
+            </Link>
+          </VStack>
+        ) : (
         <VStack
           flex={2}
           as={Card}
@@ -182,8 +223,11 @@ const ReportBuilder = () => {
                   </Button>
                 )}
               </Flex>
+
               <Button
                 minW="20%"
+                position="absolute"
+                right="12"
                 variant="Blue-rounded"
                 onClick={onOpen}
                 isDisabled={report?.cards?.length == 0}
@@ -216,12 +260,13 @@ const ReportBuilder = () => {
             </CardBody>
           ))}
         </VStack>
-        <VStack maxW="35%" flex={1} alignItems="end">
+        )}
+        <VStack w="25%" alignItems="end">
           {user?.isLoggedIn && user?.archivedReports.length > 0 && (
             <Card
               boxShadow="none"
-              w="90%"
-              p={4}
+              w="100%"
+              p={5}
               gap={3}
               border="1px solid"
               borderColor="gray.300"
@@ -234,7 +279,8 @@ const ReportBuilder = () => {
           <Card
             boxShadow="none"
             p={5}
-            w="90%"
+            w="100%"
+            h="320px"
             border="1px solid"
             borderColor="gray.300"
             rounded={16}
