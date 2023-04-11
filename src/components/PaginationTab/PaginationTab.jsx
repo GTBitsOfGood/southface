@@ -1,7 +1,14 @@
 import { Button, Flex } from "@chakra-ui/react";
 import useSearch from "src/lib/hooks/useSearch";
 
-const PaginationTab = ({ numPages, currentPage, setCurrentPage, setCards }) => {
+const PaginationTab = ({
+  numPages,
+  currentPage,
+  setCurrentPage,
+  setCards,
+  searchString,
+  tags,
+}) => {
   const numPagesArray = [...new Array(numPages).keys()].map(
     (element) => ++element
   );
@@ -20,7 +27,7 @@ const PaginationTab = ({ numPages, currentPage, setCurrentPage, setCards }) => {
             variant="link"
             color="white"
             isDisabled={currentPage === pageNumber ? true : false}
-            onClick={() => onPageChange({ pageNumber })}
+            onClick={() => onPageChange({ pageNumber, searchString, tags })}
           >
             {pageNumber}
           </Button>

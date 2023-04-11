@@ -8,52 +8,53 @@ const AddImageModal = ({ setValue, form, ...props }) => {
   const toastRef = useRef();
   const uploadingToast = useToast();
 
-  const handleImageUploads = (images) => {
+  const handleImageUploads = async (images) => {
     toastRef.current = uploadingToast({
       title: images.length == 1 ? "Uploading Image..." : "Uploading Images...",
       status: "info",
       duration: 20000,
-      isClosable: false,
+      isClosable: true,
       icon: <Spinner />,
     });
     const existingImages = JSON.parse(JSON.stringify(form.values.images));
 
+    let imagesSucceeded = 0;
     for (let image of images) {
-      let imagesSucceeded = 0;
-      uploadFile(image.name, image).then((res) => {
-        if (!(res instanceof Error)) {
-          imagesSucceeded++;
+      const res = await uploadFile(image.name, image);
+      if (!(res instanceof Error)) {
+        imagesSucceeded++;
 
-          const imageObject = {
-            imageUrl: res._response.request.url,
-            thumbsUp: [],
-            thumbsDown: [],
-          };
+        const imageObject = {
+          imageUrl: res._response.request.url,
+          thumbsUp: [],
+          thumbsDown: [],
+        };
 
-          existingImages.push(imageObject);
-          if (imagesSucceeded == images.length) {
-            if (toastRef.current) {
-              uploadingToast.update(toastRef.current, {
-                title: "Image Uploaded",
-                duration: 2000,
-                isClosable: true,
-                status: "success",
-              });
-            }
-            setValue("images", existingImages);
-          }
-        } else {
-          if (toastRef.current) {
-            uploadingToast.update(toastRef.current, {
-              title: "Upload Failed",
-              duration: 10000,
-              isClosable: true,
-              status: "error",
-            });
-          }
+        existingImages.push(imageObject);
+      } else {
+        if (toastRef.current) {
+          uploadingToast.update(toastRef.current, {
+            title: "Upload Failed",
+            duration: 10000,
+            isClosable: true,
+            status: "error",
+          });
         }
-      });
+      }
     }
+
+    if (imagesSucceeded == images.length) {
+      if (toastRef.current) {
+        uploadingToast.update(toastRef.current, {
+          title: "Image Uploaded",
+          duration: 2000,
+          isClosable: true,
+          status: "success",
+        });
+      }
+    }
+
+    setValue("images", existingImages);
   };
 
   return (

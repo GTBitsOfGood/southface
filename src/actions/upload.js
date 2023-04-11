@@ -1,11 +1,11 @@
 import * as XLSX from "xlsx";
 import { primaryCategoryRoutes } from "../lib/utils/constants";
+import { DEFAULT_IMAGE } from "../lib/utils/constants";
 
 const formatStandard = (row, primaryCategory, buildingType) => ({
   images: [
     {
-      imageUrl:
-        "/static/EarthcraftLogo.png",
+      imageUrl: DEFAULT_IMAGE,
       thumbsUp: [],
       thumbsDown: [],
     },
