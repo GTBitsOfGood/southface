@@ -14,7 +14,7 @@ function RecentStandardsView({ maxCards }) {
           <Text fontSize="xs">See All Standards</Text>
         </Button>
       </Link>
-      <Flex gap="2rem" overflowX="auto" p={2}>
+      <Flex gap="2rem" overflowX="auto">
         <LoadedStandards
           standardsData={user?.recentStandards}
           maxCards={maxCards}
