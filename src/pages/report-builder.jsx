@@ -83,6 +83,7 @@ const ReportBuilder = () => {
             border="1px solid"
             borderColor="gray.300"
             height="43em"
+            flex={2}
           >
             <Box>
               {" "}
@@ -174,12 +175,12 @@ const ReportBuilder = () => {
             ))}
           </VStack>
         )}
-        <VStack maxW="35%" flex={1} alignItems="end">
+        <VStack w="25%" alignItems="end">
           {user?.isLoggedIn && user?.archivedReports.length > 0 && (
             <Card
               boxShadow="none"
-              w="90%"
-              p={4}
+              w="100%"
+              p={5}
               gap={3}
               border="1px solid"
               borderColor="gray.300"
@@ -192,7 +193,8 @@ const ReportBuilder = () => {
           <Card
             boxShadow="none"
             p={5}
-            w="90%"
+            w="100%"
+            h="320px"
             border="1px solid"
             borderColor="gray.300"
             rounded={16}

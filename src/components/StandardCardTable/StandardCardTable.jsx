@@ -51,6 +51,8 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
               cards={cards}
               setCards={setCards}
               selState={selArr[index]}
+              height="90%"
+              w="400px"
             />
           </GridItem>
         ))}

@@ -7,14 +7,14 @@ function RecentStandardsView({ maxCards }) {
   const { user } = useUser();
 
   return (
-    <Flex flexDirection={"column"} gap="16px">
+    <Flex flexDirection="column" gap="16px">
       <Heading fontSize="1.5em">Recent Standards</Heading>
       <Link href="/library">
         <Button width="max" variant="Grey-outlined">
           <Text fontSize="xs">See All Standards</Text>
         </Button>
       </Link>
-      <Flex gap="2rem" overflowX="auto" p={2}>
+      <Flex gap="2rem" overflowX="auto">
         <LoadedStandards
           standardsData={user?.recentStandards}
           maxCards={maxCards}
