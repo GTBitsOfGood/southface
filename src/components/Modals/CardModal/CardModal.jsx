@@ -75,11 +75,6 @@ const CardModal = ({
     onClose: onDeleteStandardClose,
   } = useDisclosure();
 
-  const {
-    isOpen: isDeleteImageOpen,
-    onOpen: onDeleteImageOpen,
-    onClose: onDeleteImageClose,
-  } = useDisclosure();
 
   const {
     isOpen: isTagDoesNotExistOpen,
@@ -177,14 +172,12 @@ const CardModal = ({
     onCloseCardModal();
   };
 
-  const handleDeleteImage = (image) => {
-    const newCardImages = card.images.filter((imageFromArray) => {
+  const handleDeleteImage = (image, onDeleteImageClose) => {
+    const newCardImages = form?.values?.images?.filter((imageFromArray) => {
       if (image != imageFromArray.imageUrl) {
         return image;
       }
     });
-
-    // newCardImages.splice(index, 1);
     setValue("images", newCardImages);
     setImagesToDelete((imagesToDelete) => [...imagesToDelete, image]);
     onDeleteImageClose();
@@ -327,53 +320,52 @@ const CardModal = ({
                 arrowLeft={<ArrowIcon orientation="left" />}
                 arrowRight={<ArrowIcon orientation="right" />}
               >
-                {form.values?.images?.map(({ imageUrl: image }, index) => (
-                  <Carousel.Item key={index}>
-                    <Box position="relative">
-                      {editingReport && (
-                        <Circle
-                          position="absolute"
-                          bottom="10px"
-                          bgColor="blue.500"
-                          color="white"
-                          right="10px"
-                          zIndex={5}
-                          padding={2}
-                        >
-                          {selState?.imgSelections[index] ? (
-                            <CloseIcon />
-                          ) : (
-                            <AddIcon />
-                          )}
-                        </Circle>
-                      )}
-                      <ModalImage
-                        onClick={imgToggleHandler(index)}
-                        borderWidth={
-                          selState?.imgSelections[index] && editingReport
-                            ? "5px"
-                            : "0px"
-                        }
-                        borderColor={
-                          selState?.imgSelections[index] && editingReport
-                            ? "blue.500"
-                            : "none"
-                        }
-                        cursor={editingReport ? "pointer" : "default"}
-                        image={image}
-                        openImagePreviewCallback={openImagePreviewCallback}
-                        showEnlarge={!editingReport}
-                        setCurrentImage={setSelectedImage}
-                        index={index}
-                        editing={editing}
-                        isDeleteImageOpen={isDeleteImageOpen}
-                        onDeleteImageClose={onDeleteImageClose}
-                        onDeleteImageOpen={onDeleteImageOpen}
-                        handleDeleteImage={handleDeleteImage}
-                      />
-                    </Box>
-                  </Carousel.Item>
-                ))}
+                {form.values?.images?.map(({ imageUrl: image }, index) => {
+                  return (
+                    <Carousel.Item key={index}>
+                      <Box position="relative">
+                        {editingReport && (
+                          <Circle
+                            position="absolute"
+                            bottom="10px"
+                            bgColor="blue.500"
+                            color="white"
+                            right="10px"
+                            zIndex={5}
+                            padding={2}
+                          >
+                            {selState?.imgSelections[index] ? (
+                              <CloseIcon />
+                            ) : (
+                              <AddIcon />
+                            )}
+                          </Circle>
+                        )}
+                        <ModalImage
+                          onClick={imgToggleHandler(index)}
+                          borderWidth={
+                            selState?.imgSelections[index] && editingReport
+                              ? "5px"
+                              : "0px"
+                          }
+                          borderColor={
+                            selState?.imgSelections[index] && editingReport
+                              ? "blue.500"
+                              : "none"
+                          }
+                          cursor={editingReport ? "pointer" : "default"}
+                          image={image}
+                          openImagePreviewCallback={openImagePreviewCallback}
+                          showEnlarge={!editingReport}
+                          setCurrentImage={setSelectedImage}
+                          index={index}
+                          editing={editing}
+                          handleDeleteImage={handleDeleteImage}
+                        />
+                      </Box>
+                    </Carousel.Item>
+                  );
+                })}
                 {editing ? (
                   <Carousel.Item>
                     <AddImageModal setValue={setValue} form={form} />
