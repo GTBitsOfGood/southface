@@ -20,7 +20,6 @@ const AddImageModal = ({ setValue, form, ...props }) => {
 
     let imagesSucceeded = 0;
     for (let image of images) {
-      
       const res = await uploadFile(image.name, image);
       if (!(res instanceof Error)) {
         imagesSucceeded++;
@@ -32,7 +31,6 @@ const AddImageModal = ({ setValue, form, ...props }) => {
         };
 
         existingImages.push(imageObject);
-
       } else {
         if (toastRef.current) {
           uploadingToast.update(toastRef.current, {

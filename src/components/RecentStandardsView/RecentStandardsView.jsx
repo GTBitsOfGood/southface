@@ -6,7 +6,6 @@ import LoadedStandards from "./LoadedStandards";
 function RecentStandardsView({ maxCards }) {
   const { user } = useUser();
 
-
   return (
     <Flex flexDirection="column" gap="16px">
       <Heading fontSize="1.5em">Recent Standards</Heading>
