@@ -32,10 +32,12 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   );
   const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
     useState(false);
+  const [addToReportButtonPressed, setAddToReportButtonPressed] =
+    useState(false);
 
   useEffect(() => {
     if (
-      isOpenCardModal &&
+      (isOpenCardModal || addToReportButtonPressed) &&
       user?.id &&
       !isMutating &&
       !updateRecentStandardsTriggered
@@ -51,6 +53,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
     trigger,
     isMutating,
     updateRecentStandardsTriggered,
+    addToReportButtonPressed,
   ]);
 
   useEffect(() => {
@@ -67,9 +70,12 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   // useEffect on editEnable: make API call after deselecting
   const { selState } = { ...props };
   const selected = !selState ? false : true;
+
   // const imgArr = selected ?
   const { addToReport } = useActiveReport();
+
   const reportAddHandler = (e) => {
+    setAddToReportButtonPressed(true);
     e.stopPropagation(); // stops modal from opening
     if (!selected) {
       addToReport(card);

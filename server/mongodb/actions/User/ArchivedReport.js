@@ -1,14 +1,14 @@
 import mongoDB from "../../index";
 import User from "../../models/User";
 
-export const addToArchivedReport = async (userId, cards) => {
+export const addToArchivedReport = async (userId, cards, name) => {
   try {
     await mongoDB();
 
     const user = await User.findByIdAndUpdate(
       userId,
       {
-        $addToSet: { archivedReports: { cards: cards, name: "Default" } },
+        $addToSet: { archivedReports: { cards: cards, name: name } },
       },
       { upsert: true }
     );

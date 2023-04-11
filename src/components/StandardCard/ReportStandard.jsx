@@ -23,7 +23,7 @@ const ReportStandard = ({ card, selState, ...props }) => {
   return (
     <Box {...props} p={0}>
       <HStack justify="space-between">
-        <Heading size="lg" mb={5}>
+        <Heading size="lg" mb={5} maxWidth="80%">
           {card.title}
         </Heading>
         <Box>

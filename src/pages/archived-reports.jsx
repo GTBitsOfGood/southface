@@ -12,7 +12,16 @@ const ArchivedReports = () => {
   const archivedReports = data?.payload.archivedReports;
 
   if (user?.isLoggedIn && archivedReports?.length == 0)
-    return <Heading p={10}>Currently No ArchivedReports</Heading>;
+    return (
+      <Box>
+        <Link href="/report-builder">
+          <Button variant="Grey-rounded" marginBottom="20">
+            Return to Report Builder Home
+          </Button>
+        </Link>
+        <Heading p={10}>Currently No ArchivedReports</Heading>
+      </Box>
+    );
 
   return (
     <Box>

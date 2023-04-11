@@ -5,7 +5,6 @@ const handler = async (req, res) => {
   try {
     const userId = req.session.user.id;
     const updatedActivePlan = await updateActiveReport(userId, req.body);
-    console.log(updatedActivePlan);
     return res.status(200).json({
       success: true,
       payload: updatedActivePlan,

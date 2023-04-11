@@ -11,14 +11,16 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import PrintToPDFButton from "src/components/PrintToPDFButton";
-import defaultReportProps from "./defaultReportProps";
-import StandardCard from "./StandardCard";
 import { removeArchivedReport } from "../../actions/User/ArchivedReport";
 import ConfirmActionModal from "../Modals/ConfirmActionModal";
+import defaultReportProps from "./defaultReportProps";
+import StandardCard from "./StandardCard";
+import { useRouter } from "next/router";
 
 const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const [hasReportCard, setHasReportCard] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
 
   // Date place holder
   const date = new Date();
@@ -26,6 +28,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const handleRemove = async () => {
     await removeArchivedReport(report._id);
     setHasReportCard(false);
+    router.reload();
   };
 
   return (
@@ -43,7 +46,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
             <Box display="flex" justifyContent="space-between">
               <Box display="flex" alignItems="center">
                 <Heading size="xl" mr={6}>
-                  Recent Report
+                  {report.name}
                 </Heading>
                 <PrintToPDFButton report={report} />
               </Box>

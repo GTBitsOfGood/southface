@@ -1,4 +1,4 @@
-import { updateTagById } from "server/mongodb/actions/Report";
+import { updateTagById } from "server/mongodb/actions/Tag";
 import { withSessionRoute } from "src/lib/utils/session";
 
 // @route   POST api/report/update

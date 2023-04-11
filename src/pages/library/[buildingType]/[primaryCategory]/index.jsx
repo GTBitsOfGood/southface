@@ -117,7 +117,7 @@ const LibraryCategoryPage = (props) => {
             </Text>
             <Link href={`/library/${props.params.buildingType}`}>
               <Button variant="Blue" size="md">
-                Return to Site Planning
+                Return to {props.params.buildingType}
               </Button>
             </Link>
           </Flex>

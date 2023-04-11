@@ -15,7 +15,6 @@ import {
   ModalOverlay,
   Tag,
   Text,
-  Wrap,
   useDisclosure,
 } from "@chakra-ui/react";
 import urls from "lib/utils/urls";
@@ -399,8 +398,12 @@ const CardModal = ({
               alignItems="end"
               width="full"
             >
-              <Flex flex={1} flexDirection="column" gap="1rem" width="full">
-                <Wrap overflowY="hidden" overflowX="hidden">
+              <Flex flex={1} width="50%" flexDirection="column" gap="1rem">
+                <Flex
+                  flexShrink={0}
+                  overflow="scroll"
+                  flexWrap={editing ? "wrap" : "nowrap"}
+                >
                   {form.values?.tags
                     ? form.values.tags.map((tag, index) => (
                         <Box key={index} position="relative">
@@ -408,9 +411,12 @@ const CardModal = ({
                             bgColor="#c4d600"
                             borderRadius="30px"
                             minWidth="fill"
+                            textTransform="capitalize"
                             mt={editing ? "0.6rem" : "0rem"}
                             fontSize="1rem"
                             px="1rem"
+                            whiteSpace="nowrap"
+                            mx="4px"
                           >
                             {tag}
                           </Tag>
@@ -418,7 +424,7 @@ const CardModal = ({
                             <Button
                               position="absolute"
                               top="0.2rem"
-                              right="-0.5rem"
+                              right="-0.10rem"
                               backgroundColor="#FFFFFF"
                               color="#6D6E70"
                               boxShadow="0 0 0.5rem #b3b3b3"
@@ -442,7 +448,7 @@ const CardModal = ({
                         </Box>
                       ))
                     : ""}
-                </Wrap>
+                </Flex>
                 {editing ? (
                   <Flex
                     border="solid 1px #B4B4B4B4"

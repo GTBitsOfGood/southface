@@ -1,12 +1,12 @@
 import { Heading, VStack } from "@chakra-ui/react";
 import Image from "next/image";
-import { DEFAULT_IMAGE } from "src/lib/utils/constants";
 import ConfirmActionModal from "./ConfirmActionModal/ConfirmActionModal";
 
 const DeleteImageModal = ({
   isOpen,
   onClose,
   image,
+  imageUrl,
   index,
   handleDeleteImage,
 }) => {
@@ -29,7 +29,7 @@ const DeleteImageModal = ({
           {image.name}
         </Heading>
         <Image
-          src={DEFAULT_IMAGE}
+          src={imageUrl}
           height={125}
           width={125}
           alt="construction image"

@@ -1,5 +1,4 @@
 import urls from "lib/utils/urls";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Form } from "react-final-form";
 import useSWR, { useSWRConfig } from "swr";
@@ -8,6 +7,7 @@ import {
   revalidate,
   updateCardById,
 } from "../../../actions/Card";
+import { parseNestedPaths } from "src/lib/utils/utilFunctions";
 
 import { createTag } from "../../../actions/Tag";
 import cardEditValidator from "./cardEditValidator";
@@ -19,10 +19,9 @@ const CardModalWithForm = ({
   isOpenCardModal,
   onCloseCardModal,
   setCards,
+
   ...rest
 }) => {
-  const router = useRouter();
-
   // eslint-disable-next-line no-unused-vars
   const [imagesToDelete, setImagesToDelete] = useState([]);
 
@@ -77,12 +76,26 @@ const CardModalWithForm = ({
     mutate(urls.api.user.activeReport.get);
 
     // setImagesToDelete([]);
-    await revalidate(JSON.stringify([router.asPath]));
+    const revalidationPaths = JSON.stringify(
+      parseNestedPaths("library", newCard.buildingType, newCard.primaryCategory)
+    );
+
+    await revalidate(revalidationPaths);
   };
 
   const handleDeleteStandard = async () => {
-    await deleteCardById(card._id);
-    await revalidate(JSON.stringify([router.asPath]));
+    const deletedCard = await deleteCardById(card._id);
+
+    const revalidationPaths = JSON.stringify(
+      parseNestedPaths(
+        "library",
+        deletedCard.buildingType,
+        deletedCard.primaryCategory
+      )
+    );
+
+    await revalidate(revalidationPaths);
+
     let newCards = [];
     for (let oldCardIndex in cards) {
       if (cards[oldCardIndex]._id !== card._id) {

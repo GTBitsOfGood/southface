@@ -1,5 +1,5 @@
-import { addToArchivedReport } from "server/mongodb/actions/User/ArchivedReport";
 import { updateActiveReport } from "server/mongodb/actions/User/ActiveReport";
+import { addToArchivedReport } from "server/mongodb/actions/User/ArchivedReport";
 import { withSessionRoute } from "src/lib/utils/session";
 
 const handler = async (req, res) => {
@@ -11,7 +11,7 @@ const handler = async (req, res) => {
         return cardObject.card;
       });
 
-      await addToArchivedReport(userId, formattedArchivedReport);
+      await addToArchivedReport(userId, formattedArchivedReport, req.body.name);
     }
 
     await updateActiveReport(userId, []);

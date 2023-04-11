@@ -1,17 +1,17 @@
 import {
-  Box,
   Button,
   Card,
   CardBody,
   Flex,
   Heading,
   HStack,
-  Input,
-  Link,
   StackDivider,
-  Text,
   useDisclosure,
   VStack,
+  Box,
+  Text,
+  Link,
+  Spinner,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -26,21 +26,27 @@ import useUser from "../lib/hooks/useUser";
 
 const ReportBuilder = () => {
   // For PDF exporting
-  const [editingTitle, setEditingTitle] = useState(false);
-  useEffect(() => setEditingTitle(true), []);
+  const [renaming, setRenaming] = useState(false);
+  const renameEditableRef = useRef();
+
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { user } = useUser({ redirectTo: "/login" });
 
-  const nameRef = useRef();
+  const { report, isValidating, updateReport } = useActiveReport();
 
-  const { report, isValidating } = useActiveReport();
+  const [nameField, setNameField] = useState(report.name);
+  const [renamedData, setRenamedData] = useState(report.name);
+  const [isLoadingState, setIsLoadingState] = useState(true);
+
   const [sels, setSels] = useState([]);
 
   useEffect(() => {
     if (report && !isValidating) {
       // this useEffect wrapper prevents jittering
+      setNameField(report.name);
+      setRenamedData(report.name);
       setSels(
         report.cards.map((cardWrapper) => ({
           ...cardWrapper,
@@ -50,6 +56,18 @@ const ReportBuilder = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValidating]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoadingState(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (renaming) {
+      renameEditableRef.current.focus();
+      document.execCommand("selectAll", true, null);
+    }
+  }, [renaming]);
 
   const handleCompleteReport = async ({ noSave = false }) => {
     const updatedSels = sels.map((sel) => ({
@@ -68,12 +86,49 @@ const ReportBuilder = () => {
   };
 
   const useGlobalEditing = useState(false);
-
   if (!user) return;
+
+  const handleSaveChanges = async () => {
+    if (renameEditableRef.current) {
+      if (!(renamedData?.length > 0)) {
+        setRenamedData("Untitled Report");
+      }
+      let newReport = JSON.parse(JSON.stringify(report));
+      newReport.name = (renamedData ?? "Untitled Report").trim();
+      await updateReport(newReport);
+      setRenaming(false);
+    }
+  };
+
+  const handleDiscardChanges = () => {
+    if (renamedData == "" || report.name == "") {
+      report.name = "Untitled Report";
+    }
+    setRenamedData(report.name ?? "Untitled Report");
+    renameEditableRef.current.innerHTML = report.name ?? "Untitled Report";
+    setRenaming(false);
+  };
+
+  if (isLoadingState)
+    return (
+      <Spinner
+        size="xl"
+        position="fixed"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+      />
+    );
 
   return (
     <>
-      <HStack py={10} alignItems="flex-start" spacing={3} px={8}>
+      <HStack
+        py={10}
+        display={isLoadingState ? "none" : "flex"}
+        alignItems="flex-start"
+        spacing={3}
+        px={8}
+      >
         {!(sels?.length > 0) ? (
           <VStack
             as={Card}
@@ -118,27 +173,56 @@ const ReportBuilder = () => {
                 width="100%"
                 flexFlow="row nowrap"
                 justifyContent="space-between"
+                gap={2}
               >
-                <HStack w="100%">
-                  {editingTitle ? ( // temp placeholder condition
-                    <Heading maxW="80%" mr={3}>
-                      Untitiled Report
-                    </Heading>
+                <Flex gap={2}>
+                  <Heading
+                    contentEditable={renaming}
+                    suppressContentEditableWarning
+                    ref={renameEditableRef}
+                    onInput={(e) => {
+                      setRenamedData(e.currentTarget.textContent);
+                    }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") e.preventDefault();
+                    }}
+                  >
+                    {nameField || "Untitled Report"}
+                  </Heading>
+                  {renaming ? (
+                    <Flex gap={2}>
+                      <Button
+                        minW="9rem"
+                        variant="Grey-outlined-rounded"
+                        onClick={handleDiscardChanges}
+                      >
+                        Discard Changes
+                      </Button>
+                      <Button
+                        minW="9rem"
+                        variant="Grey-rounded"
+                        onClick={handleSaveChanges}
+                        isDisabled={
+                          !renamedData || renamedData.trim().length == 0
+                        }
+                      >
+                        Save Changes
+                      </Button>
+                    </Flex>
                   ) : (
-                    <Input
-                      size="lg"
-                      maxW="50%"
-                      fontSize="3xl"
-                      variant="flushed"
-                      mr={3}
-                      placeholder="Title of Current Project Plan"
-                      ref={nameRef}
-                    />
+                    <Button
+                      minW="6rem"
+                      variant="Grey-outlined-rounded"
+                      onClick={() => {
+                        setRenaming(true);
+                        renameEditableRef.current.focus();
+                      }}
+                    >
+                      Rename
+                    </Button>
                   )}
-                  <Button minW="10%" variant="Grey-outlined-rounded">
-                    Rename
-                  </Button>
-                </HStack>
+                </Flex>
+
                 <Button
                   minW="20%"
                   position="absolute"
