@@ -6,6 +6,7 @@ const DeleteImageModal = ({
   isOpen,
   onClose,
   image,
+  imageUrl,
   index,
   handleDeleteImage,
 }) => {
@@ -28,7 +29,7 @@ const DeleteImageModal = ({
           {image.name}
         </Heading>
         <Image
-          src="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
+          src={imageUrl}
           height={125}
           width={125}
           alt="construction image"

@@ -27,3 +27,6 @@ export const primaryCategoryRoutes = {
   "efficient-lighting-and-applications": "Efficient Lighting and Applications",
   "education-and-operations": "Education and Operations",
 };
+
+export const DEFAULT_IMAGE =
+  "https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png";

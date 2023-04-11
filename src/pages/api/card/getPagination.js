@@ -9,7 +9,7 @@ const handler = async (req, res) => {
   try {
     const pageNumber = req.query.page - 1;
     const buildingType = req.query.buildingType;
-    const primaryCategory = req.query.primaryCategory;
+    const primaryCategory = req.query.primaryCategory || null;
     const searchFilterString = req.query.searchFilterString || null;
     const searchFilterTags = req.query.searchFilterTags || null;
 
@@ -21,6 +21,8 @@ const handler = async (req, res) => {
       primaryCategory,
     });
     const cardsCount = await getCardsCount({
+      buildingType,
+      primaryCategory,
       searchFilterString,
       searchFilterTags,
     });

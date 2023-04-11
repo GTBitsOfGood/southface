@@ -5,12 +5,6 @@ import ReportStandardNotes from "./ReportStandardNoteCarousel";
 import StandardCardImageCarousel from "./StandardCardImageCarousel";
 
 const ReportStandard = ({ card, selState, ...props }) => {
-  // Active report code
-  // get report state
-  // if state is undefined, selected = false
-  // conditionally render note, images selection UI
-  // editEnable,
-  // useEffect on editEnable: make API call after deselecting
   const { removeFromReport } = useActiveReport();
   const { useGlobalEditing: [globalEditing, setGlobalEditing] = [] } = {
     ...props,
@@ -29,7 +23,7 @@ const ReportStandard = ({ card, selState, ...props }) => {
   return (
     <Box {...props} p={0}>
       <HStack justify="space-between">
-        <Heading size="lg" mb={5}>
+        <Heading size="lg" mb={5} maxWidth="80%">
           {card.title}
         </Heading>
         <Box>

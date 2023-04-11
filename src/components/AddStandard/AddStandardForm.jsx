@@ -6,7 +6,7 @@
 import { Box, Heading, HStack } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Form } from "react-final-form";
-import { createCard, revalidate } from "../../actions/Card";
+import { createCard, createManyCards, revalidate } from "../../actions/Card";
 import { uploadFile } from "../../lib/utils/blobStorage";
 import {
   buildingTypeNames,
@@ -15,10 +15,16 @@ import {
 import { parseNestedPaths } from "../../lib/utils/utilFunctions";
 import EditAddStandard from "./EditAddStandard";
 import OpenStandardPopup from "./OpenStandardPopup";
+import ViewAddManyStandards from "./ViewAddManyStandards";
 import ViewAddStandard from "./ViewAddStandard";
 
 const validate = (values) => {
   const errors = {};
+
+  if (values.massUpload) {
+    return;
+  }
+
   if (!values.title) {
     errors.title = "*This is a required field.";
   }
@@ -46,6 +52,22 @@ const AddStandardForm = () => {
       form.mutators.setValue("isEditing", false);
       return;
     }
+
+    if (values.massUpload) {
+      const cards = values.massUpload;
+      const newCards = await createManyCards(cards);
+
+      setPrevSubmitted({
+        title: newCards[0].title,
+        buildingType: newCards[0].buildingType,
+        primaryCategory: newCards[0].primaryCategory,
+      });
+
+      form.reset();
+
+      return;
+    }
+
     const images = values.uploadImages.map(async (image) => {
       const blob = await uploadFile(image.name, image);
       const imageUrl = blob._response.request.url;
@@ -94,7 +116,7 @@ const AddStandardForm = () => {
     const revalidationPaths = JSON.stringify(
       parseNestedPaths("library", newCard.buildingType, newCard.primaryCategory)
     );
-    revalidate(revalidationPaths);
+    await revalidate(revalidationPaths);
 
     form.reset();
   };
@@ -126,6 +148,8 @@ const AddStandardForm = () => {
 
           {values.isEditing ? (
             <EditAddStandard handleSubmit={handleSubmit} />
+          ) : values.massUpload ? (
+            <ViewAddManyStandards handleSubmit={handleSubmit} />
           ) : (
             <ViewAddStandard handleSubmit={handleSubmit} />
           )}

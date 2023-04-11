@@ -3,7 +3,7 @@ import BuildingType from "../../components/BuildingTypeCard";
 
 const LibraryPage = () => {
   return (
-    <Flex justifyContent="center" height="40vh" paddingX="10vw">
+    <Flex justifyContent="center" height="78vh" paddingX="10vw">
       <Flex justifyContent="space-between" height="40vw" width="full">
         <BuildingType
           src="/static/MultiFamilyIcon.png"
