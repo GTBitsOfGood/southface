@@ -1,7 +1,7 @@
 import Head from "next/head";
 import PropTypes from "prop-types";
 import React from "react";
-import NavBar from "src/components/NavBar/NavBar"
+import NavBar from "src/components/NavBar/NavBar";
 import Footer from "../components/NavBar/Footer";
 import { SWRConfig } from "swr";
 
