@@ -107,6 +107,7 @@ const CardModal = ({
   })();
 
   const { selected = false } = { ...rest };
+
   const reportAddHandler = () => {
     if (!selected) {
       addToReport(card);
@@ -386,7 +387,12 @@ const CardModal = ({
             {editing ? (
               <TextareaControl name="criteria" resize="none"></TextareaControl>
             ) : (
-              <Text lineHeight="normal" fontSize="18px">
+              <Text
+                lineHeight="normal"
+                maxH="8em"
+                overflow="scroll"
+                fontSize="18px"
+              >
                 {card.criteria}
               </Text>
             )}
