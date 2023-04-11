@@ -1,11 +1,12 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
-import { updateCardById } from "../../actions/Card";
+import { updateCardById, revalidate } from "../../actions/Card";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import ModalNotes from "./ModalNotes";
 import ReportNotes from "./ReportNotes";
+import { parseNestedPaths } from "../../lib/utils/utilFunctions";
 
 // note on updateCard: this should be a function that takes in a card object
 // and updates that card in the parent "cards" state
@@ -28,7 +29,15 @@ const Notes = ({ cardId, notes, ...rest }) => {
       notes: newNotes.map((n) => n).reverse(),
     });
 
+    
+
     updateCard(updatedCard);
+
+    const revalidationPaths = JSON.stringify(
+      parseNestedPaths("library", updatedCard.buildingType, updatedCard.primaryCategory)
+    );
+
+    await revalidate(revalidationPaths);
   };
 
   const createNewNote = async () => {
@@ -40,6 +49,16 @@ const Notes = ({ cardId, notes, ...rest }) => {
       notes: newNotes,
     });
     updateCard(updatedCard);
+
+    const revalidationPaths = JSON.stringify(
+      parseNestedPaths(
+        "library",
+        updatedCard.buildingType,
+        updatedCard.primaryCategory
+      )
+    );
+
+    await revalidate(revalidationPaths);
   };
 
   const { changeInReport } = useActiveReport();
