@@ -42,6 +42,7 @@ const ReportBuilder = () => {
     if (report && !isValidating) {
       // this useEffect wrapper prevents jittering
       setNameField(report.name);
+      setRenamedData(report.name);
       setSels(
         report.cards.map((cardWrapper) => ({
           ...cardWrapper,
@@ -82,6 +83,27 @@ const ReportBuilder = () => {
 
   const useGlobalEditing = useState(false);
   if (!user) return;
+
+  const handleSaveChanges = async () => {
+    if (renameEditableRef.current) {
+      if (!(renamedData?.length > 0)) {
+        setRenamedData("Untitled Report");
+      }
+      let newReport = JSON.parse(JSON.stringify(report));
+      newReport.name = (renamedData ?? "Untitled Report").trim();
+      await updateReport(newReport);
+      setRenaming(false);
+    }
+  };
+
+  const handleDiscardChanges = () => {
+    if (report.name.length == 0) {
+      report.name = "Untitled Report";
+    }
+    setRenamedData(report.name ?? "Untitled Report");
+    renameEditableRef.current.innerHTML = report.name ?? "Untitled Report";
+    setRenaming(false);
+  };
 
   return (
     <>
@@ -127,29 +149,17 @@ const ReportBuilder = () => {
                     <Button
                       minW="9rem"
                       variant="Grey-outlined-rounded"
-                      onClick={() => {
-                        setRenamedData(report.name);
-                        renameEditableRef.current.innerHTML = report.name;
-                        setRenaming(false);
-                      }}
+                      onClick={handleDiscardChanges}
                     >
                       Discard Changes
                     </Button>
                     <Button
                       minW="9rem"
                       variant="Grey-rounded"
-                      onClick={async () => {
-                        if (renameEditableRef.current) {
-                          if (!(renamedData?.length > 0)) {
-                            setRenamedData("Default Report");
-                          }
-                          let newReport = JSON.parse(JSON.stringify(report));
-                          newReport.name = renamedData ?? "Default Report";
-                          console.log("newReport", newReport);
-                          await updateReport(newReport);
-                          setRenaming(false);
-                        }
-                      }}
+                      onClick={handleSaveChanges}
+                      isDisabled={
+                        !renamedData || renamedData.trim().length == 0
+                      }
                     >
                       Save Changes
                     </Button>
