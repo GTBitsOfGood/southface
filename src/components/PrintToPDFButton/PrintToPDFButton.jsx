@@ -72,7 +72,7 @@ const PrintToPDFButton = (props) => {
             </ModalBody>
             <ModalFooter>
               <Button variant="Grey-rounded">
-                <a download="PDF Name Here" href={instance.url}>
+                <a download={props.report?.name} href={instance.url}>
                   Download PDF
                 </a>
               </Button>

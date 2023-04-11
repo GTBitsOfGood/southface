@@ -15,10 +15,12 @@ function RecentStandardsView({ maxCards }) {
         </Button>
       </Link>
       <Flex gap="2rem" overflowX="auto" p={2}>
-        <LoadedStandards
+        {user?.recentStandards?.length > 0 ? (<LoadedStandards
           standardsData={user?.recentStandards}
           maxCards={maxCards}
-        />
+        />) : (
+          <Text>No standards browsed as of yet</Text>
+        )}
       </Flex>
     </Flex>
   );

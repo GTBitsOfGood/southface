@@ -50,7 +50,9 @@ const ReportBuilder = () => {
         }))
       );
     }
-  }, [isValidating, report]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isValidating]);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoadingState(false), 1000);
@@ -97,7 +99,7 @@ const ReportBuilder = () => {
   };
 
   const handleDiscardChanges = () => {
-    if (report.name.length == 0) {
+    if (renamedData == "" || report.name == "") {
       report.name = "Untitled Report";
     }
     setRenamedData(report.name ?? "Untitled Report");
@@ -141,8 +143,11 @@ const ReportBuilder = () => {
                   onInput={(e) => {
                     setRenamedData(e.currentTarget.textContent);
                   }}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") e.preventDefault();
+                  }}
                 >
-                  {nameField || "Default Report"}
+                  {nameField || "Untitled Report"}
                 </Heading>
                 {renaming ? (
                   <Flex gap={2}>

@@ -79,7 +79,7 @@ const ReportDocumentPDF = ({ selectedReport }) => {
         <View style={styles.outerContainer}>
           <View style={styles.sectionLarge}>
             <Text style={styles.title}>
-              {selectedReport.name ?? "Default Report"}
+              {selectedReport.name ?? "Untitled Report"}
             </Text>
             <Text style={styles.textSmall}>Completed on ...</Text>
           </View>
