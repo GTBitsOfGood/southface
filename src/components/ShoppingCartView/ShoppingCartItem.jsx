@@ -35,7 +35,7 @@ const ShoppingCartItem = ({ card, selState }) => {
           alignItems="flex-start"
           justifyContent="space-between"
         >
-          <Text fontSize="xl" as="b">
+          <Text fontSize="xl" as="b" noOfLines={1}>
             {card.title}
           </Text>
           <Box>
