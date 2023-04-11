@@ -2,20 +2,20 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Button, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { MdExpand } from "react-icons/md";
-import ConfirmActionsModal from "../CardModal/ConfirmActionModal";
+import ConfirmActionModal from "../CardModal/ConfirmActionModal";
 
 const ModalImage = ({
   image,
+  index = 0,
   openImagePreviewCallback,
   editing,
   handleDeleteImage,
-  isImageDeleteOpen,
-  onImageDeleteClose,
-  onImageDeleteOpen,
+  isDeleteImageOpen,
+  onDeleteImageClose,
+  onDeleteImageOpen,
+  setCurrentImage = null,
   ...props
 }) => {
-  const imagePath = new URL(image).pathname.split("/");
-  const filename = imagePath[imagePath.length - 1];
   const { showEnlarge = true } = { ...props };
 
   return (
@@ -27,13 +27,14 @@ const ModalImage = ({
             layout="responsive"
             width="100%"
             height="100%"
+            objectFit="cover"
             alt={"card image"}
           />
         </Box>
         {editing ? (
           <Button
             position="absolute"
-            top="0.25rem"
+            top="-0.25rem"
             right="0rem"
             backgroundColor="#FFFFFF"
             color="#6D6E70"
@@ -42,7 +43,7 @@ const ModalImage = ({
             height="max"
             rounded="full"
             p="0.6rem"
-            onClick={onImageDeleteOpen}
+            onClick={onDeleteImageOpen}
           >
             <CloseIcon h={3} w={3} />
           </Button>
@@ -61,23 +62,25 @@ const ModalImage = ({
           backgroundColor="#FFFFFF"
           color="Grey"
           boxShadow="xl"
-          onClick={openImagePreviewCallback}
+          onClick={() => {
+            if (setCurrentImage) {
+              setCurrentImage(index);
+            }
+            openImagePreviewCallback();
+          }}
         >
           Enlarge Image
         </Button>
       )}
-      <ConfirmActionsModal
-        isOpen={isImageDeleteOpen}
-        onClose={onImageDeleteClose}
+      <ConfirmActionModal
+        isOpen={isDeleteImageOpen}
+        onClose={onDeleteImageClose}
         handleAction={() => {
           handleDeleteImage(image);
         }}
         prompt="Are you sure you want to delete this image?"
         subcontent={
           <Box>
-            <Text fontSize="lg" color="gray.500">
-              {filename}
-            </Text>
             <Image
               src={image}
               width="100px"

@@ -7,16 +7,28 @@ import {
   Divider,
   Flex,
   Heading,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import PrintToPDFButton from "src/components/PrintToPDFButton";
+import { removeArchivedReport } from "../../actions/User/ArchivedReport";
+import ConfirmActionModal from "../Modals/ConfirmActionModal";
 import defaultReportProps from "./defaultReportProps";
 import StandardCard from "./StandardCard";
+import { useRouter } from "next/router";
 
 const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const [hasReportCard, setHasReportCard] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
 
-  const handleRemove = () => {
+  // Date place holder
+  const date = new Date();
+
+  const handleRemove = async () => {
+    await removeArchivedReport(report._id);
     setHasReportCard(false);
+    router.reload();
   };
 
   return (
@@ -30,24 +42,40 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
           marginBottom="10"
           flex="1"
         >
-          <CardHeader display="flex" justifyContent="space-between">
-            <Box display="flex" alignItems="center">
-              <Heading size="xl">Recent Report</Heading>
-              <Button as="a" variant="Grey-rounded" marginLeft="15">
-                Download
-              </Button>
-              <Button as="a" variant="Red-rounded" marginLeft="15">
-                Print to PDF
-              </Button>
+          <CardHeader>
+            <Box display="flex" justifyContent="space-between">
+              <Box display="flex" alignItems="center">
+                <Heading size="xl" mr={6}>
+                  {report.name}
+                </Heading>
+                <PrintToPDFButton report={report} />
+              </Box>
+              <Box>
+                <Button onClick={onOpen} variant="Red-rounded">
+                  Remove from Reports
+                </Button>
+                <ConfirmActionModal
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  mainText="Are you sure you want to remove this report"
+                  confirmButtonText="Yes, remove report"
+                  cancelButtonText="No, cancel"
+                  handleAction={handleRemove}
+                  isDanger={false}
+                />
+              </Box>
             </Box>
-            <Box>
-              <Button onClick={handleRemove} variant="Red-rounded">
-                Remove from Reports
-              </Button>
+            <Box textColor="gray">
+              Completed on{" "}
+              {new Date(date).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
             </Box>
           </CardHeader>
           <CardBody>
-            <Flex justifyContent="space-between" marginRight="15em">
+            <Flex marginRight="15em">
               {report.cards.map((card, index) => (
                 <Flex key={index}>
                   <StandardCard

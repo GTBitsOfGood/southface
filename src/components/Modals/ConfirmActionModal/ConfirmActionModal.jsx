@@ -19,10 +19,18 @@ const ConfirmActionModal = ({
   confirmButtonText,
   cancelButtonText,
   handleAction,
+  handleCancelAction = null,
   isDanger = false,
   children,
+  ...rest
 }) => (
-  <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size="lg">
+  <Modal
+    isOpen={isOpen}
+    onClose={onClose}
+    isCentered={true}
+    size="lg"
+    {...rest}
+  >
     <ModalOverlay />
     <ModalContent rounded={14} display="flex">
       <ModalHeader
@@ -53,19 +61,17 @@ const ConfirmActionModal = ({
       <ModalFooter justifyContent="center" pb={10}>
         <ButtonGroup>
           <Button
-            variant="Grey-outlined"
+            variant={isDanger ? "Grey-rounded" : "Grey-outlined-rounded"}
             size="sm"
-            rounded={16}
             fontSize="md"
             width="auto"
-            onClick={onClose}
+            onClick={handleCancelAction ? handleCancelAction : onClose}
           >
             {cancelButtonText}
           </Button>
           <Button
-            variant={isDanger ? "Red" : "Blue"}
+            variant={isDanger ? "Red-outlined-rounded" : "Blue-rounded"}
             size="sm"
-            rounded={16}
             fontSize="md"
             width="auto"
             onClick={handleAction}

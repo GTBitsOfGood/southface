@@ -10,81 +10,143 @@ import React from "react";
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: "#E4E4E4",
-    paddingTop: 40,
+    backgroundColor: "#FFFFFF",
+    padding: 40,
   },
-  outerContainer: {
-    display: "flex",
-    flexDirection: "column",
+  hr: {
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgray",
+    borderBottomStyle: "solid",
+    marginBottom: 10,
+    width: "100%",
   },
-  container: {
+  card: {},
+  imageSetContainer: {
     display: "flex",
     flexDirection: "row",
-    margin: "20px 20px 0px 20px",
-    padding: 10,
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   imageContainer: {
-    display: "flex",
-    flexDirection: "column",
-    marginRight: 10,
+    flexBasis: "50%",
+    paddingBottom: 10,
+  },
+  sectionLarge: {
+    paddingVertical: 14,
+  },
+  section: {
+    paddingVertical: 5,
+  },
+  notes: {
+    paddingBottom: 10,
   },
   image: {
-    height: "200px",
-    width: "250px",
-    marginBottom: 20,
+    width: "100%",
+    border: "1px solid black",
   },
-  description: {
-    marginLeft: "15%",
-    marginTop: "5%",
-    width: "80%",
+  name: {
+    fontFamily: "Helvetica-Bold",
+    color: "#666666",
+    fontSize: 15,
+  },
+  title: {
+    fontFamily: "Helvetica-Bold",
+    color: "#666666",
+    fontSize: 18,
+  },
+  category: {
+    fontFamily: "Helvetica-Bold",
+    color: "#8C8C8C",
+    fontSize: 13,
+    marginVertical: 2,
   },
   text: {
-    fontSize: 11,
-    margin: "0px 10px 0px 10px",
+    fontWeight: "thin",
+    color: "#6D6E70",
+    fontSize: 10,
+  },
+  textSmall: {
+    fontWeight: "thin",
+    fontSize: 8,
+    color: "#8C8C8C",
   },
 });
 
-const ReportDocumentPDF = ({ selectedReportCards }) => {
+const ReportDocumentPDF = ({ selectedReport }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.outerContainer}>
-          {selectedReportCards.map((card, index) => {
+          <View style={styles.sectionLarge}>
+            <Text style={styles.title}>
+              {selectedReport.name ?? "Untitled Report"}
+            </Text>
+            <Text style={styles.textSmall}>Completed on ...</Text>
+          </View>
+          {selectedReport?.cards.map((item, index) => {
+            let card = item.card || item;
             return (
-              <View
-                break={card.images.length > 1 && index != 0}
-                key={index}
-                style={styles.container}
-              >
-                <View key={index} style={styles.imageContainer}>
-                  {card.images.map((image, index) => {
-                    {
-                      return (
-                        image && (
-                          <Image
-                            key={index}
-                            style={styles.image}
-                            src={image}
-                            alt="construction-image"
-                          />
-                        )
-                      );
-                    }
+              <View key={index} styles={styles.card}>
+                <Text style={styles.name}>{card.title}</Text>
+                <View style={styles.section}>
+                  <Text style={styles.category}>Criteria</Text>
+                  <Text style={styles.text}>{card.criteria}</Text>
+                </View>
+                <View style={styles.imageSetContainer}>
+                  {card?.images.map((image, index) => {
+                    return image ? (
+                      <View
+                        style={[
+                          styles.imageContainer,
+                          {
+                            paddingRight: index % 2 == 0 ? 5 : 0,
+                            paddingLeft: index % 2 == 0 ? 0 : 5,
+                            paddingBottom:
+                              card.images.length % 2 == 0
+                                ? // looks confusing, just replicates the functions of the gap flex property
+                                  index < card.images.length - 2
+                                  ? 10
+                                  : 0
+                                : index < card.images.length - 1
+                                ? 10
+                                : 0,
+                          },
+                        ]}
+                        key={index}
+                      >
+                        <Image
+                          src={image.imageUrl}
+                          alt=""
+                          style={styles.image}
+                        ></Image>
+                      </View>
+                    ) : (
+                      <></>
+                    );
                   })}
                 </View>
-                <View style={styles.description}>
-                  {card.notes.map((comment, index) => {
-                    {
+                <View style={styles.section}>
+                  {card.notes.length > 0 && (
+                    <Text style={styles.category}>Notes</Text>
+                  )}
+                  <View>
+                    {card.notes?.map((note, index) => {
                       return (
-                        comment.body && (
-                          <Text key={index} style={styles.text}>
-                            {comment.body}
+                        <View style={styles.notes} key={index}>
+                          <Text style={styles.text}>{note.body}</Text>
+                          <Text style={styles.textSmall}>
+                            {new Date(note.date).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })}
                           </Text>
-                        )
+                        </View>
                       );
-                    }
-                  })}
+                    })}
+                  </View>
                 </View>
+                <View style={styles.hr}></View>
               </View>
             );
           })}

@@ -8,6 +8,7 @@ import {
 import InputControl from "../FormComponents/InputControl";
 import Multiselect from "../FormComponents/Multiselect";
 import TextareaControl from "../FormComponents/TextareaControl";
+import Tag from "../Tag";
 import CreateTag from "./CreateTag";
 import ImageUpload from "./ImageUpload";
 import MassUpload from "./MassUpload";
@@ -20,7 +21,7 @@ const ReviewAddButton = ({ handleSubmit }) => {
   return (
     <Button
       variant="Blue"
-      mr="15%"
+      mr="5%"
       fontSize="md"
       onClick={handleSubmit}
       border={submitFailed && hasValidationErrors ? "2px solid red" : "none"}
@@ -67,6 +68,14 @@ const EditAddStandard = ({ handleSubmit }) => {
           label="Primary Category"
           entries={Object.values(primaryCategoryNames)}
         />
+      </Box>
+
+      <FormLabel fontSize="xl" fontWeight="bold" color="#8C8C8C" mb={1} mt={5}>
+        Tags
+      </FormLabel>
+
+      <Box w="full">
+        <Tag h={{ base: "45em", xl: "30em", "2xl": "35em" }} />
       </Box>
 
       <Box w="50%">

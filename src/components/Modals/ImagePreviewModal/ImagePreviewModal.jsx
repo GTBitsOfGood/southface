@@ -11,9 +11,18 @@ import React, { useEffect, useState } from "react";
 import Notes from "../../Notes/Notes";
 import LgImageCarousel from "./LgImageCarousel";
 
-const ImagePreviewModal = ({ isOpen, onClose, card, setCards, ...rest }) => {
+const ImagePreviewModal = ({
+  isOpen,
+  onClose,
+  card,
+  setCards,
+  currentImageIndex,
+  setSelectedImage,
+  ...rest
+}) => {
   const { selState } = { ...rest };
   const [editing, setEditing] = useState(false);
+
   useEffect(() => {
     if (!selState) {
       setEditing(false);
@@ -25,6 +34,17 @@ const ImagePreviewModal = ({ isOpen, onClose, card, setCards, ...rest }) => {
       return false;
     });
   };
+  const updateCard = (updatedCard) => {
+    setCards((cards) => {
+      return cards.map((c) => {
+        if (card._id === c._id) {
+          return updatedCard;
+        } else {
+          return c;
+        }
+      });
+    });
+  };
 
   return (
     <Modal size="4xl" isOpen={isOpen} onClose={modalCloseHandler}>
@@ -33,14 +53,19 @@ const ImagePreviewModal = ({ isOpen, onClose, card, setCards, ...rest }) => {
         <ModalCloseButton right={1} top={0} m={2} />
         <ModalBody p="0">
           <HStack alignItems="top" minH="80vh" h="80vh">
-            <LgImageCarousel cardImages={card.images} />
+            <LgImageCarousel
+              cardImages={card.images}
+              currentImage={currentImageIndex}
+              setCurrentImage={setSelectedImage}
+            />
             <Notes
               selState={selState}
               cardId={card._id}
               notes={card.notes}
-              setCards={setCards}
+              updateCard={updateCard}
               editing={editing}
               setEditing={setEditing}
+              currentImage={currentImageIndex}
             />
           </HStack>
         </ModalBody>

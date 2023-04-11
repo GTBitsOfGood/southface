@@ -11,8 +11,18 @@ const CardSchema = new Schema({
     type: [
       {
         imageUrl: String,
-        thumbsUp: Number,
-        thumbsDown: Number,
+        thumbsUp: [
+          {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+          },
+        ],
+        thumbsDown: [
+          {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+          },
+        ],
       },
     ],
     required: true,

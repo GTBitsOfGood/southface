@@ -1,16 +1,20 @@
 import {
+  Box,
   Breadcrumb,
   BreadcrumbItem,
+  Button,
   Flex,
-  Heading,
+  HStack,
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState } from "react";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import PaginationTab from "src/components/PaginationTab";
-import SearchBar, { useSearch } from "src/components/SearchBar";
+import SearchBar from "src/components/SearchBar";
+import CurrentSearchInfo from "src/components/SearchBar/CurrentSearchInfo";
 import StandardCardTable from "src/components/StandardCardTable";
+import useSearch from "src/lib/hooks/useSearch";
 import {
   buildingTypeNames,
   primaryCategoryNames,
@@ -28,24 +32,61 @@ const LibraryCategoryPage = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(numPagesInitial);
 
-  const { handleSearch } = useSearch({ setNumPages, setCurrentPage, setCards });
+  const {
+    handleSearch,
+    searchString,
+    tags,
+    resetSearch,
+    setResetSearch,
+    tagToClear,
+    setTagToClear,
+  } = useSearch({
+    setNumPages,
+    setCurrentPage,
+    setCards,
+  });
 
   return (
     <Flex alignItems="stretch" flexDirection="column" p="2rem">
-      <Breadcrumb separator=">" fontWeight="semibold" pb="5">
-        <BreadcrumbItem>
-          <Link href="/library">Digital Library</Link>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <Link href={`/library/${props.params.buildingType}`}>
-            {props.buildingType}
-          </Link>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <Text>{props.primaryCategory}</Text>
-        </BreadcrumbItem>
-      </Breadcrumb>
-      <SearchBar handleSearch={handleSearch} />
+      <HStack w="full" position="relative">
+        <Breadcrumb
+          separator=">"
+          fontWeight="semibold"
+          position="absolute"
+          top={2}
+        >
+          <BreadcrumbItem>
+            <Link href="/library">Digital Library</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <Link href={`/library/${props.params.buildingType}`}>
+              {props.buildingType}
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <Text>{props.primaryCategory}</Text>
+          </BreadcrumbItem>
+        </Breadcrumb>
+
+        <Box flex="1"></Box>
+
+        <SearchBar
+          handleSearch={handleSearch}
+          resetSearch={resetSearch}
+          tagToClear={tagToClear}
+          setTagToClear={setTagToClear}
+          setResetSearch={setResetSearch}
+        />
+      </HStack>
+
+      <CurrentSearchInfo
+        handleSearch={handleSearch}
+        searchString={searchString}
+        location={props.primaryCategory}
+        tags={tags}
+        setResetSearch={setResetSearch}
+        setTagToClear={setTagToClear}
+      />
 
       {numPages > 0 ? (
         <>
@@ -60,7 +101,27 @@ const LibraryCategoryPage = (props) => {
           />
         </>
       ) : (
-        <Heading>No Cards Found</Heading>
+        <div>
+          <Flex
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            paddingX="14rem"
+            paddingY="8rem"
+            marginX="8rem"
+          >
+            <Text fontSize="2xl" textAlign="center" color="grey" mb={5}>
+              Sorry! We couldn&apos;t find any standards matching your search.
+              Try changing your spelling, removing filters, or searching for
+              something else.
+            </Text>
+            <Link href={`/library/${props.params.buildingType}`}>
+              <Button variant="Blue" size="md">
+                Return to {props.params.buildingType}
+              </Button>
+            </Link>
+          </Flex>
+        </div>
       )}
     </Flex>
   );
@@ -79,9 +140,10 @@ export async function getStaticProps({ params }) {
     buildingType,
     primaryCategory,
   });
-  let numPages = Math.floor(cardsCount / 4);
 
-  if (cardsCount % 4 > 0) {
+  let numPages = Math.floor(cardsCount / 6);
+
+  if (cardsCount % 6 > 0) {
     numPages += 1;
   }
 

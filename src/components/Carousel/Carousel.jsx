@@ -13,11 +13,14 @@ const Carousel = ({
   showDots = false,
   dotColorActive = "#795548",
   dotColorInactive = "#ccc",
+  currentImage = 0,
+  setCurrentImage = null,
   dot,
   containerStyle,
+  isReportCarousel = false,
   children,
 }) => {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(currentImage);
   const railWrapperRef = useRef(null);
 
   const itemList = useMemo(
@@ -54,20 +57,27 @@ const Carousel = ({
   const handlePrev = useCallback(() => {
     setCurrentPage((p) => {
       const prevPage = p - 1;
+      if (setCurrentImage) {
+        setCurrentImage(prevPage);
+      }
       return prevPage;
     });
-  }, []);
+  }, [setCurrentImage]);
 
   const handleNext = useCallback(() => {
     setCurrentPage((p) => {
       const nextPage = p + 1;
-      if (nextPage >= page) {
-        return p;
+      if (setCurrentImage) {
+        setCurrentImage(nextPage);
       }
+
+      // if (nextPage >= page) {
+      //   return p;
+      // }
 
       return nextPage;
     });
-  }, [page]);
+  }, [setCurrentImage]);
 
   const turnToPage = useCallback((page) => {
     setCurrentPage(page);
@@ -89,11 +99,12 @@ const Carousel = ({
         icon={<ArrowIcon orientation="left" />}
         onClick={handlePrev}
         position="absolute"
-        left="1rem"
+        left="-1rem"
         background="none"
         _hover={{ background: "none" }}
         zIndex="10"
         cursor="pointer"
+        display={isReportCarousel ? "none" : "block"}
       />
       <Box overflow="hidden" margin="0" w="100%" h="100%" ref={railWrapperRef}>
         <Box
@@ -158,6 +169,7 @@ const Carousel = ({
         _hover={{ background: "none" }}
         zIndex="10"
         cursor="pointer"
+        display={isReportCarousel ? "none" : "block"}
       />
     </Box>
   );

@@ -2,14 +2,14 @@ import { BlobServiceClient } from "@azure/storage-blob";
 
 const getBlobClient = () => {
   const blobServiceClient = new BlobServiceClient(
-    `https://${process.env.NEXT_PUBLIC_STORAGERESOURCENAME}.blob.core.windows.net/?${process.env.NEXT_PUBLIC_STORAGESASTOKEN}`
+    `https://${process.env.NEXT_PUBLIC_STORAGERESOURCENAME}.blob.core.windows.net/${process.env.NEXT_PUBLIC_STORAGESASTOKEN}`
   );
   const containerClient = blobServiceClient.getContainerClient("standards");
 
   return containerClient;
 };
 
-const uploadFile = async (blobName, content, metadata, tags) => {
+const uploadFile = async (blobName, content) => {
   try {
     const containerClient = getBlobClient();
 
@@ -18,8 +18,6 @@ const uploadFile = async (blobName, content, metadata, tags) => {
       blobHTTPHeaders: {
         blobContentType: content.type,
       },
-      metadata: metadata,
-      tags: tags,
     };
 
     const uploadBlobResponse = await blockBlobClient.uploadData(
@@ -27,6 +25,21 @@ const uploadFile = async (blobName, content, metadata, tags) => {
       options
     );
     return uploadBlobResponse;
+  } catch (e) {
+    return e;
+  }
+};
+
+const deleteFile = async (blobUrl) => {
+  try {
+    const blobName = parseUrlToBlobName(blobUrl);
+    const containerClient = getBlobClient();
+
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
+    const deleteBlobResponse = await blockBlobClient.deleteIfExists();
+
+    return deleteBlobResponse;
   } catch (e) {
     return e;
   }
@@ -43,6 +56,13 @@ const listBlobs = async () => {
   return blobs;
 };
 
+const parseUrlToBlobName = (blobUrl) => {
+  return blobUrl.substring(
+    blobUrl.indexOf("standards") + 10,
+    blobUrl.indexOf("?")
+  );
+};
+
 function isValidBlobUrl(url) {
   try {
     var urlObject = new URL(url);
@@ -54,4 +74,4 @@ function isValidBlobUrl(url) {
   }
 }
 
-export { uploadFile, listBlobs, isValidBlobUrl };
+export { getBlobClient, uploadFile, deleteFile, listBlobs, isValidBlobUrl };

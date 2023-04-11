@@ -48,7 +48,9 @@ export const getCardsPagination = async (pageNumber, searchFilter) => {
   let url = urls.api.card.getPagination + pageNumber;
 
   if (searchFilter) {
-    const tagsArray = Object.keys(searchFilter.tags);
+    const tagsArray = searchFilter.tags.map((t) =>
+      t.toLowerCase().replaceAll(",", "-;-")
+    );
 
     url +=
       "&searchFilterString=" +
@@ -76,6 +78,23 @@ export const getCardsPagination = async (pageNumber, searchFilter) => {
         throw new Error(json.message);
       }
 
+      return json.payload;
+    });
+};
+
+export const revalidate = (path) => {
+  return fetch(urls.api.revalidate + path, {
+    method: "GET",
+    mode: "same-origin",
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
       return json.payload;
     });
 };
@@ -175,6 +194,92 @@ export const deleteCardById = async (id) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(id),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+
+      return json.payload;
+    });
+};
+
+export const thumbsUp = async (cardId, userId, index, shouldPush) => {
+  return fetch(urls.api.card.thumbsUp, {
+    method: "PUT",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      cardId,
+      userId,
+      index,
+      shouldPush,
+    }),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+
+      return json.payload;
+    });
+};
+
+export const thumbsDown = async (cardId, userId, index, shouldPush) => {
+  return fetch(urls.api.card.thumbsDown, {
+    method: "PUT",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      cardId,
+      userId,
+      index,
+      shouldPush,
+    }),
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json == null) {
+        throw new Error("Could not connect to API!");
+      } else if (!json.success) {
+        throw new Error(json.message);
+      }
+
+      return json.payload;
+    });
+};
+
+export const thumbsUpAndDown = async (
+  cardId,
+  userId,
+  index,
+  currentlyLiked
+) => {
+  return fetch(urls.api.card.thumbsUpAndDown, {
+    method: "PUT",
+    mode: "same-origin",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      cardId,
+      userId,
+      index,
+      currentlyLiked,
+    }),
   })
     .then((response) => response.json())
     .then((json) => {

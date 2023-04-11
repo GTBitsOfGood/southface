@@ -16,6 +16,9 @@ export default {
       getPagination: "/api/card/getPagination?page=",
       update: "/api/card/update/",
       delete: "/api/card/delete/",
+      thumbsUp: "/api/card/thumbsUp",
+      thumbsDown: "/api/card/thumbsDown",
+      thumbsUpAndDown: "/api/card/thumbsUpAndDown",
     },
     user: {
       signUp: "/api/user/sign-up",
@@ -37,10 +40,9 @@ export default {
         update: "/api/user/active-report/update",
         change: "/api/user/active-report/change",
       },
-      comment: {
-        create: "/api/comment/create",
-        update: "/api/comment/update",
-        delete: "/api/comment/delete",
+      archivedReport: {
+        add: "/api/user/archived-report/add",
+        delete: "/api/user/archived-report/delete",
       },
       report: {
         create: "/api/report/create",
@@ -58,5 +60,6 @@ export default {
       update: "api/tag/update",
       getTag: "/api/tag/get/tag",
     },
+    revalidate: "/api/revalidate?pathToRevalidate=",
   },
 };

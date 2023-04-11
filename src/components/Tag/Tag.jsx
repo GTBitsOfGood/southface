@@ -8,18 +8,21 @@ const Tag = (props) => {
   const tags = data?.payload[0];
 
   return (
-    <>
-      <Flex {...props} direction="column" wrap="wrap">
-        {tags &&
-          Object.keys(tags).map((letter) => {
-            return (
-              <Box key={letter}>
-                <TagBox key={letter} letter={letter} list={tags[letter]} />
-              </Box>
-            );
-          })}
-      </Flex>
-    </>
+    <Flex {...props} direction="column" wrap="wrap">
+      {tags &&
+        Object.keys(tags).map((letter) => {
+          return (
+            <Box key={letter}>
+              <TagBox
+                key={letter}
+                letter={letter}
+                list={tags[letter]}
+                isTruncated
+              />
+            </Box>
+          );
+        })}
+    </Flex>
   );
 };
 

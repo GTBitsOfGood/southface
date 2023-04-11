@@ -1,5 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { getCardsPagination } from "../../actions/Card";
 
 export default function useSearch({ setNumPages, setCurrentPage, setCards }) {
@@ -7,10 +8,17 @@ export default function useSearch({ setNumPages, setCurrentPage, setCards }) {
   const noSearchResultsToast = useToast();
   const { buildingType, primaryCategory } = router.query;
 
+  const [searchString, setSearchString] = useState("");
+  const [tags, setTags] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const [resetSearch, setResetSearch] = useState(false);
+  const [tagToClear, setTagToClear] = useState();
+
   const calculateNumPagesToDisplay = (cardsCount) => {
     if (setNumPages) {
-      let numPages = Math.floor(cardsCount / 4);
-      if (cardsCount % 4 > 0) {
+      let numPages = Math.floor(cardsCount / 6);
+      if (cardsCount % 6 > 0) {
         numPages += 1;
       }
 
@@ -30,7 +38,7 @@ export default function useSearch({ setNumPages, setCurrentPage, setCards }) {
 
   const handleSearch = async ({
     searchString = "",
-    tags = {},
+    tags = [],
     pageNumber = 1,
   }) => {
     const searchFilter = {
@@ -41,7 +49,11 @@ export default function useSearch({ setNumPages, setCurrentPage, setCards }) {
     };
 
     // accounts for click button on primary category page with empty string
-    if (searchString === "" && primaryCategory === undefined) {
+    if (
+      searchString === "" &&
+      tags.length == 0 &&
+      primaryCategory === undefined
+    ) {
       setCards([]);
     } else {
       const { cards, cardsCount } = await getCardsPagination(
@@ -58,7 +70,20 @@ export default function useSearch({ setNumPages, setCurrentPage, setCards }) {
         displayNoSearchResultToast();
       }
     }
+
+    setSearchString(searchString);
+    setTags(tags);
+    setPageNumber(pageNumber);
   };
 
-  return { handleSearch };
+  return {
+    handleSearch,
+    searchString,
+    tags,
+    pageNumber,
+    resetSearch,
+    setResetSearch,
+    tagToClear,
+    setTagToClear,
+  };
 }

@@ -1,4 +1,9 @@
-import { CloseIcon, Icon, SearchIcon } from "@chakra-ui/icons";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Icon,
+  SearchIcon,
+} from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -6,61 +11,88 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
-  Popover,
-  PopoverArrow,
-  PopoverContent,
-  PopoverTrigger,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { Form, useForm, useFormState } from "react-final-form";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import Tag from "../Tag/Tag";
+import Tag from "../Tag";
 
-const SearchBar = (props) => {
-  const { handleSearch, ...rest } = props;
-  const [isClickedSearch, setIsClickedSearch] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
+const SearchBarComponent = (props) => {
+  const {
+    resetSearch,
+    setResetSearch,
+    handleSubmit,
+    isClickedSearch,
+    searchInput,
+    setSearchInput,
+    tagToClear,
+    setTagToClear,
+    ...rest
+  } = props;
+
+  const { values } = useFormState();
+  const { mutators } = useForm();
+
+  const { isOpen, onToggle } = useDisclosure();
 
   useEffect(() => {
-    if (searchInput === "") {
-      setIsClickedSearch(false);
+    if (resetSearch) {
+      mutators.setValue("tagArray", null);
+      setResetSearch(false);
     }
-  }, [searchInput]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetSearch, setResetSearch]);
 
-  const handleSearchButtonClick = () => {
-    setIsClickedSearch(true);
-    handleSearch({ searchString: searchInput });
-  };
+  useEffect(() => {
+    const newArray = values.tagArray
+      ? values.tagArray.filter((tag) => tag !== tagToClear)
+      : null;
+    mutators.setValue("tagArray", newArray);
+    setTagToClear(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tagToClear, setTagToClear]);
 
-  const handleExitSearchButtonClick = () => {
-    handleSearch({});
-    setSearchInput("");
-    setIsClickedSearch(false);
+  const handleApplyFiltersClick = (handleSubmit) => {
+    onToggle();
+    handleSubmit();
   };
 
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
   };
 
-  const SearchButton = () =>
-    isClickedSearch ? (
-      <Button
-        variant="Blue"
-        size="lg"
-        mr="3"
-        onClick={handleExitSearchButtonClick}
-      >
-        <CloseIcon boxSize="12px" />
-      </Button>
-    ) : (
-      <Button variant="Blue" size="lg" mr="3" onClick={handleSearchButtonClick}>
+  const getNumTagsFiltered = (values) => {
+    return isClickedSearch && values.tagArray && values.tagArray.length > 0
+      ? `(${values.tagArray.length})`
+      : "";
+  };
+
+  const SearchButton = ({ handleSubmit }) => {
+    return (
+      <Button variant="Blue" size="lg" mr="3" onClick={handleSubmit}>
         <FaLongArrowAltRight />
       </Button>
     );
+  };
 
   return (
     <Flex {...rest} justifyContent="flex-end">
       {/* search bar */}
-      <Box mr="1">
+      <Box
+        position="absolute"
+        right={
+          isClickedSearch && values.tagArray && values.tagArray.length > 0
+            ? "15em"
+            : "13em"
+        }
+      >
         <InputGroup size="lg" borderWidth="">
           <InputLeftAddon bg="transparent" borderRight="none">
             <Icon as={SearchIcon} />
@@ -72,21 +104,117 @@ const SearchBar = (props) => {
           />
         </InputGroup>
       </Box>
+
+      {/* Filter tab */}
       <Box mr="3">
-        <Popover placement="bottom-end">
-          <PopoverTrigger>
-            <Button variant="Grey-outlined" size="lg">
-              Filter
+        <Tabs variant="enclosed" h="full" align="end">
+          {isOpen ? (
+            <TabList>
+              <Box
+                border="1px solid Grey"
+                borderBottom="none"
+                roundedTop={8}
+                roundedBottom={0}
+              >
+                <Tab
+                  color="Grey"
+                  bgColor="#F2F2F2"
+                  border="none"
+                  onClick={onToggle}
+                  fontSize="lg"
+                  px={4}
+                  pb={isOpen ? 5 : 3}
+                >
+                  <Text pr={3}>Filter {getNumTagsFiltered(values)}</Text>
+                  <ChevronUpIcon />
+                </Tab>
+              </Box>
+            </TabList>
+          ) : (
+            <Button
+              p={4}
+              pt={3}
+              rounded={8}
+              bgColor="#F2F2F2"
+              color="Grey"
+              border="1px solid Grey"
+              _hover={{ bgColor: "#d9d9d9" }}
+              _active={{ bgColor: "#c1c1c1" }}
+              size="lg"
+              fontSize="lg"
+              onClick={onToggle}
+            >
+              <Text pr={3}>Filter {getNumTagsFiltered(values)}</Text>
+              <ChevronDownIcon />
             </Button>
-          </PopoverTrigger>
-          <PopoverContent width={{ base: "75em", "2xl": "80em" }}>
-            <PopoverArrow />
-            <Tag height={{ base: "45em", "2xl": "55em" }} />
-          </PopoverContent>
-        </Popover>
+          )}
+          <TabPanels
+            display={isOpen ? "initial" : "none"}
+            backgroundColor="#F2F2F2"
+            mr="-100px"
+          >
+            <TabPanel
+              width={{ base: "75em", "2xl": "80em" }}
+              border="1px solid Grey"
+              rounded={8}
+              roundedTopRight={0}
+              bgColor="#F2F2F2"
+              position="relative"
+            >
+              <Tag height="65vh" overflow="auto" />
+              <Button
+                p={4}
+                variant="Blue"
+                pos="absolute"
+                right="2em"
+                bottom="2em"
+                onClick={() => handleApplyFiltersClick(handleSubmit)}
+              >
+                Apply Filters {getNumTagsFiltered(values)}
+              </Button>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Box>
-      <SearchButton />
+      {/* Submit search button */}
+      <SearchButton handleSubmit={handleSubmit} />
     </Flex>
+  );
+};
+
+const SearchBar = (props) => {
+  const [searchInput, setSearchInput] = useState("");
+  const [isClickedSearch, setIsClickedSearch] = useState(false);
+
+  const handleSearchButtonClick = (values) => {
+    values.tagArray && values.tagArray.length == 0
+      ? setIsClickedSearch(false)
+      : setIsClickedSearch(true);
+    props.handleSearch({
+      searchString: searchInput,
+      tags: values.tagArray || [],
+    });
+  };
+
+  return (
+    <Form
+      onSubmit={handleSearchButtonClick}
+      mutators={{
+        setValue: ([field, value], state, { changeValue }) => {
+          changeValue(state, field, () => value);
+        },
+      }}
+    >
+      {({ handleSubmit }) => (
+        <SearchBarComponent
+          handleSubmit={handleSubmit}
+          isClickedSearch={isClickedSearch}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+          {...props}
+        />
+      )}
+    </Form>
   );
 };
 

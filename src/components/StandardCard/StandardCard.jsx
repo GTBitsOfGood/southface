@@ -32,10 +32,12 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   );
   const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
     useState(false);
+  const [addToReportButtonPressed, setAddToReportButtonPressed] =
+    useState(false);
 
   useEffect(() => {
     if (
-      isOpenCardModal &&
+      (isOpenCardModal || addToReportButtonPressed) &&
       user?.id &&
       !isMutating &&
       !updateRecentStandardsTriggered
@@ -51,6 +53,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
     trigger,
     isMutating,
     updateRecentStandardsTriggered,
+    addToReportButtonPressed,
   ]);
 
   useEffect(() => {
@@ -67,9 +70,12 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   // useEffect on editEnable: make API call after deselecting
   const { selState } = { ...props };
   const selected = !selState ? false : true;
+
   // const imgArr = selected ?
   const { addToReport } = useActiveReport();
+
   const reportAddHandler = (e) => {
+    setAddToReportButtonPressed(true);
     e.stopPropagation(); // stops modal from opening
     if (!selected) {
       addToReport(card);
@@ -78,83 +84,106 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
 
   const ReportButton = ({ ...props }) => (
     <Button
-      position="absolute"
-      right="1"
-      bottom="0"
       variant={selected ? "Grey" : "Blue-outlined"}
       onClick={reportAddHandler}
+      flexGrow={0}
+      flexShrink={0}
+      whiteSpace="nowrap"
       {...props}
+      w="35%"
+      isDisabled={user?.isLoggedIn ? false : true}
     >
       {!selected ? "Add To Report" : "Added to Report"}
     </Button>
   );
 
   return (
-    <Flex
-      {...props}
-      flexDirection="column"
-      boxShadow="base"
-      rounded="23.3173px"
-      overflow="hidden"
-      height="19rem"
-      width="24rem"
-      onClick={onOpenCardModal}
-      _hover={{
-        cursor: "pointer",
-        transition: "0.1s ease-in-out",
-        boxShadow: "xl",
-      }}
-      transition="0.1s ease-in-out"
-    >
-      <Box height="47%" position="relative">
-        <Image
-          height="100%"
-          width="100%"
-          fit="cover"
-          src={card.images[0].imageUrl}
-          alt="construction image"
-        />
-      </Box>
+    <Box {...props}>
+      <Flex
+        flexDirection="column"
+        boxShadow="base"
+        rounded="23.3173px"
+        overflow="hidden"
+        onClick={onOpenCardModal}
+        _hover={{
+          cursor: "pointer",
+          transition: "0.1s ease-in-out",
+          boxShadow: "xl",
+        }}
+        minWidth="24em"
+        maxHeight="20em"
+        width="auto"
+        height="100%"
+        transition="0.1s ease-in-out"
+      >
+        <Box height="50%" flexShrink={1}>
+          <Image
+            fit="cover"
+            src={card.images[0].imageUrl}
+            alt="construction image"
+            height="100%"
+            width="100%"
+          />
+        </Box>
 
-      <Flex p={3} flexDirection="column" flex={1} mx="2">
-        <Heading fontSize="1rem">{card.title}</Heading>
+        <Flex height="50%" p={3} flexDirection="column" flexShrink={1} mx="2">
+          <Heading fontSize="100%" isTruncated flexShrink={1}>
+            {card.title}
+          </Heading>
 
-        <Text
-          fontSize=".92rem"
-          lineHeight="1.2rem"
-          maxHeight="4rem"
-          noOfLines="3"
-        >
-          {card.criteria}
-        </Text>
+          <Text
+            fontSize="90%"
+            lineHeight="1.2em"
+            maxHeight="4em"
+            noOfLines="3"
+            flexShrink={1}
+          >
+            {card.criteria}
+          </Text>
 
-        <HStack mt="auto" position="relative" mb="0.5">
-          {card.tags.slice(0, 3).map((tag, index) => {
-            return (
-              <Tag
-                key={index}
-                textTransform="capitalize"
-                bgColor="#C4D600"
-                rounded="14.7877px"
-                px="2"
-              >
-                {tag}
-              </Tag>
-            );
-          })}
-          <ReportButton />
-        </HStack>
-        <CardModalWithForm
-          isOpenCardModal={isOpenCardModal}
-          onCloseCardModal={onCloseCardModal}
-          card={card}
-          cards={cards}
-          setCards={setCards}
-          selected={selected}
-          selState={selState}
-        />
+          <HStack
+            mt="auto"
+            mb="0.5"
+            display="flex"
+            justifyContent="space-between"
+            width="100%"
+          >
+            <Flex overflowY="auto" flexShrink={0} width="65%">
+              {card.tags.map((tag, index) => {
+                if (index < 3) {
+                  return (
+                    <Tag
+                      key={index}
+                      textTransform="capitalize"
+                      bgColor="#C4D600"
+                      rounded="14.7877px"
+                      marginLeft={0.5}
+                      minWidth="max-content"
+                    >
+                      {tag}
+                    </Tag>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </Flex>
+
+            <ReportButton />
+          </HStack>
+
+          <CardModalWithForm
+            isOpenCardModal={isOpenCardModal}
+            onCloseCardModal={onCloseCardModal}
+            card={card}
+            cards={cards}
+            setCards={setCards}
+            selected={selected}
+            selState={selState}
+          />
+        </Flex>
       </Flex>
-    </Flex>
+    </Box>
   );
 };
 

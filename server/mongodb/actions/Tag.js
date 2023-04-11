@@ -3,9 +3,14 @@ import Tag from "../models/Tag";
 
 export async function createTag({ name }) {
   await mongoDB();
-  name = name.toLowerCase();
   const tag = await Tag.create({ name });
   return tag;
+}
+
+export async function insertManyTags(tags) {
+  await mongoDB();
+
+  return Tag.insertMany(tags);
 }
 
 export async function getTags() {
@@ -20,7 +25,7 @@ export async function getTagsObject() {
   const tag = await Tag.aggregate([
     {
       $group: {
-        _id: { $substr: ["$name", 0, 1] },
+        _id: { $toLower: { $substr: ["$name", 0, 1] } },
         tags: {
           $push: {
             id: "$_id",
