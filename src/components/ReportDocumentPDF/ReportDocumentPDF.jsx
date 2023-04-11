@@ -84,7 +84,7 @@ const ReportDocumentPDF = ({ selectedReport }) => {
             </Text>
             <Text style={styles.textSmall}>
               Completed on{" "}
-              {new Date(selectedReport.date).toLocaleDateString("en-US", {
+              {new Date(selectedReport.date || new Date()).toLocaleDateString("en-US", {
                 month: "short",
                 day: "numeric",
                 year: "numeric",
