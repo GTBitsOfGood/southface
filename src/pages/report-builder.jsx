@@ -84,7 +84,6 @@ const ReportBuilder = () => {
             borderColor="gray.300"
             height="43em"
             flex={2}
-
           >
             <Box>
               {" "}
@@ -199,7 +198,6 @@ const ReportBuilder = () => {
             border="1px solid"
             borderColor="gray.300"
             rounded={16}
-            
           >
             <RecentStandardsView maxCards={3} />
           </Card>

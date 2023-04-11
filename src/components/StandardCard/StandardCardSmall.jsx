@@ -95,7 +95,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
       flexDirection="column"
       boxShadow="base"
       rounded="23.3173px"
-      overflow="hidden" 
+      overflow="hidden"
       onClick={onOpenCardModal}
       _hover={{
         cursor: "pointer",
