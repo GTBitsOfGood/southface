@@ -8,7 +8,9 @@ export const addToArchivedReport = async (userId, cards, name) => {
     const user = await User.findByIdAndUpdate(
       userId,
       {
-        $addToSet: { archivedReports: { cards: cards, name: name, date: new Date() } },
+        $addToSet: {
+          archivedReports: { cards: cards, name: name, date: new Date() },
+        },
       },
       { upsert: true }
     );
