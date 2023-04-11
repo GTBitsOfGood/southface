@@ -399,8 +399,11 @@ const CardModal = ({
               width="full"
             >
               <Flex flex={1} width="50%" flexDirection="column" gap="1rem">
-
-                <Flex flexShrink={0} overflow="scroll" flexWrap={editing ? "wrap": "nowrap"}>
+                <Flex
+                  flexShrink={0}
+                  overflow="scroll"
+                  flexWrap={editing ? "wrap" : "nowrap"}
+                >
                   {form.values?.tags
                     ? form.values.tags.map((tag, index) => (
                         <Box key={index} position="relative">

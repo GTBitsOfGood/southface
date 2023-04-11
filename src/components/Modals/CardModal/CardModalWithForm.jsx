@@ -22,7 +22,6 @@ const CardModalWithForm = ({
 
   ...rest
 }) => {
-
   // eslint-disable-next-line no-unused-vars
   const [imagesToDelete, setImagesToDelete] = useState([]);
 
@@ -88,12 +87,14 @@ const CardModalWithForm = ({
     const deletedCard = await deleteCardById(card._id);
 
     const revalidationPaths = JSON.stringify(
-      parseNestedPaths("library", deletedCard.buildingType, deletedCard.primaryCategory)
+      parseNestedPaths(
+        "library",
+        deletedCard.buildingType,
+        deletedCard.primaryCategory
+      )
     );
 
     await revalidate(revalidationPaths);
-
-
 
     let newCards = [];
     for (let oldCardIndex in cards) {

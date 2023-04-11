@@ -7,11 +7,10 @@ import { withSessionRoute } from "src/lib/utils/session";
 const handler = async (req, res) => {
   try {
     const deletedCard = await deleteCardById(req.body);
-   
 
     return res.status(200).json({
       success: true,
-      payload: deletedCard
+      payload: deletedCard,
     });
   } catch (error) {
     res.status(400).json({

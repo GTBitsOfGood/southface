@@ -3,9 +3,9 @@ import Notes from "../Notes/Notes";
 
 const ReportStandardNotes = ({ notes, card, /* selState, */ ...rest }) => {
   const { user } = useUser();
-  const notesFilter = (note/* , index */) =>
+  const notesFilter = (note /* , index */) =>
     // selState?.noteSelections[index] &&
-    (user.isAdmin || note.userId === user.id);
+    user.isAdmin || note.userId === user.id;
   return (
     <Notes
       notes={notes.filter(notesFilter)}
