@@ -162,13 +162,11 @@ const CardModal = ({
   };
 
   const handleDeleteImage = (image, onDeleteImageClose) => {
-    const newCardImages = card.images.filter((imageFromArray) => {
+    const newCardImages = form?.values?.images?.filter((imageFromArray) => {
       if (image != imageFromArray.imageUrl) {
         return image;
       }
     });
-
-    // newCardImages.splice(index, 1);
     setValue("images", newCardImages);
     setImagesToDelete((imagesToDelete) => [...imagesToDelete, image]);
     onDeleteImageClose();
