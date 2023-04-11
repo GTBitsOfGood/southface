@@ -9,17 +9,15 @@ import React from "react";
  */
 const NavLink = ({ href, name, ...rest }) => {
   return href ? (
-    <Link href={href}>
-      <NavButton name={name} href={true} {...rest} />
-    </Link>
+    <NavButton name={name} href={href} {...rest} passHref></NavButton>
   ) : (
     <NavButton name={name} {...rest} />
   );
 };
 
-const NavButton = ({ name, href, children, ...rest }) => (
+const NavButton = ({ name, href, ...rest }) => (
   <Button
-    as={href ? "a" : "button"}
+    as="button"
     color="Grey"
     _hover={{
       color: "Blue",
@@ -35,7 +33,13 @@ const NavButton = ({ name, href, children, ...rest }) => (
     mt={1}
     {...rest}
   >
-    {name || children}
+    {href ? (
+      <Link href={href} passHref>
+        <a>{name}</a>
+      </Link>
+    ) : (
+      name
+    )}
   </Button>
 );
 

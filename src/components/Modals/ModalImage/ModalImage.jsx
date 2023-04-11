@@ -1,5 +1,5 @@
 import { CloseIcon } from "@chakra-ui/icons";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text, useDisclosure } from "@chakra-ui/react";
 import Image from "next/image";
 import { MdExpand } from "react-icons/md";
 import ConfirmActionModal from "../CardModal/ConfirmActionModal";
@@ -10,13 +10,15 @@ const ModalImage = ({
   openImagePreviewCallback,
   editing,
   handleDeleteImage,
-  isDeleteImageOpen,
-  onDeleteImageClose,
-  onDeleteImageOpen,
   setCurrentImage = null,
   ...props
 }) => {
   const { showEnlarge = true } = { ...props };
+  const {
+    isOpen: isDeleteImageOpen,
+    onOpen: onDeleteImageOpen,
+    onClose: onDeleteImageClose,
+  } = useDisclosure();
 
   return (
     <>
@@ -76,7 +78,7 @@ const ModalImage = ({
         isOpen={isDeleteImageOpen}
         onClose={onDeleteImageClose}
         handleAction={() => {
-          handleDeleteImage(image);
+          handleDeleteImage(image, onDeleteImageClose);
         }}
         prompt="Are you sure you want to delete this image?"
         subcontent={
