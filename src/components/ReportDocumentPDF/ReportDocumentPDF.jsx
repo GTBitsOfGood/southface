@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     fontWeight: "thin",
     fontSize: 8,
     color: "#8C8C8C",
+    paddingTop: "2px"
   },
 });
 
@@ -81,7 +82,11 @@ const ReportDocumentPDF = ({ selectedReport }) => {
             <Text style={styles.title}>
               {selectedReport.name ?? "Untitled Report"}
             </Text>
-            <Text style={styles.textSmall}>Completed on ...</Text>
+            <Text style={styles.textSmall}>Completed on {new Date(selectedReport.date).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}</Text>
           </View>
           {selectedReport?.cards.map((item, index) => {
             let card = item.card || item;

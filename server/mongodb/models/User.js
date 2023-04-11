@@ -23,6 +23,7 @@ const UserSchema = new Schema({
       {
         cards: [CardSchema],
         name: String,
+        date: Date,
       },
     ], // this is embedded
   },
