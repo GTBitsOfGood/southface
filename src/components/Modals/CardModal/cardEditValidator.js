@@ -1,4 +1,5 @@
 import { isValidBlobUrl } from "src/lib/utils/blobStorage";
+import { DEFAULT_IMAGE } from "src/lib/utils/constants";
 
 const cardEditValidator = (values) => {
   const errors = {};
@@ -13,7 +14,9 @@ const cardEditValidator = (values) => {
       errors.images = "One image minimum is required";
     }
     for (let image of values.images) {
-      if (!isValidBlobUrl(image.imageUrl)) {
+      if (
+        !(isValidBlobUrl(image.imageUrl) || image.imageUrl === DEFAULT_IMAGE)
+      ) {
         errors.images = "An image has an invalid url";
       }
     }

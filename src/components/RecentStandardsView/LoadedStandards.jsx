@@ -40,7 +40,8 @@ function LoadedStandards(props) {
           setCards(returnedCards);
         });
     }
-  }, [data, props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   useEffect(() => {
     if (!data && props.standardsData) {
