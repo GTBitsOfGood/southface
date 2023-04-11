@@ -75,7 +75,6 @@ const CardModal = ({
     onClose: onDeleteStandardClose,
   } = useDisclosure();
 
-
   const {
     isOpen: isTagDoesNotExistOpen,
     onOpen: onTagDoesNotExistOpen,

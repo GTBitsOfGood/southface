@@ -22,8 +22,6 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
-
-
   const handleRemove = async () => {
     await removeArchivedReport(report._id);
     setHasReportCard(false);
