@@ -4,7 +4,7 @@ import urls from "src/lib/utils/urls";
 import useSWRMutation from "swr/mutation";
 import { getCardsByIdsRequest } from "../../actions/Card";
 import useSelectionArray from "../../lib/hooks/useSelectionArray";
-import StandardCard from "../StandardCard";
+import StandardCardSmall from "../StandardCard/StandardCardSmall";
 
 function LoadedStandards(props) {
   const [cards, setCards] = useState([]);
@@ -61,20 +61,18 @@ function LoadedStandards(props) {
   const { selectionArray } = useSelectionArray(cards);
   return (
     <>
-      <HStack height="21rem">
+      <HStack maxH="200px" gap="10px">
         {props.standardsData ? (
           cards.map((card, index) => {
             {
               return (
-                <StandardCard
+                <StandardCardSmall
                   key={index}
                   card={card}
-                  height="3rem"
-                  minW="300px"
                   selState={selectionArray[index]}
                   cards={cards}
                   setCards={setCards}
-                ></StandardCard>
+                />
               );
             }
           })
