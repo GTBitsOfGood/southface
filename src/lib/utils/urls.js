@@ -10,6 +10,7 @@ export default {
     example: "/api/example",
     card: {
       create: "/api/card/create/",
+      insertMany: "/api/card/create/insertMany",
       get: "/api/card/get/",
       getIds: "/api/card/getIds/",
       getPagination: "/api/card/getPagination?page=",

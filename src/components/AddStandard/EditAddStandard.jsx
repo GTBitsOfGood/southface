@@ -11,6 +11,7 @@ import TextareaControl from "../FormComponents/TextareaControl";
 import Tag from "../Tag";
 import CreateTag from "./CreateTag";
 import ImageUpload from "./ImageUpload";
+import MassUpload from "./MassUpload";
 
 const ReviewAddButton = ({ handleSubmit }) => {
   const { hasValidationErrors, submitFailed } = useFormState({
@@ -37,6 +38,8 @@ const EditAddStandard = ({ handleSubmit }) => {
   return (
     <Box>
       <Box w="50%">
+        <MassUpload name="massUpload" />
+
         <FormLabel
           fontSize="xl"
           fontWeight="bold"
