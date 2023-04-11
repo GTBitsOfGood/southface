@@ -1,4 +1,6 @@
 import { Box, Button, Divider, Image, Text } from "@chakra-ui/react";
+import React from "react";
+import { DEFAULT_IMAGE } from "src/lib/utils/constants";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 
 const ShoppingCartItem = ({ card, selState }) => {
@@ -7,7 +9,6 @@ const ShoppingCartItem = ({ card, selState }) => {
   const removeHandler = () => {
     removeFromReport(card);
   };
-  console.log("Card: ", card);
   const selectedImages = card.images.filter(
     (_, index) => selState.imgSelections[index]
   );
@@ -21,7 +22,7 @@ const ShoppingCartItem = ({ card, selState }) => {
           <Box flex="1" paddingLeft="2.5">
             <Image
               src={selectedImages[0].imageUrl}
-              fallbackSrc="https://user-images.githubusercontent.com/69729390/214123449-126291c9-2cde-4773-90b7-a54a38336553.png"
+              fallbackSrc={DEFAULT_IMAGE}
               alt="Shopping Cart Image"
             />
           </Box>

@@ -52,6 +52,7 @@ const ImageControl = ({ img, idx, handleDeleteImage }) => {
         onClose={onDeleteClose}
         isOpen={isDeleteOpen}
         image={img}
+        imageUrl={imageUrl}
         index={idx}
         handleDeleteImage={handleDeleteImage}
       />

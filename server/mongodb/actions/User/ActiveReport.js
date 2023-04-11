@@ -15,7 +15,9 @@ export const getActiveReport = async (userId) => {
     if (user == null) {
       throw new Error();
     }
-    return removeNullCards(user.activeReport);
+    return user.activeReport
+      ? removeNullCards(user.activeReport)
+      : user.activeReport;
   } catch (e) {
     console.log(e);
   }

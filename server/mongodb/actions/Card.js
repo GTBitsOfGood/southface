@@ -23,7 +23,6 @@ export async function updateCardById(id, updatedCard) {
 
 export async function deleteCardById(id) {
   await mongoDB();
-
   return Card.findOneAndRemove({ _id: id });
 }
 

@@ -1,7 +1,7 @@
 import { AddIcon, CloseIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
+  // Button,
   Circle,
   Flex,
   Heading,
@@ -29,7 +29,7 @@ export default function ModalNotes({
   noteToggleHandler,
   editing,
   handleSaveEdit,
-  editHandler,
+  // editHandler,
   currentImage,
   cardId,
 }) {
@@ -161,11 +161,11 @@ export default function ModalNotes({
             );
           })}
         </Box>
-        {selState && (
+        {/* {selState && (
           <Button variant="Blue-rounded" p={1} onClick={editHandler}>
             {editing ? "Save Changes" : "Add notes To Report"}
           </Button>
-        )}
+        )} */}
       </VStack>
 
       {preview ? (

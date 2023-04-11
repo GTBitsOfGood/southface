@@ -16,10 +16,11 @@ import {
   Tag,
   Text,
   useDisclosure,
-  Wrap,
 } from "@chakra-ui/react";
+import urls from "lib/utils/urls";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-final-form";
+import useSWR from "swr";
 import useActiveReport from "../../../lib/hooks/useActiveReport";
 import useUser from "../../../lib/hooks/useUser";
 import ArrowIcon from "../../Carousel/ArrowIcon";
@@ -80,8 +81,17 @@ const CardModal = ({
     onClose: onDeleteImageClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isTagDoesNotExistOpen,
+    onOpen: onTagDoesNotExistOpen,
+    onClose: onTagDoesNotExistClose,
+  } = useDisclosure();
+
   const [editing, setEditing] = useState(false);
   const { user } = useUser();
+
+  const { data } = useSWR(urls.api.tag.getObject);
+  const dbTags = data?.payload[0];
 
   const [selectedImage, setSelectedImage] = useState(0);
 
@@ -178,6 +188,33 @@ const CardModal = ({
     setValue("images", newCardImages);
     setImagesToDelete((imagesToDelete) => [...imagesToDelete, image]);
     onDeleteImageClose();
+  };
+
+  const addNewTag = () => {
+    const existingTags = JSON.parse(JSON.stringify(form.values.tags))
+      ? JSON.parse(JSON.stringify(form.values.tags))
+      : [];
+    existingTags.push(form.values.newTag.trim());
+    setValue("newTag", "");
+    setValue("tags", existingTags);
+  };
+
+  const validateNewTag = () => {
+    if (form.values.tags.includes(form.values?.newTag)) {
+      setValue("newTag", "");
+      return;
+    }
+    if (form.values?.newTag?.trim().length > 0) {
+      const firstLetter = form.values.newTag.charAt(0).toLowerCase();
+      if (dbTags[firstLetter]) {
+        const foundTag = dbTags[firstLetter].find(
+          (obj) => obj.name === form.values.newTag
+        );
+        foundTag ? addNewTag() : onTagDoesNotExistOpen();
+      } else {
+        onTagDoesNotExistOpen();
+      }
+    }
   };
 
   const form = useFormState();
@@ -361,8 +398,9 @@ const CardModal = ({
               alignItems="end"
               width="full"
             >
-              <Flex flex={1} flexDirection="column" gap="1rem" width="full">
-                <Wrap overflowY="hidden" overflowX="hidden">
+              <Flex flex={1} width="50%" flexDirection="column" gap="1rem">
+
+                <Flex flexShrink={0} overflow="scroll" flexWrap={editing ? "wrap": "nowrap"}>
                   {form.values?.tags
                     ? form.values.tags.map((tag, index) => (
                         <Box key={index} position="relative">
@@ -370,9 +408,12 @@ const CardModal = ({
                             bgColor="#c4d600"
                             borderRadius="30px"
                             minWidth="fill"
+                            textTransform="capitalize"
                             mt={editing ? "0.6rem" : "0rem"}
                             fontSize="1rem"
                             px="1rem"
+                            whiteSpace="nowrap"
+                            mx="4px"
                           >
                             {tag}
                           </Tag>
@@ -380,7 +421,7 @@ const CardModal = ({
                             <Button
                               position="absolute"
                               top="0.2rem"
-                              right="-0.5rem"
+                              right="-0.10rem"
                               backgroundColor="#FFFFFF"
                               color="#6D6E70"
                               boxShadow="0 0 0.5rem #b3b3b3"
@@ -404,7 +445,7 @@ const CardModal = ({
                         </Box>
                       ))
                     : ""}
-                </Wrap>
+                </Flex>
                 {editing ? (
                   <Flex
                     border="solid 1px #B4B4B4B4"
@@ -423,16 +464,7 @@ const CardModal = ({
                       onKeyDown={(e) => {
                         if (e.code == "Enter") {
                           if (form.values.newTag?.length > 0) {
-                            const existingTags = JSON.parse(
-                              JSON.stringify(form.values.tags)
-                            )
-                              ? JSON.parse(JSON.stringify(form.values.tags))
-                              : [];
-                            if (form.values?.newTag?.trim().length > 0) {
-                              existingTags.push(form.values.newTag.trim());
-                              setValue("newTag", "");
-                              setValue("tags", existingTags);
-                            }
+                            validateNewTag();
                           }
                         }
                       }}
@@ -448,18 +480,7 @@ const CardModal = ({
                       size="xl"
                       border="solid 2px black"
                       _hover={{ bgColor: "#f0f0f0" }}
-                      onClick={() => {
-                        const existingTags = JSON.parse(
-                          JSON.stringify(form.values.tags)
-                        )
-                          ? JSON.parse(JSON.stringify(form.values.tags))
-                          : [];
-                        if (form.values?.newTag?.trim().length > 0) {
-                          existingTags.push(form.values.newTag.trim());
-                          setValue("newTag", "");
-                          setValue("tags", existingTags);
-                        }
-                      }}
+                      onClick={validateNewTag}
                     >
                       <ArrowUpIcon h={4} w={4} color="black" />
                     </Button>
@@ -554,6 +575,17 @@ const CardModal = ({
         confirmActionText="Yes, delete standard"
         abandonActionText="No, return to edit"
         colorScheme="red"
+      />
+      <ConfirmActionsModal
+        isOpen={isTagDoesNotExistOpen}
+        onClose={onTagDoesNotExistClose}
+        handleAction={() => {
+          addNewTag();
+          onTagDoesNotExistClose();
+        }}
+        subcontent={`"${form.values.newTag}" doesn't currently exist as a tag. Would you like to create it?`}
+        confirmActionText="Yes, create tag."
+        abandonActionText="No, return to edit."
       />
     </Modal>
   );

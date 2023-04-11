@@ -1,14 +1,17 @@
+import urls from "lib/utils/urls";
 import { useEffect, useState } from "react";
 import { Form } from "react-final-form";
+import useSWR, { useSWRConfig } from "swr";
 import {
   deleteCardById,
   revalidate,
   updateCardById,
 } from "../../../actions/Card";
+import { parseNestedPaths } from "src/lib/utils/utilFunctions";
 
+import { createTag } from "../../../actions/Tag";
 import cardEditValidator from "./cardEditValidator";
 import CardModal from "./CardModal";
-import { useRouter } from "next/router";
 
 const CardModalWithForm = ({
   card,
@@ -16,12 +19,16 @@ const CardModalWithForm = ({
   isOpenCardModal,
   onCloseCardModal,
   setCards,
+
   ...rest
 }) => {
-  const router = useRouter();
 
   // eslint-disable-next-line no-unused-vars
   const [imagesToDelete, setImagesToDelete] = useState([]);
+
+  const { data } = useSWR(urls.api.tag.getObject);
+  const dbTags = data?.payload[0];
+  const { mutate } = useSWRConfig();
 
   const editSubmit = async (values) => {
     const dirtyFields = Object.keys(values).filter((key) => {
@@ -37,6 +44,24 @@ const CardModalWithForm = ({
     //   await deleteFile(imagesToDelete[i]);
     // }
 
+    const newTagsToAdd = dirtyValues.tags?.filter((tag) => {
+      const firstLetter = tag.charAt(0).toLowerCase();
+      if (dbTags[firstLetter]) {
+        const foundTag = dbTags[firstLetter].find((obj) => obj.name === tag);
+        return !foundTag;
+      } else {
+        return true;
+      }
+    });
+
+    newTagsToAdd?.forEach((tag) => {
+      createTag(tag);
+    });
+
+    if (newTagsToAdd) {
+      mutate(urls.api.tag.getObject);
+    }
+
     let newCard = await updateCardById(card._id, dirtyValues);
 
     setCards((cards) => {
@@ -49,13 +74,27 @@ const CardModalWithForm = ({
       });
     });
 
+    mutate(urls.api.user.activeReport.get);
+
     // setImagesToDelete([]);
-    await revalidate(JSON.stringify([router.asPath]));
+    const revalidationPaths = JSON.stringify(
+      parseNestedPaths("library", newCard.buildingType, newCard.primaryCategory)
+    );
+
+    await revalidate(revalidationPaths);
   };
 
   const handleDeleteStandard = async () => {
-    await deleteCardById(card._id);
-    await revalidate(JSON.stringify([router.asPath]));
+    const deletedCard = await deleteCardById(card._id);
+
+    const revalidationPaths = JSON.stringify(
+      parseNestedPaths("library", deletedCard.buildingType, deletedCard.primaryCategory)
+    );
+
+    await revalidate(revalidationPaths);
+
+
+
     let newCards = [];
     for (let oldCardIndex in cards) {
       if (cards[oldCardIndex]._id !== card._id) {

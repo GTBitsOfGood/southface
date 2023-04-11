@@ -94,7 +94,7 @@ const AddStandardForm = () => {
     const revalidationPaths = JSON.stringify(
       parseNestedPaths("library", newCard.buildingType, newCard.primaryCategory)
     );
-    revalidate(revalidationPaths);
+    await revalidate(revalidationPaths);
 
     form.reset();
   };
