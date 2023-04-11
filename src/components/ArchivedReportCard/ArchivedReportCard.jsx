@@ -22,8 +22,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
-  // Date place holder
-  const date = new Date();
+
 
   const handleRemove = async () => {
     await removeArchivedReport(report._id);
@@ -46,7 +45,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
             <Box display="flex" justifyContent="space-between">
               <Box display="flex" alignItems="center">
                 <Heading size="xl" mr={6}>
-                  {report.name}
+                  {report.name || "Untitled Report"}
                 </Heading>
                 <PrintToPDFButton report={report} />
               </Box>
@@ -67,7 +66,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
             </Box>
             <Box textColor="gray">
               Completed on{" "}
-              {new Date(date).toLocaleDateString("en-US", {
+              {new Date(report.date).toLocaleDateString("en-US", {
                 month: "short",
                 day: "numeric",
                 year: "numeric",
