@@ -100,7 +100,6 @@ const ReportBuilder = () => {
       setRenaming(false);
     }
   };
-  
 
   const handleDiscardChanges = () => {
     if (renamedData == "" || report.name == "") {
@@ -111,15 +110,16 @@ const ReportBuilder = () => {
     setRenaming(false);
   };
 
-  if (isLoadingState) return (
-    <Spinner
-      size="xl"
-      position="fixed"
-      top="50%"
-      left="50%"
-      transform="translate(-50%, -50%)"
-    />
-  );
+  if (isLoadingState)
+    return (
+      <Spinner
+        size="xl"
+        position="fixed"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+      />
+    );
 
   return (
     <>
@@ -157,109 +157,109 @@ const ReportBuilder = () => {
             </Link>
           </VStack>
         ) : (
-        <VStack
-          flex={2}
-          as={Card}
-          alignItems="flex-start"
-          p={6}
-          spacing={5}
-          divider={<StackDivider color="gray.300" />}
-          rounded={16}
-          border="1px solid"
-          borderColor="gray.300"
-        >
-          <CardBody m={-3} w="100%">
-            <Flex
-              mb={3}
-              width="100%"
-              flexFlow="row nowrap"
-              justifyContent="space-between"
-              gap={2}
-            >
-              <Flex gap={2}>
-                <Heading
-                  contentEditable={renaming}
-                  suppressContentEditableWarning
-                  ref={renameEditableRef}
-                  onInput={(e) => {
-                    setRenamedData(e.currentTarget.textContent);
-                  }}
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") e.preventDefault();
-                  }}
-                >
-                  {nameField || "Untitled Report"}
-                </Heading>
-                {renaming ? (
-                  <Flex gap={2}>
-                    <Button
-                      minW="9rem"
-                      variant="Grey-outlined-rounded"
-                      onClick={handleDiscardChanges}
-                    >
-                      Discard Changes
-                    </Button>
-                    <Button
-                      minW="9rem"
-                      variant="Grey-rounded"
-                      onClick={handleSaveChanges}
-                      isDisabled={
-                        !renamedData || renamedData.trim().length == 0
-                      }
-                    >
-                      Save Changes
-                    </Button>
-                  </Flex>
-                ) : (
-                  <Button
-                    minW="6rem"
-                    variant="Grey-outlined-rounded"
-                    onClick={() => {
-                      setRenaming(true);
-                      renameEditableRef.current.focus();
+          <VStack
+            flex={2}
+            as={Card}
+            alignItems="flex-start"
+            p={6}
+            spacing={5}
+            divider={<StackDivider color="gray.300" />}
+            rounded={16}
+            border="1px solid"
+            borderColor="gray.300"
+          >
+            <CardBody m={-3} w="100%">
+              <Flex
+                mb={3}
+                width="100%"
+                flexFlow="row nowrap"
+                justifyContent="space-between"
+                gap={2}
+              >
+                <Flex gap={2}>
+                  <Heading
+                    contentEditable={renaming}
+                    suppressContentEditableWarning
+                    ref={renameEditableRef}
+                    onInput={(e) => {
+                      setRenamedData(e.currentTarget.textContent);
+                    }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") e.preventDefault();
                     }}
                   >
-                    Rename
-                  </Button>
-                )}
-              </Flex>
+                    {nameField || "Untitled Report"}
+                  </Heading>
+                  {renaming ? (
+                    <Flex gap={2}>
+                      <Button
+                        minW="9rem"
+                        variant="Grey-outlined-rounded"
+                        onClick={handleDiscardChanges}
+                      >
+                        Discard Changes
+                      </Button>
+                      <Button
+                        minW="9rem"
+                        variant="Grey-rounded"
+                        onClick={handleSaveChanges}
+                        isDisabled={
+                          !renamedData || renamedData.trim().length == 0
+                        }
+                      >
+                        Save Changes
+                      </Button>
+                    </Flex>
+                  ) : (
+                    <Button
+                      minW="6rem"
+                      variant="Grey-outlined-rounded"
+                      onClick={() => {
+                        setRenaming(true);
+                        renameEditableRef.current.focus();
+                      }}
+                    >
+                      Rename
+                    </Button>
+                  )}
+                </Flex>
 
-              <Button
-                minW="20%"
-                position="absolute"
-                right="12"
-                variant="Blue-rounded"
-                onClick={onOpen}
-                isDisabled={report?.cards?.length == 0}
-              >
-                Complete Report
-              </Button>
-              <ConfirmActionModal
-                isOpen={isOpen}
-                onClose={onClose}
-                mainText="Would you like to save this report to Completed Reports"
-                confirmButtonText="Yes, complete and save report"
-                cancelButtonText="No, complete without saving report"
-                handleAction={handleCompleteReport}
-                handleCancelAction={() =>
-                  handleCompleteReport({ noSave: true })
-                }
-                isDanger={false}
-                size="2xl"
-              />
-            </Flex>
-            <PrintToPDFButton report={report} />
-          </CardBody>
-          {sels.map((cardWrapper, index) => (
-            <CardBody pl={3} py={0} key={index}>
-              <ReportStandard
-                card={cardWrapper.card}
-                selState={cardWrapper}
-                useGlobalEditing={useGlobalEditing}
-              />
+                <Button
+                  minW="20%"
+                  position="absolute"
+                  right="12"
+                  variant="Blue-rounded"
+                  onClick={onOpen}
+                  isDisabled={report?.cards?.length == 0}
+                >
+                  Complete Report
+                </Button>
+                <ConfirmActionModal
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  mainText="Would you like to save this report to Completed Reports"
+                  confirmButtonText="Yes, complete and save report"
+                  cancelButtonText="No, complete without saving report"
+                  handleAction={handleCompleteReport}
+                  handleCancelAction={() =>
+                    handleCompleteReport({ noSave: true })
+                  }
+                  isDanger={false}
+                  size="2xl"
+                />
+              </Flex>
+              <PrintToPDFButton report={report} />
             </CardBody>
-          ))}
-        </VStack>
+            {sels.map((cardWrapper, index) => (
+              <CardBody pl={3} py={0} key={index}>
+                <ReportStandard
+                  card={cardWrapper.card}
+                  selState={cardWrapper}
+                  useGlobalEditing={useGlobalEditing}
+                />
+              </CardBody>
+            ))}
+          </VStack>
         )}
         <VStack w="25%" alignItems="end">
           {user?.isLoggedIn && user?.archivedReports.length > 0 && (
