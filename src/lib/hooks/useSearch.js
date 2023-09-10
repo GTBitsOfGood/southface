@@ -61,9 +61,13 @@ export default function useSearch({ setNumPages, setCurrentPage, setCards }) {
         searchFilter
       );
 
+      const sortedCards = cards.slice().sort((card1, card2) => {
+        return card1.title.localeCompare(card2.title);
+      });
+
       calculateNumPagesToDisplay(cardsCount);
       setCurrentPage(pageNumber);
-      setCards(cards);
+      setCards(sortedCards);
 
       // shows toast on primary category page if search result not found
       if (cards.length === 0 && primaryCategory == undefined) {
