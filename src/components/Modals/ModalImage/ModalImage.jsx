@@ -7,6 +7,8 @@ import ConfirmActionModal from "../CardModal/ConfirmActionModal";
 const ModalImage = ({
   image,
   index = 0,
+  imageCount,
+  move,
   openImagePreviewCallback,
   editing,
   handleDeleteImage,
@@ -32,6 +34,34 @@ const ModalImage = ({
             objectFit="cover"
             alt={"card image"}
           />
+          {editing ? (
+            <Box display="flex" position="absolute" bottom="0" left="0">
+              <Button
+                textAlign="center"
+                bg="blackAlpha.400"
+                backdropFilter="auto"
+                backdropBlur="1px"
+                fontWeight="bold"
+                onClick={() => move(-1)}
+                isDisabled={index === 0}
+              >
+                {"<"}
+              </Button>
+              <Button
+                textAlign="center"
+                bg="blackAlpha.400"
+                backdropFilter="auto"
+                backdropBlur="1px"
+                fontWeight="bold"
+                onClick={() => move(1)}
+                isDisabled={index === imageCount - 1}
+              >
+                {">"}
+              </Button>
+            </Box>
+          ) : (
+            <></>
+          )}
         </Box>
         {editing ? (
           <Button
