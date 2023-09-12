@@ -210,6 +210,17 @@ const CardModal = ({
     }
   };
 
+  const moveImage = (index, direction) => {
+    const newImages = [...form.values.images];
+    const thisImg = newImages[index];
+    const swapImg = newImages[index + direction];
+
+    newImages[index] = swapImg;
+    newImages[index + direction] = thisImg;
+
+    setValue("images", newImages);
+  };
+
   const form = useFormState();
 
   let discardChangesAndExit = () => {
@@ -355,6 +366,8 @@ const CardModal = ({
                           }
                           cursor={editingReport ? "pointer" : "default"}
                           image={image}
+                          move={(direction) => moveImage(index, direction)}
+                          imageCount={form.values.images.length}
                           openImagePreviewCallback={openImagePreviewCallback}
                           showEnlarge={!editingReport}
                           setCurrentImage={setSelectedImage}
