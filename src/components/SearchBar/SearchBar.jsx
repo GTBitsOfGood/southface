@@ -196,6 +196,15 @@ const SearchBar = (props) => {
     });
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" || event.key === "Return") {
+      props.handleSearch({
+        searchString: searchInput,
+        tags: event.tagArray || [],
+      });
+    }
+  };
+
   return (
     <Form
       onSubmit={handleSearchButtonClick}
@@ -208,6 +217,7 @@ const SearchBar = (props) => {
       {({ handleSubmit }) => (
         <SearchBarComponent
           handleSubmit={handleSubmit}
+          onKeyDown={handleKeyPress}
           isClickedSearch={isClickedSearch}
           searchInput={searchInput}
           setSearchInput={setSearchInput}
