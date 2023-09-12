@@ -26,8 +26,11 @@ import {
 
 const LibraryCategoryPage = (props) => {
   const cardsFromDatabase = props.cardsFromDatabase;
+  const sortedCards = cardsFromDatabase.slice().sort((card1, card2) => {
+    return card1.title.localeCompare(card2.title);
+  });
   const numPagesInitial = props.numPages;
-  const [cards, setCards] = useState(cardsFromDatabase);
+  const [cards, setCards] = useState(sortedCards);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(numPagesInitial);

@@ -29,12 +29,14 @@ const Notes = ({ cardId, notes, ...rest }) => {
       notes: newNotes.map((n) => n).reverse(),
     });
 
-    
-
     updateCard(updatedCard);
 
     const revalidationPaths = JSON.stringify(
-      parseNestedPaths("library", updatedCard.buildingType, updatedCard.primaryCategory)
+      parseNestedPaths(
+        "library",
+        updatedCard.buildingType,
+        updatedCard.primaryCategory
+      )
     );
 
     await revalidate(revalidationPaths);
