@@ -420,7 +420,7 @@ const CardModal = ({
               <Flex flex={1} width="50%" flexDirection="column" gap="1rem">
                 <Flex
                   flexShrink={0}
-                  overflow="hidden"
+                  overflow="scroll"
                   flexWrap={editing ? "wrap" : "nowrap"}
                 >
                   {form.values?.tags
