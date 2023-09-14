@@ -3,6 +3,9 @@ import { DEFAULT_IMAGE } from "src/lib/utils/constants";
 
 const cardEditValidator = (values) => {
   const errors = {};
+  if (!values.title || values.title.length == 0) {
+    errors.title = "Title cannot be blank";
+  }
   if (!values.criteria || values.criteria.length == 0) {
     errors.criteria = "Criteria cannot be blank";
   }
