@@ -258,8 +258,12 @@ const CardModal = ({
       <ModalContent rounded={14}>
         <ModalCloseButton right={2} top={0} m={4} />
         <ModalHeader mt={10} mx={6}>
-          <Flex justifyContent="space-between">
-            <Heading mb={2}>{card.title}</Heading>
+          <Flex justifyContent="space-between" align="center" gap={4}>
+            {editing ? (
+              <InputControl name="title" size="lg"></InputControl>
+            ) : (
+              <Heading mb={2}>{card.title}</Heading>
+            )}
             {user?.isAdmin ? (
               !editing ? (
                 <Button
