@@ -37,12 +37,14 @@ cd southface
 3. Install docker and docker-compose
 
 MacOS: [Docker Desktop for MacOS](https://docs.docker.com/desktop/install/mac-install/)
+
 Windows: [Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/)
+
 Linux: [Docker Desktop for Linux](https://docs.docker.com/desktop/install/linux-install/)
 
 4. Obtain your secrets -- Linux or MacOS (Skip if Windows); you will need to obtain a password from your Engineering Manager:
 
-First, install BitWarden CLI and FX with npm
+First, install BitWarden CLI and fx with npm
 
 ```
 npm install -g @bitwarden/cli fx
@@ -62,7 +64,7 @@ yarn secrets:linux
 
 4. Obtain your secrets -- Windows Machines (Skip if MacOS or Linux); you will need to obtain a password from your Engineering Manager:
 
-First, install BitWarden CLI and FX with npm
+First, install BitWarden CLI and fx with npm
 
 ```
 npm install -g @bitwarden/cli fx
@@ -76,15 +78,15 @@ yarn secrets:windows
 
 Contact your EM for the Bitwarden password. **NEVER EVER** commit `.env.local` to your version control system.
 
-5. Run the dev enviromnent, build, etc.
+5. Run the app
 
-To run the dev environment, run the default command.
+To run the dev environment, run the default docker-compose command
 
 ```
 docker-compose up --build
 ```
 
-To run build or any other script specified in the package.json, provide the YARN_COMMAND environment variable before the command.
+To run build or any other script specified in the package.json, provide the YARN_COMMAND environment variable before docker-compose
 
 ```
 YARN_COMMAND=build docker-compose up --build
