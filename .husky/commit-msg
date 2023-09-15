@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx --no -- commitlint --edit "$1"
+COMMIT_MSG=$1 YARN_COMMAND=commitlint docker-compose up --build earthcraft

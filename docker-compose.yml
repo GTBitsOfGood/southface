@@ -6,6 +6,7 @@ services:
       context: .
     environment:
       - YARN_COMMAND=${YARN_COMMAND:-dev}
+      - COMMIT_MSG=${COMMIT_MSG:-""}
     ports:
       - "3000:3000"
     env_file:
