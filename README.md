@@ -34,7 +34,7 @@ cd southface
 
 ## Running with Docker (recommended):
 
-3. Install docker and docker-compose
+3. Install **docker** and **docker-compose**
 
 MacOS: [Docker Desktop for MacOS](https://docs.docker.com/desktop/install/mac-install/)
 
@@ -42,9 +42,9 @@ Windows: [Docker Desktop for Windows](https://docs.docker.com/desktop/install/wi
 
 Linux: [Docker Desktop for Linux](https://docs.docker.com/desktop/install/linux-install/)
 
-4. Obtain your secrets -- Linux or MacOS (Skip if Windows); you will need to obtain a password from your Engineering Manager:
+4. Obtain your secrets -- **Linux or MacOS** (Skip if Windows); you will need to obtain a password from your Engineering Manager:
 
-First, install BitWarden CLI and fx with npm
+First, install **BitWarden CLI** and **fx** with npm
 
 ```
 npm install -g @bitwarden/cli fx
@@ -62,9 +62,9 @@ Now fetch the secrets from BitWarden
 yarn secrets:linux
 ```
 
-4. Obtain your secrets -- Windows Machines (Skip if MacOS or Linux); you will need to obtain a password from your Engineering Manager:
+4. Obtain your secrets -- **Windows Machines** (Skip if MacOS or Linux); you will need to obtain a password from your Engineering Manager:
 
-First, install BitWarden CLI and fx with npm
+First, install **BitWarden CLI** and **fx** with npm
 
 ```
 npm install -g @bitwarden/cli fx
@@ -118,9 +118,9 @@ nvm install 16 && nvm use 16
 yarn
 ```
 
-4. Obtain your secrets -- Linux or MacOS (Skip if Windows); you will need to obtain a password from your Engineering Manager:
+4. Obtain your secrets -- **Linux** or **MacOS** (Skip if Windows); you will need to obtain a password from your Engineering Manager:
 
-First, install BitWarden CLI with npm
+First, install **BitWarden CLI** with npm
 
 ```
 npm install -g @bitwarden/cli
@@ -138,7 +138,7 @@ Now fetch the secrets from BitWarden
 yarn secrets:linux
 ```
 
-4. Obtain your secrets -- Windows Machines (Skip if MacOS or Linux); you will need to obtain a password from your Engineering Manager:
+4. Obtain your secrets -- **Windows Machines** (Skip if MacOS or Linux); you will need to obtain a password from your Engineering Manager:
 
 First, install BitWarden CLI with npm
 
