@@ -238,7 +238,11 @@ const CardModal = ({
       <ModalContent rounded={14}>
         <ModalCloseButton right={2} top={0} m={4} />
         <ModalHeader mt={10} mx={6}>
-          <Flex justifyContent="space-between" align="center" gap={4}>
+          <Flex
+            justifyContent="space-between"
+            align={editing ? "center" : "start"}
+            gap={4}
+          >
             {editing ? (
               <InputControl name="title" size="lg"></InputControl>
             ) : (
