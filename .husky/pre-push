@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn build
+YARN_COMMAND=build docker-compose up --build earthcraft
