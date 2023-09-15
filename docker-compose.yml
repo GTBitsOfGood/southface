@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  earthcraft:
+    build:
+      context: .
+    environment:
+      - YARN_COMMAND=${YARN_COMMAND:-dev}
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
