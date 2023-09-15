@@ -1,4 +1,4 @@
-import { AddIcon, ArrowUpIcon, CloseIcon } from "@chakra-ui/icons";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -86,6 +86,9 @@ const CardModal = ({
 
   const { data } = useSWR(urls.api.tag.getObject);
   const dbTags = data?.payload[0];
+  const tagsList = useSWR(urls.api.tag.getTags).data?.payload;
+  const [autocompleteTags, setAutocompleteTags] = useState([]);
+  const [editingTags, setEditingTags] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(0);
 
@@ -190,6 +193,12 @@ const CardModal = ({
     existingTags.push(form.values.newTag.trim());
     setValue("newTag", "");
     setValue("tags", existingTags);
+    setEditingTags(false);
+  };
+
+  const selectAutocompleteTag = (name) => {
+    form.values.newTag = name;
+    validateNewTag();
   };
 
   const validateNewTag = () => {
@@ -416,9 +425,13 @@ const CardModal = ({
                 >
                   {form.values?.tags
                     ? form.values.tags.map((tag, index) => (
-                        <Box key={index} position="relative">
+                        <Box
+                          key={index}
+                          position="relative"
+                          marginRight="0.5rem"
+                        >
                           <Tag
-                            bgColor="#c4d600"
+                            bgColor="#E2E3E5"
                             borderRadius="30px"
                             minWidth="fill"
                             textTransform="capitalize"
@@ -427,21 +440,21 @@ const CardModal = ({
                             px="1rem"
                             whiteSpace="nowrap"
                             mx="4px"
+                            color="#515254"
                           >
                             {tag}
                           </Tag>
                           {editing ? (
                             <Button
                               position="absolute"
-                              top="0.2rem"
-                              right="-0.10rem"
-                              backgroundColor="#FFFFFF"
-                              color="#6D6E70"
-                              boxShadow="0 0 0.5rem #b3b3b3"
-                              size="xl"
-                              height="max"
+                              mt="0.6rem"
+                              right="-0.3rem"
+                              borderLeftRadius="none"
+                              backgroundColor="#E2E3E5"
+                              color="none"
+                              size="xs"
                               rounded="full"
-                              p="0.3rem"
+                              _hover={{ bg: "#E2E3E5" }}
                               onClick={() => {
                                 const existingTags = JSON.parse(
                                   JSON.stringify(form.values.tags)
@@ -450,7 +463,7 @@ const CardModal = ({
                                 setValue("tags", existingTags);
                               }}
                             >
-                              <CloseIcon h={1.5} w={1.5} />
+                              <CloseIcon h={1.5} w={1.5} color="#515254" />
                             </Button>
                           ) : (
                             <></>
@@ -458,45 +471,118 @@ const CardModal = ({
                         </Box>
                       ))
                     : ""}
+                  {editing && !editingTags && (
+                    <Box position="relative" marginRight="0.5rem">
+                      <Button
+                        bgColor="#E2E3E5"
+                        borderRadius="30px"
+                        minWidth="fill"
+                        textTransform="capitalize"
+                        mt="0.6rem"
+                        fontSize="1rem"
+                        px="1rem"
+                        whiteSpace="nowrap"
+                        mx="4px"
+                        size="xs"
+                        color="#515254"
+                        _hover={{ bg: "#515254", color: "#E2E3E5" }}
+                        onClick={() => setEditingTags(true)}
+                      >
+                        + Add
+                      </Button>
+                    </Box>
+                  )}
                 </Flex>
-                {editing ? (
+                {editing && editingTags ? (
                   <Flex
                     border="solid 1px #B4B4B4B4"
                     rounded="xl"
                     alignItems="center"
                     width="sm"
+                    direction="column"
                   >
-                    <InputControl
-                      name="newTag"
-                      type="text"
-                      rounded="2xl"
-                      border="none"
-                      focusBorderColor="transparent"
-                      placeholder="Add a Tag"
-                      width="full"
-                      onKeyDown={(e) => {
-                        if (e.code == "Enter") {
-                          if (form.values.newTag?.length > 0) {
-                            validateNewTag();
+                    <Box width="100%" display="inline-flex">
+                      <InputControl
+                        name="newTag"
+                        type="text"
+                        rounded="2xl"
+                        border="none"
+                        focusBorderColor="transparent"
+                        placeholder="Add a Tag"
+                        width="full"
+                        onKeyUp={(e) => {
+                          setAutocompleteTags(
+                            tagsList.filter(
+                              (tag) => tag.name.indexOf(form.values.newTag) == 0
+                            )
+                          );
+                          if (e.code == "Enter") {
+                            if (form.values.newTag?.length > 0) {
+                              validateNewTag();
+                            }
                           }
-                        }
-                      }}
-                    />
-                    <Button
-                      bgColor="transparent"
-                      rounded="full"
-                      width="max"
-                      height="max"
-                      p="0.2rem"
-                      mr="1rem"
-                      my="0.8rem"
-                      size="xl"
-                      border="solid 2px black"
-                      _hover={{ bgColor: "#f0f0f0" }}
-                      onClick={validateNewTag}
-                    >
-                      <ArrowUpIcon h={4} w={4} color="black" />
-                    </Button>
+                        }}
+                      />
+                      <Button
+                        mt="0.6rem"
+                        backgroundColor="transparent"
+                        color="none"
+                        size="xs"
+                        rounded="full"
+                        _hover={{ bg: "#E2E3E5" }}
+                        marginRight="0.5rem"
+                        onClick={() => setEditingTags(false)}
+                      >
+                        <CloseIcon h={1.5} w={1.5} color="#515254" />
+                      </Button>
+                    </Box>
+                    {form.values.newTag &&
+                    !tagsList
+                      .map((tag) => tag.name)
+                      .includes(form.values.newTag) ? (
+                      <Button
+                        width="full"
+                        backgroundColor="transparent"
+                        color="#515254"
+                        justifyContent="left"
+                        textTransform="none"
+                        rounded="none"
+                        borderTop="1px solid #B4B4B4B4"
+                        size="md"
+                        _hover={{ bg: "#E2E3E5" }}
+                        onClick={validateNewTag}
+                      >
+                        <b>
+                          <i>
+                            Add &quot;{form.values.newTag}&quot; as a new tag
+                          </i>
+                        </b>
+                      </Button>
+                    ) : (
+                      <></>
+                    )}
+                    {form.values.newTag &&
+                      autocompleteTags.map((tag, i) => {
+                        return (
+                          <Button
+                            key={i}
+                            width="full"
+                            backgroundColor="transparent"
+                            color="#515254"
+                            justifyContent="left"
+                            rounded="none"
+                            borderTop="1px solid #B4B4B4B4"
+                            borderBottomRadius={
+                              i == autocompleteTags.length - 1 ? "xl" : "none"
+                            }
+                            size="md"
+                            _hover={{ bg: "#E2E3E5" }}
+                            onClick={() => selectAutocompleteTag(tag.name)}
+                          >
+                            {tag.name}
+                          </Button>
+                        );
+                      })}
                   </Flex>
                 ) : (
                   <></>
