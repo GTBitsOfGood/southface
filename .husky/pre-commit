@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-YARN_COMMAND=lint:fix docker-compose up --build earthcraft
-YARN_COMMAND=prettier docker-compose up --build earthcraft
+YARN_COMMAND=lint:fix docker-compose up --build --exit-code-from earthcraft earthcraft
+YARN_COMMAND=prettier docker-compose up --build --exit-code-from earthcraft earthcraft
