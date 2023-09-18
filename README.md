@@ -7,6 +7,7 @@ Make sure you have gone through this walkthrough and all the links down below:
 - [Code Tour](/CODETOUR.md)
 - [Engineering Onboarding Guide](https://gtbitsofgood.notion.site/Engineering-Onboarding-Guide-a22683c9388a4b9fb03de442f6664aae)
 - [Figma/Design](https://www.figma.com/file/YTJqtLkjyxYdS3UkfR9dza/Southface-%2F-Fall22?node-id=0%3A1&t=HjMuBBxgKAeaLCzm-1)
+- [Netlify Production Build](https://southface.netlify.app)
 
 ## Stack
 
