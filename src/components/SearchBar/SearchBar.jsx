@@ -34,6 +34,7 @@ const SearchBarComponent = (props) => {
     setSearchInput,
     tagToClear,
     setTagToClear,
+    pageType,
     ...rest
   } = props;
 
@@ -41,6 +42,7 @@ const SearchBarComponent = (props) => {
   const { mutators } = useForm();
 
   const { isOpen, onToggle } = useDisclosure();
+  const searchPlaceholder = "Search within " + pageType;
 
   useEffect(() => {
     if (resetSearch) {
@@ -100,7 +102,11 @@ const SearchBarComponent = (props) => {
           <Input
             value={searchInput}
             onChange={handleSearchInputChange}
-            placeholder="Search Cards"
+            placeholder={searchPlaceholder}
+            fontFamily="Europa-Regular"
+            fontWeight="400"
+            fontSize="16px"
+            width="25rem"
           />
         </InputGroup>
       </Box>
@@ -221,6 +227,7 @@ const SearchBar = (props) => {
           isClickedSearch={isClickedSearch}
           searchInput={searchInput}
           setSearchInput={setSearchInput}
+          pageType={props.pageType}
           {...props}
         />
       )}

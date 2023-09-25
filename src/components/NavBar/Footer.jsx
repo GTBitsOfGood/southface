@@ -5,7 +5,7 @@ const Footer = () => {
     <Flex
       borderTop="1px solid"
       borderColor="gray.300"
-      height="10vh"
+      height="5vh"
       width="100%"
       justifyContent="center"
       gap="10px"

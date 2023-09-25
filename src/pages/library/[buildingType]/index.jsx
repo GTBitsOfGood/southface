@@ -2,11 +2,12 @@ import {
   Box,
   Breadcrumb,
   BreadcrumbItem,
+  BreadcrumbLink,
   Flex,
   HStack,
   Text,
+  useTheme,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
@@ -19,6 +20,7 @@ import useSearch from "src/lib/hooks/useSearch";
 import { buildingTypeNames } from "src/lib/utils/constants";
 
 function CategoriesPage({ buildingType }) {
+  const theme = useTheme();
   const router = useRouter();
   const [cards, setCards] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -43,23 +45,36 @@ function CategoriesPage({ buildingType }) {
   console.log(cards);
 
   return (
-    <Flex padding="2rem" flexDirection="column">
+    <Flex padding="2rem" flexDirection="column" height="78vh">
       <HStack w="full" position="relative">
         <Breadcrumb
-          separator=">"
-          fontWeight="semibold"
+          separator="/"
           position="absolute"
           top={3}
+          style={{ fontSize: "16px" }}
         >
-          <BreadcrumbItem>
-            <Link href="/library">Digital Library</Link>
+          <BreadcrumbItem
+            style={{
+              color: theme.colors.lightGrey,
+              fontFamily: theme.fonts.heading,
+              fontWeight: theme.fonts.regular,
+            }}
+          >
+            <BreadcrumbLink href="/library">Digital Library</BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbItem>
+          <BreadcrumbItem
+            style={{
+              color: theme.colors.boldGrey,
+              fontFamily: theme.fonts.headingBold,
+              fontWeight: theme.fonts.bold,
+            }}
+          >
             <Text>{buildingType}</Text>
           </BreadcrumbItem>
         </Breadcrumb>
         <Box flex="1"></Box>
         <SearchBar
+          pageType={buildingType}
           handleSearch={handleSearch}
           resetSearch={resetSearch}
           tagToClear={tagToClear}
@@ -67,6 +82,14 @@ function CategoriesPage({ buildingType }) {
           setResetSearch={setResetSearch}
         />
       </HStack>
+      <Text
+        fontSize="32px"
+        fontFamily={theme.fonts.body}
+        margin="10px"
+        color={theme.colors.Grey}
+      >
+        {buildingType}
+      </Text>
       <CurrentSearchInfo
         handleSearch={handleSearch}
         searchString={searchString}
@@ -90,7 +113,7 @@ function CategoriesPage({ buildingType }) {
           />
         </>
       ) : (
-        <Flex flexWrap="wrap" gap="4rem" mt="2rem">
+        <Flex flexWrap="wrap" gap="4rem" mt="2rem" marginLeft="5rem">
           <CategoryCards routerQuery={router.query} />
         </Flex>
       )}

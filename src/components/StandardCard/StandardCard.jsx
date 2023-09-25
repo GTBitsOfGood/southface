@@ -116,7 +116,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
         height="100%"
         transition="0.1s ease-in-out"
       >
-        <Box height="50%" flexShrink={1}>
+        <Box height="35%" flexShrink={1}>
           <Image
             fit="cover"
             src={card.images[0].imageUrl}
@@ -126,17 +126,25 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
           />
         </Box>
 
-        <Flex height="50%" p={3} flexDirection="column" flexShrink={1} mx="2">
-          <Heading fontSize="100%" isTruncated flexShrink={1}>
+        <Flex height="60%" p={3} flexDirection="column" flexShrink={1} mx="2">
+          <Heading
+            isTruncated
+            flexShrink={1}
+            fontFamily="Roboto Slab"
+            fontSize="25px"
+            fontWeight="700"
+          >
             {card.title}
           </Heading>
 
           <Text
             fontSize="90%"
             lineHeight="1.2em"
-            maxHeight="4em"
-            noOfLines="3"
+            maxHeight="5em"
+            noOfLines="4"
             flexShrink={1}
+            textStyle="secondaryTextStandard"
+            paddingBottom="2rem"
           >
             {card.criteria}
           </Text>
@@ -146,6 +154,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             mb="0.5"
             display="flex"
             justifyContent="space-between"
+            height="5%"
             width="100%"
           >
             <Flex overflowY="auto" flexShrink={0} width="65%">
@@ -155,7 +164,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                     <Tag
                       key={index}
                       textTransform="capitalize"
-                      bgColor="#C4D600"
+                      bgColor="#E2E3E5"
                       rounded="14.7877px"
                       marginLeft={0.5}
                       minWidth="max-content"
