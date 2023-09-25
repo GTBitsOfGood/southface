@@ -111,6 +111,7 @@ const NavBar = () => {
     borderRadius: borderR + " " + borderR + " 0 0",
   };
 
+  console.log(currPage);
   return (
     <Flex boxShadow="base" py="2">
       <Image
@@ -130,7 +131,7 @@ const NavBar = () => {
           right: 0,
           bottom: 0,
           height: "2px",
-          background: "#00ACC8",
+          background: currPage == "/library" ? "#00ACC8" : "transparent",
         }}
         _hover={{
           _before: {
@@ -139,10 +140,45 @@ const NavBar = () => {
         }}
       />
       {user?.isLoggedIn && (
-        <NavLink name="Report Builder" href={urls.pages.reportbuilder} />
+        <NavLink
+          name="Report Builder"
+          href={urls.pages.reportbuilder}
+          _before={{
+            content: '""',
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: "2px",
+            background:
+              currPage == "/report-builder" ? "#00ACC8" : "transparent",
+          }}
+          _hover={{
+            _before: {
+              background: "#00ACC8",
+            },
+          }}
+        />
       )}
       {user?.isAdmin && (
-        <NavLink name="Add a New Standard" href={urls.pages.addstandard} />
+        <NavLink
+          name="Add a New Standard"
+          href={urls.pages.addstandard}
+          _before={{
+            content: '""',
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: "2px",
+            background: currPage == "/add-standard" ? "#00ACC8" : "transparent",
+          }}
+          _hover={{
+            _before: {
+              background: "#00ACC8",
+            },
+          }}
+        />
       )}
       <Box ml="auto" />{" "}
       {/*This is an empty div to right-align the last nav link */}
