@@ -72,13 +72,15 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   const selected = !selState ? false : true;
 
   // const imgArr = selected ?
-  const { addToReport } = useActiveReport();
+  const { addToReport, removeFromReport } = useActiveReport();
 
   const reportAddHandler = (e) => {
     setAddToReportButtonPressed(true);
     e.stopPropagation(); // stops modal from opening
     if (!selected) {
       addToReport(card);
+    } else {
+      removeFromReport(card);
     }
   };
 
@@ -93,7 +95,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
       w="35%"
       isDisabled={user?.isLoggedIn ? false : true}
     >
-      {!selected ? "Add To Report" : "Added to Report"}
+      {!selected ? "Add To Report" : "Del From Report"}
     </Button>
   );
 
