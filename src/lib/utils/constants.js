@@ -12,7 +12,7 @@ export const primaryCategoryNames = {
 
 export const buildingTypeNames = {
   commercial: "Commercial",
-  "multi-family": "Multifamily",
+  multifamily: "Multifamily",
   "single-family": "Single Family",
 };
 
