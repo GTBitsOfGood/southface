@@ -1,3 +1,6 @@
+/*
+Contains a script to create a new buildingType collection based on the constants we were using.
+*/
 const mongoose = require("mongoose");
 const BuildingType = require("../models/BuildingType");
 
@@ -48,7 +51,7 @@ async function connect() {
 }
 
 async function createBuildingTypes() {
-  const types = ["single-family", "multi-family", "commercial"]; // Update with all your building types
+  const types = ["single-family", "multifamily", "commercial"]; // Update with all your building types
   for (const type of types) {
     const buildingType = new BuildingType({ name: type });
     await buildingType.save();

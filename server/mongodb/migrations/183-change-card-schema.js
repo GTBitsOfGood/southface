@@ -1,3 +1,6 @@
+/*
+This file contains mostly procedures to revert changes made to the cards collection. No reason to run these scripts again.
+*/
 const { MongoClient, ObjectId } = require("mongodb");
 const fs = require("fs");
 const path = require("path");
