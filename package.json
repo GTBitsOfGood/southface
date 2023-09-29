@@ -61,7 +61,7 @@
     "framer-motion": "^6",
     "iron-session": "^6.0.5",
     "isomorphic-unfetch": "^3.1.0",
-    "mongodb": "^4.0.0",
+    "mongodb": "^6.1.0",
     "mongoose": "^6.1.6",
     "next": "^12.2.5",
     "next-images": "^1.8.1",
