@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
-import { primaryCategoryRoutes } from "../../../src/lib/utils/constants";
+import {
+  buildingTypeNames,
+  primaryCategoryRoutes,
+} from "../../../src/lib/utils/constants";
 
 const { Schema } = mongoose;
 
@@ -60,8 +63,9 @@ const CardSchema = new Schema({
   ],
   buildingType: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "BuildingType",
+      type: String,
+      required: true,
+      enum: Object.keys(buildingTypeNames),
     },
   ],
   primaryCategory: [

@@ -36,23 +36,21 @@ async function revertBuildingTypeUpdate2() {
     for (const card of cards) {
       const { buildingType, _id, ...otherFields } = card;
 
-      // Check if buildingType is null or an empty array
-      if (
-        !buildingType ||
-        buildingType.length === 0 ||
-        buildingType[0] == null
-      ) {
-        // Revert it to an empty array or your desired default value
-        const revertedBuildingType = ["multi-family"];
+      // Revert it to an empty array or your desired default value
+      const revertedBuildingTypes = buildingType.map((type) => {
+        if (type == "multi-family" || type == null) {
+          return "multifamily";
+        }
+        return type;
+      });
 
-        // Update the card's buildingType field
-        await cardsCollection.updateOne(
-          { _id: new ObjectId(_id) },
-          {
-            $set: { buildingType: revertedBuildingType, ...otherFields },
-          }
-        );
-      }
+      // Update the card's buildingType field
+      await cardsCollection.updateOne(
+        { _id: new ObjectId(_id) },
+        {
+          $set: { buildingType: revertedBuildingTypes, ...otherFields },
+        }
+      );
     }
 
     console.log("Building types reverted successfully!");
