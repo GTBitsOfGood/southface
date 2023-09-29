@@ -17,6 +17,6 @@ services:
   mongo:
     image: mongo:latest
     volumes:
-      - ./server/mongodb/backup:/backup
+      - ./server/mongodb/backup:/current
     ports:
       - "27017:27017"
