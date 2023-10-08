@@ -3,13 +3,13 @@ import { Flex, Image } from "@chakra-ui/react";
 const Footer = () => {
   return (
     <Flex
+      position="relative"
       borderTop="1px solid"
+      marginTop="10vh"
       borderColor="gray.300"
-      height="5vh"
       width="100%"
       justifyContent="center"
       gap="10px"
-      backgroundColor="white"
     >
       <Image
         src="/static/Southface.png"
