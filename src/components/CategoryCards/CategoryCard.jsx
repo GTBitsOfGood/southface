@@ -11,8 +11,8 @@ function CategoryCard(props) {
       <Flex
         direction="column"
         alignItems="center"
-        boxShadow="md"
-        rounded="md"
+        boxShadow="0px 5px 4px rgba(0, 0, 0, 0.2)"
+        rounded="xl"
         height="12rem"
         width="12rem"
         textAlign="center"
