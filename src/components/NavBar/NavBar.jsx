@@ -58,14 +58,14 @@ const NavBar = () => {
               <Text
                 fontWeight="400"
                 fontStyle="normal"
-                fontFamily="Europa-Regular"
+                fontFamily="'Europa-Regular', sans-serif"
                 fontColor="#6D6E70"
               >{`Logged in as `}</Text>
               <Text
                 fontWeight="600"
                 fontStyle="regular"
                 marginLeft={1}
-                fontFamily="Europa-Regular"
+                fontFamily="'Europa-Regular', sans-serif"
                 fontColor="#6D6E70"
               >
                 {user.username}

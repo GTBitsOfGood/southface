@@ -22,9 +22,8 @@ export const southfaceTheme = extendTheme({
   },
   fonts: {
     body: "Roboto Slab",
-    headingBold: "Europa-Bold",
-    heading: "Europa-Regular",
-
+    headingBold: `'Europa-Bold', sans-serif`,
+    heading: `'Europa-Regular', sans-serif`,
     regular: "400",
     bold: "700",
     heavyBold: "800",
@@ -66,12 +65,14 @@ export const southfaceTheme = extendTheme({
       color: "boldGrey",
       fontFamily: "headingBold",
       fontSize: "50px",
+      letterSpacing: "-2px",
     },
     secondaryText: {
       fontSize: "17px",
       fontWeight: "regular",
       fontFamily: "heading",
       color: "Grey",
+      lineHeight: "20px",
     },
 
     // StandardCard.jsx
@@ -94,14 +95,14 @@ export const southfaceTheme = extendTheme({
     name: {
       fontWeight: "400",
       fontStyle: "normal",
-      fontFamily: "Europa-Regular",
+      headingBold: `'Europa-Regular', sans-serif`,
       fontColor: "#6D6E70",
       fontSize: "16px",
     },
     nameBold: {
       fontWeight: "700",
       fontStyle: "normal",
-      fontFamily: "Europa-Bold",
+      headingBold: `'Europa-Bold', sans-serif`,
       fontColor: "#6D6E70",
       fontSize: "16px",
     },

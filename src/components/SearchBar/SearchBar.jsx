@@ -6,7 +6,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Form, useForm, useFormState } from "react-final-form";
@@ -16,7 +15,6 @@ const SearchBarComponent = (props) => {
     resetSearch,
     setResetSearch,
     handleSubmit,
-    isClickedSearch,
     searchInput,
     setSearchInput,
     tagToClear,
@@ -28,7 +26,6 @@ const SearchBarComponent = (props) => {
   const { values } = useFormState();
   const { mutators } = useForm();
 
-  const { isOpen, onToggle } = useDisclosure();
   const searchPlaceholder = "Search within " + pageType;
 
   useEffect(() => {
@@ -48,20 +45,10 @@ const SearchBarComponent = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tagToClear, setTagToClear]);
 
-  const handleApplyFiltersClick = (handleSubmit) => {
-    onToggle();
-    handleSubmit();
-  };
-
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
   };
 
-  const getNumTagsFiltered = (values) => {
-    return isClickedSearch && values.tagArray && values.tagArray.length > 0
-      ? `(${values.tagArray.length})`
-      : "";
-  };
   const SearchButton = ({ handleSubmit }) => {
     return (
       <Button
@@ -69,6 +56,7 @@ const SearchBarComponent = (props) => {
         color="black"
         size="lg"
         fontSize="18px"
+        fontFamily="'Europa-Regular', sans-serif"
         onClick={handleSubmit}
       >
         Search
@@ -91,6 +79,7 @@ const SearchBarComponent = (props) => {
               placeholder={searchPlaceholder}
               fontWeight="400"
               fontSize="16px"
+              fontFamily="'Europa-Regular', sans-serif"
               width="25rem"
               borderRadius="15px"
               border="2px solid lightGrey"
