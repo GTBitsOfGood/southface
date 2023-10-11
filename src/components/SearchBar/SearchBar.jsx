@@ -53,11 +53,14 @@ const SearchBarComponent = (props) => {
     return (
       <Button
         bg="lightgrey"
-        color="black"
+        color="Grey"
         size="lg"
-        fontSize="18px"
+        fontSize="15px"
+        fontWeight="bold"
         fontFamily="'Europa-Regular', sans-serif"
         onClick={handleSubmit}
+        paddingLeft="2rem"
+        paddingRight="2rem"
       >
         Search
       </Button>
