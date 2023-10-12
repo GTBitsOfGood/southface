@@ -9,24 +9,43 @@ import {
   Heading,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import PrintToPDFButton from "src/components/PrintToPDFButton";
+import useActiveReport from "src/lib/hooks/useActiveReport";
+import urls from "src/lib/utils/urls";
 import { removeArchivedReport } from "../../actions/User/ArchivedReport";
 import ConfirmActionModal from "../Modals/ConfirmActionModal";
-import defaultReportProps from "./defaultReportProps";
 import StandardCard from "./StandardCard";
-import { useRouter } from "next/router";
+import defaultReportProps from "./defaultReportProps";
 
 const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const [hasReportCard, setHasReportCard] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isOpenEdit, onOpen: onOpenEdit, onClose: onCloseEdit } = useDisclosure();
   const router = useRouter();
+  const { report: activeReport, updateReport } = useActiveReport();
 
   const handleRemove = async () => {
     await removeArchivedReport(report._id);
     setHasReportCard(false);
     router.reload();
   };
+
+  const handleEdit = () => {
+    const cards = []
+    const newReport = { ...report };
+    newReport.cards.forEach((card) => {
+      cards.push({
+        card: card,
+        imgSelections: Array(card.images.length).fill(true),
+        noteSelections: Array(card.notes.length).fill(true),
+      });
+    })
+    newReport.cards = cards;
+    updateReport(newReport);
+    router.push(urls.pages.reportbuilder);
+  }
 
   return (
     hasReportCard && (
@@ -48,6 +67,9 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                 <PrintToPDFButton report={report} />
               </Box>
               <Box>
+                <Button onClick={activeReport.cards?.length > 0 ? onOpenEdit : handleEdit} marginRight="0.5rem" borderRadius="full" variant="Blue-outlined">
+                  Edit Report
+                </Button>
                 <Button onClick={onOpen} variant="Red-rounded">
                   Remove from Reports
                 </Button>
@@ -59,6 +81,15 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                   cancelButtonText="No, cancel"
                   handleAction={handleRemove}
                   isDanger={false}
+                />
+                <ConfirmActionModal
+                  isOpen={isOpenEdit}
+                  onClose={onCloseEdit}
+                  mainText="You have a current report in progress. Are you sure you want to edit this report?"
+                  confirmButtonText="Yes, edit report"
+                  cancelButtonText="No, cancel"
+                  handleAction={handleEdit}
+                  isDanger={true}
                 />
               </Box>
             </Box>

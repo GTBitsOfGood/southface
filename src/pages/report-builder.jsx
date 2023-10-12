@@ -1,17 +1,17 @@
 import {
+  Box,
   Button,
   Card,
   CardBody,
   Flex,
-  Heading,
   HStack,
-  StackDivider,
-  useDisclosure,
-  VStack,
-  Box,
-  Text,
+  Heading,
   Link,
   Spinner,
+  StackDivider,
+  Text,
+  VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -19,7 +19,9 @@ import ArchivedReportView from "src/components/ArchivedReportView";
 import RecentStandardsView from "src/components/RecentStandardsView";
 import { ReportStandard } from "src/components/StandardCard";
 import useActiveReport from "src/lib/hooks/useActiveReport";
-import { addToArchivedReport } from "../actions/User/ArchivedReport";
+import urls from "src/lib/utils/urls";
+import useSWR from "swr";
+import { addToArchivedReport, removeArchivedReport } from "../actions/User/ArchivedReport";
 import ConfirmActionModal from "../components/Modals/ConfirmActionModal";
 import PrintToPDFButton from "../components/PrintToPDFButton";
 import useUser from "../lib/hooks/useUser";
@@ -41,6 +43,8 @@ const ReportBuilder = () => {
   const [isLoadingState, setIsLoadingState] = useState(true);
 
   const [sels, setSels] = useState([]);
+
+  const archivedReports = useSWR(urls.api.user.getArchivedReports).data?.payload.archivedReports;
 
   useEffect(() => {
     if (report && !isValidating) {
@@ -79,6 +83,9 @@ const ReportBuilder = () => {
     if (noSave) {
       await addToArchivedReport();
     } else {
+      if (archivedReports.map(report => report._id).includes(report._id)) {
+        await removeArchivedReport(report._id);
+      }
       await addToArchivedReport(report);
     }
 
