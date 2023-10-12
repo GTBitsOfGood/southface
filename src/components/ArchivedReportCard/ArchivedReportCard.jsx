@@ -22,7 +22,11 @@ import defaultReportProps from "./defaultReportProps";
 const ArchivedReportCard = ({ report = defaultReportProps }) => {
   const [hasReportCard, setHasReportCard] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: isOpenEdit, onOpen: onOpenEdit, onClose: onCloseEdit } = useDisclosure();
+  const {
+    isOpen: isOpenEdit,
+    onOpen: onOpenEdit,
+    onClose: onCloseEdit,
+  } = useDisclosure();
   const router = useRouter();
   const { report: activeReport, updateReport } = useActiveReport();
 
@@ -33,7 +37,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
   };
 
   const handleEdit = () => {
-    const cards = []
+    const cards = [];
     const newReport = { ...report };
     newReport.cards.forEach((card) => {
       cards.push({
@@ -41,11 +45,11 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
         imgSelections: Array(card.images.length).fill(true),
         noteSelections: Array(card.notes.length).fill(true),
       });
-    })
+    });
     newReport.cards = cards;
     updateReport(newReport);
     router.push(urls.pages.reportbuilder);
-  }
+  };
 
   return (
     hasReportCard && (
@@ -67,7 +71,14 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                 <PrintToPDFButton report={report} />
               </Box>
               <Box>
-                <Button onClick={activeReport.cards?.length > 0 ? onOpenEdit : handleEdit} marginRight="0.5rem" borderRadius="full" variant="Blue-outlined">
+                <Button
+                  onClick={
+                    activeReport.cards?.length > 0 ? onOpenEdit : handleEdit
+                  }
+                  marginRight="0.5rem"
+                  borderRadius="full"
+                  variant="Blue-outlined"
+                >
                   Edit Report
                 </Button>
                 <Button onClick={onOpen} variant="Red-rounded">

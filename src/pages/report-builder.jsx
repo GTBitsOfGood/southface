@@ -21,7 +21,10 @@ import { ReportStandard } from "src/components/StandardCard";
 import useActiveReport from "src/lib/hooks/useActiveReport";
 import urls from "src/lib/utils/urls";
 import useSWR from "swr";
-import { addToArchivedReport, removeArchivedReport } from "../actions/User/ArchivedReport";
+import {
+  addToArchivedReport,
+  removeArchivedReport,
+} from "../actions/User/ArchivedReport";
 import ConfirmActionModal from "../components/Modals/ConfirmActionModal";
 import PrintToPDFButton from "../components/PrintToPDFButton";
 import useUser from "../lib/hooks/useUser";
@@ -44,7 +47,8 @@ const ReportBuilder = () => {
 
   const [sels, setSels] = useState([]);
 
-  const archivedReports = useSWR(urls.api.user.getArchivedReports).data?.payload.archivedReports;
+  const archivedReports = useSWR(urls.api.user.getArchivedReports).data?.payload
+    .archivedReports;
 
   useEffect(() => {
     if (report && !isValidating) {
@@ -83,7 +87,7 @@ const ReportBuilder = () => {
     if (noSave) {
       await addToArchivedReport();
     } else {
-      if (archivedReports.map(report => report._id).includes(report._id)) {
+      if (archivedReports.map((report) => report._id).includes(report._id)) {
         await removeArchivedReport(report._id);
       }
       await addToArchivedReport(report);
