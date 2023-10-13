@@ -1,10 +1,10 @@
 import { Box, Button, Flex, FormLabel } from "@chakra-ui/react";
+import urls from "lib/utils/urls";
 import { useEffect } from "react";
 import { useFormState } from "react-final-form";
-import {
-  buildingTypeNames,
-  primaryCategoryNames,
-} from "../../lib/utils/constants";
+import useSWR from "swr";
+import { primaryCategoryNames } from "../../lib/utils/constants";
+import { capitalizeAndRemoveDash } from "../../lib/utils/utilFunctions";
 import InputControl from "../FormComponents/InputControl";
 import Multiselect from "../FormComponents/Multiselect";
 import TextareaControl from "../FormComponents/TextareaControl";
@@ -35,6 +35,10 @@ const EditAddStandard = ({ handleSubmit }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const { data } = useSWR(urls.api.buildingType.get);
+  const buildingTypeNames = data?.payload.map((buildingType) =>
+    capitalizeAndRemoveDash(buildingType.name)
+  );
   return (
     <Box>
       <Box w="50%">
@@ -57,11 +61,13 @@ const EditAddStandard = ({ handleSubmit }) => {
       <ImageUpload name="uploadImages" />
 
       <Box w="50%">
-        <Multiselect
-          name="buildingType"
-          label="Building Type"
-          entries={Object.values(buildingTypeNames)}
-        />
+        {buildingTypeNames && (
+          <Multiselect
+            name="buildingType"
+            label="Building Type"
+            entries={buildingTypeNames}
+          />
+        )}
 
         <Multiselect
           name="primaryCategory"
