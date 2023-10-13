@@ -1,5 +1,5 @@
 /*
-Contains a script to create a new buildingType collection based on the constants we were using.
+Contains a script to create a new buildingType collection based on the constants we were using. Note: This script does not work with runMigration.sh. 
 */
 const mongoose = require("mongoose");
 const BuildingType = require("../models/BuildingType");
