@@ -32,5 +32,5 @@ export async function getBuildingTypeById(id) {
 export async function getBuildingTypes() {
   await mongoDB();
 
-  return BuildingType.find().populate("cards");
+  return BuildingType.find({});
 }

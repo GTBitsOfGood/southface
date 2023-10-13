@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const BuildingTypeSchema = new Schema({
+  imageUrl: {
+    type: String,
+  },
   name: {
     type: String,
     required: true,
