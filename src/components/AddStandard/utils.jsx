@@ -1,9 +1,9 @@
 import { Button, Heading, Text } from "@chakra-ui/react";
 import { useForm } from "react-final-form";
 
-export const SubmitButton = ({ onOpen }) => (
+export const SubmitButton = ({ onOpen, label }) => (
   <Button variant="Blue" size="sm" fontSize="md" width="auto" onClick={onOpen}>
-    Add to Digital Library
+    {label ? label : "Add to Digital Library"}
   </Button>
 );
 

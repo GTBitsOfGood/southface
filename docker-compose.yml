@@ -16,5 +16,7 @@ services:
       - /usr/src/app/node_modules
   mongo:
     image: mongo:latest
+    volumes:
+      - ./server/mongodb/backup:/current
     ports:
       - "27017:27017"

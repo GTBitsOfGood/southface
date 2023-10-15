@@ -8,11 +8,11 @@ import React, { useState } from "react";
 import { Form } from "react-final-form";
 import { createCard, createManyCards, revalidate } from "../../actions/Card";
 import { uploadFile } from "../../lib/utils/blobStorage";
+import { primaryCategoryRoutes } from "../../lib/utils/constants";
 import {
-  buildingTypeNames,
-  primaryCategoryRoutes,
-} from "../../lib/utils/constants";
-import { parseNestedPaths } from "../../lib/utils/utilFunctions";
+  parseNestedPaths,
+  uncapitalizeAndAddDash,
+} from "../../lib/utils/utilFunctions";
 import EditAddStandard from "./EditAddStandard";
 import OpenStandardPopup from "./OpenStandardPopup";
 import ViewAddManyStandards from "./ViewAddManyStandards";
@@ -83,9 +83,7 @@ const AddStandardForm = () => {
     });
 
     const buildingTypeKeys = values.buildingType.map((val) =>
-      Object.keys(buildingTypeNames).find(
-        (key) => buildingTypeNames[key] === val
-      )
+      uncapitalizeAndAddDash(val)
     );
 
     const primaryCategoryKeys = values.primaryCategory.map((val) =>

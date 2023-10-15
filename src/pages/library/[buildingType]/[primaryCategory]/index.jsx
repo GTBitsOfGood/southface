@@ -9,16 +9,14 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState } from "react";
+import { getBuildingTypes } from "server/mongodb/actions/BuildingType";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import PaginationTab from "src/components/PaginationTab";
 import SearchBar from "src/components/SearchBar";
 import CurrentSearchInfo from "src/components/SearchBar/CurrentSearchInfo";
 import StandardCardTable from "src/components/StandardCardTable";
 import useSearch from "src/lib/hooks/useSearch";
-import {
-  buildingTypeNames,
-  primaryCategoryNames,
-} from "src/lib/utils/constants";
+import { primaryCategoryNames } from "src/lib/utils/constants";
 import {
   capitalizeAndRemoveDash,
   uncapitalizeAndAddDash,
@@ -155,7 +153,7 @@ export async function getStaticProps({ params }) {
       cardsFromDatabase: JSON.parse(JSON.stringify(cards)),
       numPages,
       pageNumber: pageNumber + 1,
-      buildingType: buildingTypeNames[params.buildingType],
+      buildingType: capitalizeAndRemoveDash(params.buildingType),
       primaryCategory: capitalizeAndRemoveDash(params.primaryCategory),
       params,
     },
@@ -163,7 +161,11 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const paths = Object.keys(buildingTypeNames)
+  const buildingTypes = await getBuildingTypes();
+  const buildingTypeNames = buildingTypes.map(
+    (buildingType) => buildingType.name
+  );
+  const paths = buildingTypeNames
     .map((buildingType) => {
       return Object.keys(primaryCategoryNames).map((primaryCategoryInitial) => {
         return {

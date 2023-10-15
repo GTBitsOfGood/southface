@@ -60,7 +60,7 @@ const ImageControl = ({ img, idx, handleDeleteImage }) => {
   );
 };
 
-const ImageUpload = ({ name }) => {
+const ImageUpload = ({ name, label }) => {
   const { input, meta } = useField(name, { subscription: { value: false } });
   const ref = useRef();
   const { values } = useFormState();
@@ -96,7 +96,7 @@ const ImageUpload = ({ name }) => {
             width="auto"
             onClick={() => ref.current.click()}
           >
-            Upload Images
+            {label ? label : "Upload Images"}
           </Button>
           <Error name={name} />
         </HStack>

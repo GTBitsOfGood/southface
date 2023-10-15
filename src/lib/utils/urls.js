@@ -8,6 +8,10 @@ export default {
   },
   api: {
     example: "/api/example",
+    buildingType: {
+      create: "/api/buildingType/create/",
+      get: "/api/buildingType/get/",
+    },
     card: {
       create: "/api/card/create/",
       insertMany: "/api/card/create/insertMany",
