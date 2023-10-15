@@ -31,17 +31,19 @@ const LibraryPage = () => {
         </Flex>
       </Flex>
       <Flex justifyContent="flex-end" position="relative" marginTop="2vh">
-        <Button
-          onClick={onOpen}
-          position="absolute" // position the button
-          bottom="5vh" // space from the bottom
-          right="5vw" // space from the right
-          variant="Blue-rounded"
-          size="lg"
-          isDisabled={user?.isAdmin ? false : true}
-        >
-          Create New Building Type
-        </Button>
+        {user?.isAdmin ? (
+          <Button
+            onClick={onOpen}
+            position="absolute" // position the button
+            bottom="5vh" // space from the bottom
+            right="5vw" // space from the right
+            variant="Blue-rounded"
+            size="lg"
+            isDisabled={user?.isAdmin ? false : true}
+          >
+            Create New Building Type
+          </Button>
+        ) : null}
       </Flex>
       <BuildingTypeModal
         isOpen={isOpen}
