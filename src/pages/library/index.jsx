@@ -1,5 +1,4 @@
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
-// import { getBuildingTypes } from "server/mongodb/actions/BuildingType";
 import BuildingTypeModal from "src/components/Modals/BuildingTypeModal";
 import useUser from "src/lib/hooks/useUser";
 import urls from "src/lib/utils/urls";
@@ -52,12 +51,4 @@ const LibraryPage = () => {
   );
 };
 
-// export async function getStaticProps() {
-//   const buildingTypes = await getBuildingTypes();
-//   return {
-//     props: {
-//       buildingTypes: JSON.parse(JSON.stringify(buildingTypes)),
-//     },
-//   };
-// }
 export default LibraryPage;
