@@ -9,6 +9,7 @@ export default {
   api: {
     example: "/api/example",
     buildingType: {
+      create: "/api/buildingType/create/",
       get: "/api/buildingType/get/",
     },
     card: {
