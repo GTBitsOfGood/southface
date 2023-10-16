@@ -13,7 +13,7 @@ function BuildingTypeCard(props) {
             height="250px"
             objectFit="contain"
           />
-          <Text fontWeight="bold">{props.title}</Text>
+          <Text fontFamily="Roboto Slab">{props.title}</Text>
         </Flex>
       </Link>
     </Flex>

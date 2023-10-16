@@ -6,6 +6,7 @@ import {
   Flex,
   HStack,
   Text,
+  useTheme,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState } from "react";
@@ -23,6 +24,7 @@ import {
 } from "src/lib/utils/utilFunctions";
 
 const LibraryCategoryPage = (props) => {
+  const theme = useTheme();
   const cardsFromDatabase = props.cardsFromDatabase;
   const sortedCards = cardsFromDatabase.slice().sort((card1, card2) => {
     return card1.title.localeCompare(card2.title);
@@ -51,20 +53,38 @@ const LibraryCategoryPage = (props) => {
     <Flex alignItems="stretch" flexDirection="column" p="2rem">
       <HStack w="full" position="relative">
         <Breadcrumb
-          separator=">"
+          separator="/"
           fontWeight="semibold"
           position="absolute"
           top={2}
         >
-          <BreadcrumbItem>
+          <BreadcrumbItem
+            style={{
+              color: theme.colors.lightGrey,
+              fontFamily: theme.fonts.heading,
+              fontWeight: theme.fonts.regular,
+            }}
+          >
             <Link href="/library">Digital Library</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem>
+          <BreadcrumbItem
+            style={{
+              color: theme.colors.lightGrey,
+              fontFamily: theme.fonts.heading,
+              fontWeight: theme.fonts.regular,
+            }}
+          >
             <Link href={`/library/${props.params.buildingType}`}>
               {props.buildingType}
             </Link>
           </BreadcrumbItem>
-          <BreadcrumbItem>
+          <BreadcrumbItem
+            style={{
+              color: theme.colors.boldGrey,
+              fontFamily: theme.fonts.headingBold,
+              fontWeight: theme.fonts.bold,
+            }}
+          >
             <Text>{props.primaryCategory}</Text>
           </BreadcrumbItem>
         </Breadcrumb>
@@ -72,6 +92,7 @@ const LibraryCategoryPage = (props) => {
         <Box flex="1"></Box>
 
         <SearchBar
+          pageType={props.primaryCategory}
           handleSearch={handleSearch}
           resetSearch={resetSearch}
           tagToClear={tagToClear}
@@ -79,6 +100,15 @@ const LibraryCategoryPage = (props) => {
           setResetSearch={setResetSearch}
         />
       </HStack>
+
+      <Text
+        fontSize="32px"
+        fontFamily={theme.fonts.body}
+        margin="10px"
+        color={theme.colors.Grey}
+      >
+        {props.primaryCategory}
+      </Text>
 
       <CurrentSearchInfo
         handleSearch={handleSearch}
