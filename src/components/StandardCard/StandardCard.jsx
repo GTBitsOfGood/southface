@@ -32,8 +32,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   );
   const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
     useState(false);
-  const [addToReportButtonPressed, setAddToReportButtonPressed] =
-    useState(false);
+  const [addToReportButtonPressed] = useState(false);
 
   useEffect(() => {
     if (
@@ -72,30 +71,19 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   const selected = !selState ? false : true;
 
   // const imgArr = selected ?
-  const { addToReport } = useActiveReport();
+  const { addToReport, removeFromReport } = useActiveReport();
 
   const reportAddHandler = (e) => {
-    setAddToReportButtonPressed(true);
+    // We don't need this anymore since we don't want to ever
+    // completely disable the button
+    //setAddToReportButtonPressed(true);
     e.stopPropagation(); // stops modal from opening
     if (!selected) {
       addToReport(card);
+    } else {
+      removeFromReport(card);
     }
   };
-
-  const ReportButton = ({ ...props }) => (
-    <Button
-      variant={selected ? "Grey" : "Blue-outlined"}
-      onClick={reportAddHandler}
-      flexGrow={0}
-      flexShrink={0}
-      whiteSpace="nowrap"
-      {...props}
-      w="35%"
-      isDisabled={user?.isLoggedIn ? false : true}
-    >
-      {!selected ? "Add To Report" : "Added to Report"}
-    </Button>
-  );
 
   return (
     <Box {...props}>
@@ -147,6 +135,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             display="flex"
             justifyContent="space-between"
             width="100%"
+            align="stretch"
           >
             <Flex overflowY="auto" flexShrink={0} width="65%">
               {card.tags.map((tag, index) => {
@@ -168,8 +157,18 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                 }
               })}
             </Flex>
-
-            <ReportButton />
+            <Button
+              variant={selected ? "Grey" : "Blue-outlined"}
+              onClick={reportAddHandler}
+              flexGrow={0}
+              flexShrink={0}
+              whiteSpace="nowrap"
+              // {...props}
+              w="35%"
+              isDisabled={user?.isLoggedIn ? false : true}
+            >
+              {!selected ? "Add To Report" : "Del From Report"}
+            </Button>
           </HStack>
 
           <CardModalWithForm
