@@ -65,7 +65,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   // editEnable,
   // useEffect on editEnable: make API call after deselecting
   const { selState } = { ...props };
-  const selected = !selState ? false : true;
+  let selected = !selState ? false : true;
   // const imgArr = selected ?
   const { addToReport, removeFromReport } = useActiveReport();
   const reportAddHandler = (e) => {
@@ -76,21 +76,6 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
       removeFromReport(card);
     }
   };
-
-  const ReportButton = ({ ...props }) => (
-    <Button
-      variant={selected ? "Grey" : "Blue-outlined"}
-      onClick={reportAddHandler}
-      flexGrow={0}
-      flexShrink={0}
-      {...props}
-      fontSize="3xs"
-      size="xs"
-      isDisabled={user?.isLoggedIn ? false : true}
-    >
-      {!selected ? "Add To Report" : "Del From Report"}
-    </Button>
-  );
 
   return (
     <Flex
@@ -162,7 +147,19 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             })}
           </Flex>
 
-          <ReportButton />
+          {/* <ReportButton /> */}
+          <Button
+            variant={selected ? "Grey" : "Blue-outlined"}
+            onClick={reportAddHandler}
+            flexGrow={0}
+            flexShrink={0}
+            {...props}
+            fontSize="3xs"
+            size="sm"
+            isDisabled={user?.isLoggedIn ? false : true}
+          >
+            {!selected ? "Add To Report" : "Del From Report"}
+          </Button>
         </HStack>
 
         <CardModalWithForm
