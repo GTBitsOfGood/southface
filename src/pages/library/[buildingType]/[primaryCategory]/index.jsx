@@ -52,12 +52,7 @@ const LibraryCategoryPage = (props) => {
   return (
     <Flex alignItems="stretch" flexDirection="column" p="2rem">
       <HStack w="full" position="relative">
-        <Breadcrumb
-          separator="/"
-          fontWeight="semibold"
-          position="absolute"
-          top={2}
-        >
+        <Breadcrumb separator="/" fontWeight="semibold" top={2}>
           <BreadcrumbItem
             style={{
               color: theme.colors.lightGrey,
@@ -120,17 +115,21 @@ const LibraryCategoryPage = (props) => {
       />
 
       {numPages > 0 ? (
-        <>
-          <StandardCardTable cards={cards} setCards={setCards} />
-          <PaginationTab
-            numPages={numPages}
-            alignSelf="center"
-            border="1px solid black"
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            setCards={setCards}
-          />
-        </>
+        <Flex>
+          <Flex>
+            <StandardCardTable cards={cards} setCards={setCards} />
+          </Flex>
+          <Flex>
+            <PaginationTab
+              numPages={numPages}
+              alignSelf="center"
+              border="1px solid black"
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              setCards={setCards}
+            />
+          </Flex>
+        </Flex>
       ) : (
         <div>
           <Flex

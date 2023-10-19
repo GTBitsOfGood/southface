@@ -15,7 +15,7 @@ const LibraryPage = () => {
     onClose();
   };
   return (
-    <>
+    <Flex>
       <Flex justifyContent="center" height="78vh" paddingX="10vw">
         <Flex justifyContent="space-between" height="40vw" width="full">
           {buildingTypes &&
@@ -49,7 +49,7 @@ const LibraryPage = () => {
         isOpen={isOpen}
         onClose={handleModalClose}
       ></BuildingTypeModal>
-    </>
+    </Flex>
   );
 };
 
