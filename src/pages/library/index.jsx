@@ -60,7 +60,7 @@ export async function getStaticProps() {
   const buildingTypes = await getBuildingTypes();
   return {
     props: {
-      initialBuildingTypes: buildingTypes,
+      initialBuildingTypes: JSON.parse(JSON.stringify(buildingTypes)),
     },
   };
 }
