@@ -46,7 +46,7 @@ function CategoriesPage({ buildingType }) {
   console.log(cards);
 
   return (
-    <Flex padding="2rem" flexDirection="column" height="78vh">
+    <Flex padding="2rem" flexDirection="column">
       <HStack minWidth="max-content" alignItems="center" gap="2">
         <Flex p="2">
           <Breadcrumb separator="/" top={3} style={{ fontSize: "16px" }}>
