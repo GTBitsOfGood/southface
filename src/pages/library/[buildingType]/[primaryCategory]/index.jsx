@@ -9,6 +9,7 @@ import {
   useTheme,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { getBuildingTypes } from "server/mongodb/actions/BuildingType";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
@@ -24,9 +25,10 @@ import {
 } from "src/lib/utils/utilFunctions";
 
 const LibraryCategoryPage = (props) => {
+  const router = useRouter();
   const theme = useTheme();
   const cardsFromDatabase = props.cardsFromDatabase;
-  const sortedCards = cardsFromDatabase.slice().sort((card1, card2) => {
+  const sortedCards = cardsFromDatabase?.slice().sort((card1, card2) => {
     return card1.title.localeCompare(card2.title);
   });
   const numPagesInitial = props.numPages;
@@ -49,6 +51,9 @@ const LibraryCategoryPage = (props) => {
     setCards,
   });
 
+  if (router.isFallback) {
+    return <div></div>;
+  }
   return (
     <Flex alignItems="stretch" flexDirection="column" p="2rem">
       <HStack w="full" position="relative">
@@ -212,7 +217,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 

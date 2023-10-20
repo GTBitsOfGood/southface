@@ -1,14 +1,17 @@
 import { Button, Flex, useDisclosure } from "@chakra-ui/react";
+import { getBuildingTypes } from "server/mongodb/actions/BuildingType";
 import BuildingTypeModal from "src/components/Modals/BuildingTypeModal";
 import useUser from "src/lib/hooks/useUser";
 import urls from "src/lib/utils/urls";
 import { capitalizeAndRemoveDash } from "src/lib/utils/utilFunctions";
 import useSWR from "swr";
 import BuildingType from "../../components/BuildingTypeCard";
-const LibraryPage = () => {
+const LibraryPage = ({ initialBuildingTypes }) => {
   const { user } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data, mutate } = useSWR(urls.api.buildingType.get);
+  const { data, mutate } = useSWR(urls.api.buildingType.get, {
+    initialBuildingTypes,
+  });
   const buildingTypes = data?.payload;
   const handleModalClose = () => {
     mutate();
@@ -52,5 +55,14 @@ const LibraryPage = () => {
     </>
   );
 };
+
+export async function getStaticProps() {
+  const buildingTypes = await getBuildingTypes();
+  return {
+    props: {
+      initialBuildingTypes: JSON.parse(JSON.stringify(buildingTypes)),
+    },
+  };
+}
 
 export default LibraryPage;
