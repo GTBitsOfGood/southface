@@ -14,13 +14,19 @@ export const southfaceTheme = extendTheme({
     darkestBlue: "#006779",
 
     // Grey
+    lightGrey: "#8C8D8F",
     Grey: "#6D6E70",
     darkGrey: "#3F3F3F",
     darkestGrey: "#2D2C2C",
+    boldGrey: "#515254",
   },
   fonts: {
-    body: "Inter, sans-serif",
-    heading: "Inter, sans-serif",
+    body: "Roboto Slab",
+    headingBold: `'Europa-Bold', sans-serif`,
+    heading: `'Europa-Regular', sans-serif`,
+    regular: "400",
+    bold: "700",
+    heavyBold: "800",
   },
   breakpoints: {
     xl: "1200px",
@@ -41,6 +47,64 @@ export const southfaceTheme = extendTheme({
         },
         whiteSpace: "trim",
       },
+    },
+  },
+  heading: {
+    customTheme: {
+      fontFamily: "body",
+      fontSize: "24px",
+      fontWeight: "bold",
+      color: "boldGrey",
+      lineHeight: "31.65px",
+    },
+  },
+  textStyles: {
+    // CategoryCard.jsx styles
+    primaryText: {
+      fontWeight: "heavyBold",
+      color: "boldGrey",
+      fontFamily: "headingBold",
+      fontSize: "50px",
+      letterSpacing: "-2px",
+    },
+    secondaryText: {
+      fontSize: "17px",
+      fontWeight: "regular",
+      fontFamily: "heading",
+      color: "Grey",
+      lineHeight: "20px",
+    },
+
+    // StandardCard.jsx
+    primaryTextStandard: {
+      fontFamily: "body",
+      fontSize: "24px",
+      fontWeight: "bold",
+      color: "boldGrey",
+      lineHeight: "31.65px",
+    },
+    secondaryTextStandard: {
+      fontFamily: "heading",
+      fontSize: "12px",
+      fontWeight: "regular",
+      color: "Grey",
+      lineHeight: "12px",
+    },
+
+    // NavBar Sign In
+    name: {
+      fontWeight: "400",
+      fontStyle: "normal",
+      headingBold: `'Europa-Regular', sans-serif`,
+      fontColor: "#6D6E70",
+      fontSize: "16px",
+    },
+    nameBold: {
+      fontWeight: "700",
+      fontStyle: "normal",
+      headingBold: `'Europa-Bold', sans-serif`,
+      fontColor: "#6D6E70",
+      fontSize: "16px",
     },
   },
 });

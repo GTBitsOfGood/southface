@@ -56,17 +56,31 @@ const NavBar = () => {
           <Box>
             <Flex marginRight={8}>
               <Text
-                fontWeight="light"
-                fontStyle="italic"
+                fontWeight="400"
+                fontStyle="normal"
+                fontFamily="'Europa-Regular', sans-serif"
+                fontColor="#6D6E70"
               >{`Logged in as `}</Text>
-              <Text fontWeight="medium" fontStyle="italic" marginLeft={1}>
+              <Text
+                fontWeight="600"
+                fontStyle="regular"
+                marginLeft={1}
+                fontFamily="'Europa-Regular', sans-serif"
+                fontColor="#6D6E70"
+              >
                 {user.username}
               </Text>
             </Flex>
           </Box>
 
-          <Divider orientation="vertical" h={6} borderColor="Grey" mr={0} />
-          <NavLink name="Logout" onClick={onLogoutOpen} {...props} />
+          <Divider orientation="vertical" h={6} borderColor="#6D6E70" mr={0} />
+          <NavLink
+            name="Logout"
+            color="#00ACC8"
+            fontWeight="700"
+            onClick={onLogoutOpen}
+            {...props}
+          />
         </Flex>
       );
     }
@@ -97,6 +111,7 @@ const NavBar = () => {
     borderRadius: borderR + " " + borderR + " 0 0",
   };
 
+  console.log(currPage);
   return (
     <Flex boxShadow="base" py="2">
       <Image
@@ -106,12 +121,64 @@ const NavBar = () => {
         width="14em"
         right={5}
       />
-      <NavLink name="Digital Library" href={urls.pages.library} />
+      <NavLink
+        name="Digital Library"
+        href={urls.pages.library}
+        _before={{
+          content: '""',
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: "2px",
+          background: currPage == "/library" ? "#00ACC8" : "transparent",
+        }}
+        _hover={{
+          _before: {
+            background: "#00ACC8",
+          },
+        }}
+      />
       {user?.isLoggedIn && (
-        <NavLink name="Report Builder" href={urls.pages.reportbuilder} />
+        <NavLink
+          name="Report Builder"
+          href={urls.pages.reportbuilder}
+          _before={{
+            content: '""',
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: "2px",
+            background:
+              currPage == "/report-builder" ? "#00ACC8" : "transparent",
+          }}
+          _hover={{
+            _before: {
+              background: "#00ACC8",
+            },
+          }}
+        />
       )}
       {user?.isAdmin && (
-        <NavLink name="Add a New Standard" href={urls.pages.addstandard} />
+        <NavLink
+          name="Add a New Standard"
+          href={urls.pages.addstandard}
+          _before={{
+            content: '""',
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: "2px",
+            background: currPage == "/add-standard" ? "#00ACC8" : "transparent",
+          }}
+          _hover={{
+            _before: {
+              background: "#00ACC8",
+            },
+          }}
+        />
       )}
       <Box ml="auto" />{" "}
       {/*This is an empty div to right-align the last nav link */}

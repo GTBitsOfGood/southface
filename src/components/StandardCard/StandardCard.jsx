@@ -32,8 +32,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   );
   const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
     useState(false);
-  const [addToReportButtonPressed, setAddToReportButtonPressed] =
-    useState(false);
+  const [addToReportButtonPressed] = useState(false);
 
   useEffect(() => {
     if (
@@ -72,30 +71,19 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
   const selected = !selState ? false : true;
 
   // const imgArr = selected ?
-  const { addToReport } = useActiveReport();
+  const { addToReport, removeFromReport } = useActiveReport();
 
   const reportAddHandler = (e) => {
-    setAddToReportButtonPressed(true);
+    // We don't need this anymore since we don't want to ever
+    // completely disable the button
+    //setAddToReportButtonPressed(true);
     e.stopPropagation(); // stops modal from opening
     if (!selected) {
       addToReport(card);
+    } else {
+      removeFromReport(card);
     }
   };
-
-  const ReportButton = ({ ...props }) => (
-    <Button
-      variant={selected ? "Grey" : "Blue-outlined"}
-      onClick={reportAddHandler}
-      flexGrow={0}
-      flexShrink={0}
-      whiteSpace="nowrap"
-      {...props}
-      w="35%"
-      isDisabled={user?.isLoggedIn ? false : true}
-    >
-      {!selected ? "Add To Report" : "Added to Report"}
-    </Button>
-  );
 
   return (
     <Box {...props}>
@@ -116,7 +104,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
         height="100%"
         transition="0.1s ease-in-out"
       >
-        <Box height="50%" flexShrink={1}>
+        <Box height="35%" flexShrink={1}>
           <Image
             fit="cover"
             src={card.images[0].imageUrl}
@@ -126,17 +114,25 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
           />
         </Box>
 
-        <Flex height="50%" p={3} flexDirection="column" flexShrink={1} mx="2">
-          <Heading fontSize="100%" isTruncated flexShrink={1}>
+        <Flex height="60%" p={3} flexDirection="column" flexShrink={1} mx="2">
+          <Heading
+            isTruncated
+            flexShrink={1}
+            fontFamily="Roboto Slab"
+            fontSize="25px"
+            fontWeight="700"
+          >
             {card.title}
           </Heading>
 
           <Text
             fontSize="90%"
             lineHeight="1.2em"
-            maxHeight="4em"
-            noOfLines="3"
+            maxHeight="5em"
+            noOfLines="4"
             flexShrink={1}
+            textStyle="secondaryTextStandard"
+            paddingBottom="2rem"
           >
             {card.criteria}
           </Text>
@@ -146,7 +142,9 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             mb="0.5"
             display="flex"
             justifyContent="space-between"
+            height="5%"
             width="100%"
+            align="stretch"
           >
             <Flex overflowY="auto" flexShrink={0} width="65%">
               {card.tags.map((tag, index) => {
@@ -155,7 +153,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                     <Tag
                       key={index}
                       textTransform="capitalize"
-                      bgColor="#C4D600"
+                      bgColor="#E2E3E5"
                       rounded="14.7877px"
                       marginLeft={0.5}
                       minWidth="max-content"
@@ -168,8 +166,18 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                 }
               })}
             </Flex>
-
-            <ReportButton />
+            <Button
+              variant={selected ? "Grey" : "Blue-outlined"}
+              onClick={reportAddHandler}
+              flexGrow={0}
+              flexShrink={0}
+              whiteSpace="nowrap"
+              // {...props}
+              w="35%"
+              isDisabled={user?.isLoggedIn ? false : true}
+            >
+              {!selected ? "Add To Report" : "Del From Report"}
+            </Button>
           </HStack>
 
           <CardModalWithForm
