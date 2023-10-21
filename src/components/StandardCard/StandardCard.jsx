@@ -142,7 +142,6 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             mb="0.5"
             display="flex"
             justifyContent="space-between"
-            height="5%"
             width="100%"
             align="stretch"
           >
