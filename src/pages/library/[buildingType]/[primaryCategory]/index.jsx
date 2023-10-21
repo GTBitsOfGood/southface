@@ -192,6 +192,7 @@ export async function getStaticProps({ params }) {
       primaryCategory: capitalizeAndRemoveDash(params.primaryCategory),
       params,
     },
+    revalidate:10,
   };
 }
 
