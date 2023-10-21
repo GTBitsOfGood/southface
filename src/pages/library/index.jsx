@@ -37,6 +37,7 @@ const LibraryPage = ({ initialBuildingTypes }) => {
     name: "initialValue",
   });
   const { data, mutate } = useSWR(urls.api.buildingType.get, {
+    // initialBuildingTypes,
     initialData: initialBuildingTypes,
   });
   const buildingTypes = data?.payload;
