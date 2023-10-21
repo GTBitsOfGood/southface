@@ -15,12 +15,23 @@ export default async () => {
    *
    *  */
 
-  await mongoose
+  /*await mongoose
     .connect(process.env.DB_URL, {
       dbName: process.env.DB_NAME,
     })
     .catch((e) => {
       console.error("Error connecting to database.");
       throw e;
+    });*/
+  await mongoose
+    .connect(process.env.COSMOS_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      retryWrites: false
+    })
+    .catch((e) => {
+      console.error("Error connecting to database.");
+      throw e;
     });
+    
 };
