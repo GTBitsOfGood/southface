@@ -27,11 +27,10 @@ export default async () => {
     .connect(process.env.COSMOS_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      retryWrites: false
+      retryWrites: false,
     })
     .catch((e) => {
       console.error("Error connecting to database.");
       throw e;
     });
-    
 };
