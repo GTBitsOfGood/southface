@@ -1,46 +1,32 @@
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  Icon,
-  SearchIcon,
-} from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Flex,
   Input,
   InputGroup,
-  InputLeftAddon,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-  useDisclosure,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Form, useForm, useFormState } from "react-final-form";
-import { FaLongArrowAltRight } from "react-icons/fa";
-import Tag from "../Tag";
 
 const SearchBarComponent = (props) => {
   const {
     resetSearch,
     setResetSearch,
     handleSubmit,
-    isClickedSearch,
     searchInput,
     setSearchInput,
     tagToClear,
     setTagToClear,
+    pageType,
     ...rest
   } = props;
 
   const { values } = useFormState();
   const { mutators } = useForm();
 
-  const { isOpen, onToggle } = useDisclosure();
+  const searchPlaceholder = "Search within " + pageType;
 
   useEffect(() => {
     if (resetSearch) {
@@ -59,125 +45,54 @@ const SearchBarComponent = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tagToClear, setTagToClear]);
 
-  const handleApplyFiltersClick = (handleSubmit) => {
-    onToggle();
-    handleSubmit();
-  };
-
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
   };
 
-  const getNumTagsFiltered = (values) => {
-    return isClickedSearch && values.tagArray && values.tagArray.length > 0
-      ? `(${values.tagArray.length})`
-      : "";
-  };
-
   const SearchButton = ({ handleSubmit }) => {
     return (
-      <Button variant="Blue" size="lg" mr="3" onClick={handleSubmit}>
-        <FaLongArrowAltRight />
+      <Button
+        bg="lightgrey"
+        color="Grey"
+        size="lg"
+        fontSize="15px"
+        fontWeight="bold"
+        fontFamily="'Europa-Regular', sans-serif"
+        onClick={handleSubmit}
+        paddingLeft="2rem"
+        paddingRight="2rem"
+      >
+        Search
       </Button>
     );
   };
 
   return (
     <Flex {...rest} justifyContent="flex-end">
-      {/* search bar */}
-      <Box
-        position="absolute"
-        right={
-          isClickedSearch && values.tagArray && values.tagArray.length > 0
-            ? "15em"
-            : "13em"
-        }
-      >
-        <InputGroup size="lg" borderWidth="">
-          <InputLeftAddon bg="transparent" borderRight="none">
-            <Icon as={SearchIcon} />
-          </InputLeftAddon>
-          <Input
-            value={searchInput}
-            onChange={handleSearchInputChange}
-            placeholder="Search Cards"
-          />
-        </InputGroup>
-      </Box>
+      <Box position="relative">
+        <Flex alignItems="center">
+          {/* search bar */}
+          <InputGroup size="lg">
+            <InputLeftElement pointerEvents="none">
+              <SearchIcon color="lightGrey" />
+            </InputLeftElement>
+            <Input
+              value={searchInput}
+              onChange={handleSearchInputChange}
+              placeholder={searchPlaceholder}
+              fontWeight="400"
+              fontSize="16px"
+              fontFamily="'Europa-Regular', sans-serif"
+              width="25rem"
+              borderRadius="15px"
+              border="2px solid lightGrey"
+            />
+          </InputGroup>
 
-      {/* Filter tab */}
-      <Box mr="3">
-        <Tabs variant="enclosed" h="full" align="end">
-          {isOpen ? (
-            <TabList>
-              <Box
-                border="1px solid Grey"
-                borderBottom="none"
-                roundedTop={8}
-                roundedBottom={0}
-              >
-                <Tab
-                  color="Grey"
-                  bgColor="#F2F2F2"
-                  border="none"
-                  onClick={onToggle}
-                  fontSize="lg"
-                  px={4}
-                  pb={isOpen ? 5 : 3}
-                >
-                  <Text pr={3}>Filter {getNumTagsFiltered(values)}</Text>
-                  <ChevronUpIcon />
-                </Tab>
-              </Box>
-            </TabList>
-          ) : (
-            <Button
-              p={4}
-              pt={3}
-              rounded={8}
-              bgColor="#F2F2F2"
-              color="Grey"
-              border="1px solid Grey"
-              _hover={{ bgColor: "#d9d9d9" }}
-              _active={{ bgColor: "#c1c1c1" }}
-              size="lg"
-              fontSize="lg"
-              onClick={onToggle}
-            >
-              <Text pr={3}>Filter {getNumTagsFiltered(values)}</Text>
-              <ChevronDownIcon />
-            </Button>
-          )}
-          <TabPanels
-            display={isOpen ? "initial" : "none"}
-            backgroundColor="#F2F2F2"
-            mr="-100px"
-          >
-            <TabPanel
-              width={{ base: "75em", "2xl": "80em" }}
-              border="1px solid Grey"
-              rounded={8}
-              roundedTopRight={0}
-              bgColor="#F2F2F2"
-              position="relative"
-            >
-              <Tag height="65vh" overflow="auto" />
-              <Button
-                p={4}
-                variant="Blue"
-                pos="absolute"
-                right="2em"
-                bottom="2em"
-                onClick={() => handleApplyFiltersClick(handleSubmit)}
-              >
-                Apply Filters {getNumTagsFiltered(values)}
-              </Button>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+          {/* Submit search button */}
+          <SearchButton handleSubmit={handleSubmit} />
+        </Flex>
       </Box>
-      {/* Submit search button */}
-      <SearchButton handleSubmit={handleSubmit} />
     </Flex>
   );
 };
@@ -221,6 +136,7 @@ const SearchBar = (props) => {
           isClickedSearch={isClickedSearch}
           searchInput={searchInput}
           setSearchInput={setSearchInput}
+          pageType={props.pageType}
           {...props}
         />
       )}

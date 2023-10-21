@@ -11,17 +11,24 @@ function CategoryCard(props) {
       <Flex
         direction="column"
         alignItems="center"
-        boxShadow="md"
-        rounded="md"
+        boxShadow="0px 5px 4px rgba(0, 0, 0, 0.2)"
+        rounded="xl"
         height="12rem"
         width="12rem"
         textAlign="center"
         cursor="pointer"
+        paddingTop="1rem"
+        paddingBottom="1rem"
       >
-        <Text fontWeight="extrabold" fontSize="4xl">
+        <Text textAlign="center" textStyle="primaryText">
           {props.initials}
         </Text>
-        <Text paddingX="2rem" fontWeight="semibold" paddingY="1rem">
+        <Text
+          paddingX="1rem"
+          textAlign="center"
+          paddingY="1rem"
+          textStyle="secondaryText"
+        >
           {props.title}
         </Text>
       </Flex>
