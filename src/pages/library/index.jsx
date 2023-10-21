@@ -6,10 +6,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import {
-  deleteBuildingTypeById,
-  getBuildingTypes,
-} from "server/mongodb/actions/BuildingType";
+import { getBuildingTypes } from "server/mongodb/actions/BuildingType";
+import { deleteBuildingTypeById } from "src/actions/BuildingType";
 import BuildingTypeModal from "src/components/Modals/BuildingTypeModal";
 import ConfirmActionModal from "src/components/Modals/ConfirmActionModal";
 import useUser from "src/lib/hooks/useUser";
@@ -51,10 +49,10 @@ const LibraryPage = ({ initialBuildingTypes }) => {
     onSecondDeleteModalOpen();
   };
   const handleDeleteType = async () => {
-    const deletedType = await deleteBuildingTypeById();
-    // Remove console log
-    console.log(deletedType);
+    await deleteBuildingTypeById(buildingTypeToDelete._id);
     mutate();
+    onSecondDeleteModalClose();
+    setDeleteMode(false);
   };
   return (
     <>
@@ -88,7 +86,7 @@ const LibraryPage = ({ initialBuildingTypes }) => {
               </Box>
             ))}
         </Flex>
-        {user?.isAdmin ? (
+        {user?.isAdmin && (
           <Flex
             justifyContent="flex-end"
             position="absolute"
@@ -119,7 +117,7 @@ const LibraryPage = ({ initialBuildingTypes }) => {
               </Button>
             </Flex>
           </Flex>
-        ) : null}
+        )}
       </Box>
       <BuildingTypeModal
         isOpen={isCreateModalOpen}
