@@ -62,6 +62,7 @@ export async function getStaticProps() {
     props: {
       initialBuildingTypes: JSON.parse(JSON.stringify(buildingTypes)),
     },
+    revalidate: 10
   };
 }
 

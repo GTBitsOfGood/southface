@@ -147,6 +147,7 @@ export async function getStaticProps({ params }) {
       buildingType: capitalizeAndRemoveDash(params.buildingType),
       params,
     },
+    revalidate: 10,
   };
 }
 
