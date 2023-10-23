@@ -87,10 +87,17 @@ const SearchBarComponent = (props) => {
       </Button>
     );
   };
-
+  const calculateRight = () => {
+    if (!isClickedSearch || !values.tagArray || values.tagArray.length == 0)
+      return "238px";
+    if (values.tagArray.length >= 10) {
+      return "274px";
+    }
+    return "263px";
+  };
   return (
     <Flex {...rest} justifyContent="flex-end" position="relative" gap="10px">
-      <Box position="absolute" mr="238px">
+      <Box position="absolute" right={calculateRight()}>
         <InputGroup size="lg">
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="lightGrey" />
