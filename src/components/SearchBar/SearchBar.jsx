@@ -91,8 +91,6 @@ const SearchBarComponent = (props) => {
   return (
     <Flex {...rest} justifyContent="flex-end" position="relative" gap="10px">
       <Box position="absolute" mr="238px">
-        {/* <Flex alignItems="center"> */}
-        {/* search bar */}
         <InputGroup size="lg">
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="lightGrey" />
@@ -109,11 +107,7 @@ const SearchBarComponent = (props) => {
             border="2px solid lightGrey"
           />
         </InputGroup>
-
-        {/* </Flex> */}
       </Box>
-      {/* Filter tab */}
-      {/* <Box mr="3"> */}
       <Tabs variant="enclosed" h="full" align="end">
         {isOpen ? (
           <TabList>
@@ -158,13 +152,7 @@ const SearchBarComponent = (props) => {
             <ChevronDownIcon />
           </Button>
         )}
-        {/* <Box position="absolute" top="100%" left="0" width="100vw" zIndex="10"> */}
-        <TabPanels
-          display={isOpen ? "initial" : "none"}
-          // backgroundColor="#F2F2F2"
-          mr="-100px"
-          // position="absolute"
-        >
+        <TabPanels display={isOpen ? "initial" : "none"} mr="-100px">
           <TabPanel
             width={{ base: "75em", "2xl": "80em" }}
             border="1px solid Grey"
@@ -186,11 +174,8 @@ const SearchBarComponent = (props) => {
             </Button>
           </TabPanel>
         </TabPanels>
-        {/* </Box> */}
       </Tabs>
-      {/* </Box> */}
 
-      {/* Submit search button */}
       <SearchButton handleSubmit={handleSubmit} />
     </Flex>
   );
