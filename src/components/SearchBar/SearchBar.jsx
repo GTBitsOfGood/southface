@@ -52,8 +52,7 @@ const SearchBarComponent = (props) => {
   const SearchButton = ({ handleSubmit }) => {
     return (
       <Button
-        bg="lightgrey"
-        color="Grey"
+        variant="Blue"
         size="lg"
         fontSize="15px"
         fontWeight="bold"
