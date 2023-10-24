@@ -5,6 +5,7 @@ import {
   Flex,
   Icon,
   Text,
+  useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import Router, { useRouter } from "next/router";
@@ -13,11 +14,14 @@ import { logout } from "src/actions/User";
 import Image from "src/components/Image";
 import useUser from "src/lib/hooks/useUser";
 import urls from "src/lib/utils/urls";
+import MobileNavBar from "../MobileNavBar/MobileNavBar";
 import ConfirmActionModal from "../Modals/ConfirmActionModal/ConfirmActionModal";
 import ShoppingCartView from "../ShoppingCartView";
 import NavLink from "./NavLink";
 
 const NavBar = () => {
+  const breakpoint = useBreakpointValue({ base: "base", md: "md", lg: "lg" });
+
   const router = useRouter();
   const currPage = router.pathname;
   let confirmMessage;
@@ -114,108 +118,116 @@ const NavBar = () => {
   console.log(currPage);
   return (
     <Flex boxShadow="base" py="2">
-      <Image
-        src="/static/EarthcraftLogo.png"
-        alt="Earthcraft-Logo"
-        height="6em"
-        width="14em"
-        right={5}
-      />
-      <NavLink
-        name="Digital Library"
-        href={urls.pages.library}
-        _before={{
-          content: '""',
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: "2px",
-          background: currPage == "/library" ? "#00ACC8" : "transparent",
-        }}
-        _hover={{
-          _before: {
-            background: "#00ACC8",
-          },
-        }}
-      />
-      {user?.isLoggedIn && (
-        <NavLink
-          name="Report Builder"
-          href={urls.pages.reportbuilder}
-          _before={{
-            content: '""',
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: "2px",
-            background:
-              currPage == "/report-builder" ? "#00ACC8" : "transparent",
-          }}
-          _hover={{
-            _before: {
-              background: "#00ACC8",
-            },
-          }}
-        />
-      )}
-      {user?.isAdmin && (
-        <NavLink
-          name="Add a New Standard"
-          href={urls.pages.addstandard}
-          _before={{
-            content: '""',
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: "2px",
-            background: currPage == "/add-standard" ? "#00ACC8" : "transparent",
-          }}
-          _hover={{
-            _before: {
-              background: "#00ACC8",
-            },
-          }}
-        />
-      )}
-      <Box ml="auto" />{" "}
-      {/*This is an empty div to right-align the last nav link */}
-      <NavLinkAuth />
-      {user?.isLoggedIn &&
-        currPage != "/report-builder" &&
-        currPage != "/add-standard" && (
-          <>
-            <ShoppingCartView
-              buttonStyles={shoppingCartButtonStyle}
-              isOpen={isCartOpen}
-              onClose={onCartClose}
+      {breakpoint === "base" ? (
+        <MobileNavBar />
+      ) : (
+        <>
+          <Image
+            src="/static/EarthcraftLogo.png"
+            alt="Earthcraft-Logo"
+            height="6em"
+            width="14em"
+            right={5}
+          />
+          <NavLink
+            name="Digital Library"
+            href={urls.pages.library}
+            _before={{
+              content: '""',
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: "2px",
+              background: currPage == "/library" ? "#00ACC8" : "transparent",
+            }}
+            _hover={{
+              _before: {
+                background: "#00ACC8",
+              },
+            }}
+          />
+          {user?.isLoggedIn && (
+            <NavLink
+              name="Report Builder"
+              href={urls.pages.reportbuilder}
+              _before={{
+                content: '""',
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: "2px",
+                background:
+                  currPage == "/report-builder" ? "#00ACC8" : "transparent",
+              }}
+              _hover={{
+                _before: {
+                  background: "#00ACC8",
+                },
+              }}
             />
+          )}
+          {user?.isAdmin && (
+            <NavLink
+              name="Add a New Standard"
+              href={urls.pages.addstandard}
+              _before={{
+                content: '""',
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: "2px",
+                background:
+                  currPage == "/add-standard" ? "#00ACC8" : "transparent",
+              }}
+              _hover={{
+                _before: {
+                  background: "#00ACC8",
+                },
+              }}
+            />
+          )}
+          <Box ml="auto" />{" "}
+          {/*This is an empty div to right-align the last nav link */}
+          <NavLinkAuth />
+          {user?.isLoggedIn &&
+            currPage != "/report-builder" &&
+            currPage != "/add-standard" && (
+              <>
+                <ShoppingCartView
+                  buttonStyles={shoppingCartButtonStyle}
+                  isOpen={isCartOpen}
+                  onClose={onCartClose}
+                />
 
-            <Button
-              fontSize="lg"
-              onClick={onCartOpen}
-              style={shoppingCartButtonStyle}
-            >
-              {<Icon as={FiChevronsUp} mr="1" fontSize="xl" />} Report Preview
-            </Button>
-          </>
-        )}
-      <ConfirmActionModal
-        isOpen={isLogoutOpen}
-        onClose={onLogoutClose}
-        mainText="Are you sure you want to log out?"
-        subText={
-          currPage === "/add-standard"
-            ? `You have unsaved changes in ${confirmMessage}`
-            : null
-        }
-        confirmButtonText={`Yes, log out`}
-        cancelButtonText={`No, return ${confirmMessage}`}
-        handleAction={logoutHandler}
-        isDanger={true}
-      />
+                <Button
+                  fontSize="lg"
+                  onClick={onCartOpen}
+                  style={shoppingCartButtonStyle}
+                >
+                  {<Icon as={FiChevronsUp} mr="1" fontSize="xl" />} Report
+                  Preview
+                </Button>
+              </>
+            )}
+          <ConfirmActionModal
+            isOpen={isLogoutOpen}
+            onClose={onLogoutClose}
+            mainText="Are you sure you want to log out?"
+            subText={
+              currPage === "/add-standard"
+                ? `You have unsaved changes in ${confirmMessage}`
+                : null
+            }
+            confirmButtonText={`Yes, log out`}
+            cancelButtonText={`No, return ${confirmMessage}`}
+            handleAction={logoutHandler}
+            isDanger={true}
+          />
+        </>
+      )}
     </Flex>
   );
 };

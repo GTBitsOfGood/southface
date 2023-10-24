@@ -5,6 +5,7 @@ import urls from "src/lib/utils/urls";
 import { capitalizeAndRemoveDash } from "src/lib/utils/utilFunctions";
 import useSWR from "swr";
 import BuildingType from "../../components/BuildingTypeCard";
+
 const LibraryPage = () => {
   const { user } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -14,10 +15,18 @@ const LibraryPage = () => {
     mutate();
     onClose();
   };
+
   return (
-    <Flex>
+    <Flex direction="column">
+      {" "}
+      {/* Ensuring main Flex is column */}
       <Flex justifyContent="center" height="78vh" paddingX="10vw">
-        <Flex justifyContent="space-between" height="40vw" width="full">
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          justifyContent="space-between"
+          height="40vw"
+          width="full"
+        >
           {buildingTypes &&
             buildingTypes.map((type) => (
               <BuildingType
@@ -31,7 +40,7 @@ const LibraryPage = () => {
         </Flex>
       </Flex>
       <Flex justifyContent="flex-end" position="relative" marginTop="2vh">
-        {user?.isAdmin ? (
+        {user?.isAdmin && (
           <Button
             onClick={onOpen}
             position="absolute" // position the button
@@ -39,11 +48,10 @@ const LibraryPage = () => {
             right="5vw" // space from the right
             variant="Blue-rounded"
             size="lg"
-            isDisabled={user?.isAdmin ? false : true}
           >
             Create New Building Type
           </Button>
-        ) : null}
+        )}
       </Flex>
       <BuildingTypeModal
         isOpen={isOpen}
