@@ -4,7 +4,7 @@ import CategoryCard from "./CategoryCard";
 function CategoryCards(props) {
   return (
     <>
-      {Object.keys(primaryCategoryNames).map((categoryInitials) => {
+      {Object.keys(primaryCategoryNames).sort((a, b) => primaryCategoryNames[a].localeCompare(primaryCategoryNames[b])).map((categoryInitials) => {
         const name = primaryCategoryNames[categoryInitials].trim();
         return (
           <CategoryCard

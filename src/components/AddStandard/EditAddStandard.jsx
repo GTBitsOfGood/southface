@@ -72,7 +72,7 @@ const EditAddStandard = ({ handleSubmit }) => {
         <Multiselect
           name="primaryCategory"
           label="Primary Category"
-          entries={Object.values(primaryCategoryNames)}
+          entries={Object.values(primaryCategoryNames).sort()}
         />
       </Box>
 
