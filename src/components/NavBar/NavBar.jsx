@@ -117,7 +117,7 @@ const NavBar = () => {
 
   console.log(currPage);
   return (
-    <Flex boxShadow="base" py="2">
+    <Flex boxShadow="base" py="2" position="relative">
       {breakpoint === "base" ? (
         <MobileNavBar />
       ) : (

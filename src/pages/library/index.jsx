@@ -18,14 +18,12 @@ const LibraryPage = () => {
 
   return (
     <Flex direction="column">
-      {" "}
-      {/* Ensuring main Flex is column */}
-      <Flex justifyContent="center" height="78vh" paddingX="10vw">
+      <Flex justifyContent="center" paddingX="10vw">
         <Flex
           direction={{ base: "column", md: "row" }}
           justifyContent="space-between"
-          height="40vw"
-          width="full"
+          height={{ base: "full", md: "40vw" }}
+          width={{ base: "40vw", md: "full" }}
         >
           {buildingTypes &&
             buildingTypes.map((type) => (

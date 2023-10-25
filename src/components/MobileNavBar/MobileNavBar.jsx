@@ -1,4 +1,6 @@
-import { Flex, Text } from "@chakra-ui/react"; // Don't forget to import 'Text'
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { Flex, IconButton, Text } from "@chakra-ui/react"; // Don't forget to import 'Text'
+
 import React from "react";
 import Image from "src/components/Image";
 
@@ -10,14 +12,24 @@ const MobileNavBar = () => {
       justifyContent="center"
       width="100%"
     >
-      <Image
-        src="/static/EarthcraftLogo.png"
-        alt="Earthcraft-Logo"
-        height="6em"
-        width="14em"
-        mr={5}
-      />
-      <Text>Logged in as John</Text>
+      <Flex alignItems="center">
+        <Image
+          src="/static/EarthcraftLogo.png"
+          alt="Earthcraft-Logo"
+          height="6em"
+          width="14em"
+        />
+        <IconButton
+          aria-label="Logout"
+          icon={<ArrowForwardIcon />}
+          size="md"
+          variant="outline"
+          colorScheme="red"
+        />
+      </Flex>
+      <Flex>
+        <Text>Logged in as John</Text>
+      </Flex>
     </Flex>
   );
 };
