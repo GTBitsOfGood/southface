@@ -6,6 +6,7 @@ import {
   HStack,
   Spacer,
   Text,
+  useBreakpointValue,
   useTheme,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -28,6 +29,11 @@ function CategoriesPage({ buildingType }) {
   const [numPages, setNumPages] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState(1);
+  const breakpoint = useBreakpointValue({
+    base: "column",
+    md: "row",
+    lg: "row",
+  });
 
   const {
     handleSearch,
@@ -47,7 +53,12 @@ function CategoriesPage({ buildingType }) {
 
   return (
     <Flex padding="2rem" flexDirection="column">
-      <HStack minWidth="max-content" alignItems="center" gap="2">
+      <HStack
+        minWidth="max-content"
+        alignItems="flex-start"
+        gap="2"
+        flexDirection={breakpoint}
+      >
         <Flex p="2">
           <Breadcrumb separator="/" top={3} style={{ fontSize: "16px" }}>
             <BreadcrumbItem

@@ -98,8 +98,8 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
           transition: "0.1s ease-in-out",
           boxShadow: "xl",
         }}
-        minWidth="24em"
-        maxHeight="20em"
+        minWidth={{ base: "100%", md: "24em" }}
+        maxHeight={{ base: "auto", md: "20em" }}
         width="auto"
         height="100%"
         transition="0.1s ease-in-out"

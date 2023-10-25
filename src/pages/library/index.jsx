@@ -37,16 +37,9 @@ const LibraryPage = () => {
             ))}
         </Flex>
       </Flex>
-      <Flex justifyContent="flex-end" position="relative" marginTop="2vh">
+      <Flex justifyContent="center" position="relative" marginTop="2vh">
         {user?.isAdmin && (
-          <Button
-            onClick={onOpen}
-            position="absolute" // position the button
-            bottom="5vh" // space from the bottom
-            right="5vw" // space from the right
-            variant="Blue-rounded"
-            size="lg"
-          >
+          <Button onClick={onOpen} variant="Blue-rounded" size="lg">
             Create New Building Type
           </Button>
         )}
