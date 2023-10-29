@@ -165,18 +165,19 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                 }
               })}
             </Flex>
-            <Button
-              variant={selected ? "Grey" : "Blue-outlined"}
-              onClick={reportAddHandler}
-              flexGrow={0}
-              flexShrink={0}
-              whiteSpace="nowrap"
-              // {...props}
-              w="35%"
-              isDisabled={user?.isLoggedIn ? false : true}
-            >
-              {!selected ? "Add To Report" : "Del From Report"}
-            </Button>
+            {user?.isLoggedIn && (
+              <Button
+                variant={selected ? "Grey" : "Blue-outlined"}
+                onClick={reportAddHandler}
+                flexGrow={0}
+                flexShrink={0}
+                whiteSpace="nowrap"
+                // {...props}
+                w="35%"
+              >
+                {!selected ? "Add To Report" : "Del From Report"}
+              </Button>
+            )}
           </HStack>
 
           <CardModalWithForm
