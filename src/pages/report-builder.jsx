@@ -11,6 +11,7 @@ import {
   StackDivider,
   Text,
   VStack,
+  useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -33,6 +34,8 @@ const ReportBuilder = () => {
   // For PDF exporting
   const [renaming, setRenaming] = useState(false);
   const renameEditableRef = useRef();
+
+  const flexDirection = useBreakpointValue({ base: "column", md: "row" });
 
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -139,6 +142,7 @@ const ReportBuilder = () => {
         alignItems="flex-start"
         spacing={3}
         px={8}
+        flexDir={flexDirection}
       >
         {!(sels?.length > 0) ? (
           <VStack
@@ -153,7 +157,6 @@ const ReportBuilder = () => {
             flex={2}
           >
             <Box>
-              {" "}
               <Text as="b" fontSize="2xl">
                 Current Report
               </Text>
