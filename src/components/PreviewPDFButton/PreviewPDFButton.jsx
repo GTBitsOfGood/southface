@@ -34,7 +34,7 @@ const PDFWrapper = (props) => {
   );
 };
 
-const PrintToPDFButton = (props) => {
+const PreviewPDFButton = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [instance] = usePDF({
@@ -44,16 +44,6 @@ const PrintToPDFButton = (props) => {
   return (
     <HStack>
       <Button
-        as={props.report?.cards?.length == 0 ? "" : "a"}
-        px={4}
-        download={props.report?.name}
-        variant="Grey-rounded"
-        href={props.report?.cards?.length == 0 ? "" : instance.url}
-        isDisabled={props.report?.cards?.length == 0}
-      >
-        Download
-      </Button>
-      <Button
         onClick={() => {
           onOpen();
         }}
@@ -61,7 +51,7 @@ const PrintToPDFButton = (props) => {
         px={4}
         isDisabled={props.report?.cards?.length == 0}
       >
-        Print to PDF
+        Preview PDF
         <Modal isOpen={isOpen} onClose={onClose} size="6xl">
           <ModalOverlay />
           <ModalContent>
@@ -84,4 +74,4 @@ const PrintToPDFButton = (props) => {
   );
 };
 
-export default PrintToPDFButton;
+export default PreviewPDFButton;
