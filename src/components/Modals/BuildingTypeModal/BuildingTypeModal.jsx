@@ -64,6 +64,9 @@ const BuildingTypeModal = ({ isOpen, onClose }) => {
     return errors;
   };
   const isObjectEmpty = (obj) => {
+    if (!obj.uploadImages || obj.uploadImages.length < 1) {
+      return true;
+    }
     return Object.values(obj).every((value) => {
       if (Array.isArray(value)) {
         return value.length === 0;
