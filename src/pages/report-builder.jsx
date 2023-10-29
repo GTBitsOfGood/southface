@@ -4,14 +4,14 @@ import {
   Card,
   CardBody,
   Flex,
-  HStack,
   Heading,
+  HStack,
   Link,
   Spinner,
   StackDivider,
   Text,
-  VStack,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -258,7 +258,7 @@ const ReportBuilder = () => {
                   size="2xl"
                 />
               </Flex>
-              <PrintToPDFButton report={report} />
+              <PrintToPDFButton report={report} sels={sels} />
             </CardBody>
             {sels.map((cardWrapper, index) => (
               <CardBody pl={3} py={0} key={index}>

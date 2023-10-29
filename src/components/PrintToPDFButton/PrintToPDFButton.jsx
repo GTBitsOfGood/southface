@@ -15,9 +15,9 @@ import { PDFViewer, usePDF } from "@react-pdf/renderer";
 import ReportDocumentPDF from "../ReportDocumentPDF/ReportDocumentPDF";
 
 const PDFWrapper = (props) => {
-  const { report, error } = props;
+  const { report, sels, error } = props;
 
-  if (!report) {
+  if (!report || !sels) {
     return <>Loading...</>;
   }
 
@@ -28,7 +28,7 @@ const PDFWrapper = (props) => {
   return (
     <Flex justifyContent="center" height="max">
       <PDFViewer style={{ height: "70vh", width: "100%" }}>
-        <ReportDocumentPDF selectedReport={report} />
+        <ReportDocumentPDF selectedReport={report} sels={sels} />
       </PDFViewer>
     </Flex>
   );
@@ -68,7 +68,11 @@ const PrintToPDFButton = (props) => {
             <ModalHeader>PDF Preview</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <PDFWrapper error={props.error} report={props.report} />
+              <PDFWrapper
+                error={props.error}
+                report={props.report}
+                sels={props.sels}
+              />
             </ModalBody>
             <ModalFooter>
               <Button variant="Grey-rounded">
