@@ -117,6 +117,7 @@ export const southfaceTheme = extendTheme({
       fontWeight: "300",
       fontFamily: "'Europa-Light', sans-serif",
       color: "#6D6E70",
+      fontSize: "16px",
     },
   },
 });
