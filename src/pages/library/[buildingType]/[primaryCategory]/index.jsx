@@ -153,7 +153,7 @@ const LibraryCategoryPage = (props) => {
             </Text>
             <Link href={`/library/${props.params.buildingType}`}>
               <Button variant="Blue" size="md">
-                Return to {props.params.buildingType}
+                Return to {capitalizeAndRemoveDash(props.params.buildingType)}
               </Button>
             </Link>
           </Flex>
