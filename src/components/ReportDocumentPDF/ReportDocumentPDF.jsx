@@ -96,6 +96,8 @@ const ReportDocumentPDF = ({ selectedReport }) => {
           </View>
           {selectedReport?.cards.map((item, index) => {
             let card = item.card || item;
+            let notes = item.notes || card.notes || [];
+
             return (
               <View key={index} styles={styles.card}>
                 <Text style={styles.name}>{card.title}</Text>
@@ -137,11 +139,11 @@ const ReportDocumentPDF = ({ selectedReport }) => {
                   })}
                 </View>
                 <View style={styles.section}>
-                  {card.notes.length > 0 && (
+                  {notes.length > 0 && (
                     <Text style={styles.category}>Notes</Text>
                   )}
                   <View>
-                    {card.notes?.map((note, index) => {
+                    {notes?.map((note, index) => {
                       return (
                         <View style={styles.notes} key={index}>
                           <Text style={styles.text}>{note.body}</Text>

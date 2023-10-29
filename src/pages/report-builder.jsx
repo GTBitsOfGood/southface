@@ -4,14 +4,14 @@ import {
   Card,
   CardBody,
   Flex,
-  HStack,
   Heading,
+  HStack,
   Link,
   Spinner,
   StackDivider,
   Text,
-  VStack,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -263,7 +263,9 @@ const ReportBuilder = () => {
             {sels.map((cardWrapper, index) => (
               <CardBody pl={3} py={0} key={index}>
                 <ReportStandard
+                  cardWrapper={cardWrapper}
                   card={cardWrapper.card}
+                  notes={cardWrapper.notes}
                   selState={cardWrapper}
                   useGlobalEditing={useGlobalEditing}
                 />

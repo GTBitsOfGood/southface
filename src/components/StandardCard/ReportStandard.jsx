@@ -4,7 +4,7 @@ import useActiveReport from "../../lib/hooks/useActiveReport";
 import ReportStandardNotes from "./ReportStandardNoteCarousel";
 import StandardCardImageCarousel from "./StandardCardImageCarousel";
 
-const ReportStandard = ({ card, selState, ...props }) => {
+const ReportStandard = ({ cardWrapper, card, notes, selState, ...props }) => {
   const { removeFromReport } = useActiveReport();
   const { useGlobalEditing: [globalEditing, setGlobalEditing] = [] } = {
     ...props,
@@ -50,7 +50,8 @@ const ReportStandard = ({ card, selState, ...props }) => {
       <Box mb={5}>{card.criteria}</Box>
       <ReportStandardNotes
         cols={3}
-        notes={card.notes}
+        cardWrapper={cardWrapper}
+        notes={notes}
         selState={selState}
         card={card}
         editing={editing}
