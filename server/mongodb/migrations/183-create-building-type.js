@@ -45,6 +45,7 @@ async function connect() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       retryWrites: false,
+      family: 4
     })
     .catch((e) => {
       console.error("Error connecting to database.");
