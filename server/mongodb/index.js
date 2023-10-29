@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export default async () => {
+  console.log(process.env.COSMOS_URI);
   if (mongoose.connections[0].readyState) return;
 
   if (!process.env.DB_URL || !process.env.DB_NAME) {
@@ -30,7 +31,7 @@ export default async () => {
       retryWrites: false,
     })
     .catch((e) => {
-      console.error("Error connecting to database.");
+      console.error("Error connecting to database: " + process.env.COSMOS_URI);
       throw e;
     });
 };
