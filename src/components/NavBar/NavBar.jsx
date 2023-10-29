@@ -6,6 +6,7 @@ import {
   Icon,
   Text,
   useDisclosure,
+  useTheme,
 } from "@chakra-ui/react";
 import Router, { useRouter } from "next/router";
 import { FiChevronsUp } from "react-icons/fi";
@@ -18,6 +19,7 @@ import ShoppingCartView from "../ShoppingCartView";
 import NavLink from "./NavLink";
 
 const NavBar = () => {
+  const theme = useTheme();
   const router = useRouter();
   const currPage = router.pathname;
   let confirmMessage;
@@ -59,14 +61,14 @@ const NavBar = () => {
                 fontWeight="400"
                 fontStyle="normal"
                 fontFamily="'Europa-Regular', sans-serif"
-                fontColor="#6D6E70"
-              >{`Logged in as `}</Text>
+                color="#6D6E70"
+              >{`Signed in as `}</Text>
               <Text
-                fontWeight="600"
+                fontWeight="700"
                 fontStyle="regular"
                 marginLeft={1}
                 fontFamily="'Europa-Regular', sans-serif"
-                fontColor="#6D6E70"
+                color="#6D6E70"
               >
                 {user.username}
               </Text>
@@ -75,9 +77,12 @@ const NavBar = () => {
 
           <Divider orientation="vertical" h={6} borderColor="#6D6E70" mr={0} />
           <NavLink
-            name="Logout"
+            name="Sign Out"
             color="#00ACC8"
-            fontWeight="700"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontWeight: "700",
+            }}
             onClick={onLogoutOpen}
             {...props}
           />
@@ -124,6 +129,11 @@ const NavBar = () => {
       <NavLink
         name="Digital Library"
         href={urls.pages.library}
+        style={{
+          color: theme.colors.Grey,
+          fontFamily: theme.fonts.heading,
+          fontWeight: theme.fonts.regular,
+        }}
         _before={{
           content: '""',
           position: "absolute",
@@ -134,6 +144,7 @@ const NavBar = () => {
           background: currPage == "/library" ? "#00ACC8" : "transparent",
         }}
         _hover={{
+          color: "#515254",
           _before: {
             background: "#00ACC8",
           },
@@ -143,6 +154,11 @@ const NavBar = () => {
         <NavLink
           name="Report Builder"
           href={urls.pages.reportbuilder}
+          style={{
+            color: theme.colors.Grey,
+            fontFamily: theme.fonts.heading,
+            fontWeight: theme.fonts.regular,
+          }}
           _before={{
             content: '""',
             position: "absolute",
@@ -164,6 +180,11 @@ const NavBar = () => {
         <NavLink
           name="Add a New Standard"
           href={urls.pages.addstandard}
+          style={{
+            color: theme.colors.Grey,
+            fontFamily: theme.fonts.heading,
+            fontWeight: theme.fonts.regular,
+          }}
           _before={{
             content: '""',
             position: "absolute",
