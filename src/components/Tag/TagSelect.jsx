@@ -75,9 +75,11 @@ const TagSelect = ({ tag }) => {
           isOpen={isOpenDeleteModal}
           onClose={onCloseDeleteModal}
           mainText="Are you sure you want to delete this tag?"
+          subText="Deleting a tag will remove the tag from all of its linked standard cards."
           confirmButtonText="Yes, delete tag"
           cancelButtonText="No, return to add standard"
           handleAction={updateTags}
+          isDanger={true}
         />
       </CheckboxArrayControl>
     </div>
