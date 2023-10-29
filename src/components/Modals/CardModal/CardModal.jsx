@@ -411,8 +411,9 @@ const CardModal = ({
               <Text
                 lineHeight="normal"
                 maxH="8em"
-                overflow="scroll"
+                overflow="hidden"
                 fontSize="18px"
+                _hover={{overflow:"auto"}}
               >
                 {card.criteria}
               </Text>
@@ -428,7 +429,8 @@ const CardModal = ({
               <Flex flex={1} width="50%" flexDirection="column" gap="1rem">
                 <Flex
                   flexShrink={0}
-                  overflow="scroll"
+                  overflow="hidden"
+                  _hover={{overflow:"auto"}}
                   flexWrap={editing ? "wrap" : "nowrap"}
                 >
                   {form.values?.tags
