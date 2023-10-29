@@ -29,10 +29,10 @@ function CategoriesPage({ buildingType }) {
   const [numPages, setNumPages] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState(1);
-  const breakpoint = useBreakpointValue({
-    base: "column",
-    md: "row",
-    lg: "row",
+  const { flexPadding, breakpoint } = useBreakpointValue({
+    base: { flexPadding: "1rem", breakpoint: "column" },
+    md: { flexPadding: "2rem", breakpoint: "row" },
+    lg: { flexPadding: "2rem", breakpoint: "row" },
   });
 
   const {
@@ -52,7 +52,7 @@ function CategoriesPage({ buildingType }) {
   console.log(cards);
 
   return (
-    <Flex padding="2rem" flexDirection="column">
+    <Flex padding={flexPadding} flexDirection="column">
       <HStack
         minWidth="max-content"
         alignItems="flex-start"
@@ -60,7 +60,7 @@ function CategoriesPage({ buildingType }) {
         flexDirection={breakpoint}
       >
         <Flex p="2">
-          <Breadcrumb separator="/" top={3} style={{ fontSize: "16px" }}>
+          <Breadcrumb separator="/" style={{ fontSize: "16px" }}>
             <BreadcrumbItem
               style={{
                 color: theme.colors.lightGrey,

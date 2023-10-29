@@ -6,6 +6,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Form, useForm, useFormState } from "react-final-form";
@@ -25,6 +26,13 @@ const SearchBarComponent = (props) => {
 
   const { values } = useFormState();
   const { mutators } = useForm();
+
+  const searchBarSize = useBreakpointValue({ base: "md", md: "md", lg: "lg" });
+  const showSearchButton = useBreakpointValue({
+    base: false,
+    md: true,
+    lg: true,
+  });
 
   const searchPlaceholder = "Search within " + pageType;
 
@@ -72,7 +80,7 @@ const SearchBarComponent = (props) => {
       <Box position="relative">
         <Flex alignItems="center">
           {/* search bar */}
-          <InputGroup size="lg">
+          <InputGroup size={searchBarSize}>
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="lightGrey" />
             </InputLeftElement>
@@ -90,7 +98,7 @@ const SearchBarComponent = (props) => {
           </InputGroup>
 
           {/* Submit search button */}
-          <SearchButton handleSubmit={handleSubmit} />
+          {showSearchButton && <SearchButton handleSubmit={handleSubmit} />}
         </Flex>
       </Box>
     </Flex>
