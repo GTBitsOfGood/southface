@@ -11,12 +11,13 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Tag,
   Text,
   useDisclosure,
+  useTheme,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Form, useForm, useFormState } from "react-final-form";
-import Tag from "../Tag";
 
 const SearchBarComponent = (props) => {
   const {
@@ -34,6 +35,7 @@ const SearchBarComponent = (props) => {
 
   const { values } = useFormState();
   const { mutators } = useForm();
+  const theme = useTheme();
 
   const { isOpen, onToggle } = useDisclosure();
   const searchPlaceholder = "Search within " + pageType;
@@ -105,9 +107,7 @@ const SearchBarComponent = (props) => {
             value={searchInput}
             onChange={handleSearchInputChange}
             placeholder={searchPlaceholder}
-            fontWeight="400"
-            fontSize="16px"
-            fontFamily="'Europa-Regular', sans-serif"
+            style={theme.textStyles.searchBox}
             width="25rem"
             borderRadius="15px"
             border="2px solid lightGrey"
