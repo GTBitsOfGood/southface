@@ -34,7 +34,8 @@ const ReportBuilder = () => {
   // For PDF exporting
   const [renaming, setRenaming] = useState(false);
   const renameEditableRef = useRef();
-
+  const cardWidth = useBreakpointValue({ base: "100%", md: "25%" });
+  const hStackSpacing = useBreakpointValue({ base: 0, md: 3 });
   const flexDirection = useBreakpointValue({ base: "column", md: "row" });
 
   const router = useRouter();
@@ -140,7 +141,7 @@ const ReportBuilder = () => {
         py={10}
         display={isLoadingState ? "none" : "flex"}
         alignItems="flex-start"
-        spacing={3}
+        spacing={hStackSpacing}
         px={8}
         flexDir={flexDirection}
       >
@@ -274,7 +275,7 @@ const ReportBuilder = () => {
             ))}
           </VStack>
         )}
-        <VStack w="25%" alignItems="end">
+        <VStack w={cardWidth} alignItems="end">
           {user?.isLoggedIn && user?.archivedReports.length > 0 && (
             <Card
               boxShadow="none"
