@@ -23,8 +23,14 @@ const LoginComponent = () => {
   };
 
   return (
-    <Flex direction="column" height="65%" width="60%" gap="1em">
-      <Text fontSize="3xl" as="b">
+    <Flex
+      direction="column"
+      height="65%"
+      width="60%"
+      gap="1em"
+      fontFamily="Europa-Regular"
+    >
+      <Text fontSize="3xl" as="b" fontFamily="Roboto Slab">
         Login
       </Text>
       <Box>
@@ -46,7 +52,13 @@ const LoginComponent = () => {
           />
         </FormControl>
       </Box>
-      <Button width="100%" height="2.3em" variant="Blue" onClick={handleSubmit}>
+      <Button
+        width="100%"
+        height="2.3em"
+        variant="Blue"
+        onClick={handleSubmit}
+        fontFamily="Europa-Bold"
+      >
         Log In
       </Button>
       {/* <Center gap="0.3em">

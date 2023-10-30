@@ -84,11 +84,9 @@ const LibraryCategoryPage = (props) => {
             </Link>
           </BreadcrumbItem>
           <BreadcrumbItem
-            style={{
-              color: theme.colors.boldGrey,
-              fontFamily: theme.fonts.headingBold,
-              fontWeight: theme.fonts.bold,
-            }}
+            color={theme.colors.boldGrey}
+            fontFamily={theme.fonts.headingBold}
+            fontWeight="300"
           >
             <Text>{props.primaryCategory}</Text>
           </BreadcrumbItem>

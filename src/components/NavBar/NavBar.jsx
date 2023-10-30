@@ -51,7 +51,14 @@ const NavBar = () => {
 
   const NavLinkAuth = (props) => {
     if (!user?.isLoggedIn) {
-      return <NavLink name="Login" href={urls.pages.login} {...props} />;
+      return (
+        <NavLink
+          fontFamily="Europa-Regular"
+          name="Login"
+          href={urls.pages.login}
+          {...props}
+        />
+      );
     } else {
       return (
         <Flex align="center">
@@ -218,6 +225,7 @@ const NavBar = () => {
               fontSize="lg"
               onClick={onCartOpen}
               style={shoppingCartButtonStyle}
+              fontFamily="Europa-Regular"
             >
               {<Icon as={FiChevronsUp} mr="1" fontSize="xl" />} Report Preview
             </Button>

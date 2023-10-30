@@ -45,6 +45,7 @@ const TagSelect = ({ tag }) => {
           w: "100%",
           textTransform: "capitalize",
           fontSize: { base: "0.8em", "2xl": "1em" },
+          fontFamily: "'Europa-Regular', sans-serif",
         }}
       >
         {tag.name}

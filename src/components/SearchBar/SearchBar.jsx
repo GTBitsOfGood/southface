@@ -11,13 +11,13 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Tag,
   Text,
   useDisclosure,
   useTheme,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Form, useForm, useFormState } from "react-final-form";
+import Tag from "../Tag";
 
 const SearchBarComponent = (props) => {
   const {
@@ -154,7 +154,9 @@ const SearchBarComponent = (props) => {
             fontSize="lg"
             onClick={onToggle}
           >
-            <Text pr={3}>Filter {getNumTagsFiltered(values)}</Text>
+            <Text fontFamily="'Europa-Regular', sans-serif" pr={3}>
+              Filter {getNumTagsFiltered(values)}
+            </Text>
             <ChevronDownIcon />
           </Button>
         )}

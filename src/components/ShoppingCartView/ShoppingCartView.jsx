@@ -58,7 +58,11 @@ const ShoppingCartView = ({ isOpen, onClose, ...rest }) => {
       <DrawerOverlay />
       <DrawerContent justifyContent="space-between">
         <Box>
-          <DrawerCloseButton fontSize="lg" style={closeButtonStyle}>
+          <DrawerCloseButton
+            fontSize="lg"
+            style={closeButtonStyle}
+            fontFamily="Europa-Regular"
+          >
             {<Icon as={FiChevronsDown} mr="1" fontSize="xl" />} Report Preview
           </DrawerCloseButton>
           <DrawerHeader display="flex" justifyContent="center">
@@ -70,7 +74,13 @@ const ShoppingCartView = ({ isOpen, onClose, ...rest }) => {
         <Box display="flex" justifyContent="center">
           {sels.length > 0 && (
             <Link href={urls.pages.reportbuilder}>
-              <Button variant="Grey-rounded" size="lg" marginBottom="20">
+              <Button
+                variant="Grey-rounded"
+                size="lg"
+                marginBottom="20"
+                fontWeight="700"
+                fontFamily="Europa-Bold"
+              >
                 View Full Report
               </Button>
             </Link>

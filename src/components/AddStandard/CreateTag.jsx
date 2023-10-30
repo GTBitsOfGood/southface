@@ -37,7 +37,8 @@ const CreateTag = () => {
     <Box mb={4}>
       <FormLabel
         fontSize="xl"
-        color="#8C8C8C"
+        color="#51524"
+        fontFamily="'Europa-Bold', sans-serif"
         fontWeight="bold"
         textAlign="left"
         mb={1}

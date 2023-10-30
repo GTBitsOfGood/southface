@@ -135,7 +135,14 @@ const AddStandardForm = () => {
       {({ handleSubmit, values }) => (
         <Box p={14} pb={14} w="full" as="form" onSubmit={handleSubmit}>
           <HStack>
-            <Heading as="h1" size="xl" color="Grey" textAlign="left" my={2}>
+            <Heading
+              as="h1"
+              size="xl"
+              color="#515254"
+              textAlign="left"
+              my={2}
+              fontFamily="Roboto Slab"
+            >
               Add a New Standard
             </Heading>
 
