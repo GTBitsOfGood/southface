@@ -64,78 +64,69 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
           flex="1"
         >
           <CardHeader>
-            <Flex justifyContent="space-between">
+            <Flex
+              justifyContent="space-between"
+              alignItems={flexDirection === "column" ? "flex-start" : "center"}
+              flexDirection={flexDirection}
+            >
               <Flex flexDirection="column">
                 <Heading size="xl" mr={6}>
                   {report.name || "Untitled Report"}
                 </Heading>
-                <Flex
-                  flexDirection={flexDirection}
-                  alignItems={
-                    flexDirection === "column" ? "flex-start" : "center"
-                  }
-                >
-                  {/* completed date */}
-                  <Heading size="xs" mr={6}>
-                    <Flex textColor="gray">
-                      Completed on{" "}
-                      {new Date(report.date).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </Flex>
-                  </Heading>
+                <Flex textColor="gray" flexDirection={flexDirection}>
+                  Completed on{" "}
+                  {new Date(report.date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </Flex>
+              </Flex>
 
-                  {/* button group */}
-                  <Flex
-                    mt={flexDirection === "column" ? 4 : 0}
-                    flexGrow={1}
-                    flexBasis={0}
-                    justifyContent={["flex-start", "space-between"]}
+              <Flex
+                flexDirection="row"
+                alignItems="center"
+                gap={2}
+                width="80%"
+                justifyContent="space-between"
+              >
+                <PrintToPDFButton report={report} />
+                <Flex gap={1}>
+                  <Button
+                    onClick={
+                      activeReport.cards?.length > 0 ? onOpenEdit : handleEdit
+                    }
+                    borderRadius="full"
+                    variant="Blue-outlined"
                   >
-                    <PrintToPDFButton report={report} />
-
-                    <Flex ml={4} backgroundColor="blue">
-                      <Button
-                        onClick={
-                          activeReport.cards?.length > 0
-                            ? onOpenEdit
-                            : handleEdit
-                        }
-                        borderRadius="full"
-                        variant="Blue-outlined"
-                      >
-                        Edit Report
-                      </Button>
-                      <Button onClick={onOpen} variant="Red-rounded">
-                        Remove from Reports
-                      </Button>
-                    </Flex>
-
-                    <ConfirmActionModal
-                      isOpen={isOpen}
-                      onClose={onClose}
-                      mainText="Are you sure you want to remove this report"
-                      confirmButtonText="Yes, remove report"
-                      cancelButtonText="No, cancel"
-                      handleAction={handleRemove}
-                      isDanger={false}
-                    />
-                    <ConfirmActionModal
-                      isOpen={isOpenEdit}
-                      onClose={onCloseEdit}
-                      mainText="You have a current report in progress. Are you sure you want to edit this report?"
-                      confirmButtonText="Yes, edit report"
-                      cancelButtonText="No, cancel"
-                      handleAction={handleEdit}
-                      isDanger={true}
-                    />
-                  </Flex>
+                    Edit Report
+                  </Button>
+                  <Button onClick={onOpen} variant="Red-rounded">
+                    Remove from Reports
+                  </Button>
                 </Flex>
               </Flex>
             </Flex>
+            <ConfirmActionModal
+              isOpen={isOpen}
+              onClose={onClose}
+              mainText="Are you sure you want to remove this report"
+              confirmButtonText="Yes, remove report"
+              cancelButtonText="No, cancel"
+              handleAction={handleRemove}
+              isDanger={false}
+            />
+            <ConfirmActionModal
+              isOpen={isOpenEdit}
+              onClose={onCloseEdit}
+              mainText="You have a current report in progress. Are you sure you want to edit this report?"
+              confirmButtonText="Yes, edit report"
+              cancelButtonText="No, cancel"
+              handleAction={handleEdit}
+              isDanger={true}
+            />
           </CardHeader>
+
           <CardBody>
             <Flex flexDirection={flexDirection}>
               {report.cards.map((card, index) => (
