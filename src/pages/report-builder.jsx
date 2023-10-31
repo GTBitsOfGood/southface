@@ -268,7 +268,9 @@ const ReportBuilder = () => {
             {sels.map((cardWrapper, index) => (
               <CardBody pl={3} py={0} key={index}>
                 <ReportStandard
+                  cardWrapper={cardWrapper}
                   card={cardWrapper.card}
+                  notes={cardWrapper.notes}
                   selState={cardWrapper}
                   useGlobalEditing={useGlobalEditing}
                 />

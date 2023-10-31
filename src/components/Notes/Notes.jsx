@@ -1,20 +1,24 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
-import { updateCardById, revalidate } from "../../actions/Card";
+import { revalidate, updateCardById } from "../../actions/Card";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
+import { parseNestedPaths } from "../../lib/utils/utilFunctions";
 import ModalNotes from "./ModalNotes";
 import ReportNotes from "./ReportNotes";
-import { parseNestedPaths } from "../../lib/utils/utilFunctions";
 
 // note on updateCard: this should be a function that takes in a card object
 // and updates that card in the parent "cards" state
-const Notes = ({ cardId, notes, ...rest }) => {
+const Notes = ({ cardWrapper, cardId, notes, inReport = false, ...rest }) => {
   const [currentNotes, setCurrentNotes] = useState(
     notes.map((n) => n).reverse()
   );
-  const [newNote, setNewNote] = useState({ body: "", userId: "", date: "" });
+  const [newNote, setNewNote] = useState({
+    body: "",
+    userId: "",
+    date: new Date(),
+  });
 
   const { user } = useUser();
 
@@ -24,22 +28,28 @@ const Notes = ({ cardId, notes, ...rest }) => {
 
   const { updateCard = () => {} } = { ...rest };
 
+  const { changeInReport } = useActiveReport();
+
   const handleSaveEdit = async (newNotes) => {
-    const updatedCard = await updateCardById(cardId, {
-      notes: newNotes.map((n) => n).reverse(),
-    });
+    if (inReport) {
+      await changeInReport({ ...cardWrapper, notes: newNotes });
+    } else {
+      const updatedCard = await updateCardById(cardId, {
+        notes: newNotes.map((n) => n).reverse(),
+      });
 
-    updateCard(updatedCard);
+      updateCard(updatedCard);
 
-    const revalidationPaths = JSON.stringify(
-      parseNestedPaths(
-        "library",
-        updatedCard.buildingType,
-        updatedCard.primaryCategory
-      )
-    );
+      const revalidationPaths = JSON.stringify(
+        parseNestedPaths(
+          "library",
+          updatedCard.buildingType,
+          updatedCard.primaryCategory
+        )
+      );
 
-    await revalidate(revalidationPaths);
+      await revalidate(revalidationPaths);
+    }
   };
 
   const createNewNote = async () => {
@@ -47,23 +57,27 @@ const Notes = ({ cardId, notes, ...rest }) => {
       return;
     }
     const newNotes = notes.concat(newNote);
-    const updatedCard = await updateCardById(cardId, {
-      notes: newNotes,
-    });
-    updateCard(updatedCard);
 
-    const revalidationPaths = JSON.stringify(
-      parseNestedPaths(
-        "library",
-        updatedCard.buildingType,
-        updatedCard.primaryCategory
-      )
-    );
+    if (inReport) {
+      await changeInReport({ ...cardWrapper, notes: newNotes });
+    } else {
+      const updatedCard = await updateCardById(cardId, {
+        notes: newNotes,
+      });
+      updateCard(updatedCard);
 
-    await revalidate(revalidationPaths);
+      const revalidationPaths = JSON.stringify(
+        parseNestedPaths(
+          "library",
+          updatedCard.buildingType,
+          updatedCard.primaryCategory
+        )
+      );
+
+      await revalidate(revalidationPaths);
+    }
   };
 
-  const { changeInReport } = useActiveReport();
   const { selState } = { ...rest };
   const noteArr = (function () {
     if (selState && selState.noteSelections.length === notes.length) {
@@ -118,7 +132,12 @@ const Notes = ({ cardId, notes, ...rest }) => {
   return notesVariant === "modal" ? (
     <ModalNotes cardId={cardId} {...childProps} {...rest} />
   ) : (
-    <ReportNotes {...childProps} />
+    <ReportNotes
+      createNewNote={createNewNote}
+      newNote={newNote}
+      setNewNote={setNewNote}
+      {...childProps}
+    />
   );
 };
 
