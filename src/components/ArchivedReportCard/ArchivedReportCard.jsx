@@ -68,7 +68,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                 <Heading size="xl" mr={6}>
                   {report.name || "Untitled Report"}
                 </Heading>
-                <PreviewPDFButton report={report} />
+                <PreviewPDFButton report={report} sels={sels}/>
               </Box>
               <Box>
                 <Button
