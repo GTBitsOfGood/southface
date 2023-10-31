@@ -53,7 +53,7 @@ const ConfirmActionModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
       <ModalOverlay />
-      <ModalContent rounded={14}>
+      <ModalContent rounded={14} fontFamily="Europa-Regular">
         <ModalHeader
           pt={10}
           display="flex"
@@ -81,6 +81,7 @@ const ConfirmActionModal = ({
               fontSize="md"
               width="auto"
               onClick={onClose}
+              fontFamily="Europa-Bold"
             >
               {abandonActionText}
             </Button>
@@ -91,6 +92,7 @@ const ConfirmActionModal = ({
               fontSize="md"
               width="auto"
               onClick={handleAction}
+              fontFamily="Europa-Bold"
             >
               {confirmActionText}
             </Button>

@@ -40,14 +40,15 @@ const EditAddStandard = ({ handleSubmit }) => {
     capitalizeAndRemoveDash(buildingType.name)
   );
   return (
-    <Box>
+    <Box fontFamily="'Europa-Regular', sans-serif">
       <Box w="50%">
         <MassUpload name="massUpload" />
 
         <FormLabel
-          fontSize="xl"
+          fontSize="2xl"
           fontWeight="bold"
-          color="#8C8C8C"
+          fontFamily="'Europa-Bold', sans-serif"
+          color="#515254"
           mb={1}
           mt={5}
         >
@@ -76,7 +77,7 @@ const EditAddStandard = ({ handleSubmit }) => {
         />
       </Box>
 
-      <FormLabel fontSize="xl" fontWeight="bold" color="#8C8C8C" mb={1} mt={5}>
+      <FormLabel fontSize="xl" fontWeight="bold" color="#515254" mb={1} mt={5}>
         Tags
       </FormLabel>
 

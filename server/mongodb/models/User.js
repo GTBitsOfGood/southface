@@ -48,6 +48,27 @@ const UserSchema = new Schema({
           noteSelections: {
             type: [Boolean],
           },
+          notes: {
+            type: [
+              {
+                body: {
+                  type: String,
+                  required: true,
+                },
+                userId: {
+                  type: String,
+                  required: true,
+                  default: "63c5be6fa7d3c693fa1d335a", // userId for testNonAdmin account
+                },
+                date: {
+                  type: Date,
+                  required: true,
+                  default: Date.now(),
+                },
+              },
+            ],
+            default: [],
+          },
         },
       ],
       name: {

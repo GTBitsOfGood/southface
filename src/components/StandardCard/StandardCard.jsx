@@ -156,6 +156,8 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                       rounded="14.7877px"
                       marginLeft={0.5}
                       minWidth="max-content"
+                      fontFamily="'Inter', sans-serif"
+                      color="#515254"
                     >
                       {tag}
                     </Tag>
@@ -174,6 +176,8 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                 whiteSpace="nowrap"
                 // {...props}
                 w="35%"
+                fontWeight="500"
+                fontFamily="'Inter', sans-serif"
               >
                 {!selected ? "Add To Report" : "Del From Report"}
               </Button>
