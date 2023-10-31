@@ -26,7 +26,7 @@ import {
   removeArchivedReport,
 } from "../actions/User/ArchivedReport";
 import ConfirmActionModal from "../components/Modals/ConfirmActionModal";
-import PrintToPDFButton from "../components/PrintToPDFButton";
+import PreviewPDFButton from "../components/PreviewPDFButton";
 import useUser from "../lib/hooks/useUser";
 
 const ReportBuilder = () => {
@@ -263,7 +263,7 @@ const ReportBuilder = () => {
                   size="2xl"
                 />
               </Flex>
-              <PrintToPDFButton report={report} sels={sels} />
+              <PreviewPDFButton report={report} sels={sels}/>
             </CardBody>
             {sels.map((cardWrapper, index) => (
               <CardBody pl={3} py={0} key={index}>
