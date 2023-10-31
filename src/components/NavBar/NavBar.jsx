@@ -119,7 +119,16 @@ const NavBar = () => {
   return (
     <Flex boxShadow="base" py="2" position="relative">
       {breakpoint === "base" ? (
-        <MobileNavBar />
+        <MobileNavBar
+          isLoggedIn={user?.isLoggedIn}
+          username={user?.username}
+          onLogout={onLogoutOpen}
+          isAdmin={user?.isAdmin}
+          isLogoutOpen={isLogoutOpen}
+          onLogoutOpen={onLogoutOpen}
+          onLogoutClose={onLogoutClose}
+          logoutHandler={logoutHandler}
+        />
       ) : (
         <>
           <Image
