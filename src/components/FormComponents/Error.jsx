@@ -5,7 +5,11 @@ const Error = ({ name }) => {
   const {
     meta: { error },
   } = useField(name, { subscription: { error: true } });
-  return <FormErrorMessage>{error}</FormErrorMessage>;
+  return (
+    <FormErrorMessage fontFamily="'Europa-Regular', sans-serif">
+      {error}
+    </FormErrorMessage>
+  );
 };
 
 export default Error;

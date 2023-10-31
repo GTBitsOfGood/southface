@@ -84,11 +84,9 @@ const LibraryCategoryPage = (props) => {
             </Link>
           </BreadcrumbItem>
           <BreadcrumbItem
-            style={{
-              color: theme.colors.boldGrey,
-              fontFamily: theme.fonts.headingBold,
-              fontWeight: theme.fonts.bold,
-            }}
+            color={theme.colors.boldGrey}
+            fontFamily={theme.fonts.headingBold}
+            fontWeight="300"
           >
             <Text>{props.primaryCategory}</Text>
           </BreadcrumbItem>
@@ -146,13 +144,26 @@ const LibraryCategoryPage = (props) => {
             paddingY="8rem"
             marginX="8rem"
           >
-            <Text fontSize="2xl" textAlign="center" color="grey" mb={5}>
+            <Text
+              fontSize="2xl"
+              textAlign="center"
+              mb={5}
+              color={theme.colors.boldGrey}
+              fontWeight="400"
+              fontFamily={theme.fonts.heading}
+            >
               Sorry! We couldn&apos;t find any standards matching your search.
               Try changing your spelling, removing filters, or searching for
               something else.
             </Text>
             <Link href={`/library/${props.params.buildingType}`}>
-              <Button variant="Blue" size="md">
+              <Button
+                variant="Blue"
+                size="md"
+                fontFamily={theme.fonts.headingBold}
+                fontWeight="700"
+                fontSize="16px"
+              >
                 Return to {capitalizeAndRemoveDash(props.params.buildingType)}
               </Button>
             </Link>

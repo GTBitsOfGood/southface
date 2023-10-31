@@ -51,7 +51,7 @@ export default function ReportNotes({
   return (
     <VStack alignItems="left">
       <VStack alignItems="left" w="100%">
-        <Heading textColor="#3F3F3F" size="md" mt={3} mb={-2}>
+        <Heading textColor="#515254" size="md" mt={3} mb={-2}>
           Notes ({currentNotes.length})
         </Heading>
         {currentNotes.length === 0 ? (

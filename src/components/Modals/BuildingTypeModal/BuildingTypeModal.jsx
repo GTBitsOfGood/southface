@@ -110,9 +110,15 @@ const BuildingTypeModal = ({ isOpen, onClose }) => {
         size={{ base: "xs", md: "2xl", lg: "4xl" }}
       >
         <ModalOverlay />
-        <ModalContent rounded={14}>
+        <ModalContent rounded={14} fontFamily="Europa-Regular">
           <ModalCloseButton right={2} top={0} m={4} />
-          <ModalHeader mt={8} mx={6} fontSize="4xl" color="#6D6E70">
+          <ModalHeader
+            mt={8}
+            mx={6}
+            fontSize="4xl"
+            color="#6D6E70"
+            fontFamily="Roboto Slab"
+          >
             Add A New Building Type
           </ModalHeader>
           <Form

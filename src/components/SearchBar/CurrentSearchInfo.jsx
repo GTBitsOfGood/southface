@@ -1,5 +1,13 @@
 import { CloseIcon } from "@chakra-ui/icons";
-import { Box, HStack, IconButton, Tag, Text, Wrap } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  IconButton,
+  Tag,
+  Text,
+  Wrap,
+  useTheme,
+} from "@chakra-ui/react";
 
 const CurrentSearchInfo = ({
   handleSearch,
@@ -9,6 +17,7 @@ const CurrentSearchInfo = ({
   setResetSearch,
   setTagToClear,
 }) => {
+  const theme = useTheme();
   const clearTags = () => {
     setResetSearch(true);
     handleSearch({ searchString: searchString, tags: [] });
@@ -26,7 +35,7 @@ const CurrentSearchInfo = ({
   return (
     <Box mt={5} mb={0}>
       {searchString !== "" && (
-        <Text fontSize="lg" fontWeight="500">
+        <Text fontSize="lg" fontWeight="500" style={theme.textStyles.search}>
           You searched for &quot;{searchString}&quot; in {location}
         </Text>
       )}

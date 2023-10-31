@@ -11,7 +11,13 @@ const ArchivedReportView = () => {
   console.log(archivedReports);
   return (
     <>
-      <Heading fontSize="1.5em">Completed Reports</Heading>
+      <Heading
+        fontSize="1.5em"
+        fontFamily="'Roboto Slab'
+      , serif"
+      >
+        Completed Reports
+      </Heading>
       {user?.isLoggedIn && (
         <Link
           href="/archived-reports"

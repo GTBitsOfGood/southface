@@ -197,6 +197,7 @@ const ReportBuilder = () => {
                     onKeyPress={(e) => {
                       if (e.key === "Enter") e.preventDefault();
                     }}
+                    fontFamily="Roboto Slab"
                   >
                     {nameField || "Untitled Report"}
                   </Heading>
@@ -206,6 +207,7 @@ const ReportBuilder = () => {
                         minW="9rem"
                         variant="Grey-outlined-rounded"
                         onClick={handleDiscardChanges}
+                        fontFamily="'Europa-Bold', sans-serif"
                       >
                         Discard Changes
                       </Button>
@@ -216,6 +218,7 @@ const ReportBuilder = () => {
                         isDisabled={
                           !renamedData || renamedData.trim().length == 0
                         }
+                        fontFamily="'Europa-Bold', sans-serif"
                       >
                         Save Changes
                       </Button>
@@ -228,6 +231,7 @@ const ReportBuilder = () => {
                         setRenaming(true);
                         renameEditableRef.current.focus();
                       }}
+                      fontFamily="'Europa-Bold', sans-serif"
                     >
                       Rename
                     </Button>
@@ -241,6 +245,7 @@ const ReportBuilder = () => {
                   variant="Blue-rounded"
                   onClick={onOpen}
                   isDisabled={report?.cards?.length == 0}
+                  fontFamily="'Europa-Bold', sans-serif"
                 >
                   Complete Report
                 </Button>
