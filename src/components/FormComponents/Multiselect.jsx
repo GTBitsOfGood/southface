@@ -12,7 +12,8 @@ const Multiselect = ({ name, label, entries }) => {
           m={0}
           fontSize="xl"
           fontWeight="bold"
-          color="#8C8C8C"
+          fontFamily="'Europa-Bold', sans-serif"
+          color="#515254"
         >
           {label}
         </FormLabel>

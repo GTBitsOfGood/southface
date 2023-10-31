@@ -2,8 +2,9 @@ import Head from "next/head";
 import PropTypes from "prop-types";
 import React from "react";
 import NavBar from "src/components/NavBar/NavBar";
-import Footer from "../components/NavBar/Footer";
+import "src/styles/fonts.css";
 import { SWRConfig } from "swr";
+import Footer from "../components/NavBar/Footer";
 
 import fetchJson from "src/lib/utils/fetchJson";
 import { southfaceTheme } from "src/styles/theme";

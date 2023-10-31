@@ -1,5 +1,5 @@
+import Document, { Head, Html, Main, NextScript } from "next/document";
 import React from "react";
-import Document, { Html, Head, Main, NextScript } from "next/document";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -17,6 +17,14 @@ class MyDocument extends Document {
             type="image/png"
             href="/static/favicon.png"
           />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap"
+            rel="stylesheet"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap"
+            rel="stylesheet"
+          ></link>
         </Head>
         <body>
           <Main />

@@ -96,14 +96,27 @@ export const southfaceTheme = extendTheme({
       fontWeight: "400",
       fontStyle: "normal",
       headingBold: `'Europa-Regular', sans-serif`,
-      fontColor: "#6D6E70",
+      color: "#6D6E70",
       fontSize: "16px",
     },
     nameBold: {
       fontWeight: "700",
-      fontStyle: "normal",
       headingBold: `'Europa-Bold', sans-serif`,
-      fontColor: "#6D6E70",
+      color: "#6D6E70",
+      fontSize: "16px",
+    },
+
+    // Search text
+    search: {
+      fontWeight: "400",
+      fontFamily: "'Europa-Regular', sans-serif",
+      color: "#6D6E70",
+    },
+
+    searchBox: {
+      fontWeight: "300",
+      fontFamily: "'Europa-Light', sans-serif",
+      color: "#6D6E70",
       fontSize: "16px",
     },
   },

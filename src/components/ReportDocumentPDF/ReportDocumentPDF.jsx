@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ReportDocumentPDF = ({ selectedReport }) => {
+const ReportDocumentPDF = ({ selectedReport, sels }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -97,6 +97,7 @@ const ReportDocumentPDF = ({ selectedReport }) => {
           {selectedReport?.cards.map((item, index) => {
             let card = item.card || item;
             let notes = item.notes || card.notes || [];
+            let imgSelections = (sels || [])[index]?.imgSelections || [];
 
             return (
               <View key={index} styles={styles.card}>
@@ -106,37 +107,39 @@ const ReportDocumentPDF = ({ selectedReport }) => {
                   <Text style={styles.text}>{card.criteria}</Text>
                 </View>
                 <View style={styles.imageSetContainer}>
-                  {card?.images.map((image, index) => {
-                    return image ? (
-                      <View
-                        style={[
-                          styles.imageContainer,
-                          {
-                            paddingRight: index % 2 == 0 ? 5 : 0,
-                            paddingLeft: index % 2 == 0 ? 0 : 5,
-                            paddingBottom:
-                              card.images.length % 2 == 0
-                                ? // looks confusing, just replicates the functions of the gap flex property
-                                  index < card.images.length - 2
+                  {card?.images
+                    .filter((_, index) => imgSelections[index])
+                    .map((image, index) => {
+                      return image ? (
+                        <View
+                          style={[
+                            styles.imageContainer,
+                            {
+                              paddingRight: index % 2 == 0 ? 5 : 0,
+                              paddingLeft: index % 2 == 0 ? 0 : 5,
+                              paddingBottom:
+                                card.images.length % 2 == 0
+                                  ? // looks confusing, just replicates the functions of the gap flex property
+                                    index < card.images.length - 2
+                                    ? 10
+                                    : 0
+                                  : index < card.images.length - 1
                                   ? 10
-                                  : 0
-                                : index < card.images.length - 1
-                                ? 10
-                                : 0,
-                          },
-                        ]}
-                        key={index}
-                      >
-                        <Image
-                          src={image.imageUrl}
-                          alt=""
-                          style={styles.image}
-                        ></Image>
-                      </View>
-                    ) : (
-                      <></>
-                    );
-                  })}
+                                  : 0,
+                            },
+                          ]}
+                          key={index}
+                        >
+                          <Image
+                            src={image.imageUrl}
+                            alt=""
+                            style={styles.image}
+                          ></Image>
+                        </View>
+                      ) : (
+                        <></>
+                      );
+                    })}
                 </View>
                 <View style={styles.section}>
                   {notes.length > 0 && (

@@ -49,6 +49,7 @@ const AddNewNote = ({ newNote, setNewNote, createNewNote }) => {
         color="Grey"
         value={newNote.body}
         fontSize="sm"
+        fontFamily="Europa-Regular"
         onChange={(val) => handleChange(val)}
         submitOnBlur={false}
         onSubmit={() => {

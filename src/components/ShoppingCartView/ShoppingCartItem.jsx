@@ -38,13 +38,18 @@ const ShoppingCartItem = ({ card, selState }) => {
           <Text fontSize="xl" as="b" noOfLines={1}>
             {card.title}
           </Text>
-          <Box>
+          <Box fontFamily="Europa-Regular">
             {selectedImages.length}{" "}
             {`image${selectedImages.length !== 1 ? "s" : ""}`} &middot;{" "}
             {selectedNotes.length}{" "}
             {`note${selectedNotes.length !== 1 ? "s" : ""}`}
           </Box>
-          <Button onClick={removeHandler} variant="Red-rounded" fontSize="xs">
+          <Button
+            onClick={removeHandler}
+            variant="Red-rounded"
+            fontSize="xs"
+            fontFamily="Europa-Bold"
+          >
             Remove from report
           </Button>
         </Box>

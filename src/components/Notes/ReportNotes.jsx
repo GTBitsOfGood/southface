@@ -77,7 +77,7 @@ export default function ReportNotes({
           justifyContent="space-between"
           gap={2}
         >
-          <Heading textColor="#3F3F3F" size="md" mt={3} mb={-2}>
+          <Heading textColor="#515254" size="md" mt={3} mb={-2}>
             Notes ({currentNotes.length})
           </Heading>
           <Button

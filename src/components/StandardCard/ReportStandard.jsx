@@ -23,17 +23,31 @@ const ReportStandard = ({ cardWrapper, card, notes, selState, ...props }) => {
   return (
     <Box {...props} p={0}>
       <HStack justify="space-between">
-        <Heading size="lg" mb={5} maxWidth="80%">
+        <Heading
+          size="lg"
+          mb={5}
+          maxWidth="80%"
+          fontFamily="'Roboto Slab', serif"
+        >
           {card.title}
         </Heading>
         <Box>
           {(!globalEditing || editing) && (
-            <Button variant="Grey-rounded" mr={3} onClick={editHandler}>
+            <Button
+              variant="Grey-rounded"
+              fontFamily="'Europa-Bold', sans-serif"
+              mr={3}
+              onClick={editHandler}
+            >
               {!editing ? "Edit" : "Save changes"}
             </Button>
           )}
           {!globalEditing && (
-            <Button variant="Red-rounded" onClick={removeHandler}>
+            <Button
+              variant="Red-rounded"
+              fontFamily="'Europa-Bold', sans-serif"
+              onClick={removeHandler}
+            >
               Remove
             </Button>
           )}
@@ -44,7 +58,7 @@ const ReportStandard = ({ cardWrapper, card, notes, selState, ...props }) => {
         selState={selState}
         editing={editing}
       />
-      <Heading textColor="#3F3F3F" size="md">
+      <Heading textColor="#515254" size="md">
         Criteria
       </Heading>
       <Box mb={5}>{card.criteria}</Box>
