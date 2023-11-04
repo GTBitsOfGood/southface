@@ -267,7 +267,7 @@ const ReportBuilder = () => {
                   size="2xl"
                 />
               </Flex>
-              <PreviewPDFButton report={report} sels={sels}/>
+              <PreviewPDFButton report={report} sels={sels} />
             </CardBody>
             {sels.map((cardWrapper, index) => (
               <CardBody pl={3} py={0} key={index}>

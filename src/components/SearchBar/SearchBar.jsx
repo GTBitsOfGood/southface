@@ -6,13 +6,13 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  useBreakpointValue,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
   Text,
+  useBreakpointValue,
   useDisclosure,
   useTheme,
 } from "@chakra-ui/react";
@@ -106,7 +106,7 @@ const SearchBarComponent = (props) => {
   };
   return (
     <Flex {...rest} justifyContent="flex-end">
-      <Box position="relative" right={calculateRight()>
+      <Box position="relative" right={calculateRight()}>
         <Flex alignItems="center">
           {/* search bar */}
           <InputGroup size={searchBarSize}>

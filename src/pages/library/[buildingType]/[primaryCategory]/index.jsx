@@ -61,9 +61,7 @@ const LibraryCategoryPage = (props) => {
   if (router.isFallback) {
     return <div></div>;
   }
-  
-  
-  
+
   return (
     <Flex padding={flexPadding} flexDirection="column">
       <HStack

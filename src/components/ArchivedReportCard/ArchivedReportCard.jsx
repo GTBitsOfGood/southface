@@ -90,8 +90,8 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                 width="80%"
                 justifyContent="space-between"
               >
-                <PreviewPDFButton report={report}/> 
-                <PrintToPDFButton report={report} />
+                <PreviewPDFButton report={report} />
+                {/* <PrintToPDFButton report={report} /> */}
                 <Flex gap={1}>
                   <Button
                     onClick={

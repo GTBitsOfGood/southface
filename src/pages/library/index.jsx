@@ -91,12 +91,39 @@ const LibraryPage = ({ initialBuildingTypes }) => {
             ))}
         </Flex>
       </Flex>
-      
+
       <Flex justifyContent="center" position="relative" marginTop="2vh">
         {user?.isAdmin && (
-          <Button onClick={onOpen} variant="Blue-rounded" size="lg">
-            Create New Building Type
-          </Button>
+          <Flex
+            justifyContent="flex-end"
+            position="absolute"
+            bottom="0"
+            right="5vw"
+          >
+            <Flex
+              flexDirection="column"
+              justifyContent="center"
+              gap="1vh"
+              padding="2vh"
+            >
+              <Button onClick={onCreateModalOpen} variant="Blue" size="lg">
+                Create New Building Type
+              </Button>
+              <Button
+                onClick={() => {
+                  if (deleteMode) {
+                    setDeleteMode(!deleteMode);
+                    return;
+                  }
+                  onFirstDeleteModalOpen();
+                }}
+                variant={deleteMode ? "Grey" : "Red"}
+                size="lg"
+              >
+                {deleteMode ? "Return to Home" : "Delete Building Type"}
+              </Button>
+            </Flex>
+          </Flex>
         )}
       </Flex>
 
@@ -104,8 +131,36 @@ const LibraryPage = ({ initialBuildingTypes }) => {
         isOpen={isCreateModalOpen}
         onClose={handleCreateModalClose}
       ></BuildingTypeModal>
-    </Flex>
 
+      <ConfirmActionModal
+        isOpen={isFirstDeleteModalOpen}
+        onClose={onFirstDeleteModalClose}
+        mainText="Are you sure you want to continue?"
+        subText={`Deleting a building type will permanently delete the build type and the standards within the building type`}
+        confirmButtonText="Yes, continue"
+        cancelButtonText="No, return to home"
+        handleAction={() => {
+          setDeleteMode(!deleteMode);
+          onFirstDeleteModalClose();
+        }}
+        handleCancelAction={onFirstDeleteModalClose}
+        isDanger={true}
+      ></ConfirmActionModal>
+
+      <ConfirmActionModal
+        isOpen={isSecondDeleteModalOpen}
+        onClose={onSecondDeleteModalClose}
+        mainText={`Are you sure you want to delete (${capitalizeAndRemoveDash(
+          buildingTypeToDelete.name
+        )})?`}
+        subText="You will permanently delete this building type and will be unable to recover it."
+        confirmButtonText="Yes, delete building type"
+        cancelButtonText="No, return"
+        handleAction={handleDeleteType}
+        handleCancelAction={onSecondDeleteModalClose}
+        isDanger={true}
+      ></ConfirmActionModal>
+    </Flex>
   );
 };
 

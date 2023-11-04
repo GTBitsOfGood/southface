@@ -128,7 +128,7 @@ const NavBar = () => {
 
   console.log(currPage);
   return (
-    <Flex boxShadow="base" py="2" position="relative">
+    <Flex boxShadow="base" py="2">
       {breakpoint === "base" ? (
         <MobileNavBar
           isLoggedIn={user?.isLoggedIn}
@@ -152,6 +152,11 @@ const NavBar = () => {
           <NavLink
             name="Digital Library"
             href={urls.pages.library}
+            style={{
+              color: theme.colors.Grey,
+              fontFamily: theme.fonts.heading,
+              fontWeight: theme.fonts.regular,
+            }}
             _before={{
               content: '""',
               position: "absolute",
@@ -162,6 +167,7 @@ const NavBar = () => {
               background: currPage == "/library" ? "#00ACC8" : "transparent",
             }}
             _hover={{
+              color: "#515254",
               _before: {
                 background: "#00ACC8",
               },
@@ -171,6 +177,11 @@ const NavBar = () => {
             <NavLink
               name="Report Builder"
               href={urls.pages.reportbuilder}
+              style={{
+                color: theme.colors.Grey,
+                fontFamily: theme.fonts.heading,
+                fontWeight: theme.fonts.regular,
+              }}
               _before={{
                 content: '""',
                 position: "absolute",
@@ -192,6 +203,11 @@ const NavBar = () => {
             <NavLink
               name="Add a New Standard"
               href={urls.pages.addstandard}
+              style={{
+                color: theme.colors.Grey,
+                fontFamily: theme.fonts.heading,
+                fontWeight: theme.fonts.regular,
+              }}
               _before={{
                 content: '""',
                 position: "absolute",
@@ -221,6 +237,7 @@ const NavBar = () => {
                   isOpen={isCartOpen}
                   onClose={onCartClose}
                 />
+
                 <Button
                   fontSize="lg"
                   onClick={onCartOpen}

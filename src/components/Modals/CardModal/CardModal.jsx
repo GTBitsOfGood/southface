@@ -271,7 +271,12 @@ const CardModal = ({
             {editing ? (
               <InputControl name="title" size="lg"></InputControl>
             ) : (
-              <Heading mb={2} size={headerFontSize} fontFamily="'Roboto Slab', serif" color="#515254">
+              <Heading
+                mb={2}
+                size={headerFontSize}
+                fontFamily="'Roboto Slab', serif"
+                color="#515254"
+              >
                 {card.title}
               </Heading>
             )}
@@ -422,7 +427,7 @@ const CardModal = ({
                 maxH="8em"
                 overflow="hidden"
                 fontSize="18px"
-                _hover={{overflow:"auto"}}
+                _hover={{ overflow: "auto" }}
               >
                 {card.criteria}
               </Text>
@@ -439,7 +444,7 @@ const CardModal = ({
                 <Flex
                   flexShrink={0}
                   overflow="hidden"
-                  _hover={{overflow:"auto"}}
+                  _hover={{ overflow: "auto" }}
                   flexWrap={editing ? "wrap" : "nowrap"}
                 >
                   {form.values?.tags
