@@ -11,6 +11,7 @@ export default {
     buildingType: {
       create: "/api/buildingType/create/",
       get: "/api/buildingType/get/",
+      delete: "/api/buildingType/delete/",
     },
     card: {
       create: "/api/card/create/",

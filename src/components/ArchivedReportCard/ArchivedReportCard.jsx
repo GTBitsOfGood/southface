@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import PrintToPDFButton from "src/components/PrintToPDFButton";
+import PreviewPDFButton from "src/components/PreviewPDFButton";
 import useActiveReport from "src/lib/hooks/useActiveReport";
 import urls from "src/lib/utils/urls";
 import { removeArchivedReport } from "../../actions/User/ArchivedReport";
@@ -90,6 +90,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                 width="80%"
                 justifyContent="space-between"
               >
+                <PreviewPDFButton report={report}/> 
                 <PrintToPDFButton report={report} />
                 <Flex gap={1}>
                   <Button

@@ -8,7 +8,9 @@ function RecentStandardsView({ maxCards }) {
 
   return (
     <Flex flexDirection="column" gap="16px">
-      <Heading fontSize="1.5em">Recent Standards</Heading>
+      <Heading fontSize="1.5em" fontFamily="'Roboto Slab', serif">
+        Recent Standards
+      </Heading>
       <Link href="/library">
         <Button width="max" variant="Grey-outlined">
           <Text fontSize="xs">See All Standards</Text>

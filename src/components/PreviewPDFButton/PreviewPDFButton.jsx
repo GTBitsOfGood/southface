@@ -15,9 +15,9 @@ import { PDFViewer, usePDF } from "@react-pdf/renderer";
 import ReportDocumentPDF from "../ReportDocumentPDF/ReportDocumentPDF";
 
 const PDFWrapper = (props) => {
-  const { report, error } = props;
+  const { report, sels, error } = props;
 
-  if (!report) {
+  if (!report || !sels) {
     return <>Loading...</>;
   }
 
@@ -28,13 +28,13 @@ const PDFWrapper = (props) => {
   return (
     <Flex justifyContent="center" height="max">
       <PDFViewer style={{ height: "70vh", width: "100%" }}>
-        <ReportDocumentPDF selectedReport={report} />
+        <ReportDocumentPDF selectedReport={report} sels={sels} />
       </PDFViewer>
     </Flex>
   );
 };
 
-const PrintToPDFButton = (props) => {
+const PreviewPDFButton = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [instance] = usePDF({
@@ -44,16 +44,6 @@ const PrintToPDFButton = (props) => {
   return (
     <HStack>
       <Button
-        as={props.report?.cards?.length == 0 ? "" : "a"}
-        px={4}
-        download={props.report?.name}
-        variant="Grey-rounded"
-        href={props.report?.cards?.length == 0 ? "" : instance.url}
-        isDisabled={props.report?.cards?.length == 0}
-      >
-        Download
-      </Button>
-      <Button
         onClick={() => {
           onOpen();
         }}
@@ -61,14 +51,18 @@ const PrintToPDFButton = (props) => {
         px={4}
         isDisabled={props.report?.cards?.length == 0}
       >
-        Print to PDF
+        Preview PDF
         <Modal isOpen={isOpen} onClose={onClose} size="6xl">
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>PDF Preview</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <PDFWrapper error={props.error} report={props.report} />
+              <PDFWrapper
+                error={props.error}
+                report={props.report}
+                sels={props.sels}
+              />
             </ModalBody>
             <ModalFooter>
               <Button variant="Grey-rounded">
@@ -84,4 +78,4 @@ const PrintToPDFButton = (props) => {
   );
 };
 
-export default PrintToPDFButton;
+export default PreviewPDFButton;

@@ -17,7 +17,7 @@ const DeleteImageModal = ({
       mainText="Are you sure you want to delete this image?"
       subText={true}
       confirmButtonText="Yes, delete image."
-      cancelButtonText="No, return to standard."
+      cancelButtonText="No, return to edit."
       handleAction={() => {
         handleDeleteImage(index);
         onClose();

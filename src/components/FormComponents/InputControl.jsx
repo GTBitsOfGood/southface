@@ -8,7 +8,12 @@ const InputControl = ({ name, label, type, ...props }) => {
   return (
     <Control name={name}>
       <HStack>
-        <FormLabel htmlFor={name} m={0} color="Grey">
+        <FormLabel
+          htmlFor={name}
+          m={0}
+          color="Grey"
+          fontFamily="'Europa-Regular', sans-serif"
+        >
           {label}
         </FormLabel>
         <Error name={name} />
@@ -20,6 +25,7 @@ const InputControl = ({ name, label, type, ...props }) => {
         isInvalid={meta.error && meta.touched}
         id={name}
         type={type}
+        fontFamily="'Europa-Regular', sans-serif"
       />
     </Control>
   );

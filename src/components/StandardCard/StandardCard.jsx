@@ -142,7 +142,6 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             mb="0.5"
             display="flex"
             justifyContent="space-between"
-            height="5%"
             width="100%"
             align="stretch"
           >
@@ -157,6 +156,8 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                       rounded="14.7877px"
                       marginLeft={0.5}
                       minWidth="max-content"
+                      fontFamily="'Inter', sans-serif"
+                      color="#515254"
                     >
                       {tag}
                     </Tag>
@@ -166,18 +167,21 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
                 }
               })}
             </Flex>
-            <Button
-              variant={selected ? "Grey" : "Blue-outlined"}
-              onClick={reportAddHandler}
-              flexGrow={0}
-              flexShrink={0}
-              whiteSpace="nowrap"
-              // {...props}
-              w="35%"
-              isDisabled={user?.isLoggedIn ? false : true}
-            >
-              {!selected ? "Add To Report" : "Del From Report"}
-            </Button>
+            {user?.isLoggedIn && (
+              <Button
+                variant={selected ? "Grey" : "Blue-outlined"}
+                onClick={reportAddHandler}
+                flexGrow={0}
+                flexShrink={0}
+                whiteSpace="nowrap"
+                // {...props}
+                w="35%"
+                fontWeight="500"
+                fontFamily="'Inter', sans-serif"
+              >
+                {!selected ? "Add To Report" : "Del From Report"}
+              </Button>
+            )}
           </HStack>
 
           <CardModalWithForm

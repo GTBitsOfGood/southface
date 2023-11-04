@@ -7,6 +7,7 @@ import {
   Text,
   useBreakpointValue,
   useDisclosure,
+  useTheme,
 } from "@chakra-ui/react";
 import Router, { useRouter } from "next/router";
 import { FiChevronsUp } from "react-icons/fi";
@@ -21,7 +22,7 @@ import NavLink from "./NavLink";
 
 const NavBar = () => {
   const breakpoint = useBreakpointValue({ base: "base", md: "md", lg: "lg" });
-
+  const theme = useTheme();
   const router = useRouter();
   const currPage = router.pathname;
   let confirmMessage;
@@ -53,7 +54,14 @@ const NavBar = () => {
 
   const NavLinkAuth = (props) => {
     if (!user?.isLoggedIn) {
-      return <NavLink name="Login" href={urls.pages.login} {...props} />;
+      return (
+        <NavLink
+          fontFamily="Europa-Regular"
+          name="Login"
+          href={urls.pages.login}
+          {...props}
+        />
+      );
     } else {
       return (
         <Flex align="center">
@@ -63,14 +71,14 @@ const NavBar = () => {
                 fontWeight="400"
                 fontStyle="normal"
                 fontFamily="'Europa-Regular', sans-serif"
-                fontColor="#6D6E70"
-              >{`Logged in as `}</Text>
+                color="#6D6E70"
+              >{`Signed in as `}</Text>
               <Text
-                fontWeight="600"
+                fontWeight="700"
                 fontStyle="regular"
                 marginLeft={1}
                 fontFamily="'Europa-Regular', sans-serif"
-                fontColor="#6D6E70"
+                color="#6D6E70"
               >
                 {user.username}
               </Text>
@@ -79,9 +87,12 @@ const NavBar = () => {
 
           <Divider orientation="vertical" h={6} borderColor="#6D6E70" mr={0} />
           <NavLink
-            name="Logout"
+            name="Sign Out"
             color="#00ACC8"
-            fontWeight="700"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontWeight: "700",
+            }}
             onClick={onLogoutOpen}
             {...props}
           />
@@ -210,11 +221,11 @@ const NavBar = () => {
                   isOpen={isCartOpen}
                   onClose={onCartClose}
                 />
-
                 <Button
                   fontSize="lg"
                   onClick={onCartOpen}
                   style={shoppingCartButtonStyle}
+                  fontFamily="Europa-Regular"
                 >
                   {<Icon as={FiChevronsUp} mr="1" fontSize="xl" />} Report
                   Preview

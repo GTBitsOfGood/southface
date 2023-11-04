@@ -32,7 +32,7 @@ const ConfirmActionModal = ({
     {...rest}
   >
     <ModalOverlay />
-    <ModalContent rounded={14} display="flex">
+    <ModalContent rounded={14} display="flex" fontFamily="Europa-Regular">
       <ModalHeader
         pt={10}
         display="flex"
@@ -65,6 +65,8 @@ const ConfirmActionModal = ({
             size="sm"
             fontSize="md"
             width="auto"
+            fontWeight="700"
+            fontFamily="Europa-Bold"
             onClick={handleCancelAction ? handleCancelAction : onClose}
           >
             {cancelButtonText}
@@ -74,6 +76,8 @@ const ConfirmActionModal = ({
             size="sm"
             fontSize="md"
             width="auto"
+            fontWeight="700"
+            fontFamily="Europa-Bold"
             onClick={handleAction}
           >
             {confirmButtonText}

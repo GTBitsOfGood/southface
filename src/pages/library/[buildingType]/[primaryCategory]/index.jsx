@@ -10,6 +10,7 @@ import {
   useTheme,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { getBuildingTypes } from "server/mongodb/actions/BuildingType";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
@@ -25,9 +26,10 @@ import {
 } from "src/lib/utils/utilFunctions";
 
 const LibraryCategoryPage = (props) => {
+  const router = useRouter();
   const theme = useTheme();
   const cardsFromDatabase = props.cardsFromDatabase;
-  const sortedCards = cardsFromDatabase.slice().sort((card1, card2) => {
+  const sortedCards = cardsFromDatabase?.slice().sort((card1, card2) => {
     return card1.title.localeCompare(card2.title);
   });
   const numPagesInitial = props.numPages;
@@ -56,6 +58,12 @@ const LibraryCategoryPage = (props) => {
     lg: { flexPadding: "2rem", breakpoint: "row" },
   });
 
+  if (router.isFallback) {
+    return <div></div>;
+  }
+  
+  
+  
   return (
     <Flex padding={flexPadding} flexDirection="column">
       <HStack
@@ -143,14 +151,27 @@ const LibraryCategoryPage = (props) => {
             paddingY="8rem"
             marginX="8rem"
           >
-            <Text fontSize="2xl" textAlign="center" color="grey" mb={5}>
+            <Text
+              fontSize="2xl"
+              textAlign="center"
+              mb={5}
+              color={theme.colors.boldGrey}
+              fontWeight="400"
+              fontFamily={theme.fonts.heading}
+            >
               Sorry! We couldn&apos;t find any standards matching your search.
               Try changing your spelling, removing filters, or searching for
               something else.
             </Text>
             <Link href={`/library/${props.params.buildingType}`}>
-              <Button variant="Blue" size="md">
-                Return to {props.params.buildingType}
+              <Button
+                variant="Blue"
+                size="md"
+                fontFamily={theme.fonts.headingBold}
+                fontWeight="700"
+                fontSize="16px"
+              >
+                Return to {capitalizeAndRemoveDash(props.params.buildingType)}
               </Button>
             </Link>
           </Flex>
@@ -202,6 +223,7 @@ export async function getStaticProps({ params }) {
       primaryCategory: capitalizeAndRemoveDash(params.primaryCategory),
       params,
     },
+    revalidate: 10,
   };
 }
 
@@ -227,7 +249,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 

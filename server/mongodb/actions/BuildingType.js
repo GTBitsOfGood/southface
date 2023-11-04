@@ -1,5 +1,6 @@
 import mongoDB from "../index";
 import BuildingType from "../models/BuildingType";
+import Card from "../models/Card";
 
 export async function createBuildingType(type) {
   await mongoDB();
@@ -18,7 +19,18 @@ export async function updateBuildingTypeById(id, updatedType) {
 export async function deleteBuildingTypeById(id) {
   await mongoDB();
 
-  await BuildingType.findOneAndRemove({ _id: id });
+  const type = await BuildingType.findOneAndRemove(
+    { _id: id },
+    { select: "name" }
+  );
+  const name = type.name;
+
+  await Card.updateMany(
+    { buildingType: name },
+    { $pull: { buildingType: name } }
+  );
+
+  await Card.deleteMany({ buildingType: { $size: 0 } });
 }
 
 export async function getBuildingTypeById(id) {

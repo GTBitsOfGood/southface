@@ -4,8 +4,8 @@ import {
   // Button,
   Circle,
   Flex,
-  Heading,
   HStack,
+  Heading,
   IconButton,
   Text,
   VStack,
@@ -16,9 +16,9 @@ import useSWR, { mutate } from "swr";
 import { thumbsDown, thumbsUp, thumbsUpAndDown } from "../../actions/Card";
 import useUser from "../../lib/hooks/useUser";
 import AddNewNote from "./AddNewNote";
+import InformationPreview from "./InformationPreview";
 import Note from "./Note";
 import SentimentButton from "./SentimentButton";
-import InformationPreview from "./InformationPreview";
 
 export default function ModalNotes({
   selState,
@@ -102,7 +102,7 @@ export default function ModalNotes({
       justifyContent="space-between"
     >
       <VStack alignItems="left" w="100%" maxH={{ xl: "86%", "2xl": "89%" }}>
-        <Heading size="lg" mt={3} mb={2}>
+        <Heading size="lg" mt={3} mb={2} fontFamily="Roboto Slab">
           Notes
         </Heading>
 
@@ -178,7 +178,9 @@ export default function ModalNotes({
         <Flex alignItems="end">
           <VStack alignItems="left" w="80%">
             <HStack>
-              <Text fontSize="sm">Was this image helpful?</Text>
+              <Text fontSize="sm" fontFamily="Europa-Regular">
+                Was this image helpful?
+              </Text>
               {user?.isAdmin ? (
                 <IconButton
                   bg="none"

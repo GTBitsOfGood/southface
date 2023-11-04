@@ -158,6 +158,7 @@ export async function getStaticProps({ params }) {
       buildingType: capitalizeAndRemoveDash(params.buildingType),
       params,
     },
+    revalidate: 10,
   };
 }
 
@@ -178,7 +179,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 

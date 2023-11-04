@@ -5,7 +5,18 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
+  Flex,
   Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  Textarea,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import useUser from "../../lib/hooks/useUser";
@@ -15,6 +26,9 @@ export default function ReportNotes({
   currentNotes,
   noteToggleHandler,
   handleSaveEdit,
+  createNewNote,
+  newNote,
+  setNewNote,
 }) {
   const { user } = useUser();
   const firstTwo = currentNotes.slice(0, 2);
@@ -48,12 +62,37 @@ export default function ReportNotes({
       </>
     );
 
+  const {
+    isOpen: isOpenAddNote,
+    onOpen: onOpenAddNote,
+    onClose: onCloseAddNote,
+  } = useDisclosure();
+
   return (
     <VStack alignItems="left">
       <VStack alignItems="left" w="100%">
-        <Heading textColor="#3F3F3F" size="md" mt={3} mb={-2}>
-          Notes ({currentNotes.length})
-        </Heading>
+        <Flex
+          width="100%"
+          flexFlow="row nowrap"
+          justifyContent="space-between"
+          gap={2}
+        >
+          <Heading textColor="#515254" size="md" mt={3} mb={-2}>
+            Notes ({currentNotes.length})
+          </Heading>
+          <Button
+            minW="20%"
+            position="absolute"
+            right="12"
+            variant="Blue-rounded"
+            onClick={() => {
+              setNewNote({ body: "", date: new Date() });
+              onOpenAddNote();
+            }}
+          >
+            Add Note
+          </Button>
+        </Flex>
         {currentNotes.length === 0 ? (
           <Box fontStyle="italic" color="Gray">
             No notes added to report
@@ -82,6 +121,65 @@ export default function ReportNotes({
           </Box>
         )}
       </VStack>
+
+      <Modal
+        isOpen={isOpenAddNote}
+        onClose={onCloseAddNote}
+        size={{ base: "xs", md: "2xl", lg: "4xl" }}
+      >
+        <ModalOverlay />
+        <ModalContent rounded={14}>
+          <ModalHeader mt={10} mx={6}>
+            <Flex justify="center">Add Note</Flex>
+          </ModalHeader>
+          <ModalCloseButton />
+
+          <ModalBody>
+            <Box border="1px solid #cccccc" p={3} mb={2} rounded={14}>
+              <Textarea
+                placeholder="Add a new note..."
+                color="Grey"
+                value={newNote.body}
+                fontSize="sm"
+                onChange={(e) =>
+                  setNewNote({ ...newNote, body: e.target.value })
+                }
+                border={0}
+                style={{ resize: "none" }}
+                height="16"
+              />
+              <Text mt={1} color="blue.400" fontWeight="bold" fontSize="small">
+                {new Date().toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </Text>
+            </Box>
+            <Flex justify="end" experimental_spaceX={2}>
+              <Button
+                minW="20%"
+                variant="Grey-outlined"
+                onClick={onCloseAddNote}
+              >
+                Cancel
+              </Button>
+              <Button
+                minW="20%"
+                variant={newNote.body ? "Blue" : "Grey"}
+                onClick={() => {
+                  createNewNote();
+                  setNewNote({ body: "", date: new Date() });
+                  onCloseAddNote();
+                }}
+                isDisabled={!newNote.body}
+              >
+                Done
+              </Button>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </VStack>
   );
 }

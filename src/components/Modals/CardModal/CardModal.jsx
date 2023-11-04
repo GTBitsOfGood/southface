@@ -260,7 +260,7 @@ const CardModal = ({
       size={modalSize}
     >
       <ModalOverlay />
-      <ModalContent rounded={14}>
+      <ModalContent rounded={14} fontFamily="'Europa-Regular', sans-serif">
         <ModalCloseButton right={2} top={0} m={4} />
         <ModalHeader mt={10} mx={mxValue}>
           <Flex
@@ -271,8 +271,7 @@ const CardModal = ({
             {editing ? (
               <InputControl name="title" size="lg"></InputControl>
             ) : (
-              // edit here --> title
-              <Heading mb={2} size={headerFontSize}>
+              <Heading mb={2} size={headerFontSize} fontFamily="'Roboto Slab', serif" color="#515254">
                 {card.title}
               </Heading>
             )}
@@ -304,6 +303,7 @@ const CardModal = ({
                     whiteSpace="nowrap"
                     width="auto"
                     onClick={onDiscardChangesOpen}
+                    fontFamily="Europa-Bold"
                   >
                     Discard Changes
                   </Button>
@@ -318,6 +318,7 @@ const CardModal = ({
                     _active={{ bgColor: "#057b8f" }}
                     onClick={onSaveChangesOpen}
                     isDisabled={form.hasValidationErrors}
+                    fontFamily="Europa-Bold"
                   >
                     Save Changes
                   </Button>
@@ -419,8 +420,9 @@ const CardModal = ({
               <Text
                 lineHeight="normal"
                 maxH="8em"
-                overflow="scroll"
+                overflow="hidden"
                 fontSize="18px"
+                _hover={{overflow:"auto"}}
               >
                 {card.criteria}
               </Text>
@@ -436,7 +438,8 @@ const CardModal = ({
               <Flex flex={1} width="50%" flexDirection="column" gap="1rem">
                 <Flex
                   flexShrink={0}
-                  overflow="scroll"
+                  overflow="hidden"
+                  _hover={{overflow:"auto"}}
                   flexWrap={editing ? "wrap" : "nowrap"}
                 >
                   {form.values?.tags
@@ -610,6 +613,7 @@ const CardModal = ({
                     variant="Red"
                     size="lg"
                     onClick={onDeleteStandardOpen}
+                    fontFamily="Europa-Bold"
                   >
                     Delete Standard
                   </Button>
@@ -623,6 +627,7 @@ const CardModal = ({
                         openImagePreviewCallback();
                       }}
                       fontSize="xs"
+                      fontFamily="Europa-Bold"
                     >
                       View Notes
                     </Button>
@@ -631,6 +636,7 @@ const CardModal = ({
                       variant="Blue-rounded"
                       fontSize="xs"
                       isDisabled={user?.isLoggedIn ? false : true}
+                      fontFamily="Europa-Bold"
                     >
                       {!selected
                         ? "Add to Report"

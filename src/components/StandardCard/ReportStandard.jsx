@@ -4,7 +4,7 @@ import useActiveReport from "../../lib/hooks/useActiveReport";
 import ReportStandardNotes from "./ReportStandardNoteCarousel";
 import StandardCardImageCarousel from "./StandardCardImageCarousel";
 
-const ReportStandard = ({ card, selState, ...props }) => {
+const ReportStandard = ({ cardWrapper, card, notes, selState, ...props }) => {
   const { removeFromReport } = useActiveReport();
   const { useGlobalEditing: [globalEditing, setGlobalEditing] = [] } = {
     ...props,
@@ -23,17 +23,31 @@ const ReportStandard = ({ card, selState, ...props }) => {
   return (
     <Box {...props} p={0}>
       <HStack justify="space-between">
-        <Heading size="lg" mb={5} maxWidth="80%">
+        <Heading
+          size="lg"
+          mb={5}
+          maxWidth="80%"
+          fontFamily="'Roboto Slab', serif"
+        >
           {card.title}
         </Heading>
         <Box>
           {(!globalEditing || editing) && (
-            <Button variant="Grey-rounded" mr={3} onClick={editHandler}>
+            <Button
+              variant="Grey-rounded"
+              fontFamily="'Europa-Bold', sans-serif"
+              mr={3}
+              onClick={editHandler}
+            >
               {!editing ? "Edit" : "Save changes"}
             </Button>
           )}
           {!globalEditing && (
-            <Button variant="Red-rounded" onClick={removeHandler}>
+            <Button
+              variant="Red-rounded"
+              fontFamily="'Europa-Bold', sans-serif"
+              onClick={removeHandler}
+            >
               Remove
             </Button>
           )}
@@ -44,13 +58,14 @@ const ReportStandard = ({ card, selState, ...props }) => {
         selState={selState}
         editing={editing}
       />
-      <Heading textColor="#3F3F3F" size="md">
+      <Heading textColor="#515254" size="md">
         Criteria
       </Heading>
       <Box mb={5}>{card.criteria}</Box>
       <ReportStandardNotes
         cols={3}
-        notes={card.notes}
+        cardWrapper={cardWrapper}
+        notes={notes}
         selState={selState}
         card={card}
         editing={editing}

@@ -4,15 +4,15 @@ import {
   Card,
   CardBody,
   Flex,
-  HStack,
   Heading,
+  HStack,
   Link,
   Spinner,
   StackDivider,
   Text,
-  VStack,
   useBreakpointValue,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -27,7 +27,7 @@ import {
   removeArchivedReport,
 } from "../actions/User/ArchivedReport";
 import ConfirmActionModal from "../components/Modals/ConfirmActionModal";
-import PrintToPDFButton from "../components/PrintToPDFButton";
+import PreviewPDFButton from "../components/PreviewPDFButton";
 import useUser from "../lib/hooks/useUser";
 
 const ReportBuilder = () => {
@@ -201,6 +201,7 @@ const ReportBuilder = () => {
                     onKeyPress={(e) => {
                       if (e.key === "Enter") e.preventDefault();
                     }}
+                    fontFamily="Roboto Slab"
                   >
                     {nameField || "Untitled Report"}
                   </Heading>
@@ -210,6 +211,7 @@ const ReportBuilder = () => {
                         minW="9rem"
                         variant="Grey-outlined-rounded"
                         onClick={handleDiscardChanges}
+                        fontFamily="'Europa-Bold', sans-serif"
                       >
                         Discard Changes
                       </Button>
@@ -220,6 +222,7 @@ const ReportBuilder = () => {
                         isDisabled={
                           !renamedData || renamedData.trim().length == 0
                         }
+                        fontFamily="'Europa-Bold', sans-serif"
                       >
                         Save Changes
                       </Button>
@@ -232,6 +235,7 @@ const ReportBuilder = () => {
                         setRenaming(true);
                         renameEditableRef.current.focus();
                       }}
+                      fontFamily="'Europa-Bold', sans-serif"
                     >
                       Rename
                     </Button>
@@ -245,6 +249,7 @@ const ReportBuilder = () => {
                   variant="Blue-rounded"
                   onClick={onOpen}
                   isDisabled={report?.cards?.length == 0}
+                  fontFamily="'Europa-Bold', sans-serif"
                 >
                   Complete Report
                 </Button>
@@ -262,12 +267,14 @@ const ReportBuilder = () => {
                   size="2xl"
                 />
               </Flex>
-              <PrintToPDFButton report={report} />
+              <PreviewPDFButton report={report} sels={sels}/>
             </CardBody>
             {sels.map((cardWrapper, index) => (
               <CardBody pl={3} py={0} key={index}>
                 <ReportStandard
+                  cardWrapper={cardWrapper}
                   card={cardWrapper.card}
+                  notes={cardWrapper.notes}
                   selState={cardWrapper}
                   useGlobalEditing={useGlobalEditing}
                 />
