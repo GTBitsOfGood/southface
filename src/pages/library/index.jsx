@@ -60,12 +60,17 @@ const LibraryPage = ({ initialBuildingTypes }) => {
 
   return (
     <Flex direction="column">
-      <Flex justifyContent="center" paddingX="10vw">
+      <Flex
+        justifyContent="center"
+        paddingX="10vw"
+        marginTop={{ base: "2vw", md: "0" }}
+      >
         <Flex
           direction={{ base: "column", md: "row" }}
           justifyContent="space-between"
           height={{ base: "full", md: "40vw" }}
           width={{ base: "40vw", md: "full" }}
+          gap="2vw"
         >
           {buildingTypes &&
             buildingTypes.map((type) => (
@@ -92,14 +97,13 @@ const LibraryPage = ({ initialBuildingTypes }) => {
         </Flex>
       </Flex>
 
-      <Flex justifyContent="center" position="relative" marginTop="2vh">
+      <Flex
+        justifyContent={{ base: "center", md: "flex-end" }}
+        position="relative"
+        marginTop="2vh"
+      >
         {user?.isAdmin && (
-          <Flex
-            justifyContent="flex-end"
-            position="absolute"
-            bottom="0"
-            right="5vw"
-          >
+          <Flex justifyContent="flex-end" bottom="0" right="5vw">
             <Flex
               flexDirection="column"
               justifyContent="center"

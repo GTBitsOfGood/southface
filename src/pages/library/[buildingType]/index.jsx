@@ -125,7 +125,12 @@ function CategoriesPage({ buildingType }) {
           />
         </>
       ) : (
-        <Flex flexWrap="wrap" gap="4rem" mt="2rem" marginLeft="5rem">
+        <Flex
+          flexWrap="wrap"
+          gap="4rem"
+          mt="2rem"
+          marginLeft={{ base: "1", md: "5rem" }}
+        >
           <CategoryCards routerQuery={router.query} />
         </Flex>
       )}

@@ -17,13 +17,13 @@ import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import PaginationTab from "src/components/PaginationTab";
 import SearchBar from "src/components/SearchBar";
 import CurrentSearchInfo from "src/components/SearchBar/CurrentSearchInfo";
-import StandardCardTable from "src/components/StandardCardTable";
 import useSearch from "src/lib/hooks/useSearch";
 import { primaryCategoryNames } from "src/lib/utils/constants";
 import {
   capitalizeAndRemoveDash,
   uncapitalizeAndAddDash,
 } from "src/lib/utils/utilFunctions";
+import StandardCardTable from "../../../../components/StandardCardTable/StandardCardTable";
 
 const LibraryCategoryPage = (props) => {
   const router = useRouter();
