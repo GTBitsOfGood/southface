@@ -97,8 +97,14 @@ const SearchBarComponent = (props) => {
     return "263px";
   };
   return (
-    <Flex {...rest} justifyContent="flex-end" position="relative" gap="10px">
-      <Box position="absolute" right={calculateRight()}>
+    <Flex
+      {...rest}
+      flexDirection={{ base: "column", md: "row" }}
+      justifyContent="flex-end"
+      position="relative"
+      gap="10px"
+    >
+      <Box right={calculateRight()}>
         <InputGroup size="lg">
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="lightGrey" />
@@ -114,77 +120,79 @@ const SearchBarComponent = (props) => {
           />
         </InputGroup>
       </Box>
-      <Tabs variant="enclosed" h="full" align="end">
-        {isOpen ? (
-          <TabList>
-            <Box
-              border="1px solid Grey"
-              borderBottom="none"
-              roundedTop={8}
-              roundedBottom={0}
-            >
-              <Tab
-                color="Grey"
-                bgColor="#F2F2F2"
-                border="none"
-                onClick={onToggle}
-                fontSize="lg"
-                px={4}
-                pb={isOpen ? 5 : 3}
+      <Flex gap="1vh" justifyContent="space-between">
+        <Tabs variant="enclosed" h="full" align="end">
+          {isOpen ? (
+            <TabList>
+              <Box
+                border="1px solid Grey"
+                borderBottom="none"
+                roundedTop={8}
+                roundedBottom={0}
               >
-                <Text pr={3} fontFamily="'Europa-Regular', sans-serif">
-                  Filter {getNumTagsFiltered(values)}
-                </Text>
-                <ChevronUpIcon />
-              </Tab>
-            </Box>
-          </TabList>
-        ) : (
-          <Button
-            p={4}
-            pt={3}
-            rounded={8}
-            bgColor="#F2F2F2"
-            color="Grey"
-            border="1px solid Grey"
-            _hover={{ bgColor: "#d9d9d9" }}
-            _active={{ bgColor: "#c1c1c1" }}
-            size="lg"
-            fontFamily="'Europa-Regular', sans-serif"
-            fontSize="lg"
-            onClick={onToggle}
-          >
-            <Text fontFamily="'Europa-Regular', sans-serif" pr={3}>
-              Filter {getNumTagsFiltered(values)}
-            </Text>
-            <ChevronDownIcon />
-          </Button>
-        )}
-        <TabPanels display={isOpen ? "initial" : "none"} mr="-100px">
-          <TabPanel
-            width={{ base: "75em", "2xl": "80em" }}
-            border="1px solid Grey"
-            rounded={8}
-            roundedTopRight={0}
-            bgColor="#F2F2F2"
-            position="relative"
-          >
-            <Tag height="65vh" overflow="auto" />
+                <Tab
+                  color="Grey"
+                  bgColor="#F2F2F2"
+                  border="none"
+                  onClick={onToggle}
+                  fontSize="lg"
+                  px={4}
+                  pb={isOpen ? 5 : 3}
+                >
+                  <Text pr={3} fontFamily="'Europa-Regular', sans-serif">
+                    Filter {getNumTagsFiltered(values)}
+                  </Text>
+                  <ChevronUpIcon />
+                </Tab>
+              </Box>
+            </TabList>
+          ) : (
             <Button
               p={4}
-              variant="Blue"
-              pos="absolute"
-              right="2em"
-              bottom="2em"
-              onClick={() => handleApplyFiltersClick(handleSubmit)}
+              pt={3}
+              rounded={8}
+              bgColor="#F2F2F2"
+              color="Grey"
+              border="1px solid Grey"
+              _hover={{ bgColor: "#d9d9d9" }}
+              _active={{ bgColor: "#c1c1c1" }}
+              size="lg"
+              fontFamily="'Europa-Regular', sans-serif"
+              fontSize="lg"
+              onClick={onToggle}
             >
-              Apply Filters {getNumTagsFiltered(values)}
+              <Text fontFamily="'Europa-Regular', sans-serif" pr={3}>
+                Filter {getNumTagsFiltered(values)}
+              </Text>
+              <ChevronDownIcon />
             </Button>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+          )}
+          <TabPanels display={isOpen ? "initial" : "none"} mr="-100px">
+            <TabPanel
+              width={{ base: "75em", "2xl": "80em" }}
+              border="1px solid Grey"
+              rounded={8}
+              roundedTopRight={0}
+              bgColor="#F2F2F2"
+              position="relative"
+            >
+              <Tag height="65vh" overflow="auto" />
+              <Button
+                p={4}
+                variant="Blue"
+                pos="absolute"
+                right="2em"
+                bottom="2em"
+                onClick={() => handleApplyFiltersClick(handleSubmit)}
+              >
+                Apply Filters {getNumTagsFiltered(values)}
+              </Button>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
 
-      <SearchButton handleSubmit={handleSubmit} />
+        <SearchButton handleSubmit={handleSubmit} />
+      </Flex>
     </Flex>
   );
 };

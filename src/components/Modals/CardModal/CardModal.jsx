@@ -15,6 +15,7 @@ import {
   ModalOverlay,
   Tag,
   Text,
+  useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import urls from "lib/utils/urls";
@@ -240,6 +241,10 @@ const CardModal = ({
     onCloseCardModal();
   };
 
+  const headerFontSize = useBreakpointValue({ base: "md", md: "lg", lg: "xl" });
+  const modalSize = useBreakpointValue({ base: "md", md: "2xl", lg: "4xl" });
+  const mxValue = useBreakpointValue({ base: 2, lg: 6 });
+
   return (
     <Modal
       {...rest}
@@ -252,12 +257,12 @@ const CardModal = ({
           onCloseCardModal();
         }
       }}
-      size={{ base: "xs", md: "2xl", lg: "4xl" }}
+      size={modalSize}
     >
       <ModalOverlay />
       <ModalContent rounded={14} fontFamily="'Europa-Regular', sans-serif">
         <ModalCloseButton right={2} top={0} m={4} />
-        <ModalHeader mt={10} mx={6}>
+        <ModalHeader mt={10} mx={mxValue}>
           <Flex
             justifyContent="space-between"
             align={editing ? "center" : "start"}
@@ -266,7 +271,12 @@ const CardModal = ({
             {editing ? (
               <InputControl name="title" size="lg"></InputControl>
             ) : (
-              <Heading mb={2} fontFamily="'Roboto Slab', serif" color="#515254">
+              <Heading
+                mb={2}
+                size={headerFontSize}
+                fontFamily="'Roboto Slab', serif"
+                color="#515254"
+              >
                 {card.title}
               </Heading>
             )}
@@ -325,7 +335,7 @@ const CardModal = ({
           </Flex>
         </ModalHeader>
 
-        <ModalBody mx={6}>
+        <ModalBody mx={mxValue}>
           <Flex flexDirection="column">
             <FormControl
               isInvalid={() => form?.values?.images.length == 0}
@@ -417,7 +427,7 @@ const CardModal = ({
                 maxH="8em"
                 overflow="hidden"
                 fontSize="18px"
-                _hover={{overflow:"auto"}}
+                _hover={{ overflow: "auto" }}
               >
                 {card.criteria}
               </Text>
@@ -434,7 +444,7 @@ const CardModal = ({
                 <Flex
                   flexShrink={0}
                   overflow="hidden"
-                  _hover={{overflow:"auto"}}
+                  _hover={{ overflow: "auto" }}
                   flexWrap={editing ? "wrap" : "nowrap"}
                 >
                   {form.values?.tags
@@ -453,7 +463,7 @@ const CardModal = ({
                             fontSize="1rem"
                             px="1rem"
                             whiteSpace="nowrap"
-                            mx="4px"
+                            mx={mxValue}
                             color="#515254"
                           >
                             {tag}
@@ -496,7 +506,7 @@ const CardModal = ({
                         fontSize="1rem"
                         px="1rem"
                         whiteSpace="nowrap"
-                        mx="4px"
+                        mx={mxValue}
                         size="xs"
                         color="#515254"
                         _hover={{ bg: "#515254", color: "#E2E3E5" }}
@@ -613,14 +623,15 @@ const CardModal = ({
                     Delete Standard
                   </Button>
                 ) : (
-                  <>
+                  // edit here
+                  <Flex gap={2}>
                     <Button
                       variant="Grey-outlined-rounded"
-                      size="lg"
                       onClick={() => {
                         setSelectedImage(0);
                         openImagePreviewCallback();
                       }}
+                      fontSize="xs"
                       fontFamily="Europa-Bold"
                     >
                       View Notes
@@ -628,7 +639,7 @@ const CardModal = ({
                     <Button
                       onClick={reportAddHandler}
                       variant="Blue-rounded"
-                      size="lg"
+                      fontSize="xs"
                       isDisabled={user?.isLoggedIn ? false : true}
                       fontFamily="Europa-Bold"
                     >
@@ -638,7 +649,7 @@ const CardModal = ({
                         ? "Save changes"
                         : "Edit In Report"}
                     </Button>
-                  </>
+                  </Flex>
                 )}
               </Flex>
             </Flex>

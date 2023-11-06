@@ -15,6 +15,7 @@ import urls from "src/lib/utils/urls";
 import { capitalizeAndRemoveDash } from "src/lib/utils/utilFunctions";
 import useSWR from "swr";
 import BuildingType from "../../components/BuildingTypeCard";
+
 const LibraryPage = ({ initialBuildingTypes }) => {
   const {
     isOpen: isFirstDeleteModalOpen,
@@ -27,6 +28,7 @@ const LibraryPage = ({ initialBuildingTypes }) => {
     onClose: onSecondDeleteModalClose,
   } = useDisclosure();
   const [deleteMode, setDeleteMode] = useState(false);
+
   const { user } = useUser();
   const {
     isOpen: isCreateModalOpen,
@@ -55,14 +57,20 @@ const LibraryPage = ({ initialBuildingTypes }) => {
     onSecondDeleteModalClose();
     setDeleteMode(false);
   };
+
   return (
-    <>
-      <Box height="78vh" paddingX="10vw" position="relative">
+    <Flex direction="column">
+      <Flex
+        justifyContent="center"
+        paddingX="10vw"
+        marginTop={{ base: "2vw", md: "0" }}
+      >
         <Flex
+          direction={{ base: "column", md: "row" }}
           justifyContent="space-between"
-          alignItems="center"
-          height="40vw"
-          width="full"
+          height={{ base: "full", md: "40vw" }}
+          width={{ base: "40vw", md: "full" }}
+          gap="2vw"
         >
           {buildingTypes &&
             buildingTypes.map((type) => (
@@ -87,13 +95,15 @@ const LibraryPage = ({ initialBuildingTypes }) => {
               </Box>
             ))}
         </Flex>
+      </Flex>
+
+      <Flex
+        justifyContent={{ base: "center", md: "flex-end" }}
+        position="relative"
+        marginTop="2vh"
+      >
         {user?.isAdmin && (
-          <Flex
-            justifyContent="flex-end"
-            position="absolute"
-            bottom="0"
-            right="5vw"
-          >
+          <Flex justifyContent="flex-end" bottom="0" right="5vw">
             <Flex
               flexDirection="column"
               justifyContent="center"
@@ -119,11 +129,13 @@ const LibraryPage = ({ initialBuildingTypes }) => {
             </Flex>
           </Flex>
         )}
-      </Box>
+      </Flex>
+
       <BuildingTypeModal
         isOpen={isCreateModalOpen}
         onClose={handleCreateModalClose}
       ></BuildingTypeModal>
+
       <ConfirmActionModal
         isOpen={isFirstDeleteModalOpen}
         onClose={onFirstDeleteModalClose}
@@ -138,6 +150,7 @@ const LibraryPage = ({ initialBuildingTypes }) => {
         handleCancelAction={onFirstDeleteModalClose}
         isDanger={true}
       ></ConfirmActionModal>
+
       <ConfirmActionModal
         isOpen={isSecondDeleteModalOpen}
         onClose={onSecondDeleteModalClose}
@@ -151,7 +164,7 @@ const LibraryPage = ({ initialBuildingTypes }) => {
         handleCancelAction={onSecondDeleteModalClose}
         isDanger={true}
       ></ConfirmActionModal>
-    </>
+    </Flex>
   );
 };
 

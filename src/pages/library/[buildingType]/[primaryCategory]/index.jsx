@@ -1,11 +1,12 @@
 import {
-  Box,
   Breadcrumb,
   BreadcrumbItem,
   Button,
   Flex,
   HStack,
+  Spacer,
   Text,
+  useBreakpointValue,
   useTheme,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -16,13 +17,13 @@ import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import PaginationTab from "src/components/PaginationTab";
 import SearchBar from "src/components/SearchBar";
 import CurrentSearchInfo from "src/components/SearchBar/CurrentSearchInfo";
-import StandardCardTable from "src/components/StandardCardTable";
 import useSearch from "src/lib/hooks/useSearch";
 import { primaryCategoryNames } from "src/lib/utils/constants";
 import {
   capitalizeAndRemoveDash,
   uncapitalizeAndAddDash,
 } from "src/lib/utils/utilFunctions";
+import StandardCardTable from "../../../../components/StandardCardTable/StandardCardTable";
 
 const LibraryCategoryPage = (props) => {
   const router = useRouter();
@@ -51,57 +52,69 @@ const LibraryCategoryPage = (props) => {
     setCards,
   });
 
+  const { flexPadding, breakpoint } = useBreakpointValue({
+    base: { flexPadding: "1rem", breakpoint: "column" },
+    md: { flexPadding: "2rem", breakpoint: "row" },
+    lg: { flexPadding: "2rem", breakpoint: "row" },
+  });
+
   if (router.isFallback) {
     return <div></div>;
   }
+
   return (
-    <Flex alignItems="stretch" flexDirection="column" p="2rem">
-      <HStack w="full" position="relative">
-        <Breadcrumb
-          separator="/"
-          fontWeight="semibold"
-          position="absolute"
-          top={2}
-        >
-          <BreadcrumbItem
-            style={{
-              color: theme.colors.lightGrey,
-              fontFamily: theme.fonts.heading,
-              fontWeight: theme.fonts.regular,
-            }}
-          >
-            <Link href="/library">Digital Library</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem
-            style={{
-              color: theme.colors.lightGrey,
-              fontFamily: theme.fonts.heading,
-              fontWeight: theme.fonts.regular,
-            }}
-          >
-            <Link href={`/library/${props.params.buildingType}`}>
-              {props.buildingType}
-            </Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem
-            color={theme.colors.boldGrey}
-            fontFamily={theme.fonts.headingBold}
-            fontWeight="300"
-          >
-            <Text>{props.primaryCategory}</Text>
-          </BreadcrumbItem>
-        </Breadcrumb>
+    <Flex padding={flexPadding} flexDirection="column">
+      <HStack
+        minWidth="max-content"
+        alignItems="flex-start"
+        gap="2"
+        flexDirection={breakpoint}
+      >
+        <Flex p="2">
+          <Breadcrumb separator="/" fontWeight="semibold">
+            <BreadcrumbItem
+              style={{
+                color: theme.colors.lightGrey,
+                fontFamily: theme.fonts.heading,
+                fontWeight: theme.fonts.regular,
+              }}
+            >
+              <Link href="/library">Digital Library</Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              style={{
+                color: theme.colors.lightGrey,
+                fontFamily: theme.fonts.heading,
+                fontWeight: theme.fonts.regular,
+              }}
+            >
+              <Link href={`/library/${props.params.buildingType}`}>
+                {props.buildingType}
+              </Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              style={{
+                color: theme.colors.boldGrey,
+                fontFamily: theme.fonts.headingBold,
+                fontWeight: theme.fonts.bold,
+              }}
+            >
+              <Text>{props.primaryCategory}</Text>
+            </BreadcrumbItem>
+          </Breadcrumb>
+        </Flex>
 
-        <Box flex="1"></Box>
-
-        <SearchBar
-          pageType={props.primaryCategory}
-          handleSearch={handleSearch}
-          resetSearch={resetSearch}
-          tagToClear={tagToClear}
-          setTagToClear={setTagToClear}
-          setResetSearch={setResetSearch}
-        />
+        <Spacer />
+        <Flex>
+          <SearchBar
+            pageType={props.primaryCategory}
+            handleSearch={handleSearch}
+            resetSearch={resetSearch}
+            tagToClear={tagToClear}
+            setTagToClear={setTagToClear}
+            setResetSearch={setResetSearch}
+          />
+        </Flex>
       </HStack>
 
       <Text
@@ -123,17 +136,9 @@ const LibraryCategoryPage = (props) => {
       />
 
       {numPages > 0 ? (
-        <>
+        <Flex>
           <StandardCardTable cards={cards} setCards={setCards} />
-          <PaginationTab
-            numPages={numPages}
-            alignSelf="center"
-            border="1px solid black"
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            setCards={setCards}
-          />
-        </>
+        </Flex>
       ) : (
         <div>
           <Flex
@@ -169,6 +174,19 @@ const LibraryCategoryPage = (props) => {
             </Link>
           </Flex>
         </div>
+      )}
+
+      {numPages > 0 && (
+        <Flex marginTop="16px" justifyContent="center" alignItems="center">
+          <PaginationTab
+            numPages={numPages}
+            border="1px solid black"
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            alignItems="center"
+            setCards={setCards}
+          />
+        </Flex>
       )}
     </Flex>
   );

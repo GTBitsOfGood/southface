@@ -1,11 +1,12 @@
 import {
-  Box,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   Flex,
   HStack,
+  Spacer,
   Text,
+  useBreakpointValue,
   useTheme,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -14,11 +15,11 @@ import { getBuildingTypes } from "server/mongodb/actions/BuildingType";
 import { getCardsCount, getCardsPagination } from "server/mongodb/actions/Card";
 import CategoryCards from "src/components/CategoryCards";
 import PaginationTab from "src/components/PaginationTab";
-import SearchBar from "src/components/SearchBar";
 import CurrentSearchInfo from "src/components/SearchBar/CurrentSearchInfo";
 import StandardCardTable from "src/components/StandardCardTable";
 import useSearch from "src/lib/hooks/useSearch";
 import { capitalizeAndRemoveDash } from "src/lib/utils/utilFunctions";
+import SearchBar from "../../../components/SearchBar/SearchBar";
 
 function CategoriesPage({ buildingType }) {
   const theme = useTheme();
@@ -28,6 +29,11 @@ function CategoriesPage({ buildingType }) {
   const [numPages, setNumPages] = useState(1);
   // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState(1);
+  const { flexPadding, breakpoint } = useBreakpointValue({
+    base: { flexPadding: "1rem", breakpoint: "column" },
+    md: { flexPadding: "2rem", breakpoint: "row" },
+    lg: { flexPadding: "2rem", breakpoint: "row" },
+  });
 
   const {
     handleSearch,
@@ -46,43 +52,48 @@ function CategoriesPage({ buildingType }) {
   console.log(cards);
 
   return (
-    <Flex padding="2rem" flexDirection="column" height="78vh">
-      <HStack w="full" position="relative">
-        <Breadcrumb
-          separator="/"
-          position="absolute"
-          top={3}
-          style={{ fontSize: "16px" }}
-        >
-          <BreadcrumbItem
-            style={{
-              color: theme.colors.lightGrey,
-              fontFamily: theme.fonts.heading,
-              fontWeight: theme.fonts.regular,
-            }}
-          >
-            <BreadcrumbLink href="/library">Digital Library</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem
-            style={{
-              color: theme.colors.boldGrey,
-              fontFamily: theme.fonts.headingBold,
-              fontWeight: theme.fonts.bold,
-            }}
-          >
-            <Text>{buildingType}</Text>
-          </BreadcrumbItem>
-        </Breadcrumb>
-        <Box flex="1"></Box>
-        <SearchBar
-          pageType={buildingType}
-          handleSearch={handleSearch}
-          resetSearch={resetSearch}
-          tagToClear={tagToClear}
-          setTagToClear={setTagToClear}
-          setResetSearch={setResetSearch}
-        />
+    <Flex padding={flexPadding} flexDirection="column">
+      <HStack
+        minWidth="max-content"
+        alignItems="flex-start"
+        gap="2"
+        flexDirection={breakpoint}
+      >
+        <Flex p="2">
+          <Breadcrumb separator="/" style={{ fontSize: "16px" }}>
+            <BreadcrumbItem
+              style={{
+                color: theme.colors.lightGrey,
+                fontFamily: theme.fonts.heading,
+                fontWeight: theme.fonts.regular,
+              }}
+            >
+              <BreadcrumbLink href="/library">Digital Library</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              style={{
+                color: theme.colors.boldGrey,
+                fontFamily: theme.fonts.headingBold,
+                fontWeight: theme.fonts.bold,
+              }}
+            >
+              <Text>{buildingType}</Text>
+            </BreadcrumbItem>
+          </Breadcrumb>
+        </Flex>
+        <Spacer />
+        <Flex>
+          <SearchBar
+            pageType={buildingType}
+            handleSearch={handleSearch}
+            resetSearch={resetSearch}
+            tagToClear={tagToClear}
+            setTagToClear={setTagToClear}
+            setResetSearch={setResetSearch}
+          />
+        </Flex>
       </HStack>
+
       <Text
         fontSize="32px"
         fontFamily={theme.fonts.body}
@@ -114,7 +125,12 @@ function CategoriesPage({ buildingType }) {
           />
         </>
       ) : (
-        <Flex flexWrap="wrap" gap="4rem" mt="2rem" marginLeft="5rem">
+        <Flex
+          flexWrap="wrap"
+          gap="4rem"
+          mt="2rem"
+          marginLeft={{ base: "1", md: "5rem" }}
+        >
           <CategoryCards routerQuery={router.query} />
         </Flex>
       )}

@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Card,
   CardBody,
@@ -7,6 +6,7 @@ import {
   Divider,
   Flex,
   Heading,
+  useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -20,6 +20,8 @@ import StandardCard from "./StandardCard";
 import defaultReportProps from "./defaultReportProps";
 
 const ArchivedReportCard = ({ report = defaultReportProps }) => {
+  const flexDirection = useBreakpointValue({ base: "column", md: "row" });
+
   const [hasReportCard, setHasReportCard] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -56,65 +58,78 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
       <Flex>
         <Card
           boxShadow="md"
-          p="6"
           rounded="mlgd"
           bg="white"
           marginBottom="10"
           flex="1"
         >
           <CardHeader>
-            <Box display="flex" justifyContent="space-between">
-              <Box display="flex" alignItems="center">
+            <Flex
+              justifyContent="space-between"
+              alignItems={flexDirection === "column" ? "flex-start" : "center"}
+              flexDirection={flexDirection}
+            >
+              <Flex flexDirection="column">
                 <Heading size="xl" mr={6}>
                   {report.name || "Untitled Report"}
                 </Heading>
-                <PreviewPDFButton report={report}/>
-              </Box>
-              <Box>
-                <Button
-                  onClick={
-                    activeReport.cards?.length > 0 ? onOpenEdit : handleEdit
-                  }
-                  marginRight="0.5rem"
-                  borderRadius="full"
-                  variant="Blue-outlined"
-                >
-                  Edit Report
-                </Button>
-                <Button onClick={onOpen} variant="Red-rounded">
-                  Remove from Reports
-                </Button>
-                <ConfirmActionModal
-                  isOpen={isOpen}
-                  onClose={onClose}
-                  mainText="Are you sure you want to remove this report"
-                  confirmButtonText="Yes, remove report"
-                  cancelButtonText="No, cancel"
-                  handleAction={handleRemove}
-                  isDanger={false}
-                />
-                <ConfirmActionModal
-                  isOpen={isOpenEdit}
-                  onClose={onCloseEdit}
-                  mainText="You have a current report in progress. Are you sure you want to edit this report?"
-                  confirmButtonText="Yes, edit report"
-                  cancelButtonText="No, cancel"
-                  handleAction={handleEdit}
-                  isDanger={true}
-                />
-              </Box>
-            </Box>
-            <Box textColor="gray">
-              Completed on{" "}
-              {new Date(report.date).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </Box>
+                <Flex textColor="gray" flexDirection={flexDirection}>
+                  Completed on{" "}
+                  {new Date(report.date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </Flex>
+              </Flex>
+
+              <Flex
+                flexDirection="row"
+                alignItems="center"
+                gap={2}
+                width="80%"
+                justifyContent="space-between"
+              >
+                <PreviewPDFButton report={report} />
+                {/* <PrintToPDFButton report={report} /> */}
+                <Flex gap={1}>
+                  <Button
+                    onClick={
+                      activeReport.cards?.length > 0 ? onOpenEdit : handleEdit
+                    }
+                    borderRadius="full"
+                    variant="Blue-outlined"
+                  >
+                    Edit Report
+                  </Button>
+                  <Button onClick={onOpen} variant="Red-rounded">
+                    Remove from Reports
+                  </Button>
+                </Flex>
+              </Flex>
+            </Flex>
+            <ConfirmActionModal
+              isOpen={isOpen}
+              onClose={onClose}
+              mainText="Are you sure you want to remove this report"
+              confirmButtonText="Yes, remove report"
+              cancelButtonText="No, cancel"
+              handleAction={handleRemove}
+              isDanger={false}
+            />
+            <ConfirmActionModal
+              isOpen={isOpenEdit}
+              onClose={onCloseEdit}
+              mainText="You have a current report in progress. Are you sure you want to edit this report?"
+              confirmButtonText="Yes, edit report"
+              cancelButtonText="No, cancel"
+              handleAction={handleEdit}
+              isDanger={true}
+            />
           </CardHeader>
+
           <CardBody>
-            <Flex marginRight="15em">
+            <Flex flexDirection={flexDirection}>
               {report.cards.map((card, index) => (
                 <Flex key={index}>
                   <StandardCard
