@@ -24,6 +24,11 @@ export async function getTagsObject() {
   // const tag = Tag.find().sort({ name: 1 });
   const tag = await Tag.aggregate([
     {
+      $sort: {
+        name: 1,
+      },
+    },
+    {
       $group: {
         _id: { $toLower: { $substr: ["$name", 0, 1] } },
         tags: {
