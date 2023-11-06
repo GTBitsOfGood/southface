@@ -47,6 +47,11 @@ export async function getTagsObject() {
       },
     },
     {
+      $addFields: {
+        tags: { $sortArray: { input: "$tags", sortBy: { name: 1 } } },
+      },
+    },
+    {
       $group: {
         _id: null,
         tagsByChar: {

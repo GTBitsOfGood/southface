@@ -55,6 +55,7 @@ function createSearchQuery(
             { title: { $regex: regex } },
             { criteria: { $regex: regex } },
             { "notes.body": { $regex: regex } },
+            { tags: { $regex: regex } },
           ],
         },
         { tags: { $all: searchFilterTags } },
@@ -68,6 +69,7 @@ function createSearchQuery(
         { title: { $regex: regex } },
         { criteria: { $regex: regex } },
         { "notes.body": { $regex: regex } },
+        { tags: { $regex: regex } },
       ],
     };
   } else if (searchFilterTags) {
