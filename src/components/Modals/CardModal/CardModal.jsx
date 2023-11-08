@@ -44,6 +44,7 @@ const CardModal = ({
   registerField,
   handleDeleteStandard,
   setImagesToDelete,
+  filteredTags,
   ...rest
 }) => {
   const {
@@ -448,7 +449,18 @@ const CardModal = ({
                   flexWrap={editing ? "wrap" : "nowrap"}
                 >
                   {form.values?.tags
-                    ? form.values.tags.map((tag, index) => (
+                    ? form.values.tags.toSorted((a, b) => {
+                      if (filteredTags) {
+                        if (filteredTags.includes(a) && filteredTags.includes(b)) {
+                          return a.localeCompare(b)
+                        } else if (filteredTags.includes(a)) {
+                          return -1
+                        } else if (filteredTags.includes(b)) {
+                          return 1
+                        }
+                      }
+                      return a.localeCompare(b)
+                    }).map((tag, index) => (
                         <Box
                           key={index}
                           position="relative"

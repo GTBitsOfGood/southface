@@ -6,7 +6,7 @@ import useSelectionArray from "../../lib/hooks/useSelectionArray";
 import ReportDocumentPDF from "../ReportDocumentPDF/ReportDocumentPDF";
 import StandardCard from "../StandardCard/StandardCard";
 
-const StandardCardTable = ({ cards, setCards, ...props }) => {
+const StandardCardTable = ({ cards, setCards, filteredTags, ...props }) => {
   const [isClientSide, setClientSide] = useState(false);
 
   const { enablepdfexport = false } = { ...props };
@@ -52,6 +52,7 @@ const StandardCardTable = ({ cards, setCards, ...props }) => {
               card={card}
               cards={cards}
               setCards={setCards}
+              filteredTags={filteredTags}
               selState={selArr[index]}
               height="90%"
               w="400px"

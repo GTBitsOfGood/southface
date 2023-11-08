@@ -1,13 +1,13 @@
 import urls from "lib/utils/urls";
 import { useEffect, useState } from "react";
 import { Form } from "react-final-form";
+import { parseNestedPaths } from "src/lib/utils/utilFunctions";
 import useSWR, { useSWRConfig } from "swr";
 import {
   deleteCardById,
   revalidate,
   updateCardById,
 } from "../../../actions/Card";
-import { parseNestedPaths } from "src/lib/utils/utilFunctions";
 
 import { createTag } from "../../../actions/Tag";
 import cardEditValidator from "./cardEditValidator";
@@ -16,6 +16,7 @@ import CardModal from "./CardModal";
 const CardModalWithForm = ({
   card,
   cards,
+  filteredTags,
   isOpenCardModal,
   onCloseCardModal,
   setCards,
@@ -150,6 +151,7 @@ const CardModalWithForm = ({
               selState={selState}
               selected={selected}
               setImagesToDelete={setImagesToDelete}
+              filteredTags={filteredTags}
             />
           );
         }}
