@@ -4,8 +4,9 @@ import { useState } from "react";
 import { login } from "src/actions/User";
 import useUser from "src/lib/hooks/useUser";
 import urls from "src/lib/utils/urls";
+import SalesforceLoginButton from "./SalesforceLoginButton";
 
-const LoginComponent = () => {
+const LoginComponent = ({ ssoUrl }) => {
   const { mutateUser } = useUser({
     redirectIfFound: true,
     redirectTo: urls.pages.library,
@@ -61,6 +62,7 @@ const LoginComponent = () => {
       >
         Log In
       </Button>
+      <SalesforceLoginButton ssoUrl={ssoUrl} />
       {/* <Center gap="0.3em">
         {"Don't have an account?"}
         <Link>Sign Up</Link>
