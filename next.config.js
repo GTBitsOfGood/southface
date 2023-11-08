@@ -20,6 +20,5 @@ module.exports = withImages({
         permanent: true,
       },
     ];
-  },
-  webpack5: true  
+  }
 });
