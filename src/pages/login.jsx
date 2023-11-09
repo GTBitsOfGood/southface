@@ -16,7 +16,8 @@ const LoginPage = ({ ssoUrl }) => {
 export async function getStaticProps() {
   return {
     props: {
-      ssoUrl: `https://southface.my.salesforce.com/idp/endpoint/HttpRedirect?SAMLRequest=${generateEncodedRequest()}`,
+      // ssoUrl: `https://southface.my.salesforce.com/idp/endpoint/HttpRedirect?SAMLRequest=${generateEncodedRequest()}`,
+      ssoUrl: `https://southface.my.site.com/earthcraftcommunity/idp/endpoint/HttpRedirect?SAMLRequest=${generateEncodedRequest()}`,
     },
   };
 }
