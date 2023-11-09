@@ -32,7 +32,7 @@ export function decodeSAMLResponse(encodedSAMLResp) {
 export function validateSAMLResponse(samlResp) {
   const xml = new DOMParser().parseFromString(samlResp, "text/xml");
 
-  const statusElement = xml.getElementsByTagName("samlp:StatusCode")[0];
+  const statusElement = xml.getElementsByTagName("saml2p:StatusCode")[0];
   const statusStr = statusElement.getAttribute("Value");
 
   return statusStr === SUCCESS_VALUE;
