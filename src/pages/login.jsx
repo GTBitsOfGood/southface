@@ -19,7 +19,7 @@ export async function getStaticProps() {
       // ssoUrl: `https://southface.my.salesforce.com/idp/endpoint/HttpRedirect?SAMLRequest=${generateEncodedRequest()}`,
       // ssoUrl: `https://southface.my.site.com/earthcraftcommunity/idp/endpoint/HttpRedirect?SAMLRequest=${generateEncodedRequest()}`,
       // ssoUrl: `https://southface.my.salesforce.com/idp/login?app=0spQi000000009h&SAMLRequest=${generateEncodedRequest()}`,
-      ssoUrl: `https://southface.my.site.com/earthcraftcommunity/idp/login?app=0spQi000000009h`,
+      ssoUrl: `https://southface.my.site.com/earthcraftcommunity/idp/login?app=0spQi000000009h&SAMLRequest=${generateEncodedRequest()}`,
     },
   };
 }
