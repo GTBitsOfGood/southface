@@ -7,11 +7,7 @@ const handler = async (req, res) => {
     const userId = req.session.user.id;
 
     if (req.body.cards) {
-      const formattedArchivedReport = req.body.cards.map((cardObject) => {
-        return cardObject.card;
-      });
-
-      await addToArchivedReport(userId, formattedArchivedReport, req.body.name);
+      await addToArchivedReport(userId, req.body.cards, req.body.name);
     }
 
     await updateActiveReport(userId, []);

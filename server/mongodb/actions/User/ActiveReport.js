@@ -11,7 +11,7 @@ const removeNullCards = (report) => {
 export const getActiveReport = async (userId) => {
   try {
     await mongoDB();
-    const user = await User.findById(userId).populate({ path: populateString });
+    const user = await User.findById(userId).populate("activeReport.cards.card");
     if (user == null) {
       throw new Error();
     }
