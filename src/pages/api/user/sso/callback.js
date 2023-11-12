@@ -46,7 +46,7 @@ const handler = async (req, res) => {
     };
     await req.session.save();
 
-    return res.redirect("/library");
+    return res.redirect(302, "/library");
   } catch (e) {
     return res.status(200).json({
       error: e,
