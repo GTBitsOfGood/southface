@@ -18,7 +18,9 @@ describe("decodeSAMLResponse", () => {
     // Pulled from https://www.samltool.com/generic_sso_res.php
     const expected = readFixture("saml_response.xml");
 
-    expect(decodeSAMLResponse(encoded)).toEqual(expected);
+    expect(decodeSAMLResponse(encoded).replace(/\s/g, "")).toEqual(
+      expected.replace(/\s/g, "")
+    );
   });
 });
 
@@ -27,12 +29,18 @@ describe("validateSAMLResponse", () => {
     // SAML response pulled from https://www.samltool.com/generic_sso_res.php
     const samlResp = readFixture("saml_response.xml");
 
-    expect(validateSAMLResponse(samlResp)).toEqual(true);
+    expect(validateSAMLResponse(samlResp, "test-certificate")).toEqual(true);
   });
 
-  test("validate bad SAML response", () => {
-    const samlResp = readFixture("bad_saml_response.xml");
+  test("validate wrong cert SAML response", () => {
+    const samlResp = readFixture("saml_response_wrong_cert.xml");
 
-    expect(validateSAMLResponse(samlResp)).toEqual(false);
+    expect(validateSAMLResponse(samlResp, "test-certificate")).toEqual(false);
+  });
+
+  test("validate bad status SAML response", () => {
+    const samlResp = readFixture("saml_response_bad_status.xml");
+
+    expect(validateSAMLResponse(samlResp, "test-certificate")).toEqual(false);
   });
 });

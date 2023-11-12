@@ -1,5 +1,4 @@
 import { JSDOM } from "jsdom";
-import { inflateRawSync } from "zlib";
 
 // No great options for XML parsing that exposed required attributes,
 // so pulling in JSDOM just to use the DOMParser.
@@ -11,13 +10,11 @@ const SUCCESS_VALUE = "urn:oasis:names:tc:SAML:2.0:status:Success";
 /**
  * Decodes an encoded SAML response.
  *
- * @param {String} encodedSAMLResp Base64-encoded and compressed SAML response
+ * @param {String} encodedSAMLResp Base64-encoded SAML response
  */
 export function decodeSAMLResponse(encodedSAMLResp) {
-  // Inflate and base64-decode
-  const samlResp = inflateRawSync(
-    Buffer.from(encodedSAMLResp, "base64")
-  ).toString("utf-8");
+  // Base64-decode
+  const samlResp = Buffer.from(encodedSAMLResp, "base64").toString("utf-8");
 
   return samlResp;
 }
@@ -29,11 +26,14 @@ export function decodeSAMLResponse(encodedSAMLResp) {
  * @param {String} samlResp decoded SAML response (XML)
  * @returns {Boolean} true if successful
  */
-export function validateSAMLResponse(samlResp) {
+export function validateSAMLResponse(samlResp, certificate) {
   const xml = new DOMParser().parseFromString(samlResp, "text/xml");
+
+  const certificateElement = xml.getElementsByTagName("ds:X509Certificate")[0];
+  const certificateStr = certificateElement.textContent.replace(/\s/g, "");
 
   const statusElement = xml.getElementsByTagName("saml2p:StatusCode")[0];
   const statusStr = statusElement.getAttribute("Value");
 
-  return statusStr === SUCCESS_VALUE;
+  return certificateStr === certificate && statusStr === SUCCESS_VALUE;
 }

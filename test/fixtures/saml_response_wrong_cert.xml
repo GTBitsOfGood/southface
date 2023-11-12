@@ -24,7 +24,7 @@
     <ds:SignatureValue>test-signature</ds:SignatureValue>
     <ds:KeyInfo>
       <ds:X509Data>
-        <ds:X509Certificate>test-certificate</ds:X509Certificate>
+        <ds:X509Certificate>wrong-certificate</ds:X509Certificate>
       </ds:X509Data>
     </ds:KeyInfo>
   </ds:Signature>
@@ -55,7 +55,7 @@
       <ds:SignatureValue>test-signature</ds:SignatureValue>
       <ds:KeyInfo>
         <ds:X509Data>
-          <ds:X509Certificate>test-certificate</ds:X509Certificate>
+          <ds:X509Certificate>wrong-certificate</ds:X509Certificate>
         </ds:X509Data>
       </ds:KeyInfo>
     </ds:Signature>

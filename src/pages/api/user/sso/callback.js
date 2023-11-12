@@ -4,21 +4,21 @@ import {
   validateSAMLResponse,
 } from "../../../../../server/actions/sso";
 
+const SALESFORCE_CERTIFICATE = process.env["SALESFORCE_CERTIFICATE"];
+if (!SALESFORCE_CERTIFICATE && process.env["NODE_ENV"] === "production")
+  throw new Error("SALESFORCE_CERTIFICATE env var must be set");
+
 // TODO determine how Salesforce will fetch this
 // @route   GET/POST api/user/sso/callback
 // @desc    URL to provide to the IdP
 // @access  Public
 const handler = async (req, res) => {
-  const {
-    query: { SAMLResponse: encodedSAMLResp },
-  } = req;
-
-  console.log(encodedSAMLResp);
+  const { SAMLResponse: encodedSAMLResp } = req.body;
 
   let success, error;
   try {
     const decodedSAMLResp = decodeSAMLResponse(encodedSAMLResp);
-    success = validateSAMLResponse(decodedSAMLResp);
+    success = validateSAMLResponse(decodedSAMLResp, SALESFORCE_CERTIFICATE);
   } catch (e) {
     console.error("Error processing SAML response");
     console.error(e);
