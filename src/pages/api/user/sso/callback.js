@@ -14,38 +14,45 @@ if (!SALESFORCE_CERTIFICATE && process.env["NODE_ENV"] === "production")
 // @desc    URL to provide to the IdP
 // @access  Public
 const handler = async (req, res) => {
-  const { SAMLResponse: encodedSAMLResp } = req.body;
-
-  let result;
   try {
-    const decodedSAMLResp = decodeSAMLResponse(encodedSAMLResp);
-    result = validateSAMLResponse(decodedSAMLResp, SALESFORCE_CERTIFICATE);
+    const { SAMLResponse: encodedSAMLResp } = req.body;
+
+    let result;
+    try {
+      const decodedSAMLResp = decodeSAMLResponse(encodedSAMLResp);
+      result = validateSAMLResponse(decodedSAMLResp, SALESFORCE_CERTIFICATE);
+    } catch (e) {
+      console.error(e);
+      result = { error: "Error processing SAML response" };
+    }
+
+    if (result.error) {
+      return res.status(500).json({
+        success: false,
+        message: `${result.error}: Contact an administrator`,
+      });
+    }
+
+    const user = await getUserFromSalesforceUserId(result.userId);
+    if (!user)
+      return res.status(404).json({
+        success: false,
+        message: "A Southface user has not been provisioned for this user yet",
+      });
+
+    req.session.user = {
+      ...user,
+      isLoggedIn: true,
+    };
+    await req.session.save();
+
+    return res.redirect("/library");
   } catch (e) {
-    console.error(e);
-    result = { error: "Error processing SAML response" };
-  }
-
-  if (result.error) {
-    return res.status(500).json({
-      success: false,
-      message: `${result.error}: Contact an administrator`,
+    return res.status(200).json({
+      error: e,
+      stack: e.stack,
     });
   }
-
-  const user = await getUserFromSalesforceUserId(result.userId);
-  if (!user)
-    return res.status(404).json({
-      success: false,
-      message: "A Southface user has not been provisioned for this user yet",
-    });
-
-  req.session.user = {
-    ...user,
-    isLoggedIn: true,
-  };
-  await req.session.save();
-
-  return res.redirect("/library");
 };
 
 export default withSessionRoute(handler);
