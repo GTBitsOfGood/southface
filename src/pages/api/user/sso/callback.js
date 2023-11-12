@@ -3,6 +3,7 @@ import {
   decodeSAMLResponse,
   validateSAMLResponse,
 } from "../../../../../server/actions/sso";
+import { getUserFromSalesforceUserId } from "../../../../../server/mongodb/actions/User";
 
 const SALESFORCE_CERTIFICATE = process.env["SALESFORCE_CERTIFICATE"];
 if (!SALESFORCE_CERTIFICATE && process.env["NODE_ENV"] === "production")
@@ -15,39 +16,36 @@ if (!SALESFORCE_CERTIFICATE && process.env["NODE_ENV"] === "production")
 const handler = async (req, res) => {
   const { SAMLResponse: encodedSAMLResp } = req.body;
 
-  let success, error;
+  let result;
   try {
     const decodedSAMLResp = decodeSAMLResponse(encodedSAMLResp);
-    success = validateSAMLResponse(decodedSAMLResp, SALESFORCE_CERTIFICATE);
+    result = validateSAMLResponse(decodedSAMLResp, SALESFORCE_CERTIFICATE);
   } catch (e) {
-    console.error("Error processing SAML response");
     console.error(e);
-    error = e;
+    result = { error: "Error processing SAML response" };
   }
 
-  if (success) {
-    // TODO check SAML response to determine user
-    const user = {
-      id: "",
-    };
-    req.session.user = {
-      ...user,
-      isLoggedIn: true,
-    };
-    await req.session.save();
-
-    return res.redirect("/library");
-  } else if (error) {
+  if (result.error) {
     return res.status(500).json({
       success: false,
-      message: "Internal error: contact an administrator",
-    });
-  } else {
-    return res.status(403).json({
-      success: false,
-      message: "Failed to authenticate user",
+      message: `${result.error}: Contact an administrator`,
     });
   }
+
+  const user = await getUserFromSalesforceUserId(result.userId);
+  if (!user)
+    return res.status(404).json({
+      success: false,
+      message: "A Southface user has not been provisioned for this user yet",
+    });
+
+  req.session.user = {
+    ...user,
+    isLoggedIn: true,
+  };
+  await req.session.save();
+
+  return res.redirect("/library");
 };
 
 export default withSessionRoute(handler);

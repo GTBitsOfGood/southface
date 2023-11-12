@@ -24,16 +24,31 @@ export function decodeSAMLResponse(encodedSAMLResp) {
  * TODO determine if there are other indicators of success/failure
  *
  * @param {String} samlResp decoded SAML response (XML)
- * @returns {Boolean} true if successful
+ * @returns {Object} result        Object containing results of the validation
+ * @returns {String} result.error  Message describing an error if any occurred
+ * @returns {String} result.userId ID of the user that was authenticated
  */
 export function validateSAMLResponse(samlResp, certificate) {
   const xml = new DOMParser().parseFromString(samlResp, "text/xml");
 
   const certificateElement = xml.getElementsByTagName("ds:X509Certificate")[0];
   const certificateStr = certificateElement.textContent.replace(/\s/g, "");
+  if (certificateStr !== certificate)
+    return { error: "Could verify authenticity of response" };
 
   const statusElement = xml.getElementsByTagName("saml2p:StatusCode")[0];
   const statusStr = statusElement.getAttribute("Value");
+  if (statusStr !== SUCCESS_VALUE)
+    return { error: "Response was not successful" };
 
-  return certificateStr === certificate && statusStr === SUCCESS_VALUE;
+  const attributes = xml.getElementsByTagName("saml2:Attribute");
+  let userId;
+  for (let attribute of attributes) {
+    if (attribute.getAttribute("Name") === "userId")
+      userId = attribute.textContent.trim();
+  }
+
+  if (!userId) return { error: "Could not find user ID" };
+
+  return { userId };
 }

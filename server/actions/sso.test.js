@@ -28,19 +28,23 @@ describe("validateSAMLResponse", () => {
   test("validate successful SAML response", () => {
     // SAML response pulled from https://www.samltool.com/generic_sso_res.php
     const samlResp = readFixture("saml_response.xml");
+    const result = validateSAMLResponse(samlResp, "test-certificate");
 
-    expect(validateSAMLResponse(samlResp, "test-certificate")).toEqual(true);
+    expect(result.error).toBeUndefined();
+    expect(result.userId).toEqual("1234");
   });
 
   test("validate wrong cert SAML response", () => {
     const samlResp = readFixture("saml_response_wrong_cert.xml");
+    const result = validateSAMLResponse(samlResp, "test-certificate");
 
-    expect(validateSAMLResponse(samlResp, "test-certificate")).toEqual(false);
+    expect(result.error).toEqual("Could verify authenticity of response");
   });
 
   test("validate bad status SAML response", () => {
     const samlResp = readFixture("saml_response_bad_status.xml");
+    const result = validateSAMLResponse(samlResp, "test-certificate");
 
-    expect(validateSAMLResponse(samlResp, "test-certificate")).toEqual(false);
+    expect(result.error).toEqual("Response was not successful");
   });
 });
