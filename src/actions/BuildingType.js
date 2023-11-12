@@ -1,4 +1,5 @@
 import urls from "src/lib/utils/urls";
+//small change
 
 export const getBuildingTypes = async () => {
   return fetch(urls.api.buildingType.get, {

@@ -3,3 +3,4 @@
 
 YARN_COMMAND=lint:fix docker-compose up --build --exit-code-from earthcraft earthcraft
 YARN_COMMAND=prettier docker-compose up --build --exit-code-from earthcraft earthcraft
+YARN_COMMAND=test docker-compose up --build --exit-code-from earthcraft earthcraft

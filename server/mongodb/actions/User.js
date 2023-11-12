@@ -72,6 +72,21 @@ export const getUserFromId = async (id) => {
   }
 };
 
+export const getUserFromSalesforceUserId = async (salesforceUserId) => {
+  await mongoDB();
+  try {
+    const user = await User.findOne({ salesforceUserId });
+    if (!user) return null;
+
+    return {
+      id: user._id,
+      isAdmin: user.isAdmin,
+    };
+  } catch (e) {
+    throw new Error("Invalid token!");
+  }
+};
+
 export const getUserArchivedReports = async (id) => {
   await mongoDB();
   try {

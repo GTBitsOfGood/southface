@@ -110,6 +110,10 @@ const UserSchema = new Schema({
       },
     },
   },
+  salesforceUserId: {
+    type: String,
+    required: false,
+  },
 });
 
 export { UserSchema };
