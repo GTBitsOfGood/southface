@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// Connection to database
 export default async () => {
   if (mongoose.connections[0].readyState) return;
 
