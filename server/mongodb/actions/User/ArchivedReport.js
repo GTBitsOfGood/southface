@@ -9,7 +9,11 @@ export const addToArchivedReport = async (userId, cards, name) => {
       userId,
       {
         $addToSet: {
-          archivedReports: { cards: cards, name: name, date: new Date() },
+          archivedReports: {
+            cards: cards,
+            name: name,
+            date: new Date()
+          },
         },
       },
       { upsert: true }

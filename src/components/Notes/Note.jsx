@@ -45,8 +45,8 @@ const Note = ({
       setCurrNote(note.body);
       return;
     }
-    const newNotes = notes.map((n, idx) => {
-      if (idx === currNoteIdx) {
+    const newNotes = notes.map((n) => {
+      if (n._id === note._id) {
         n.body = currNote;
         n.date = new Date();
       }

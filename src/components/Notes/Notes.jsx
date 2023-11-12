@@ -32,7 +32,7 @@ const Notes = ({ cardWrapper, cardId, notes, inReport = false, ...rest }) => {
 
   const handleSaveEdit = async (newNotes) => {
     if (inReport) {
-      await changeInReport({ ...cardWrapper, notes: newNotes });
+      await changeInReport({ ...cardWrapper, notes: newNotes.reverse() });
     } else {
       const updatedCard = await updateCardById(cardId, {
         notes: newNotes.map((n) => n).reverse(),

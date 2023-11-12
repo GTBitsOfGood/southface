@@ -146,20 +146,23 @@ const ReportDocumentPDF = ({ selectedReport, sels }) => {
                     <Text style={styles.category}>Notes</Text>
                   )}
                   <View>
-                    {notes?.map((note, index) => {
-                      return (
-                        <View style={styles.notes} key={index}>
-                          <Text style={styles.text}>{note.body}</Text>
-                          <Text style={styles.textSmall}>
-                            {new Date(note.date).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })}
-                          </Text>
-                        </View>
-                      );
-                    })}
+                    {notes
+                      .slice()
+                      .reverse()
+                      .map((note, index) => {
+                        return (
+                          <View style={styles.notes} key={index}>
+                            <Text style={styles.text}>{note.body}</Text>
+                            <Text style={styles.textSmall}>
+                              {new Date(note.date).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })}
+                            </Text>
+                          </View>
+                        );
+                      })}
                   </View>
                 </View>
                 <View style={styles.hr}></View>

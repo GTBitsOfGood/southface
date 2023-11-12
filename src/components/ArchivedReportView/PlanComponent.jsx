@@ -17,7 +17,10 @@ const PlanComponent = ({ report }) => {
             background="black"
           ></Box>
           <Text fontSize=".75em">
-            {report.cards.reduce((acc, { images }) => acc + images.length, 0)}{" "}
+            {report.cards.reduce(
+              (acc, { card: { images } }) => acc + images.length,
+              0
+            )}{" "}
             images
           </Text>
         </HStack>

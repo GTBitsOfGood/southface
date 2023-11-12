@@ -76,7 +76,7 @@ export const getUserArchivedReports = async (id) => {
   await mongoDB();
   try {
     const user = await User.findOne({ _id: id }).populate(
-      "archivedReports.cards"
+      "archivedReports.cards.card"
     );
 
     if (user == null) {

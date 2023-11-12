@@ -39,17 +39,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
   };
 
   const handleEdit = () => {
-    const cards = [];
-    const newReport = { ...report };
-    newReport.cards.forEach((card) => {
-      cards.push({
-        card: card,
-        imgSelections: Array(card.images.length).fill(true),
-        noteSelections: Array(card.notes.length).fill(true),
-      });
-    });
-    newReport.cards = cards;
-    updateReport(newReport);
+    updateReport({ ...report });
     router.push(urls.pages.reportbuilder);
   };
 
@@ -90,7 +80,7 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
                 width="80%"
                 justifyContent="space-between"
               >
-                <PreviewPDFButton report={report} />
+                <PreviewPDFButton report={report} sels={report.cards} />
                 {/* <PrintToPDFButton report={report} /> */}
                 <Flex gap={1}>
                   <Button
@@ -130,12 +120,13 @@ const ArchivedReportCard = ({ report = defaultReportProps }) => {
 
           <CardBody>
             <Flex flexDirection={flexDirection}>
-              {report.cards.map((card, index) => (
+              {report.cards.map((cardWrapper, index) => (
                 <Flex key={index}>
                   <StandardCard
-                    title={card.title}
-                    images={card.images}
-                    criteria={card.criteria}
+                    title={cardWrapper.card.title}
+                    images={cardWrapper.card.images}
+                    imgSelections={cardWrapper.imgSelections}
+                    criteria={cardWrapper.card.criteria}
                   />
                   {index < report.cards.length - 1 && (
                     <Divider orientation="vertical" />

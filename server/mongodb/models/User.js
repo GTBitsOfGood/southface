@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { CardSchema } from "./Card";
 
 const { Schema } = mongoose;
 
@@ -21,7 +20,41 @@ const UserSchema = new Schema({
   archivedReports: {
     type: [
       {
-        cards: [CardSchema],
+        cards: [
+          {
+            card: {
+              type: Schema.Types.ObjectId,
+              ref: "Card",
+            },
+            imgSelections: {
+              type: [Boolean],
+            },
+            noteSelections: {
+              type: [Boolean],
+            },
+            notes: {
+              type: [
+                {
+                  body: {
+                    type: String,
+                    required: true,
+                  },
+                  userId: {
+                    type: String,
+                    required: true,
+                    default: "63c5be6fa7d3c693fa1d335a", // userId for testNonAdmin account
+                  },
+                  date: {
+                    type: Date,
+                    required: true,
+                    default: Date.now(),
+                  },
+                },
+              ],
+              default: [],
+            },
+          },
+        ],
         name: String,
         date: Date,
       },
