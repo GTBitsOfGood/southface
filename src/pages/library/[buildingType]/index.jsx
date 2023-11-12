@@ -112,7 +112,7 @@ function CategoriesPage({ buildingType }) {
       />
       {cards.length > 0 ? (
         <>
-          <StandardCardTable cards={cards} setCards={setCards} />
+          <StandardCardTable cards={cards} setCards={setCards} filteredTags={tags}/>
           <PaginationTab
             numPages={numPages}
             alignSelf="center"

@@ -137,7 +137,7 @@ const LibraryCategoryPage = (props) => {
 
       {numPages > 0 ? (
         <Flex>
-          <StandardCardTable cards={cards} setCards={setCards} />
+          <StandardCardTable cards={cards} setCards={setCards} filteredTags={tags}/>
         </Flex>
       ) : (
         <div>

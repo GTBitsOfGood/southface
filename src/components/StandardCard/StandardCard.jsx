@@ -5,9 +5,8 @@ import {
   Heading,
   HStack,
   Image,
-  Tag,
   Text,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
@@ -17,7 +16,7 @@ import useActiveReport from "../../lib/hooks/useActiveReport";
 import useUser from "../../lib/hooks/useUser";
 import CardModalWithForm from "../Modals/CardModal";
 
-const StandardCard = ({ card, cards, setCards, ...props }) => {
+const StandardCard = ({ card, cards, setCards, filteredTags, ...props }) => {
   const { user } = useUser();
   const {
     isOpen: isOpenCardModal,
@@ -145,28 +144,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             width="100%"
             align="stretch"
           >
-            <Flex overflowY="auto" flexShrink={0} width="65%">
-              {card.tags.map((tag, index) => {
-                if (index < 3) {
-                  return (
-                    <Tag
-                      key={index}
-                      textTransform="capitalize"
-                      bgColor="#E2E3E5"
-                      rounded="14.7877px"
-                      marginLeft={0.5}
-                      minWidth="max-content"
-                      fontFamily="'Inter', sans-serif"
-                      color="#515254"
-                    >
-                      {tag}
-                    </Tag>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-            </Flex>
+            <div/>
             {user?.isLoggedIn && (
               <Button
                 variant={selected ? "Grey" : "Blue-outlined"}
@@ -189,6 +167,7 @@ const StandardCard = ({ card, cards, setCards, ...props }) => {
             onCloseCardModal={onCloseCardModal}
             card={card}
             cards={cards}
+            filteredTags={filteredTags}
             setCards={setCards}
             selected={selected}
             selState={selState}
