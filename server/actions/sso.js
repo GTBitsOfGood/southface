@@ -29,7 +29,7 @@ export function decodeSAMLResponse(encodedSAMLResp) {
  * @returns {String} result.userId ID of the user that was authenticated
  */
 export function validateSAMLResponse(samlResp, certificate) {
-  const xml = new DOMParser().parseFromString(samlResp, "text/xml");
+  const xml = new DOMParser().parseFromString(atob(samlResp), "text/xml");
 
   const certificateElement = xml.getElementsByTagName("ds:X509Certificate")[0];
   const certificateStr = certificateElement.textContent.replace(/\s/g, "");
