@@ -26,7 +26,8 @@ export async function login({ username, password }) {
   };
 }
 
-export async function signUp({ username, password, isAdmin, salesforceUserId }) {
+export const signUp = async ( username, password, isAdmin, salesforceUserId ) => {
+  console.log(username);
   if (username == null) {
     throw new Error("All parameters must be provided!");
   }
@@ -86,7 +87,7 @@ export const getUserFromId = async (id) => {
   }
 };
 
-export const getUserFromSalesforceUserId = async (salesforceUserId, permissionLevel) => {
+export const getUserFromSalesforceUserId = async (salesforceUserId, permissionLevel, username) => {
   await mongoDB();
   try {
     let user;
@@ -94,10 +95,10 @@ export const getUserFromSalesforceUserId = async (salesforceUserId, permissionLe
     if (!user) {
       // We create the user only if they have the correct NetlifyPermissionLevel
       if (permissionLevel == "General") {
-        user = await signUp("Salesforce User", null, false, salesforceUserId);
+        user = await signUp(username, undefined, false, salesforceUserId);
       }
       else if (permissionLevel == "Administrator") {
-        user = await signUp("Salesforce User", null, true, salesforceUserId);
+        user = await signUp(username, undefined, true, salesforceUserId);
       }else {
         return null;
       }
@@ -108,6 +109,7 @@ export const getUserFromSalesforceUserId = async (salesforceUserId, permissionLe
       isAdmin: user.isAdmin,
     };
   } catch (e) {
+    console.log(e);
     throw new Error("Invalid token!");
   }
 };

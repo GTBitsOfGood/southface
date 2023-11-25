@@ -15,10 +15,10 @@ if (!SALESFORCE_CERTIFICATE && process.env["NODE_ENV"] === "production")
 // @access  Public
 const handler = async (req, res) => {
   const { SAMLResponse: encodedSAMLResp } = req.body;
-
   let result;
+  let val = Buffer.from(encodedSAMLResp, 'utf-8');
   try {
-    const decodedSAMLResp = decodeSAMLResponse(encodedSAMLResp);
+    const decodedSAMLResp = decodeSAMLResponse(val);
     result = validateSAMLResponse(decodedSAMLResp, SALESFORCE_CERTIFICATE);
   } catch (e) {
     console.error(e);
@@ -32,7 +32,7 @@ const handler = async (req, res) => {
     });
   }
 
-  const user = await getUserFromSalesforceUserId(result.userId, result.permissionLevel);
+  const user = await getUserFromSalesforceUserId(result.userId, result.permissionLevel, result.username);
   if (!user)
     return res.status(404).json({
       success: result.permissionLevel,

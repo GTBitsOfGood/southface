@@ -34,7 +34,7 @@ export function validateSAMLResponse(samlResp, certificate) {
   const certificateElement = xml.getElementsByTagName("ds:X509Certificate")[0];
   const certificateStr = certificateElement.textContent.replace(/\s/g, "");
   if (certificateStr !== certificate)
-    return { error: "Could verify authenticity of response" };
+    return { error: "Could not verify authenticity of response" };
 
   const statusElement = xml.getElementsByTagName("saml2p:StatusCode")[0];
   const statusStr = statusElement.getAttribute("Value");
@@ -44,14 +44,17 @@ export function validateSAMLResponse(samlResp, certificate) {
   const attributes = xml.getElementsByTagName("saml2:Attribute");
   let userId;
   let permissionLevel;
+  let username;
   for (let attribute of attributes) {
     if (attribute.getAttribute("Name") === "userId")
       userId = attribute.textContent.trim();
     if (attribute.getAttribute("Name") === "NetlifyPermissionLevel")
       permissionLevel = attribute.textContent.trim();
+    if (attribute.getAttribute("Name") ===  "username")
+      username = attribute.textContent.trim();
   }
 
   if (!userId) return { error: "Could not find user ID" };
 
-  return { userId, permissionLevel };
+  return { userId, permissionLevel, username };
 }
