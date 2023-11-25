@@ -32,10 +32,10 @@ const handler = async (req, res) => {
     });
   }
 
-  const user = await getUserFromSalesforceUserId(result.userId);
+  const user = await getUserFromSalesforceUserId(result.userId, result.permissionLevel);
   if (!user)
     return res.status(404).json({
-      success: false,
+      success: result.permissionLevel,
       message: "A Southface user has not been provisioned for this user yet",
     });
 

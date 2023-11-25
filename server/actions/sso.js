@@ -43,12 +43,15 @@ export function validateSAMLResponse(samlResp, certificate) {
 
   const attributes = xml.getElementsByTagName("saml2:Attribute");
   let userId;
+  let permissionLevel;
   for (let attribute of attributes) {
     if (attribute.getAttribute("Name") === "userId")
       userId = attribute.textContent.trim();
+    if (attribute.getAttribute("Name") === "NetlifyPermissionLevel")
+      permissionLevel = attribute.textContent.trim();
   }
 
   if (!userId) return { error: "Could not find user ID" };
 
-  return { userId };
+  return { userId, permissionLevel };
 }

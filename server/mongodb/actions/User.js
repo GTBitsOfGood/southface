@@ -26,29 +26,43 @@ export async function login({ username, password }) {
   };
 }
 
-export async function signUp({ username, password, isAdmin }) {
-  if (username == null || password == null) {
+export async function signUp({ username, password, isAdmin, salesforceUserId }) {
+  if (username == null) {
     throw new Error("All parameters must be provided!");
   }
 
   await mongoDB();
-
-  return bcrypt
-    .hash(password, 10)
-    .then((hashedPassword) =>
-      User.create({
-        username,
-        password: hashedPassword,
-        isAdmin: isAdmin || false,
-      })
-    )
-    .then((user) => {
-      return {
-        id: user._id,
-        isAdmin: user.isAdmin,
-        password: user.password,
-      };
-    });
+  if (password == null) {
+    return User.create({
+          username,
+          salesforceUserId: salesforceUserId,
+          isAdmin: isAdmin || false,
+        })
+        .then((user) => {
+        return {
+          id: user._id,
+          isAdmin: user.isAdmin,
+          salesforceUserId: user.salesforceUserId,
+        };
+      });
+  } else {
+    return bcrypt
+      .hash(password, 10)
+      .then((hashedPassword) =>
+        User.create({
+          username,
+          password: hashedPassword,
+          isAdmin: isAdmin || false,
+        })
+      )
+      .then((user) => {
+        return {
+          id: user._id,
+          isAdmin: user.isAdmin,
+          password: user.password,
+        };
+      });
+  }
 }
 
 export const getUserFromId = async (id) => {
@@ -72,11 +86,22 @@ export const getUserFromId = async (id) => {
   }
 };
 
-export const getUserFromSalesforceUserId = async (salesforceUserId) => {
+export const getUserFromSalesforceUserId = async (salesforceUserId, permissionLevel) => {
   await mongoDB();
   try {
-    const user = await User.findOne({ salesforceUserId });
-    if (!user) return null;
+    let user;
+    user = await User.findOne({ salesforceUserId });
+    if (!user) {
+      // We create the user only if they have the correct NetlifyPermissionLevel
+      if (permissionLevel == "General") {
+        user = await signUp("Salesforce User", null, false, salesforceUserId);
+      }
+      else if (permissionLevel == "Administrator") {
+        user = await signUp("Salesforce User", null, true, salesforceUserId);
+      }else {
+        return null;
+      }
+    } 
 
     return {
       id: user._id,
