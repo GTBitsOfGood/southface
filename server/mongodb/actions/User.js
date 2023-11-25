@@ -95,10 +95,12 @@ export const getUserFromSalesforceUserId = async (salesforceUserId, permissionLe
     if (!user) {
       // We create the user only if they have the correct NetlifyPermissionLevel
       if (permissionLevel == "General") {
-        user = await signUp(username, undefined, false, salesforceUserId);
+        await signUp(username, undefined, false, salesforceUserId);
+        user = await User.findOne({ salesforceUserId });
       }
       else if (permissionLevel == "Administrator") {
-        user = await signUp(username, undefined, true, salesforceUserId);
+        await signUp(username, undefined, true, salesforceUserId);
+        user = await User.findOne({ salesforceUserId });
       }else {
         return null;
       }
