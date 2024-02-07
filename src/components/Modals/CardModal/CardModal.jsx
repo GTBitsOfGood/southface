@@ -1,22 +1,23 @@
 import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
-  Box,
-  Button,
-  Circle,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  Heading,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Tag,
-  Text,
-  useBreakpointValue,
-  useDisclosure,
+    Box,
+    Button,
+    Circle,
+    Flex,
+    FormControl,
+    FormErrorMessage,
+    Heading,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay,
+    Tag,
+    TagCloseButton,
+    Text,
+    useBreakpointValue,
+    useDisclosure,
 } from "@chakra-ui/react";
 import urls from "lib/utils/urls";
 import { useEffect, useState } from "react";
@@ -449,7 +450,7 @@ const CardModal = ({
                   flexWrap={editing ? "wrap" : "nowrap"}
                 >
                   {form.values?.tags
-                    ? form.values.tags.toSorted((a, b) => {
+                    ? [...form.values.tags].sort((a, b) => {
                       if (filteredTags) {
                         if (filteredTags.includes(a) && filteredTags.includes(b)) {
                           return a.localeCompare(b)
@@ -479,8 +480,22 @@ const CardModal = ({
                             color="#515254"
                           >
                             {tag}
+                            {editing ? (
+                                <TagCloseButton 
+                                    color="#000000"
+                                    onClick={() => {
+                                    const existingTags = JSON.parse(
+                                    JSON.stringify(form.values.tags)
+                                    );
+                                    existingTags.splice(index, 1);
+                                    setValue("tags", existingTags);
+                                }}
+                                />
+                            ) : (
+                                <></>
+                            )}
                           </Tag>
-                          {editing ? (
+                          {/* {editing ? (
                             <Button
                               position="absolute"
                               mt="0.6rem"
@@ -503,7 +518,7 @@ const CardModal = ({
                             </Button>
                           ) : (
                             <></>
-                          )}
+                          )} */}
                         </Box>
                       ))
                     : ""}
