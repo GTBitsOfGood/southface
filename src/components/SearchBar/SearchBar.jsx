@@ -175,7 +175,7 @@ const SearchBarComponent = (props) => {
               roundedTopRight={0}
               bgColor="#F2F2F2"
               position="relative"
-              marginLeft="-42rem"
+              marginLeft={{ md: "-42rem" }}
             >
               <Tag height="65vh" overflow="auto" />
               <Button
