@@ -121,7 +121,7 @@ const SearchBarComponent = (props) => {
         </InputGroup>
       </Box>
       <Flex gap="1vh" justifyContent="space-between">
-        <Tabs variant="enclosed" h="full" align="end" w="auto">
+        <Tabs variant="enclosed" h="full" align="end">
           {isOpen ? (
             <TabList>
               <Box
