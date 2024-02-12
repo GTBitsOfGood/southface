@@ -195,6 +195,7 @@ const StandardCard = ({ card, cards, setCards, filteredTags, ...props }) => {
                 } else if (index == 2) {
                     return (
                         <Popover
+                            key={index}
                             isOpen={isOpenTagModal}
                             onClose={onCloseTagModal}
                             placement="top"
