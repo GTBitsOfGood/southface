@@ -104,7 +104,7 @@ const SearchBarComponent = (props) => {
       position="relative"
       gap="10px"
     >
-      <Box right={calculateRight()}>
+      <Box paddingRight={{ md: "15rem" }} right={calculateRight()}>
         <InputGroup size="lg">
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="lightGrey" />
