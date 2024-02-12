@@ -1,10 +1,18 @@
 import {
     Button,
     Flex,
-    Heading,
     HStack,
+    Heading,
     Image,
+    Popover,
+    PopoverBody,
+    PopoverContent,
+    PopoverTrigger,
+    Portal,
+    Tag,
+    TagLabel,
     Text,
+    VStack,
     useDisclosure
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -21,6 +29,11 @@ const StandardCard = ({ card, cards, setCards, filteredTags, ...props }) => {
     isOpen: isOpenCardModal,
     onOpen: onOpenCardModal,
     onClose: onCloseCardModal,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenTagModal,
+    onOpen: onOpenTagModal,
+    onClose: onCloseTagModal,
   } = useDisclosure();
   const { trigger, data, isMutating } = useSWRMutation(
     urls.api.user.standards.update,
