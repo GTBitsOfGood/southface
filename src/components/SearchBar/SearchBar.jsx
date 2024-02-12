@@ -104,7 +104,7 @@ const SearchBarComponent = (props) => {
       position="relative"
       gap="10px"
     >
-      <Box paddingRight={{ md: "15rem" }} right={calculateRight()}>
+      <Box right={calculateRight()}>
         <InputGroup size="lg">
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="lightGrey" />
@@ -121,8 +121,8 @@ const SearchBarComponent = (props) => {
         </InputGroup>
       </Box>
       <Flex gap="1vh" justifyContent="space-between">
-        <Tabs variant="enclosed" h="full" align="end">
           {isOpen ? (
+        <Tabs variant="enclosed" h="full" align="end" w="75rem">
             <TabList>
               <Box
                 border="1px solid Grey"
@@ -147,6 +147,7 @@ const SearchBarComponent = (props) => {
               </Box>
             </TabList>
           ) : (
+        <Tabs variant="enclosed" h="full" align="end">
             <Button
               p={4}
               pt={3}
