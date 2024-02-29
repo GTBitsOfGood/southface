@@ -1,11 +1,19 @@
 import {
-  Button,
-  Flex,
-  Heading,
-  HStack,
-  Image,
-  Text,
-  useDisclosure
+    Button,
+    Flex,
+    HStack,
+    Heading,
+    Image,
+    Popover,
+    PopoverBody,
+    PopoverContent,
+    PopoverTrigger,
+    Portal,
+    Tag,
+    TagLabel,
+    Text,
+    VStack,
+    useDisclosure
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
@@ -21,6 +29,11 @@ const StandardCard = ({ card, cards, setCards, filteredTags, ...props }) => {
     isOpen: isOpenCardModal,
     onOpen: onOpenCardModal,
     onClose: onCloseCardModal,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenTagModal,
+    onOpen: onOpenTagModal,
+    onClose: onCloseTagModal,
   } = useDisclosure();
   const { trigger, data, isMutating } = useSWRMutation(
     urls.api.user.standards.update,
@@ -123,7 +136,126 @@ const StandardCard = ({ card, cards, setCards, filteredTags, ...props }) => {
           width="100%"
           alignContent="center"
         >
-          <div/>
+            <Flex overflowY="none" flexShrink={0} width="65%">
+                {[...card.tags].sort((a, b) => {
+                    if (filteredTags) {
+                    if (filteredTags.includes(a) && filteredTags.includes(b)) {
+                        return a.localeCompare(b)
+                    } else if (filteredTags.includes(a)) {
+                        return -1
+                    } else if (filteredTags.includes(b)) {
+                        return 1
+                    }
+                    }
+                    return a.localeCompare(b)
+                }).map((tag, index) => {
+                if (index < 2 || (index == 2 && card.tags.length == 3)) {
+                    return (
+                    <Tag
+                        key={index}
+                        bgColor="#E2E3E5"
+                        borderRadius="30px"
+                        textTransform="capitalize"
+                        fontSize="0.75rem"
+                        px="0.75rem"
+                        fontFamily="'Inter', sans-serif"
+                        color="#515254"
+                        marginRight="0.25rem"
+                        width="fit-content"
+                        >
+                        <TagLabel 
+                            textOverflow="ellipsis"
+                            maxWidth="10ch"
+                            minWidth="15px"
+                            width="fit-content"
+                        >{tag}</TagLabel>
+                    </Tag>
+                    );
+                } else if (index == 2) {
+                    return (
+                        <Popover
+                            key={index}
+                            isOpen={isOpenTagModal}
+                            onClose={onCloseTagModal}
+                            placement="top"
+                        >
+                        <PopoverTrigger>
+                            <Tag
+                                key={index}
+                                bgColor="#E2E3E5"
+                                borderRadius="30px"
+                                textTransform="capitalize"
+                                fontSize="0.75rem"
+                                px="0.25rem"
+                                fontFamily="'Inter', sans-serif"
+                                color="#515254"
+                            >
+                                <TagLabel 
+                                    textOverflow="ellipsis"
+                                    maxWidth="8ch"
+                                    minWidth="15px"
+                                    onClick={(e)=> {
+                                        onOpenTagModal()
+                                        e.stopPropagation()
+                                    }}
+                                >+{card.tags.length-2}</TagLabel>
+                            </Tag>
+                        </PopoverTrigger>
+                        <Portal>
+                            <PopoverContent
+                                border="0px"
+                                background="none"
+                            >
+                                <PopoverBody>
+                                <VStack
+                                    borderColor="#E2E3E5"
+                                    borderWidth="2px"
+                                    borderRadius="10px"
+                                    background="#FFFFFF"
+                                    padding="10px"
+                                    alignItems="left"
+                                    width="fit-content"
+                                >
+                                    {[...card.tags].sort((a, b) => {
+                                        if (filteredTags) {
+                                        if (filteredTags.includes(a) && filteredTags.includes(b)) {
+                                            return a.localeCompare(b)
+                                        } else if (filteredTags.includes(a)) {
+                                            return -1
+                                        } else if (filteredTags.includes(b)) {
+                                            return 1
+                                        }
+                                        }
+                                        return a.localeCompare(b)
+                                    }).map((tag, index) => 
+                                        <Tag
+                                            key={index}
+                                            bgColor="#E2E3E5"
+                                            borderRadius="30px"
+                                            textTransform="capitalize"
+                                            fontSize="0.75rem"
+                                            px="0.75rem"
+                                            fontFamily="'Inter', sans-serif"
+                                            color="#515254"
+                                            margin="0.1rem"
+                                            width="fit-content"
+                                            >
+                                            <TagLabel 
+                                                width="fit-content"
+                                            >{tag}</TagLabel>
+                                        </Tag>
+                                    )}
+                                </VStack>
+                                </PopoverBody>
+                            </PopoverContent>
+                        </Portal>
+                        </Popover>
+                    );
+                } else {
+                    return null;
+                }
+                })}
+            </Flex>
           {/* <ReportButton /> */}
           {user?.isLoggedIn && (
             <Button
