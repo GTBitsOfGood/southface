@@ -1,6 +1,7 @@
 const withImages = require("next-images");
 
 module.exports = withImages({
+  staticPageGenerationTimeout: 1000,
   images: {
     domains: [
       "southfaceblob.blob.core.windows.net",
@@ -19,5 +20,5 @@ module.exports = withImages({
         permanent: true,
       },
     ];
-  },
+  }
 });

@@ -1,4 +1,5 @@
 export default async function fetchJson(input, init) {
+  console.log("input: " + input);
   const response = await fetch(input, init);
 
   // if the server replies, there's always some data in json

@@ -41,8 +41,11 @@ async function connect() {
    *  */
 
   await mongoose
-    .connect(process.env.DB_URL, {
-      dbName: process.env.DB_NAME,
+    .connect(process.env.COSMOS_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      retryWrites: false,
+      family: 4
     })
     .catch((e) => {
       console.error("Error connecting to database.");
