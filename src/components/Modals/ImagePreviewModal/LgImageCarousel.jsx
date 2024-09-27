@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import Promise from 'promise';
 import React, { useEffect, useRef, useState } from "react";
 import Carousel from "../../Carousel/Carousel";
 
