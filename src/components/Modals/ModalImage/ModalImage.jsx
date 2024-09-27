@@ -25,12 +25,12 @@ const ModalImage = ({
   return (
     <>
       <Box position="relative" {...props}>
-        <Box boxShadow="lg" margin="0 .3rem .5rem 0">
-          <Image
+        <Box boxShadow="lg" margin="0 .3rem .5rem 0" height="100%" maxHeight="200px" width="100%">
+          <img
             src={image}
             layout="responsive"
             width="100%"
-            height="100%"
+            height="min(100%, 200px)"
             objectFit="cover"
             alt={"card image"}
           />
