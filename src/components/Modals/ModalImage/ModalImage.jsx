@@ -1,6 +1,7 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Button, Text, useDisclosure } from "@chakra-ui/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { MdExpand } from "react-icons/md";
 import ConfirmActionModal from "../CardModal/ConfirmActionModal";
 
@@ -22,16 +23,54 @@ const ModalImage = ({
     onClose: onDeleteImageClose,
   } = useDisclosure();
 
+  const [imageStyle, setImageStyle] = useState({});
+
+  useEffect(() => {
+    const img = new window.Image();
+    img.onload = () => {
+      if (img.width < 200) {
+        // For images smaller than 200px wide, zoom to make a 200x200 square
+        const scale = 200 / Math.min(img.width, img.height);
+        setImageStyle({
+          width: `${img.width * scale}px`,
+          height: `${img.height * scale}px`,
+          objectFit: 'none',
+          objectPosition: 'center',
+        });
+      } else {
+        // For larger images, maintain aspect ratio with a height of 200px
+        const aspectRatio = img.width / img.height;
+        setImageStyle({
+          width: aspectRatio > 1 ? `${200 * aspectRatio}px` : '100%',
+          height: '200px',
+          objectFit: 'cover',
+          objectPosition: 'center',
+        });
+      }
+    };
+    img.src = image;
+  }, [image]);
+
   return (
     <>
       <Box position="relative" {...props}>
-        <Box boxShadow="lg" margin="0 .3rem .5rem 0" height="100%" maxHeight="200px" width="100%">
+        <Box
+          boxShadow="lg"
+          margin="0 .3rem .5rem 0"
+          height="200px"
+          width="200px"
+          overflow="hidden"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <img
             src={image}
-            layout="responsive"
-            width="100%"
-            height="min(100%, 200px)"
-            objectFit="cover"
+            style={{
+              ...imageStyle,
+              maxWidth: 'none',
+              maxHeight: 'none',
+            }}
             alt={"card image"}
           />
           {editing ? (

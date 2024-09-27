@@ -1,8 +1,7 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import Dot from "./Dot";
-
 import { Box, IconButton } from "@chakra-ui/react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import ArrowIcon from "./ArrowIcon";
+import Dot from "./Dot";
 
 const CAROUSEL_ITEM = "CAROUSEL_ITEM";
 const Carousel = ({
@@ -36,7 +35,15 @@ const Carousel = ({
     () =>
       itemList.reduce((result, item, i) => {
         const itemComponent = (
-          <Box key={i} w="100%" h="100%">
+          <Box
+            key={i}
+            w="100%"
+            h="100%"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            overflow="hidden"
+          >
             {item}
           </Box>
         );
@@ -70,10 +77,6 @@ const Carousel = ({
       if (setCurrentImage) {
         setCurrentImage(nextPage);
       }
-
-      // if (nextPage >= page) {
-      //   return p;
-      // }
 
       return nextPage;
     });
