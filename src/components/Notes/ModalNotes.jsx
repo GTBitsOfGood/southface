@@ -1,7 +1,7 @@
+// Inside ModalNotes Component
 import { AddIcon, CloseIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import {
   Box,
-  // Button,
   Circle,
   Flex,
   HStack,
@@ -29,16 +29,15 @@ export default function ModalNotes({
   noteToggleHandler,
   editing,
   handleSaveEdit,
-  // editHandler,
   currentImage,
   cardId,
 }) {
   const { user } = useUser();
   const { data } = useSWR(urls.api.card.get + cardId);
   const [card, setCard] = useState();
-
   const [liked, setLiked] = useState();
   const [disliked, setDisliked] = useState();
+  const [preview, setPreview] = useState(false);
 
   useEffect(() => {
     setCard(data?.payload);
@@ -57,18 +56,13 @@ export default function ModalNotes({
     });
   }, [user, currentImage, card]);
 
-  const [preview, setPreview] = useState(false);
-
   const handleLikeClick = async () => {
     if (disliked && !liked) {
-      // disliked image previously and about to like
       await thumbsUpAndDown(cardId, user.id, currentImage, false);
     } else {
       if (liked) {
-        // unlike the image
         await thumbsUp(cardId, user.id, currentImage, false);
       } else {
-        // like image
         await thumbsUp(cardId, user.id, currentImage, true);
       }
     }
@@ -77,7 +71,6 @@ export default function ModalNotes({
 
   const handleDislikeClick = async () => {
     if (liked && !disliked) {
-      // liked image previous and about to dislike
       await thumbsUpAndDown(cardId, user.id, currentImage, true);
     } else {
       if (disliked) {
@@ -93,14 +86,14 @@ export default function ModalNotes({
     setPreview(!preview);
   };
 
+  const handleCreateNewNote = async () => {
+    await createNewNote();
+    setNewNote({ body: "", date: new Date() }); // Clear newNote after saving
+    mutate(urls.api.card.get + cardId); // Refresh SWR cache
+  };
+
   return (
-    <VStack
-      h="100%"
-      w="35%"
-      p="5% 2% 2% 2%"
-      alignItems="left"
-      justifyContent="space-between"
-    >
+    <VStack h="100%" w="35%" p="5% 2% 2% 2%" alignItems="left" justifyContent="space-between">
       <VStack alignItems="left" w="100%" maxH={{ xl: "86%", "2xl": "89%" }}>
         <Heading size="lg" mt={3} mb={2} fontFamily="Roboto Slab">
           Notes
@@ -111,7 +104,7 @@ export default function ModalNotes({
             <AddNewNote
               newNote={newNote}
               setNewNote={setNewNote}
-              createNewNote={createNewNote}
+              createNewNote={handleCreateNewNote}
             />
           )}
 
@@ -161,11 +154,6 @@ export default function ModalNotes({
             );
           })}
         </Box>
-        {/* {selState && (
-          <Button variant="Blue-rounded" p={1} onClick={editHandler}>
-            {editing ? "Save Changes" : "Add notes To Report"}
-          </Button>
-        )} */}
       </VStack>
 
       {preview ? (
