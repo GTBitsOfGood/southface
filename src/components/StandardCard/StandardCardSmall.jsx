@@ -1,19 +1,19 @@
 import {
-    Button,
-    Flex,
-    HStack,
-    Heading,
-    Image,
-    Popover,
-    PopoverBody,
-    PopoverContent,
-    PopoverTrigger,
-    Portal,
-    Tag,
-    TagLabel,
-    Text,
-    VStack,
-    useDisclosure
+  Button,
+  Flex,
+  HStack,
+  Heading,
+  Image,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Portal,
+  Tag,
+  TagLabel,
+  Text,
+  VStack,
+  useDisclosure
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import urls from "src/lib/utils/urls";
@@ -42,6 +42,8 @@ const StandardCard = ({ card, cards, setCards, filteredTags, ...props }) => {
     }
   );
   const [updateRecentStandardsTriggered, setUpdateRecentStandardsTriggered] =
+    useState(false);
+  const [isSelecting, setIsSelecting] =
     useState(false);
 
   useEffect(() => {
@@ -81,12 +83,20 @@ const StandardCard = ({ card, cards, setCards, filteredTags, ...props }) => {
   // const imgArr = selected ?
   const { addToReport, removeFromReport } = useActiveReport();
   const reportAddHandler = (e) => {
+    if (isSelecting)
+      return
+    
+    try {
+    setIsSelecting(true);
     e.stopPropagation(); // stops modal from opening
     if (!selected) {
       addToReport(card);
     } else {
       removeFromReport(card);
     }
+        setIsSelecting(false);} catch {
+          setIsSelecting(false);
+        }
   };
 
   return (
@@ -265,8 +275,9 @@ const StandardCard = ({ card, cards, setCards, filteredTags, ...props }) => {
               flexShrink={0}
               {...props}
               fontSize="3xs"
+              loading={isSelecting}
               size="sm"
-              isDisabled={user?.isLoggedIn ? false : true}
+              isDisabled={user?.isLoggedIn && !isSelecting ? false : true}
             >
               {!selected ? "Add To Report" : "Del From Report"}
             </Button>
