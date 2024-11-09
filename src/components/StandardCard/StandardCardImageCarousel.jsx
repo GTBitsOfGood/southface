@@ -4,6 +4,10 @@ import Carousel from "src/components/Carousel/Carousel";
 import useActiveReport from "../../lib/hooks/useActiveReport";
 
 const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
+  const { cols = 5, rows = 1, gap = 10, selState, editing } = rest;
+  const { changeInReport } = useActiveReport();
+
+  // Custom chevron component for carousel navigation
   const ChevronIcon = (props) => {
     const styles = {
       pos: "absolute",
@@ -14,13 +18,14 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       zIndex: 2,
       boxSize: 12,
     };
-    if (props.orientation == "right") {
+    if (props.orientation === "right") {
       return <ChevronRightIcon {...styles} right="20px" />;
-    } else if (props.orientation == "left") {
+    } else if (props.orientation === "left") {
       return <ChevronLeftIcon {...styles} left="20px" />;
     }
   };
 
+  // Custom dot component for carousel pagination
   const MyDot = ({ isActive }) => (
     <Box
       style={{
@@ -31,34 +36,35 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
         border: "1px solid white",
         background: `${isActive ? "white" : "none"}`,
       }}
-    ></Box>
+    />
   );
 
-  const { cols = 5, rows = 1, gap = 10 } = { ...rest };
-
-  const { selState } = { ...rest };
-  const { changeInReport } = useActiveReport();
+  // Initialize image selection array if not present
   const imgArr = (function () {
-    if (selState && selState.imgSelections.length === cardImages.length) {
+    if (selState && selState.imgSelections?.length === cardImages.length) {
       return selState.imgSelections;
     } else {
       return Array(cardImages.length).fill(false);
     }
   })();
-  const { editing } = { ...rest };
 
+  // Handle toggling image selection
   const imgToggleHandler = (index) => () => {
     if (selState && editing) {
-      imgArr[index] = !imgArr[index];
-      const newSel = { ...selState };
-      newSel.imgSelections = imgArr;
+      const newImgArr = [...imgArr];
+      newImgArr[index] = !newImgArr[index];
+      const newSel = { 
+        ...selState,
+        imgSelections: newImgArr
+      };
       changeInReport(newSel);
     }
   };
 
-  // Extracted image component that shows inside carousel
+  // Component for rendering individual images with selection UI
   const ConditionalImage = ({ image, index }) => {
     const selected = selState?.imgSelections[index];
+    
     const img = (
       <Image
         opacity={selected ? "100%" : "50%"}
@@ -70,6 +76,7 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
         alt="construction image"
       />
     );
+
     const iconStyles = {
       position: "absolute",
       right: "2px",
@@ -79,9 +86,12 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       fontSize: "small",
       padding: "5px",
     };
+
     return editing ? (
       <Box onClick={imgToggleHandler(index)} position="relative">
-        <Circle style={iconStyles}>{selected ? <CloseIcon /> : "Add"}</Circle>
+        <Circle style={iconStyles}>
+          {selected ? <CloseIcon /> : "Add"}
+        </Circle>
         {img}
       </Box>
     ) : (
@@ -106,15 +116,13 @@ const StandardCardImageCarousel = ({ cardImages, ...rest }) => {
       arrowRight={<ChevronIcon orientation="right" />}
       isReportCarousel={true}
     >
-      {cardImages.map(({ imageUrl: image }, index) => {
-        return (
-          (selState.imgSelections[index] || editing) && (
-            <Carousel.Item key={index}>
-              <ConditionalImage image={image} index={index} />
-            </Carousel.Item>
-          )
-        );
-      })}
+      {cardImages.map(({ imageUrl: image }, index) => (
+        (selState.imgSelections[index] || editing) && (
+          <Carousel.Item key={index}>
+            <ConditionalImage image={image} index={index} />
+          </Carousel.Item>
+        )
+      ))}
     </Carousel>
   );
 };
